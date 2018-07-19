@@ -8,10 +8,7 @@ from util import evaluate_model, train_model
 
 def train_emnist_mlp():
     data = Emnist()
-    num_classes = data.y_train.shape[1]
-    input_size = data.x_train.shape[1]
-
-    model = EmnistMlp(num_classes, input_size)
+    model = EmnistMlp()
 
     train_model(
         model=model.model,

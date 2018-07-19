@@ -7,13 +7,14 @@ name = "pypi"
 boltons = "*"
 h5py = "*"
 numpy = "*"
+opencv-python = "*"
 tensorflow = "*"
 
 [dev-packages]
 jupyterlab = "*"
 matplotlib = "*"
-scipy = "*"
 pylint = "*"
+scipy = "*"
 
 [requires]
 python_version = "3.6"

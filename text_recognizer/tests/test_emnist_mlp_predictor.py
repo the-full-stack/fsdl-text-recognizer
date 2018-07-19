@@ -1,17 +1,18 @@
 import pathlib
 import unittest
 
-from text_recognizer.predict.emnist_mlp import EmnistMlpPredictor
+from text_recognizer.emnist_mlp_predictor import EmnistMlpPredictor
 
 
 SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support' / 'emnist'
 
 
 class TestEmnistMlpPredictor(unittest.TestCase):
-    def test():
+    def test(self):
       predictor = EmnistMlpPredictor()
 
-      filename = SUPPORT_DIRNAME / 'a.png'
-      pred, conf = predictor.predict(filename)
-      self.assertEqual(pred, 'a')
-      self.assertGreater(conf, 0.9)
+      for filename in SUPPORT_DIRNAME.glob('*.png'):
+        pred, conf = predictor.predict(str(filename))
+        print(pred, conf, filename.stem)
+        self.assertEqual(pred, filename.stem)
+        self.assertGreater(conf, 0.9)

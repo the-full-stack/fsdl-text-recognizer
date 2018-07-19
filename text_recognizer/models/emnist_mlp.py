@@ -26,10 +26,14 @@ def _create_mlp(num_classes: int,
 
 
 class EmnistMlp:
-    def __init__(self, num_classes: int, input_size: int, layer_size: int=128, dropout_amount: float=0.2):
-        self.model = _create_mlp(num_classes, input_size, layer_size, dropout_amount)
-        self.model.summary()
+    def __init__(self, layer_size: int=128, dropout_amount: float=0.2):
+        data = Emnist()
         self.mapping = Emnist().mapping
+        self.num_classes = data.y_test.shape[1]
+        self.input_size = data.x_test.shape[1]
+
+        self.model = _create_mlp(self.num_classes, self.input_size, layer_size, dropout_amount)
+        self.model.summary()
 
     def load_weights(self):
         self.model.load_weights(str(MODEL_WEIGHTS_FILENAME))
@@ -37,8 +41,8 @@ class EmnistMlp:
     def save_weights(self):
         self.model.save_weights(str(MODEL_WEIGHTS_FILENAME))
 
-    def predict_on_instance(self, instance: np.ndarray) -> Tuple[str, float]:
-        pred_raw = self.model.predict(instance, batch_size=1)
+    def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
+        pred_raw = self.model.predict(image.reshape(1, -1), batch_size=1).flatten()
         ind = np.argmax(pred_raw)
         conf = pred_raw[ind]
         pred = self.mapping[ind]
