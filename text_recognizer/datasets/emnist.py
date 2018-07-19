@@ -6,6 +6,7 @@ import pathlib
 import urllib.request
 import zipfile
 
+from boltons.cacheutils import cachedproperty
 import numpy as np
 import scipy.io
 from tensorflow.python.keras.utils import to_categorical
@@ -25,8 +26,9 @@ def _download_and_process_emnist():
 
     os.chdir(RAW_DATA_DIRNAME)
 
-    print('Downloading EMNIST...')
-    urllib.request.urlretrieve(RAW_URL, 'matlab.zip')
+    if not os.path.exist('matlab.zip'):
+        print('Downloading EMNIST...')
+        urllib.request.urlretrieve(RAW_URL, 'matlab.zip')
 
     print('Unzipping EMNIST and loading .mat file...')
     zip_file = zipfile.ZipFile('matlab.zip', 'r')
@@ -64,7 +66,7 @@ def _augment_emnist_mapping(mapping):
     return {**mapping, **extra_mapping}
 
 
-class EMNIST(object):
+class Emnist(object):
     """
     "The EMNIST dataset is a set of handwritten character digits derived from the NIST Special Database 19
     and converted to a 28x28 pixel image format and dataset structure that directly matches the MNIST dataset."
@@ -72,24 +74,36 @@ class EMNIST(object):
 
     The data split we will use is
     EMNIST ByClass: 814,255 characters. 62 unbalanced classes.
+
+    Note that we use cachedproperty because data takes time to load.
     """
     def __init__(self):
         if not os.path.exists(PROCESSED_FILENAME):
             _download_and_process_emnist()
-        data = np.load(PROCESSED_FILENAME)
-        x_train, y_train, x_test, y_test, mapping = \
-            data['x_train'], data['y_train'], data['x_test'], data['y_test'], data['mapping']
-        self.mapping = _augment_emnist_mapping(mapping.tolist())
+        self.data = np.load(PROCESSED_FILENAME)
+        self.mapping = _augment_emnist_mapping(self.data['mapping'].tolist())
         self.inverse_mapping = {v: k for k, v in self.mapping.items()}
         self.num_classes = len(self.mapping)
-        self.x_train = x_train.astype('float32') / 255
-        self.x_test = x_test.astype('float32') / 255
-        self.y_train = to_categorical(y_train, self.num_classes)
-        self.y_test = to_categorical(y_test, self.num_classes)
+
+    @cachedproperty
+    def x_train(self):
+        return self.data['x_train'].astype('float32') / 255
+
+    @cachedproperty
+    def x_test(self):
+        return self.data['x_test'].astype('float32') / 255
+
+    @cachedproperty
+    def y_train(self):
+        return to_categorical(self.data['y_train'], self.num_classes)
+
+    @cachedproperty
+    def y_test(self):
+        return to_categorical(self.data['y_test'], self.num_classes)
 
     def __repr__(self):
         return (
-            'EMNIST\n'
+            'EMNIST Dataset\n'
             f'Num classes: {self.num_classes}\n'
             f'Mapping: {self.mapping}\n'
             f'Train: {self.x_train.shape} {self.y_train.shape}\n'
@@ -98,4 +112,5 @@ class EMNIST(object):
 
 
 if __name__ == '__main__':
-    print(EMNIST())
+    data = Emnist()
+    print(data)

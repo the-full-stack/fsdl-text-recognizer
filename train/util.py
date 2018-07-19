@@ -1,5 +1,5 @@
 from time import time
-from typing import Callable, Optional, Union
+from typing import Callable, Optional, Union, Tuple
 
 # import gpustat
 from matplotlib.figure import Figure
@@ -28,6 +28,12 @@ class GPUUtilizationSampler(Callback):
         if np.random.rand() > 0.99:
             gpu_info = gpustat.GPUStatCollection.new_query()[self.gpu_ind]
             self.samples.append(gpu_info.utilization)
+
+
+def evaluate_model(model: Model, x: np.ndarray, y: np.ndarray) -> Tuple[float, float]:
+    score = model.evaluate(x, y, verbose=1)
+    print('Test loss/accuracy:', score[0], score[1])
+    return score
 
 
 def train_model(

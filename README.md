@@ -39,7 +39,7 @@ text_recognizer/
             emnist-matlab.zip
         processed/                  # Data in a format that can be used by our Dataset classses.
             emnist-byclass.npz
-            
+
     experiments/                # Not under code version control.
         emnist_mlp/                 # Name of the experiment
             models/
@@ -60,18 +60,18 @@ text_recognizer/
             __init__.py
             emnist_mlp.py               # Code
             emnist_mlp.h5               # Learned weights
-            emnist_mlp.config           # Experimental config that led to the learned weights.
+            emnist_mlp.config           # Experimental config that led to the learned weights
 
-        networks/                   # Code for defining neural networks
+        predict/
             __init__.py
-            mlp.py
+            emnist_mlp.py
 
         test/                       # Code that tests functionality of the other code.
             support/                    # Support files for the tests
                 emnist/
                     a.png
                     3.png
-            test_emnist_mlp.py          # Lightweight test to ensure that the trained emnist_mlp correctly classifies a few data points.
+            test_emnist_mlp_predict.py  # Lightweight test to ensure that the trained emnist_mlp correctly classifies a few data points.
 
         web/                        # Web server for serving predictions.
             server.py
