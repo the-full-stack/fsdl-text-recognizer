@@ -5,7 +5,12 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 ## Quick Start
 
 ```
+export PYTHONPATH=.  # May want to put this in your .bashrc
+
 # Get development environment set up
+# First, make sure you are using whatever Python you intend to use (conda or system).
+# Then you can install packages via pipenv.
+pipenv --python=`which python`
 pipenv install --dev
 
 # Train EMNIST MLP with default settings
@@ -93,6 +98,13 @@ text_recognizer/
     README.md
     setup.py
 ```
+
+## Explanation
+
+### Pipenv
+
+Pipenv is necessary for being exact about the dependencies.
+TODO: explain that want to stay up to date with packages, but only update them intentionally, not randomly. Explain sync vs install.
 
 ## Tasks
 

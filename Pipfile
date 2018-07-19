@@ -8,6 +8,7 @@ boltons = "*"
 h5py = "*"
 numpy = "*"
 opencv-python = "*"
+pytest = "*"
 tensorflow = "*"
 
 [dev-packages]
