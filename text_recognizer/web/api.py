@@ -23,18 +23,8 @@ def predict():
     data = request.get_json()
     if data is None:
         return 'no json received'
-
-    fd, path = tempfile.mkstemp()
-    with open(path, 'wb') as f:
-        f.write(base64.b64decode(data['image'].split(',')[1]))
-    os.close(fd)
-
-    # from IPython import embed; embed()
-
-    # image = util.read_b64_image(data['image'], grayscale=True)
-
-    pred, conf = predictor.predict(path)
-
+    image = util.read_b64_image(data['image'], grayscale=True)
+    pred, conf = predictor.predict(image)
     return jsonify({'pred': str(pred), 'conf': float(conf)})
 
 
