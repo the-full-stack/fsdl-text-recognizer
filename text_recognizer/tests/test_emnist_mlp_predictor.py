@@ -8,7 +8,7 @@ SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support' / 'emn
 
 
 class TestEmnistMlpPredictor(unittest.TestCase):
-    def test(self):
+    def test_filename(self):
       predictor = EmnistMlpPredictor()
 
       for filename in SUPPORT_DIRNAME.glob('*.png'):

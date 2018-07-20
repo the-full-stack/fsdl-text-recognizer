@@ -2,6 +2,19 @@
 
 Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp](https://fullstackdeeplearning.com/bootcamp).
 
+## Tasks
+
+- End-to-end on just MLP
+    - [ ] Set up CI that runs tests
+    - [ ] Deploy as Flask JSON API (input is image URL)
+    - [ ] Make cursive.ai a Flask web site where user can upload image and then direct it to an API URL passed a query string
+    - Make Gradescope autograder
+        - [ ] do it the setup.sh way
+        - [ ] get ibrahim's help in being able to build my own docker image
+- [ ] code to process a cell phone image of some handwritten text to get it black and white
+- Optional
+    - [ ] Deploy as Lambda function
+
 ## Quick Start
 
 ```
@@ -79,7 +92,7 @@ text_recognizer/
             test_emnist_mlp_predict.py  # Lightweight test to ensure that the trained emnist_mlp correctly classifies a few data points.
 
         web/                        # Web server for serving predictions.
-            server.py
+            api.py
 
     tasks/
         train_emnist_mlp.py
@@ -105,25 +118,3 @@ text_recognizer/
 
 Pipenv is necessary for being exact about the dependencies.
 TODO: explain that want to stay up to date with packages, but only update them intentionally, not randomly. Explain sync vs install.
-
-## Tasks
-
-### July 18
-
-Today, I want to do all parts of training, testing, ci, and web server deploying for just EMNIST MLP.
-I should be able to, from scratch: train EMNIST MLP, test on a few important examples, evaluate on test set, and deploy as a flask web api.
-
-## Commands I want to be able to run
-
-```
-# Train MLP on EMNIST with default parameters
-bin/train --name='emnist_mlp' --model='emnist_mlp' --dataset='emnist'
-
-train/emnist_mlp.py
-
-# Run training on MLP
-
-
-# Deploy MLP as a web service
-bin/deploy --name='emnist_mlp'
-```
