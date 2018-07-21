@@ -14,7 +14,7 @@ MODEL_WEIGHTS_FILENAME = DIRNAME / 'emnist_mlp_weights.h5'
 
 
 def _create_mlp(num_classes: int,
-                input_dim: int,
+                input_size: int,
                 layer_size: int=128,
                 dropout_amount: float=0.2) -> Model:
     model = Sequential()

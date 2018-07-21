@@ -1,5 +1,5 @@
-data
+__pycache__
 .idea
 .pytest_cache
-__pycache__
 .vscode
+data

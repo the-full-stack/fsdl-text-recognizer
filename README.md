@@ -10,13 +10,15 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
     - [x] Modify Emnist dataset class to store mapping separately, in text_recognizer/datasets
     - [x] Get web server to run in a Docker container
     - [ ] Deploy web server to AWS ECS via Docker
+        - July 20 2330: Decided to go with Lambda instead. ECS scales too slowly. Lambda will be cooler.
+            - But first going to try Elastic Beanstalk real quick
+            - For lambda, do the building and the zipping in a Docker container
     - [ ] Make cursive.ai a Flask web site where user can upload image and then direct it to an API URL passed a query string
     - Make Gradescope autograder
         - [ ] do it the setup.sh way
         - [ ] get ibrahim's help in being able to build my own docker image
 - [ ] code to process a cell phone image of some handwritten text to get it black and white
-- Optional
-    - [ ] Deploy as Lambda function
+    
 
 ## Quick Start
 

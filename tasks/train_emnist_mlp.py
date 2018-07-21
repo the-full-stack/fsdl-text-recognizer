@@ -1,11 +1,8 @@
-"""
-Script for training MLP on EMNIST.
-"""
 import numpy as np
 
 from text_recognizer.datasets.emnist import Emnist
 from text_recognizer.models.emnist_mlp import EmnistMlp
-from util import evaluate_model, train_model
+from train.util import evaluate_model, train_model
 
 
 def train_emnist_mlp():
@@ -18,7 +15,7 @@ def train_emnist_mlp():
         y_train=data.y_train,
         loss=model.loss,
         epochs=3,
-        batch_size=256
+        batch_size=128
     )
     model.save_weights()
 

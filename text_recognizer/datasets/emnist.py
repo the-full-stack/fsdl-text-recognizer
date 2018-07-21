@@ -41,10 +41,10 @@ def _download_and_process_emnist():
 
     print('Saving in NPZ format...')
     x_train = data['dataset']['train'][0, 0]['images'][0, 0]
-    # y_train = data['dataset']['train'][0, 0]['labels'][0, 0]
-    # x_test = data['dataset']['test'][0, 0]['images'][0, 0]
-    # y_test = data['dataset']['test'][0, 0]['labels'][0, 0]
-    # np.savez(PROCESSED_DATA_FILENAME, x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test)
+    y_train = data['dataset']['train'][0, 0]['labels'][0, 0]
+    x_test = data['dataset']['test'][0, 0]['images'][0, 0]
+    y_test = data['dataset']['test'][0, 0]['labels'][0, 0]
+    np.savez(PROCESSED_DATA_FILENAME, x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test)
 
     print('Saving essential dataset parameters...')
     mapping = {int(k): chr(v) for k, v in data['dataset']['mapping'][0, 0]}
