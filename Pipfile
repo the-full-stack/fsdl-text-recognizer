@@ -8,7 +8,7 @@ boltons = "*"
 flask = "*"
 h5py = "*"
 numpy = "*"
-opencv-python = "*"
+opencv-python-headless = "*"
 pytest = "*"
 tensorflow = "*"
 

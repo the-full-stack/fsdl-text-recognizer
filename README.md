@@ -5,8 +5,11 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 ## Tasks
 
 - End-to-end on just MLP
-    - [ ] Set up CI that runs tests
-    - [ ] Deploy as Flask JSON API (input is image URL)
+    - [ ] Set up CI that runs tests and evaluation
+    - [x] Make a Flask JSON API (input is image URL)
+    - [x] Modify Emnist dataset class to store mapping separately, in text_recognizer/datasets
+    - [x] Get web server to run in a Docker container
+    - [ ] Deploy web server to AWS ECS via Docker
     - [ ] Make cursive.ai a Flask web site where user can upload image and then direct it to an API URL passed a query string
     - Make Gradescope autograder
         - [ ] do it the setup.sh way
@@ -27,22 +30,31 @@ pipenv --python=`which python`
 pipenv install --dev
 
 # Train EMNIST MLP with default settings
-pipenv run tasks/train_emnist_mlp.py
+pipenv run train/train_emnist_mlp.py
 
 # Run EMNIST MLP experiments
-pipenv run tasks/run_emnist_mlp_experiments.py
+pipenv run train/run_emnist_mlp_experiments.py
 
 # Update the EMNIST MLP model to deploy by taking the best model from the experiments
-pipenv run tasks/update_model_with_best_experiment.py --name='emnist_mlp'
+pipenv run train/update_model_with_best_experiment.py --name='emnist_mlp'
 
 # Test EMNIST MLP model
-pipenv run pytest --pyargs text_recognizer
+pipenv run pytest text_recognizer
 
 # Evaluate EMNIST MLP model
-pipenv run tasks/evaluate_emnist_mlp_model.py
+pipenv run train/evaluate_emnist_mlp_model.py
 
 # Run the API server
 pipenv run python web/server.py
+
+# Build the API server docker image
+docker build -t text_recognizer -f text_recognizer/Dockerfile .
+
+# Run the API server via docker
+docker run -p 8000:8000 text_recognizer
+
+# Make a sample request to the running API server
+# TODO
 
 # Deploy the server to AWS
 pipenv run tasks/deploy_web_server_to_aws.py

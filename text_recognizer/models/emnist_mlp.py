@@ -2,6 +2,7 @@ import pathlib
 from typing import Tuple
 
 import numpy as np
+import tensorflow
 from tensorflow.python.keras.models import load_model, Model, Sequential
 from tensorflow.python.keras.layers import Activation, Dense, Dropout
 
@@ -13,7 +14,7 @@ MODEL_WEIGHTS_FILENAME = DIRNAME / 'emnist_mlp_weights.h5'
 
 
 def _create_mlp(num_classes: int,
-                input_size: int,
+                input_dim: int,
                 layer_size: int=128,
                 dropout_amount: float=0.2) -> Model:
     model = Sequential()
@@ -28,9 +29,12 @@ def _create_mlp(num_classes: int,
 class EmnistMlp:
     def __init__(self, layer_size: int=128, dropout_amount: float=0.2):
         data = Emnist()
-        self.mapping = Emnist().mapping
-        self.num_classes = data.y_test.shape[1]
-        self.input_size = data.x_test.shape[1]
+        self.mapping = data.mapping
+        self.num_classes = len(self.mapping)
+        self.input_size = data.input_size
+
+        np.random.seed(42)
+        tensorflow.set_random_seed(42)
 
         self.model = _create_mlp(self.num_classes, self.input_size, layer_size, dropout_amount)
         self.model.summary()

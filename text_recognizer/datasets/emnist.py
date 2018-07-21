@@ -1,14 +1,15 @@
 """
 EMNIST dataset. Downloads from NIST website and saves as .npz file if not already present.
 """
+import json
 import os
 import pathlib
+import shutil
 import urllib.request
 import zipfile
 
 from boltons.cacheutils import cachedproperty
 import numpy as np
-import scipy.io
 from tensorflow.python.keras.utils import to_categorical
 
 
@@ -17,16 +18,19 @@ RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
 DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data'
 RAW_DATA_DIRNAME = DATA_DIRNAME / 'raw' / 'emnist'
 PROCESSED_DATA_DIRNAME = DATA_DIRNAME / 'processed' / 'emnist'
-PROCESSED_FILENAME = PROCESSED_DATA_DIRNAME / 'byclass.npz'
+PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'byclass.npz'
+ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_essentials.json'
 
 
 def _download_and_process_emnist():
+    import scipy.io
+
     RAW_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
     PROCESSED_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
 
     os.chdir(RAW_DATA_DIRNAME)
 
-    if not os.path.exist('matlab.zip'):
+    if not os.path.exists('matlab.zip'):
         print('Downloading EMNIST...')
         urllib.request.urlretrieve(RAW_URL, 'matlab.zip')
 
@@ -37,11 +41,16 @@ def _download_and_process_emnist():
 
     print('Saving in NPZ format...')
     x_train = data['dataset']['train'][0, 0]['images'][0, 0]
-    y_train = data['dataset']['train'][0, 0]['labels'][0, 0]
-    x_test = data['dataset']['test'][0, 0]['images'][0, 0]
-    y_test = data['dataset']['test'][0, 0]['labels'][0, 0]
-    mapping = {k: chr(v) for k, v in data['dataset']['mapping'][0, 0]}
-    np.savez(PROCESSED_FILENAME, x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test, mapping=mapping)
+    # y_train = data['dataset']['train'][0, 0]['labels'][0, 0]
+    # x_test = data['dataset']['test'][0, 0]['images'][0, 0]
+    # y_test = data['dataset']['test'][0, 0]['labels'][0, 0]
+    # np.savez(PROCESSED_DATA_FILENAME, x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test)
+
+    print('Saving essential dataset parameters...')
+    mapping = {int(k): chr(v) for k, v in data['dataset']['mapping'][0, 0]}
+    essentials = {'mapping': list(mapping.items()), 'input_dim': list(x_train.shape[1:])}
+    with open(ESSENTIALS_FILENAME, 'w') as f:
+        json.dump(essentials, f)
 
     print('Cleaning up...')
     shutil.rmtree('matlab')
@@ -78,12 +87,20 @@ class Emnist(object):
     Note that we use cachedproperty because data takes time to load.
     """
     def __init__(self):
-        if not os.path.exists(PROCESSED_FILENAME):
+        if not os.path.exists(ESSENTIALS_FILENAME):
             _download_and_process_emnist()
-        self.data = np.load(PROCESSED_FILENAME)
-        self.mapping = _augment_emnist_mapping(self.data['mapping'].tolist())
+        with open(ESSENTIALS_FILENAME, 'rb') as f:
+            essentials = json.load(f)
+        self.mapping = _augment_emnist_mapping(dict(essentials['mapping']))
         self.inverse_mapping = {v: k for k, v in self.mapping.items()}
         self.num_classes = len(self.mapping)
+        self.input_size = essentials['input_dim'][0]
+
+    @cachedproperty    
+    def data(self):
+        if not os.path.exists(PROCESSED_DATA_FILENAME):
+            _download_and_process_emnist()
+        return np.load(PROCESSED_DATA_FILENAME)
 
     @cachedproperty
     def x_train(self):

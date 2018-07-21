@@ -1,6 +1,8 @@
 """
 Script for training MLP on EMNIST.
 """
+import numpy as np
+
 from text_recognizer.datasets.emnist import Emnist
 from text_recognizer.models.emnist_mlp import EmnistMlp
 from util import evaluate_model, train_model
