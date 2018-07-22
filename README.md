@@ -9,21 +9,21 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
     - [x] Make a Flask JSON API (input is image URL)
     - [x] Modify Emnist dataset class to store mapping separately, in text_recognizer/datasets
     - [x] Get web server to run in a Docker container
-    - [ ] Deploy web server to AWS ECS via Docker
+    - [x] Deploy web server to AWS ECS via Docker or to AWS Lambda via nice script
         - July 20 2330: Decided to go with Lambda instead. ECS scales too slowly. Lambda will be cooler.
             - But first going to try Elastic Beanstalk real quick
             - For lambda, do the building and the zipping in a Docker container
                 - serverless makes it really easy: https://serverless.com/framework/docs/providers/aws/events/apigateway/#simple-http-endpoint
                     - https://medium.com/tooso/serving-tensorflow-predictions-with-python-and-aws-lambda-facb4ab87ddd
+        - July 21 2300: spent whole day but figured out deployment to lambda
+        - [ ] add a test command for the lambda function
     - [ ] Make cursive.ai a Flask web site where user can upload image and then direct it to an API URL passed a query string
+        - July 21 2300: decided that this should also be a serverless app
+        - Realized it's nice and easy to deploy a Flask app via https://github.com/logandk/serverless-wsgi, which makes for nice dev environment
     - Make Gradescope autograder
         - [ ] do it the setup.sh way
         - [ ] get ibrahim's help in being able to build my own docker image
 - [ ] code to process a cell phone image of some handwritten text to get it black and white
-
-
-PICK UP AT: 
-- build lambda package via lambci docker (run script to generate zip)
 
 
 ## Quick Start

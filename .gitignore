@@ -3,3 +3,5 @@ __pycache__
 .pytest_cache
 .vscode
 data
+.serverless
+.requirements.zip

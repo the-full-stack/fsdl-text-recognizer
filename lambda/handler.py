@@ -1,3 +1,9 @@
+# https://github.com/UnitedIncome/serverless-python-requirements
+try:
+  import unzip_requirements
+except ImportError:
+  pass
+
 import os
 import sys
 import json
@@ -14,7 +20,7 @@ def predict(event, context):
     serverless.yml file.
     """
     try:
-        image_url = event['image_url']
+        image_url = event['queryStringParameters']['image_url']
         predictor = EmnistMlpPredictor()
         pred, conf = predictor.predict(image_url)
         return lambda_gateway_response(200, {'pred': str(pred), 'conf': float(conf)})
@@ -32,7 +38,11 @@ def lambda_gateway_response(code, body):
     :param code: HTTP response code (200 for OK), must be an int
     :param body: the actual content of the response
     """
-    response = {"statusCode": code, "body": json.dumps(body)}
+    cors_headers = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Credentials': True
+    }
+    response = {"statusCode": code, "headers": cors_headers, "body": json.dumps(body)}
     print(response)
     return response
 

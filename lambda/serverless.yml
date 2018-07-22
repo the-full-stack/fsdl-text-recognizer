@@ -1,0 +1,44 @@
+service: text-recognizer
+
+frameworkVersion: ">=1.2.0 <2.0.0"
+
+package:
+  exclude:
+    - "**/*"
+  include:
+    - ../text_recognizer/**/*
+    - handler.py
+
+provider:
+  name: aws
+  region: us-west-2
+  runtime: python3.6
+  memorysize: 1024
+  timeout: 30
+  versionFunctions: false
+
+functions:
+  predict:
+    handler: handler.predict
+    events:
+      - http:
+          path: v1/predict
+          method: get
+          cors: true
+
+plugins:
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    slim: true
+    noDeploy:
+      - "flask"
+      - "jinja2"
+      - "pytest"
+      - "werkzeug"
+    slimPatterns:
+      - "*.egg-info*"
+      - "*tensorboard"
+    zip: true
