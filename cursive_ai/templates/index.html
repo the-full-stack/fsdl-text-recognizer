@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<metea charset="utf8">
+	<title>Text Recognizer</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+	<script type="text/javascript">
+        function previewFile() {
+            var preview = document.querySelector('img');
+            var file    = document.querySelector('input[type=file]').files[0];
+            var reader  = new FileReader();
+
+            reader.addEventListener("load", function () {
+                preview.src = reader.result;
+            }, false);
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        $(document).ready(function() {
+            $("#form").submit(function(event) {
+                var preview = document.querySelector('img');
+                var apiUrl = document.getElementById('apiUrl');
+                var responseArea = document.getElementById('responseArea');
+
+                if (!preview.src) {
+                    alert('No image selected');
+                    return;
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/predict",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        'image': preview.src,
+                        'predict_api_url': apiUrl.value,
+                    }),
+                    success: function(data) {
+                        $(responseArea).text(JSON.stringify(data, null, 4));
+                    },
+                    dataType: 'json'
+                });
+                event.preventDefault();
+            });
+        });
+	</script>
+</head>
+<body>
+    <h1>Text Recognizer</h1>
+    <div>
+        <h2>File Upload</h2>
+        <form id="form">
+            <p>
+                <label for="apiUrl">API URL</label>
+                <input id="apiUrl" type="text" size="80" value="https://1klwfmaohf.execute-api.us-west-2.amazonaws.com/dev/v1/predict" />
+            </p>
+            <p>
+                <label for="file">File</label>
+                <input id="file" type="file" accept="image/*" onchange="previewFile();" />
+            </p>
+            <input type="submit" value="Recognize Text">
+        </form>
+    </div>
+    <div>
+        <h2>Image Preview</h2>
+        <img height="200" alt="Image preview...">
+    </div>
+    <div>
+        <h2>API Response</h2>
+        <pre><code id="responseArea"></code></pre>
+    </div>
+</body>
+</html>

@@ -1,7 +1,35 @@
-__pycache__
-.idea
-.pytest_cache
-.vscode
+# Data
 data
+
+# Editors
+.vscode
+
+# Node
+node_modules
+
+# Python
+__pycache__
+.pytest_cache
+
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Serverless directories
 .serverless
 .requirements.zip
+.requirements

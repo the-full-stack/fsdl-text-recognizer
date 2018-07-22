@@ -18,14 +18,26 @@ def index():
     return 'Hello, world!'
 
 
-@app.route('/v1/predict', methods=['POST'])
+@app.route('/v1/predict', methods=['GET', 'POST'])
 def predict():
-    data = request.get_json()
-    if data is None:
-        return 'no json received'
-    image = util.read_b64_image(data['image'], grayscale=True)
+    image = _load_image()
     pred, conf = predictor.predict(image)
     return jsonify({'pred': str(pred), 'conf': float(conf)})
+
+
+def _load_image():
+    if request.method == 'POST':
+        data = request.get_json()
+        if data is None:
+            return 'no json received'
+        return util.read_b64_image(data['image'], grayscale=True)
+    elif request.method == 'GET':
+        image_url = request.args.get('image_url')
+        if image_url is None:
+            return 'no image_url defined in query string'
+        return util.read_image(image_url)
+    else:
+        raise ValueError('Unsupported HTTP method')
 
 
 if __name__ == '__main__':
