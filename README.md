@@ -20,17 +20,21 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
         - Realized it's nice and easy to deploy a Flask app via https://github.com/logandk/serverless-wsgi, which makes for nice dev environment
     - [x] Re-deploy prediction API using WSGI plugin, so that it's less of a delta from the Flask web app to deploying on Lambda
     - [ ] Set up CI that runs tests and evaluation
-    - [ ] Make script that pings API endpoint with many requests, in order to work on monitoring
-    - [ ] Add monitoring to the app
+    - [ ] IB Make script that pings API endpoint with many requests, in order to work on monitoring
+    - [ ] IB Add monitoring to the app
     - [ ] IB spruce up the cursive.ai UX
     - [ ] IB make re-deploying text-recognizer faster by caching docker image or something
     - [ ] IB get cursive.ai to work on custom domain
 
-
-- [ ] add line synthetic dataset
+- [ ] add synthetic line dataset (import code from all-in-one notebook)
 - [ ] train all-conv network on line synthetic dataset
 - [ ] add IAM
 - [ ] test all-conv network on IAM
+
+Running experiments
+    - [ ] write code for launching hyperparam sweep experiments
+    - [ ] write results to W&B
+
 - [ ] add paragraph synthetic dataset
 - [ ] train detection network to detect lines in the paragraph images
 - [ ] SB code to process a cell phone image of some handwritten text to get it black and white

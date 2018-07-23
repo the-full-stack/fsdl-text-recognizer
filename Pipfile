@@ -14,8 +14,10 @@ requests = "*"
 tensorflow = "*"
 
 [dev-packages]
+gpustat = "*"
 jupyterlab = "*"
 matplotlib = "*"
+nltk = "*"
 pylint = "*"
 scipy = "*"
 

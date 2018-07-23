@@ -6,7 +6,7 @@ from train.util import evaluate_model, train_model
 
 
 def train_emnist_mlp():
-    data = Emnist()
+    data = EmnistDataset()
     model = EmnistMlp()
 
     train_model(

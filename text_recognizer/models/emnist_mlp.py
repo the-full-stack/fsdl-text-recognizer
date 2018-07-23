@@ -28,7 +28,7 @@ def _create_mlp(num_classes: int,
 
 class EmnistMlp:
     def __init__(self, layer_size: int=128, dropout_amount: float=0.2):
-        data = Emnist()
+        data = EmnistDataset()
         self.mapping = data.mapping
         self.num_classes = len(self.mapping)
         self.input_size = data.input_size

@@ -75,7 +75,7 @@ def _augment_emnist_mapping(mapping):
     return {**mapping, **extra_mapping}
 
 
-class Emnist(object):
+class EmnistDataset(object):
     """
     "The EMNIST dataset is a set of handwritten character digits derived from the NIST Special Database 19
     and converted to a 28x28 pixel image format and dataset structure that directly matches the MNIST dataset."
@@ -96,7 +96,7 @@ class Emnist(object):
         self.num_classes = len(self.mapping)
         self.input_size = essentials['input_dim'][0]
 
-    @cachedproperty    
+    @cachedproperty
     def data(self):
         if not os.path.exists(PROCESSED_DATA_FILENAME):
             _download_and_process_emnist()
@@ -129,5 +129,5 @@ class Emnist(object):
 
 
 if __name__ == '__main__':
-    data = Emnist()
+    data = EmnistDataset()
     print(data)

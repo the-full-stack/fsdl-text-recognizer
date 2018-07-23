@@ -17,7 +17,7 @@ def train(args) -> None:
     import models
     import util
 
-    emnist = datasets.EMNIST()
+    emnist = datasets.EmnistDataset()
     model = models.create_fc_model(emnist.num_classes, args.fc_size)
     util.train_model(
         model=model,
