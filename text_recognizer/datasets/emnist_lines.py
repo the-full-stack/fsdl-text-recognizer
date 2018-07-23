@@ -34,6 +34,7 @@ class EmnistLinesDataset():
         self.x_test, y_test_str = create_dataset_of_images(num_test, self.samples_by_char_test, sentence_generator, overlap)
         self.y_test = convert_strings_to_categorical_labels(y_test_str, emnist.inverse_mapping)
         self.num_classes = len(emnist.inverse_mapping)
+        self.input_shape = self.x_train[0].shape
 
 
 class EmnistLinesWithOverlapDataset(EmnistLinesDataset):

@@ -48,7 +48,7 @@ def _download_and_process_emnist():
 
     print('Saving essential dataset parameters...')
     mapping = {int(k): chr(v) for k, v in data['dataset']['mapping'][0, 0]}
-    essentials = {'mapping': list(mapping.items()), 'input_dim': list(x_train.shape[1:])}
+    essentials = {'mapping': list(mapping.items()), 'input_shape': list(x_train.shape[1:])}
     with open(ESSENTIALS_FILENAME, 'w') as f:
         json.dump(essentials, f)
 
@@ -94,7 +94,7 @@ class EmnistDataset(object):
         self.mapping = _augment_emnist_mapping(dict(essentials['mapping']))
         self.inverse_mapping = {v: k for k, v in self.mapping.items()}
         self.num_classes = len(self.mapping)
-        self.input_size = essentials['input_dim'][0]
+        self.input_shape = essentials['input_shape']
 
     @cachedproperty
     def data(self):

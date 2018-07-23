@@ -1,28 +1,51 @@
+import pathlib
+from typing import Tuple
+
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, Input, MaxPooling2D, Permute, Reshape, TimeDistributed
-from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.models import Model as KerasModel
 
+from text_recognizer.models.model import Model
 from text_recognizer.datasets.emnist_lines import EmnistLinesDataset
 from text_recognizer.networks.cnn import lenet
 
 
-class LineCnn:
+DIRNAME = pathlib.Path(__file__).parents[0].resolve()
+MODEL_NAME = pathlib.Path(__file__).stem
+MODEL_WEIGHTS_FILENAME = DIRNAME / f'{MODEL_NAME}_weights.h5'
+
+
+class LineCnn(Model):
     def __init__(self):
         np.random.seed(42)
         tf.set_random_seed(42)
 
-        self.dataset = EmnistLinesDataset(num_train=10, num_test=2)
-        sample_image = self.dataset.x_train[0]
-        h, w = sample_image.shape
-        self.model = create_fixed_width_image_model(h, w, self.dataset.max_length, self.dataset.num_classes)
+        dataset = EmnistLinesDataset(num_train=10, num_test=2)
+        self.mapping = dataset.mapping
+        self.num_classes = len(self.mapping)
+        self.max_length = dataset.max_length
+        self.input_shape = dataset.input_shape
+        self.model = create_fixed_width_image_model(self.input_shape, self.max_length, self.num_classes)
+
+    def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
+        pred_raw = self.model.predict(np.expand_dims(image, 0), batch_size=1).squeeze()
+        pred = convert_pred_raw_to_string(pred_raw, self.mapping)
+        conf = np.min(np.max(pred_raw, axis=-1)) # The least confident of the predictions.
+        return pred, conf
+
+    loss = 'categorical_crossentropy'
 
 
-def create_fixed_width_image_model(image_height: int, image_width: int, max_length: int, num_classes: int) -> Model:
-    input_shape = (image_height, image_width)
-    output_shape = (num_classes, max_length)
+def convert_pred_raw_to_string(preds, mapping):
+    return ''.join(mapping[label] for label in np.argmax(preds, axis=-1).flatten()).strip()
 
-    image_input = Input(shape=input_shape)
+
+def create_fixed_width_image_model(image_shape: Tuple[int, int], max_length: int, num_classes: int) -> KerasModel:
+    image_height, image_width = image_shape
+    # output_shape = (num_classes, max_length)
+
+    image_input = Input(shape=(image_height, image_width))
 
     window_width = image_width // max_length
     image_patches = Reshape((image_height, max_length, window_width, 1))(image_input)
@@ -31,6 +54,6 @@ def create_fixed_width_image_model(image_height: int, image_width: int, max_leng
     convnet = lenet(image_height, window_width, num_classes)
     output = TimeDistributed(convnet)(image_patches_permuted)
 
-    model = Model(inputs=image_input, outputs=output)
+    model = KerasModel(inputs=image_input, outputs=output)
     model.summary()
     return model

@@ -33,12 +33,11 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 - [ ] train all-conv network on line synthetic dataset
     - july 23 0220: stopping with this task in progress in the notebook. the mappings are getting unwieldy: move the convert_preds_to_string stuff to line_cnn model
     - will probably have to convert data to tensorflow sooner rather than later -- but it's not something that *has* to be done
-
     PICK UP AT:
-    - move convert_preds_to_tring to line_cnn model
-    - get line_rnn also working (with ctc loss): 1hr
-    - get W&B going again
-    - test different cnn archs (sliding window, FCs on top, timeditributed on top instead of bottom) on the farm
+    - [ ] move convert_preds_to_string to line_cnn model
+    - [ ] get line_rnn also working (with ctc loss): 1hr
+    - [ ] get W&B going again
+    - [ ] test different cnn archs (sliding window, FCs on top, timeditributed on top instead of bottom) on the farm
         - results should be stored under model class name in experiments/ folder
 
 - [ ] add paragraph synthetic dataset
