@@ -23,7 +23,12 @@ custom:
     packRequirements: false
   pythonRequirements:
     dockerizePip: true
+  customDomain:
+    domainName: cursive.ai
+    hostedZoneId: ZY9AETNBV8YF6
+    endpointType: regional # otherwise, certificate needs to be in us-east-1
 
 plugins:
   - serverless-wsgi
   - serverless-python-requirements
+  - serverless-domain-manager

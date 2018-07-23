@@ -11,6 +11,9 @@ pipenv install
 pipenv shell
 sls wsgi serve
 # see stuff work on localhost
+
+sls plugin install -n serverless-domain-manager
+# configure domain in serverless.yml
 ```
 
 ## Testing with CURL

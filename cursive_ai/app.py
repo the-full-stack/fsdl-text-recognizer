@@ -40,5 +40,6 @@ def predict():
 
 
 def _process_image(image):
-    # TODO: implement
+    if image.shape != (28, 28):
+        image = cv2.resize(image, (28, 28))
     return image
