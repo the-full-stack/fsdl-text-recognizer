@@ -1,0 +1,28 @@
+-i https://pypi.org/simple
+absl-py==0.2.2
+astor==0.7.1; python_version != '3.0.*'
+atomicwrites==1.1.5
+attrs==18.1.0
+boltons==18.0.0
+click==6.7
+flask==1.0.2
+gast==0.2.0
+grpcio==1.13.0
+h5py==2.8.0
+itsdangerous==0.24
+jinja2==2.10
+markdown==2.6.11
+markupsafe==1.0
+more-itertools==4.2.0
+numpy==1.14.5
+opencv-python-headless==3.4.1.15
+pluggy==0.6.0; python_version != '3.0.*'
+protobuf==3.6.0
+py==1.5.4; python_version != '3.0.*'
+pytest==3.6.3
+six==1.11.0
+tensorboard==1.9.0; python_version != '3.0.*'
+tensorflow==1.9.0
+termcolor==1.1.0
+werkzeug==0.14.1
+wheel==0.31.1; python_version != '3.0.*'

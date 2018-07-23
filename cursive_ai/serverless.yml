@@ -7,6 +7,8 @@ provider:
   runtime: python3.6
   stage: dev
   region: us-west-2
+  memory: 1024
+  timeout: 30
 
 functions:
   api:
@@ -18,6 +20,7 @@ functions:
 custom:
   wsgi:
     app: app.app
+    packRequirements: false
   pythonRequirements:
     dockerizePip: true
 

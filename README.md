@@ -5,7 +5,6 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 ## Tasks
 
 - End-to-end on just MLP
-    - [ ] Set up CI that runs tests and evaluation
     - [x] Make a Flask JSON API (input is image URL)
     - [x] Modify Emnist dataset class to store mapping separately, in text_recognizer/datasets
     - [x] Get web server to run in a Docker container
@@ -16,15 +15,26 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
                 - serverless makes it really easy: https://serverless.com/framework/docs/providers/aws/events/apigateway/#simple-http-endpoint
                     - https://medium.com/tooso/serving-tensorflow-predictions-with-python-and-aws-lambda-facb4ab87ddd
         - July 21 2300: spent whole day but figured out deployment to lambda
-        - [ ] add a test command for the lambda function
-    - [ ] Make cursive.ai a Flask web site where user can upload image and then direct it to an API URL passed a query string
+    - [x] Make cursive.ai a Flask web site where user can upload image and then direct it to an API URL passed a query string
         - July 21 2300: decided that this should also be a serverless app
         - Realized it's nice and easy to deploy a Flask app via https://github.com/logandk/serverless-wsgi, which makes for nice dev environment
-    - Make Gradescope autograder
-        - [ ] do it the setup.sh way
-        - [ ] get ibrahim's help in being able to build my own docker image
-- [ ] code to process a cell phone image of some handwritten text to get it black and white
+    - [ ] Re-deploy prediction API using WSGI plugin, so that it's less of a delta from the Flask web app to deploying on Lambda
+    - [ ] Set up CI that runs tests and evaluation
+    - [ ] Make script that pings API endpoint with many requests, in order to work on monitoring
+    - [ ] Add monitoring to the app
 
+- [ ] add line synthetic dataset
+- [ ] train all-conv network on line synthetic dataset
+- [ ] add IAM
+- [ ] test all-conv network on IAM
+- [ ] add paragraph synthetic dataset
+- [ ] train detection network to detect lines in the paragraph images
+- [ ] SB code to process a cell phone image of some handwritten text to get it black and white
+- [ ] write out instructions for composing a test set of paragraph images
+- [ ] IB make web app for annotating paragraph images with line locations
+- [ ] IB Make Gradescope autograder
+    - [ ] do it the setup.sh way
+    - [ ] get ibrahim's help in being able to build my own docker image
 
 ## Quick Start
 

@@ -10,6 +10,7 @@ h5py = "*"
 numpy = "*"
 opencv-python-headless = "*"
 pytest = "*"
+requests = "*"
 tensorflow = "*"
 
 [dev-packages]

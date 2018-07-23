@@ -16,13 +16,9 @@ sls wsgi serve
 ## Testing with CURL
 
 ```sh
-curl -X POST http://localhost:5000/predict -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i 0.png)'" }'
+curl -X POST https://r0bhgvb5y7.execute-api.us-west-2.amazonaws.com/dev/predict -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i ../text_recognizer/tests/support/emnist/0.png)'", "predict_api_url": "https://1klwfmaohf.execute-api.us-west-2.amazonaws.com/dev/v1/predict" }'
+# {"api_response":{"conf":1.0,"pred":"0"},"time_taken":0.08494734764099121}
 ```
-
-## File Upload
-
-Interesting:
-- https://gist.github.com/kylehounslow/767fb72fde2ebdd010a0bf4242371594
 
 ## HTML
 
