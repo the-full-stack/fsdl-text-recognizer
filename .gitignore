@@ -10,6 +10,7 @@ node_modules
 # Python
 __pycache__
 .pytest_cache
+.ipynb_checkpoints
 
 # Distribution / packaging
 .Python
@@ -33,3 +34,5 @@ var/
 .serverless
 .requirements.zip
 .requirements
+
+# Misc

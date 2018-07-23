@@ -3,27 +3,14 @@ from typing import Tuple
 
 import numpy as np
 import tensorflow
-from tensorflow.python.keras.models import load_model, Model, Sequential
-from tensorflow.python.keras.layers import Activation, Dense, Dropout
+from tensorflow.keras.models import load_model
 
-from text_recognizer.datasets.emnist import Emnist
+from text_recognizer.datasets.emnist import EmnistDataset
+from text_recognizer.networks.mlp import mlp
 
 
 DIRNAME = pathlib.Path(__file__).parents[0].resolve()
 MODEL_WEIGHTS_FILENAME = DIRNAME / 'emnist_mlp_weights.h5'
-
-
-def _create_mlp(num_classes: int,
-                input_size: int,
-                layer_size: int=128,
-                dropout_amount: float=0.2) -> Model:
-    model = Sequential()
-    model.add(Dense(layer_size, activation='relu', input_shape=(input_size,)))
-    model.add(Dropout(dropout_amount))
-    model.add(Dense(layer_size, activation='relu'))
-    model.add(Dropout(dropout_amount))
-    model.add(Dense(num_classes, activation='softmax'))
-    return model
 
 
 class EmnistMlp:
@@ -36,7 +23,7 @@ class EmnistMlp:
         np.random.seed(42)
         tensorflow.set_random_seed(42)
 
-        self.model = _create_mlp(self.num_classes, self.input_size, layer_size, dropout_amount)
+        self.model = mlp(self.num_classes, self.input_size, layer_size, dropout_amount)
         self.model.summary()
 
     def load_weights(self):

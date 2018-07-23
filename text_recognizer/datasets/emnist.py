@@ -115,8 +115,16 @@ class EmnistDataset(object):
         return to_categorical(self.data['y_train'], self.num_classes)
 
     @cachedproperty
+    def y_train_int(self):
+        return self.data['y_train']
+
+    @cachedproperty
     def y_test(self):
         return to_categorical(self.data['y_test'], self.num_classes)
+
+    @cachedproperty
+    def y_test_int(self):
+        return self.data['y_test']
 
     def __repr__(self):
         return (

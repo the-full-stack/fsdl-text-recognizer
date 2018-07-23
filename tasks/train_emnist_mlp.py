@@ -1,6 +1,6 @@
 import numpy as np
 
-from text_recognizer.datasets.emnist import Emnist
+from text_recognizer.datasets.emnist import EmnistDataset
 from text_recognizer.models.emnist_mlp import EmnistMlp
 from train.util import evaluate_model, train_model
 

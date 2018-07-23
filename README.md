@@ -26,23 +26,33 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
     - [ ] IB make re-deploying text-recognizer faster by caching docker image or something
     - [ ] IB get cursive.ai to work on custom domain
 
-- [ ] add synthetic line dataset (import code from all-in-one notebook)
+- [x] add synthetic line dataset (import code from all-in-one notebook)
+    - july 22 2330: reading about tf.estimator and tf.dataset stuff. tf has really developed, this is nice: https://www.tensorflow.org/tutorials/
+    - july 23 0200: ported most of the code, should be going to sleep now
+    - [ ] add self-caching to speed up loads
 - [ ] train all-conv network on line synthetic dataset
-- [ ] add IAM
-- [ ] test all-conv network on IAM
+    - july 23 0220: stopping with this task in progress in the notebook. the mappings are getting unwieldy: move the convert_preds_to_string stuff to line_cnn model
+    - will probably have to convert data to tensorflow sooner rather than later -- but it's not something that *has* to be done
 
-Running experiments
-    - [ ] write code for launching hyperparam sweep experiments
-    - [ ] write results to W&B
+    PICK UP AT:
+    - move convert_preds_to_tring to line_cnn model
+    - get line_rnn also working (with ctc loss): 1hr
+    - get W&B going again
+    - test different cnn archs (sliding window, FCs on top, timeditributed on top instead of bottom) on the farm
+        - results should be stored under model class name in experiments/ folder
 
 - [ ] add paragraph synthetic dataset
 - [ ] train detection network to detect lines in the paragraph images
+- [ ] SB write code for launching hyperparam sweep experiments
 - [ ] SB code to process a cell phone image of some handwritten text to get it black and white
 - [ ] write out instructions for composing a test set of paragraph images
 - [ ] IB make web app for annotating paragraph images with line locations
 - [ ] IB Make Gradescope autograder
     - [ ] do it the setup.sh way
     - [ ] get ibrahim's help in being able to build my own docker image
+- [ ] add IAM test set and test all-conv network on it
+
+
 
 ## Quick Start
 

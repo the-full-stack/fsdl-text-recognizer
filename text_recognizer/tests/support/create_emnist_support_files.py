@@ -2,7 +2,7 @@ import pathlib
 
 import numpy as np
 
-from text_recognizer.datasets.emnist import Emnist
+from text_recognizer.datasets.emnist import EmnistDataset
 import text_recognizer.util as util
 
 
