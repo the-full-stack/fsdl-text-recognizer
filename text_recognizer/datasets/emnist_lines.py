@@ -1,46 +1,70 @@
-# Reading about tf.data stuff, some interesting considerations
-# - https://stackoverflow.com/questions/47086599/parallelising-tf-data-dataset-from-generator
-
 from collections import defaultdict
 import os
 import pathlib
 from typing import Tuple
 
+import h5py
 import matplotlib.pyplot as plt
 import nltk
 import numpy as np
 from tensorflow.keras.utils import to_categorical
 
-from .emnist import EmnistDataset
-from .sentences import SentenceGenerator
+from text_recognizer.datasets.emnist import EmnistDataset
+from text_recognizer.datasets.sentences import SentenceGenerator
 
 
-DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data'
+DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data' / 'processed' / 'emnist_lines'
+ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_lines_essentials.json'
 
 
 class EmnistLinesDataset():
     def __init__(self, max_length: int=32, num_train: int=10000, num_test: int=1000):
-        # TODO: add self-caching to load from pickle
-        np.random.seed(42)
-        emnist = EmnistDataset()
-        self.mapping = emnist.mapping
-        self.samples_by_char_train = samples_by_char(emnist.x_train, emnist.y_train_int, emnist.mapping)
-        self.samples_by_char_test = samples_by_char(emnist.x_test, emnist.y_test_int, emnist.mapping)
+        self.emnist = EmnistDataset()
+        self.mapping = self.emnist.mapping
         self.max_length = max_length
-        sentence_generator = SentenceGenerator(self.max_length)
-        overlap = 0
-        self.x_train, y_train_str = create_dataset_of_images(num_train, self.samples_by_char_train, sentence_generator, overlap)
-        self.y_train = convert_strings_to_categorical_labels(y_train_str, emnist.inverse_mapping)
-        self.x_test, y_test_str = create_dataset_of_images(num_test, self.samples_by_char_test, sentence_generator, overlap)
-        self.y_test = convert_strings_to_categorical_labels(y_test_str, emnist.inverse_mapping)
-        self.num_classes = len(emnist.inverse_mapping)
-        self.input_shape = self.x_train[0].shape
+        self.num_classes = len(self.mapping)
+        emnist_shape = (28, 28)
+        self.input_shape = (emnist_shape[0], emnist_shape[1] * self.max_length)
+        self.num_train = num_train
+        self.num_test = num_test
+
+    def load_or_generate_data(self):
+        np.random.seed(42)
+
+        cached_filename = DATA_DIRNAME / f'ml_{self.max_length}_ntr{self.num_train}_nte{self.num_test}.h5'
+        if cached_filename.exists():
+            print('EmnistLinesDataset loading data from h5...')
+            with h5py.File(cached_filename) as f:
+                self.x_train = f['x_train'][:]
+                self.y_train = f['y_train'][:]
+                self.x_test = f['x_test'][:]
+                self.y_test = f['y_test'][:]
+        else:
+            print('EmnistLinesDataset generating data...')
+            sentence_generator = SentenceGenerator(self.max_length)
+
+            emnist = self.emnist
+            samples_by_char_train = samples_by_char(emnist.x_train, emnist.y_train_int, emnist.mapping)
+            samples_by_char_test = samples_by_char(emnist.x_test, emnist.y_test_int, emnist.mapping)
+
+            overlap = 0
+            self.x_train, y_train_str = create_dataset_of_images(self.num_train, samples_by_char_train, sentence_generator, overlap)
+            self.y_train = convert_strings_to_categorical_labels(y_train_str, emnist.inverse_mapping)
+            self.x_test, y_test_str = create_dataset_of_images(self.num_test, samples_by_char_test, sentence_generator, overlap)
+            self.y_test = convert_strings_to_categorical_labels(y_test_str, emnist.inverse_mapping)
+
+            DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
+            with h5py.File(cached_filename, 'w') as f:
+                f.create_dataset('x_train', data=self.x_train, compression='lzf')
+                f.create_dataset('y_train', data=self.y_train, compression='lzf')
+                f.create_dataset('x_test', data=self.x_test, compression='lzf')
+                f.create_dataset('y_test', data=self.y_test, compression='lzf')
 
 
 class EmnistLinesWithOverlapDataset(EmnistLinesDataset):
-    def __init__(self, max_length: int=32, overlap_range: Tuple[float, float]=(0,0)):
+    def __init__(self, max_length: int=32):
         super().__init__(max_length)
-        self.overlap_range = overlap_range
+        self.overlap_range = [0, 0.4]
 
 
 def samples_by_char(samples, labels, mapping):

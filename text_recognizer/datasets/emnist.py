@@ -89,7 +89,7 @@ class EmnistDataset(object):
     def __init__(self):
         if not os.path.exists(ESSENTIALS_FILENAME):
             _download_and_process_emnist()
-        with open(ESSENTIALS_FILENAME, 'rb') as f:
+        with open(ESSENTIALS_FILENAME) as f:
             essentials = json.load(f)
         self.mapping = _augment_emnist_mapping(dict(essentials['mapping']))
         self.inverse_mapping = {v: k for k, v in self.mapping.items()}

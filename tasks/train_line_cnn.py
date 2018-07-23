@@ -1,13 +1,16 @@
 import numpy as np
 
 from text_recognizer.datasets.emnist_lines import EmnistLinesDataset
-from text_recognizer.models.line_cnn import LineCnn
+from text_recognizer.models.line_cnn import LineCnnFixedWidth, LineCnnSlidingWindow
 from text_recognizer.train.util import evaluate_model, train_model
 
 
 def train():
-    dataset = EmnistLinesDataset(num_train=100, num_test=10)
-    model = LineCnn()
+    dataset = EmnistLinesDataset()
+    dataset.load_or_generate_data()
+
+    model = LineCnnFixedWidth()
+    # model = LineCnnSlidingWindow()
 
     train_model(
         model=model.model,
