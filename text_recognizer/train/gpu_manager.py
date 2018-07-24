@@ -6,7 +6,7 @@ import numpy as np
 from redlock import Redlock
 
 
-GPU_LOCK_TIMEOUT = 10000 # ms
+GPU_LOCK_TIMEOUT = 5000 # ms
 
 
 class GPUManager(object):

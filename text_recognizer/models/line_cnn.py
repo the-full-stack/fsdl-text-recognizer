@@ -8,43 +8,17 @@ from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, Input, MaxP
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import Model as KerasModel
 
-from text_recognizer.models.model import Model
-from text_recognizer.datasets.emnist_lines import EmnistLinesDataset
+from text_recognizer.models.line_model import LineModel
 from text_recognizer.networks.cnn import lenet
 
 
-DIRNAME = pathlib.Path(__file__).parents[0].resolve()
-MODEL_NAME = pathlib.Path(__file__).stem
-MODEL_WEIGHTS_FILENAME = DIRNAME / f'{MODEL_NAME}_weights.h5'
-
-
-class LineCnn(Model):
-    def __init__(self):
-        np.random.seed(42)
-        tf.set_random_seed(42)
-
-        dataset = EmnistLinesDataset()
-        self.mapping = dataset.mapping
-        self.num_classes = len(self.mapping)
-        self.max_length = dataset.max_length
-        self.input_shape = dataset.input_shape
-
-    def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
-        pred_raw = self.model.predict(np.expand_dims(image, 0), batch_size=1).squeeze()
-        pred = convert_pred_raw_to_string(pred_raw, self.mapping)
-        conf = np.min(np.max(pred_raw, axis=-1)) # The least confident of the predictions.
-        return pred, conf
-
-    loss = 'categorical_crossentropy'
-
-
-class LineCnnFixedWidth(LineCnn):
+class LineCnnFixedWidth(LineModel):
     @cachedproperty
     def model(self):
         return create_fixed_width_image_model(self.input_shape, self.max_length, self.num_classes)
 
 
-class LineCnnSlidingWindow(LineCnn):
+class LineCnnSlidingWindow(LineModel):
     def __init__(self, window_fraction: float=0.5, window_stride: float=0.5):
         super().__init__()
         self.window_fraction = window_fraction
@@ -55,7 +29,7 @@ class LineCnnSlidingWindow(LineCnn):
         return create_sliding_window_image_model(self.input_shape, self.max_length, self.num_classes, self.window_fraction, self.window_stride)
 
 
-class LineCnnAllConv(LineCnn):
+class LineCnnAllConv(LineModel):
     def __init__(self, window_fraction: float=0.5, window_stride: float=0.5):
         super().__init__()
         self.window_fraction = window_fraction
@@ -64,10 +38,6 @@ class LineCnnAllConv(LineCnn):
     @cachedproperty
     def model(self):
         return create_all_conv_model(self.input_shape, self.max_length, self.num_classes, self.window_fraction, self.window_stride)
-
-
-def convert_pred_raw_to_string(preds, mapping):
-    return ''.join(mapping[label] for label in np.argmax(preds, axis=-1).flatten()).strip()
 
 
 def create_fixed_width_image_model(image_shape: Tuple[int, int], max_length: int, num_classes: int) -> KerasModel:

@@ -1,0 +1,28 @@
+[
+    {
+        "dataset": "EmnistLinesDataset",
+        "dataset_args": {
+            "max_length": 32,
+            "max_overlap": 0.4,
+            "num_train": 10000,
+            "num_test": 1000
+        },
+        "model": "LineCnnAllConv",
+        "model_args": {
+            "window_fraction": 1,
+            "window_stride": 0.5
+        },
+        "train_args": {
+            "batch_size": 64,
+            "epochs": 3
+        }
+    },
+    {
+        "dataset": "EmnistLinesDataset",
+        "model": "LineCnnSlidingWindow"
+    },
+    {
+        "dataset": "EmnistDataset",
+        "model": "EmnistMlp"
+    }
+]
