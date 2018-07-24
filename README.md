@@ -49,20 +49,24 @@ july 23 1720: figured out FC vs 1x1 conv, need to run it on the farm though
 
 - [x] make EmnistDataset give you images instead of vectors (and use HDF5)
 
-- [ ] add paragraph synthetic dataset: 2h
-- [ ] train detection network to detect lines in the paragraph images: 3h
+July 23 2030: currently running sliding window experiments with CNNs:
+    - going to show that sliding window can replicate the result of fixed-width approach
+    - then going to make sliding window smaller, and add conv layer to unite them
 
-- [ ] SB write code for launching hyperparam sweep experiments
+- [ ] write code for launching hyperparam sweep experiments
 - [ ] SB code to process a cell phone image of some handwritten text to get it black and white
+- [ ] SB code write code to break up a black-and-white image of text into lines
 
-- [ ] write out instructions for composing a test set of paragraph images
-
-- [ ] IB make web app for annotating paragraph images with line locations
 - [ ] IB Make Gradescope autograder
     - [ ] do it the setup.sh way
     - [ ] get ibrahim's help in being able to build my own docker image
-- [ ] add IAM test set and test all-conv network on it: 1hr
 
+- [ ] SB add IAM test set and test all-conv network on it: 1hr
+
+- [ ] write out instructions for composing a test set of paragraph images
+- [ ] add paragraph synthetic dataset: 2h
+- [ ] train detection network to detect lines in the paragraph images: 3h
+- [ ] IB make web app for annotating paragraph images with line locations
 
 
 ## Quick Start
