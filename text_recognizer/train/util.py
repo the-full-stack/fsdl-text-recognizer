@@ -5,9 +5,9 @@ from typing import Callable, Optional, Union, Tuple
 from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import numpy as np
-from tensorflow.python.keras.callbacks import Callback, EarlyStopping, TensorBoard
-from tensorflow.python.keras.models import Model
-from tensorflow.python.keras.optimizers import SGD, RMSprop
+from tensorflow.keras.callbacks import Callback, EarlyStopping, TensorBoard
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import RMSprop
 # import wandb
 # from wandb.keras import WandbCallback
 

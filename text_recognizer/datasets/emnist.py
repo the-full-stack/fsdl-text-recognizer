@@ -11,7 +11,7 @@ import zipfile
 from boltons.cacheutils import cachedproperty
 import h5py
 import numpy as np
-from tensorflow.python.keras.utils import to_categorical
+from tensorflow.keras.utils import to_categorical
 
 
 RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
@@ -80,7 +80,7 @@ def _augment_emnist_mapping(mapping):
     return {**mapping, **extra_mapping}
 
 
-class EmnistDataset(object):
+class EmnistDataset():
     """
     "The EMNIST dataset is a set of handwritten character digits derived from the NIST Special Database 19
     and converted to a 28x28 pixel image format and dataset structure that directly matches the MNIST dataset."
@@ -100,6 +100,9 @@ class EmnistDataset(object):
         self.inverse_mapping = {v: k for k, v in self.mapping.items()}
         self.num_classes = len(self.mapping)
         self.input_shape = essentials['input_shape']
+
+    def load_or_generate_data(self):
+        pass  # Just here for the interface
 
     @cachedproperty
     def data(self):

@@ -20,6 +20,7 @@ jupyterlab = "*"
 matplotlib = "*"
 nltk = "*"
 pylint = "*"
+redlock-py = "*"  # Note that there is a competing package "redlock"
 scipy = "*"
 
 [requires]
