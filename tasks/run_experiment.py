@@ -4,6 +4,8 @@ import json
 import importlib
 import os
 
+import wandb
+
 from text_recognizer.train.gpu_manager import GPUManager
 import text_recognizer.train.util as util
 
@@ -16,8 +18,8 @@ DEFAULT_TRAIN_ARGS = {
 
 def run_experiment(filename, index, gpu_ind):
     with open(filename) as f:
-        experiment_configs = json.load(f)
-    experiment_config = experiment_configs[index]
+        experiments_config = json.load(f)
+    experiment_config = experiments_config['experiments'][index]
     print(f'Running experiment with config {experiment_config} on GPU {gpu_ind}')
 
     datasets_module = importlib.import_module('text_recognizer.datasets')
@@ -31,20 +33,23 @@ def run_experiment(filename, index, gpu_ind):
     model = model_class_(**experiment_config.get('model_args', {}))
     print(model)
 
-    train_args = {**DEFAULT_TRAIN_ARGS, **experiment_config.get('train_args', {})}
+    experiment_config['train_args'] = {**DEFAULT_TRAIN_ARGS, **experiment_config.get('train_args', {})}
+    experiment_config['experiment_group'] = experiments_config['experiment_group']
+
+    wandb.init()
+    wandb.config.update(experiment_config)
 
     util.train_model(
         model=model.model,
         x_train=dataset.x_train,
         y_train=dataset.y_train,
         loss=model.loss,
-        epochs=train_args['epochs'],
-        batch_size=train_args['batch_size'],
+        epochs=experiment_config['train_args']['epochs'],
+        batch_size=experiment_config['train_args']['batch_size'],
         gpu_ind=args.gpu
     )
-    # TODO: save model to experiment location
     score = util.evaluate_model(model.model, dataset.x_test, dataset.y_test)
-    # wandb.log({'test_loss': score[0], 'test_accuracy': score[1]})
+    wandb.log({'test_loss': score[0], 'test_accuracy': score[1]})
 
 
 if __name__ == '__main__':

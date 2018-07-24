@@ -5,8 +5,8 @@ import sys
 
 def run_experiments(filename):
     with open(filename) as f:
-        experiment_configs = json.load(f)
-    num_experiments = len(experiment_configs)
+        experiments_config = json.load(f)
+    num_experiments = len(experiments_config['experiments'])
     for ind in range(num_experiments):
         print(f'pipenv run python tasks/run_experiment.py --gpu=-1 {filename} {ind}')
 

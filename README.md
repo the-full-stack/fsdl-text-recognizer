@@ -100,6 +100,16 @@ docker run -p 8000:8000 text_recognizer
 pipenv run tasks/deploy_web_server_to_aws.py
 ```
 
+## W&B
+
+```
+pipenv run wandb login
+
+pipenv run wandb init
+# set up new project
+```
+
+
 ## Project Structure
 
 ```
@@ -170,3 +180,14 @@ text_recognizer/
 
 Pipenv is necessary for being exact about the dependencies.
 TODO: explain that want to stay up to date with packages, but only update them intentionally, not randomly. Explain sync vs install.
+
+```
+# Workhorse command when adding another dependency
+pipenv install --dev --keep-outdated
+
+# Periodically, update all versions
+pipenv install --dev
+
+# For deployment, no need to install dev packages
+pipenv install
+```

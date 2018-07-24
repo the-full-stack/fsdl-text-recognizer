@@ -22,6 +22,7 @@ nltk = "*"
 pylint = "*"
 redlock-py = "*"  # Note that there is a competing package "redlock"
 scipy = "*"
+wandb = "*"
 
 [requires]
 python_version = "3.6"

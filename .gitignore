@@ -36,3 +36,4 @@ var/
 .requirements
 
 # Misc
+wandb-debug.log

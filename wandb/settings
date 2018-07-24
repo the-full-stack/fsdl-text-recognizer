@@ -1,0 +1,4 @@
+[default]
+entity: sergeyk
+project: fsdl-text-recognizer
+base_url: https://api.wandb.ai
