@@ -61,12 +61,6 @@ class EmnistLinesDataset():
                 f.create_dataset('y_test', data=self.y_test, compression='lzf')
 
 
-class EmnistLinesWithOverlapDataset(EmnistLinesDataset):
-    def __init__(self, max_length: int=32):
-        super().__init__(max_length)
-        self.overlap_range = [0, 0.4]
-
-
 def samples_by_char(samples, labels, mapping):
     samples_by_char = defaultdict(list)
     for sample, label in zip(samples, labels.flatten()):

@@ -39,6 +39,14 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
     - [ ] test different cnn archs (sliding window, FCs on top, timeditributed on top instead of bottom) on the farm
         - results should be stored under model class name in experiments/ folder: 2h
 
+july 23 1230: finished up basic CNN and caching EmnistLinesDataset
+NEXT UP:
+- sliding window CNN (just port what I had in notebook)
+- overlap parameter is a single number that sets max overlap, with uniform distribution up to it
+- implement sliding window RNN
+
+july 23 1720: figured out FC vs 1x1 conv, need to run it on the farm though
+
 - [ ] add paragraph synthetic dataset: 2h
 - [ ] train detection network to detect lines in the paragraph images: 3h
 
