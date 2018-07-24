@@ -1,3 +1,6 @@
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = '0'
+
 import numpy as np
 
 from text_recognizer.datasets.emnist_lines import EmnistLinesDataset

@@ -33,7 +33,7 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 - [ ] train all-conv network on line synthetic dataset
     - will probably have to convert data to tensorflow sooner rather than later -- but it's not something that *has* to be done
     - [x] move convert_preds_to_string to line_cnn model
-    - [ ] get line_rnn also working (with ctc loss): 1hr
+    - [ ] SB get line_rnn also working (with ctc loss): 2hr
     - [ ] get experiment-running framework going: 1hr
     - [ ] get W&B going again: 30min
     - [ ] test different cnn archs (sliding window, FCs on top, timeditributed on top instead of bottom) on the farm
@@ -42,10 +42,12 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 july 23 1230: finished up basic CNN and caching EmnistLinesDataset
 NEXT UP:
 - sliding window CNN (just port what I had in notebook)
-- overlap parameter is a single number that sets max overlap, with uniform distribution up to it
+- [x] overlap parameter is a single number that sets max overlap, with uniform distribution up to it
 - implement sliding window RNN
 
 july 23 1720: figured out FC vs 1x1 conv, need to run it on the farm though
+
+- [x] make EmnistDataset give you images instead of vectors (and use HDF5)
 
 - [ ] add paragraph synthetic dataset: 2h
 - [ ] train detection network to detect lines in the paragraph images: 3h

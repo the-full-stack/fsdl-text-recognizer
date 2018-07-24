@@ -9,6 +9,7 @@ import urllib.request
 import zipfile
 
 from boltons.cacheutils import cachedproperty
+import h5py
 import numpy as np
 from tensorflow.python.keras.utils import to_categorical
 
@@ -18,7 +19,7 @@ RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
 DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data'
 RAW_DATA_DIRNAME = DATA_DIRNAME / 'raw' / 'emnist'
 PROCESSED_DATA_DIRNAME = DATA_DIRNAME / 'processed' / 'emnist'
-PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'byclass.npz'
+PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'byclass.h5'
 ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_essentials.json'
 
 
@@ -39,12 +40,16 @@ def _download_and_process_emnist():
     zip_file.extract('matlab/emnist-byclass.mat', )
     data = scipy.io.loadmat('matlab/emnist-byclass.mat')
 
-    print('Saving in NPZ format...')
-    x_train = data['dataset']['train'][0, 0]['images'][0, 0]
+    print('Saving to HDF5...')
+    x_train = data['dataset']['train'][0, 0]['images'][0, 0].reshape(-1, 28, 28).swapaxes(1, 2)
     y_train = data['dataset']['train'][0, 0]['labels'][0, 0]
-    x_test = data['dataset']['test'][0, 0]['images'][0, 0]
+    x_test = data['dataset']['test'][0, 0]['images'][0, 0].reshape(-1, 28, 28).swapaxes(1, 2)
     y_test = data['dataset']['test'][0, 0]['labels'][0, 0]
-    np.savez(PROCESSED_DATA_FILENAME, x_train=x_train, y_train=y_train, x_test=x_test, y_test=y_test)
+    with h5py.File(PROCESSED_DATA_FILENAME, 'w') as f:
+        f.create_dataset('x_train', data=x_train, compression='lzf')
+        f.create_dataset('y_train', data=y_train, compression='lzf')
+        f.create_dataset('x_test', data=x_test, compression='lzf')
+        f.create_dataset('y_test', data=y_test, compression='lzf')
 
     print('Saving essential dataset parameters...')
     mapping = {int(k): chr(v) for k, v in data['dataset']['mapping'][0, 0]}
@@ -100,7 +105,17 @@ class EmnistDataset(object):
     def data(self):
         if not os.path.exists(PROCESSED_DATA_FILENAME):
             _download_and_process_emnist()
-        return np.load(PROCESSED_DATA_FILENAME)
+        with h5py.File(PROCESSED_DATA_FILENAME) as f:
+            x_train = f['x_train'][:]
+            y_train = f['y_train'][:]
+            x_test = f['x_test'][:]
+            y_test = f['y_test'][:]
+        return {
+            'x_train': x_train,
+            'y_train': y_train,
+            'x_test': x_test,
+            'y_test': y_test
+        }
 
     @cachedproperty
     def x_train(self):
@@ -131,6 +146,7 @@ class EmnistDataset(object):
             'EMNIST Dataset\n'
             f'Num classes: {self.num_classes}\n'
             f'Mapping: {self.mapping}\n'
+            f'Input shape: {self.input_shape}\n'
             f'Train: {self.x_train.shape} {self.y_train.shape}\n'
             f'Test: {self.x_test.shape} {self.y_test.shape}\n'
         )

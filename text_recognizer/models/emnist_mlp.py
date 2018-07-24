@@ -23,7 +23,7 @@ class EmnistMlp(Model):
         self.model.summary()
 
     def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
-        pred_raw = self.model.predict(image.reshape(1, -1), batch_size=1).flatten()
+        pred_raw = self.model.predict(np.expand_dims(image, 0), batch_size=1).flatten()
         ind = np.argmax(pred_raw)
         conf = pred_raw[ind]
         pred = self.mapping[ind]
