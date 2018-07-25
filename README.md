@@ -49,6 +49,8 @@ July 24 0120 Thinking about this order now:
 July 24 0230
     Got a nice experimental framework coded up and working on the farm!
     PICK UP AT: sync results to W&B. Then implement LineRNN
+July 24 1345
+- syncing results to W&B nicely, now going to implement LineRNN and then work on the convnet lecture
 
 ## Tasks
 
