@@ -5,11 +5,12 @@ from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import numpy as np
 from tensorflow.keras.callbacks import EarlyStopping, TensorBoard
-from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import RMSprop
 import wandb
 from wandb.keras import WandbCallback
 
+from text_recognizer.datasets.base import Dataset
+from text_recognizer.models.base import Model
 from text_recognizer.train.gpu_util_sampler import GPUUtilizationSampler
 
 
@@ -18,17 +19,7 @@ TENSORBOARD = False
 GPU_UTIL_SAMPLER = False
 
 
-def train_model(
-        model: Model,
-        x_train: np.ndarray,
-        y_train: np.ndarray,
-        epochs: int,
-        batch_size: int,
-        loss: Union[str, Callable],
-        gpu_ind: Optional[int]=None,
-        use_wandb=False):
-    model.compile(loss=loss, optimizer=RMSprop(), metrics=['accuracy'])
-
+def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gpu_ind: Optional[int]=None, use_wandb=False) -> Model:
     callbacks = []
 
     if EARLY_STOPPING:
@@ -48,23 +39,17 @@ def train_model(
         callbacks.append(wandb)
 
     t = time()
-    history = model.fit(x_train,
-                        y_train,
-                        batch_size=batch_size,
-                        epochs=epochs,
-                        validation_split=0.25,
-                        callbacks=callbacks,
-                        verbose=1)
+    history = model.fit(dataset, batch_size, epochs, callbacks)
     print('Training took {:2f} s'.format(time() - t))
 
     if GPU_UTIL_SAMPLER:
         gpu_utilizations = gpu_utilization.samples
         print(f'GPU utilization: {round(np.mean(gpu_utilizations), 2)} +- {round(np.std(gpu_utilizations), 2)}')
 
-    return history
+    return model
 
 
-def evaluate_model(model: Model, x: np.ndarray, y: np.ndarray) -> Tuple[float, float]:
-    score = model.evaluate(x, y, verbose=1)
-    print('Test loss/accuracy:', score[0], score[1])
-    return score
+def evaluate_model(model: Model, dataset: Dataset) -> float:
+    metric = model.evaluate(dataset.x_test, dataset.y_train)
+    print('Test metric:', metric)
+    return metric

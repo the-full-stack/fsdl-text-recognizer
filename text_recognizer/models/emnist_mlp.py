@@ -5,7 +5,7 @@ import numpy as np
 import tensorflow
 from tensorflow.keras.models import load_model
 
-from text_recognizer.models.model import Model
+from text_recognizer.models.base import Model
 from text_recognizer.datasets.emnist import EmnistDataset
 from text_recognizer.networks.mlp import mlp
 

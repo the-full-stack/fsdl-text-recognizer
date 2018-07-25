@@ -7,7 +7,7 @@ import os
 import wandb
 
 from text_recognizer.train.gpu_manager import GPUManager
-import text_recognizer.train.util as util
+from text_recognizer.train.util import train_model, eva1uate_model
 
 
 DEFAULT_TRAIN_ARGS = {
@@ -35,21 +35,17 @@ def run_experiment(filename, index, gpu_ind):
 
     experiment_config['train_args'] = {**DEFAULT_TRAIN_ARGS, **experiment_config.get('train_args', {})}
     experiment_config['experiment_group'] = experiments_config['experiment_group']
+    experiment_config['gpu_ind'] = gpu_ind
 
     wandb.init()
     wandb.config.update(experiment_config)
 
-    util.train_model(
-        model=model.model,
-        x_train=dataset.x_train,
-        y_train=dataset.y_train,
-        loss=model.loss,
-        epochs=experiment_config['train_args']['epochs'],
-        batch_size=experiment_config['train_args']['batch_size'],
-        gpu_ind=args.gpu
-    )
-    score = util.evaluate_model(model.model, dataset.x_test, dataset.y_test)
-    wandb.log({'test_loss': score[0], 'test_accuracy': score[1]})
+    train_model(model,
+                dataset,
+                epochs=experiment_config['train_args']['epochs'],
+                batch_size=experiment_config['train_args']['batch_size'])
+    score = evaluate_model(model, dataset)
+    wandb.log({'test_metric': score[0]})
 
 
 if __name__ == '__main__':

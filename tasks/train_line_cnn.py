@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 
@@ -11,22 +13,11 @@ from text_recognizer.train.util import evaluate_model, train_model
 def train():
     dataset = EmnistLinesDataset()
     dataset.load_or_generate_data()
-
     model = LineCnnFixedWidth()
     # model = LineCnnSlidingWindow()
-
-    train_model(
-        model=model.model,
-        x_train=dataset.x_train,
-        y_train=dataset.y_train,
-        loss=model.loss,
-        epochs=3,
-        batch_size=128
-    )
+    train_model(model, dataset, epochs=2, batch_size=32)
     model.save_weights()
-
-    evaluate_model(model.model, dataset.x_test, dataset.y_test)
-
+    evaluate_model(model, dataset)
     return model
 
 

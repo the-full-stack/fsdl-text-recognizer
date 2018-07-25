@@ -15,6 +15,7 @@ requests = "*"
 tensorflow = "*"
 
 [dev-packages]
+editdistance = "*"
 gpustat = "*"
 jupyterlab = "*"
 matplotlib = "*"

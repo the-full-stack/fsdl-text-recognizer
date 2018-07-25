@@ -13,6 +13,8 @@ import h5py
 import numpy as np
 from tensorflow.keras.utils import to_categorical
 
+from text_recognizer.datasets.base import Dataset
+
 
 RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
 
@@ -23,64 +25,7 @@ PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'byclass.h5'
 ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_essentials.json'
 
 
-def _download_and_process_emnist():
-    import scipy.io
-
-    RAW_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
-    PROCESSED_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
-
-    os.chdir(RAW_DATA_DIRNAME)
-
-    if not os.path.exists('matlab.zip'):
-        print('Downloading EMNIST...')
-        urllib.request.urlretrieve(RAW_URL, 'matlab.zip')
-
-    print('Unzipping EMNIST and loading .mat file...')
-    zip_file = zipfile.ZipFile('matlab.zip', 'r')
-    zip_file.extract('matlab/emnist-byclass.mat', )
-    data = scipy.io.loadmat('matlab/emnist-byclass.mat')
-
-    print('Saving to HDF5...')
-    x_train = data['dataset']['train'][0, 0]['images'][0, 0].reshape(-1, 28, 28).swapaxes(1, 2)
-    y_train = data['dataset']['train'][0, 0]['labels'][0, 0]
-    x_test = data['dataset']['test'][0, 0]['images'][0, 0].reshape(-1, 28, 28).swapaxes(1, 2)
-    y_test = data['dataset']['test'][0, 0]['labels'][0, 0]
-    with h5py.File(PROCESSED_DATA_FILENAME, 'w') as f:
-        f.create_dataset('x_train', data=x_train, compression='lzf')
-        f.create_dataset('y_train', data=y_train, compression='lzf')
-        f.create_dataset('x_test', data=x_test, compression='lzf')
-        f.create_dataset('y_test', data=y_test, compression='lzf')
-
-    print('Saving essential dataset parameters...')
-    mapping = {int(k): chr(v) for k, v in data['dataset']['mapping'][0, 0]}
-    essentials = {'mapping': list(mapping.items()), 'input_shape': list(x_train.shape[1:])}
-    with open(ESSENTIALS_FILENAME, 'w') as f:
-        json.dump(essentials, f)
-
-    print('Cleaning up...')
-    shutil.rmtree('matlab')
-
-    print('EMNIST downloaded and processed')
-
-
-def _augment_emnist_mapping(mapping):
-    """
-    We should augment the mapping with three extra characters:
-
-    - ' ' for space between words
-    - '_' for padding around the line
-    - '?' for all unknown characters
-    """
-    max_key = max(mapping.keys())
-    extra_mapping = {
-        max_key + 1: ' ',
-        max_key + 2: '?',
-        max_key + 3: '_'
-    }
-    return {**mapping, **extra_mapping}
-
-
-class EmnistDataset():
+class EmnistDataset(Dataset):
     """
     "The EMNIST dataset is a set of handwritten character digits derived from the NIST Special Database 19
     and converted to a 28x28 pixel image format and dataset structure that directly matches the MNIST dataset."
@@ -153,6 +98,63 @@ class EmnistDataset():
             f'Train: {self.x_train.shape} {self.y_train.shape}\n'
             f'Test: {self.x_test.shape} {self.y_test.shape}\n'
         )
+
+
+def _download_and_process_emnist():
+    import scipy.io
+
+    RAW_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
+    PROCESSED_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
+
+    os.chdir(RAW_DATA_DIRNAME)
+
+    if not os.path.exists('matlab.zip'):
+        print('Downloading EMNIST...')
+        urllib.request.urlretrieve(RAW_URL, 'matlab.zip')
+
+    print('Unzipping EMNIST and loading .mat file...')
+    zip_file = zipfile.ZipFile('matlab.zip', 'r')
+    zip_file.extract('matlab/emnist-byclass.mat', )
+    data = scipy.io.loadmat('matlab/emnist-byclass.mat')
+
+    print('Saving to HDF5...')
+    x_train = data['dataset']['train'][0, 0]['images'][0, 0].reshape(-1, 28, 28).swapaxes(1, 2)
+    y_train = data['dataset']['train'][0, 0]['labels'][0, 0]
+    x_test = data['dataset']['test'][0, 0]['images'][0, 0].reshape(-1, 28, 28).swapaxes(1, 2)
+    y_test = data['dataset']['test'][0, 0]['labels'][0, 0]
+    with h5py.File(PROCESSED_DATA_FILENAME, 'w') as f:
+        f.create_dataset('x_train', data=x_train, compression='lzf')
+        f.create_dataset('y_train', data=y_train, compression='lzf')
+        f.create_dataset('x_test', data=x_test, compression='lzf')
+        f.create_dataset('y_test', data=y_test, compression='lzf')
+
+    print('Saving essential dataset parameters...')
+    mapping = {int(k): chr(v) for k, v in data['dataset']['mapping'][0, 0]}
+    essentials = {'mapping': list(mapping.items()), 'input_shape': list(x_train.shape[1:])}
+    with open(ESSENTIALS_FILENAME, 'w') as f:
+        json.dump(essentials, f)
+
+    print('Cleaning up...')
+    shutil.rmtree('matlab')
+
+    print('EMNIST downloaded and processed')
+
+
+def _augment_emnist_mapping(mapping):
+    """
+    We should augment the mapping with three extra characters:
+
+    - ' ' for space between words
+    - '_' for padding around the line
+    - '?' for all unknown characters
+    """
+    max_key = max(mapping.keys())
+    extra_mapping = {
+        max_key + 1: ' ',
+        max_key + 2: '?',
+        max_key + 3: '_'
+    }
+    return {**mapping, **extra_mapping}
 
 
 if __name__ == '__main__':
