@@ -28,5 +28,3 @@ class EmnistMlp(Model):
         conf = pred_raw[ind]
         pred = self.mapping[ind]
         return pred, conf
-
-    loss = 'categorical_crossentropy'

@@ -12,7 +12,7 @@ numpy = "*"
 opencv-python-headless = "*"
 pytest = "*"
 requests = "*"
-tensorflow = "*"
+tensorflow-gpu = "*"
 
 [dev-packages]
 editdistance = "*"
@@ -21,7 +21,7 @@ jupyterlab = "*"
 matplotlib = "*"
 nltk = "*"
 pylint = "*"
-redlock-py = "*"  # Note that there is a competing package "redlock"
+redlock-py = "*"
 scipy = "*"
 wandb = "*"
 

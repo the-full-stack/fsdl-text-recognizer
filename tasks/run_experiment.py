@@ -7,7 +7,7 @@ import os
 import wandb
 
 from text_recognizer.train.gpu_manager import GPUManager
-from text_recognizer.train.util import train_model, eva1uate_model
+from text_recognizer.train.util import train_model, evaluate_model
 
 
 DEFAULT_TRAIN_ARGS = {

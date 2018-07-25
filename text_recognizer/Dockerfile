@@ -11,7 +11,7 @@ WORKDIR /app
 COPY . .
 
 # Install Python dependencies
-RUN set -ex && pipenv install --deploy --system
+RUN set -ex && pipenv sync --deploy --system
 
 # Run the web server
 ENV PYTHONPATH /app

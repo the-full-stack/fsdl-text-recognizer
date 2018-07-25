@@ -35,5 +35,9 @@ var/
 .requirements.zip
 .requirements
 
-# Misc
+# W&B
 wandb-debug.log
+wandb/*
+!wandb/settings
+
+# Misc
