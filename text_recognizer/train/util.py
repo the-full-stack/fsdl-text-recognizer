@@ -15,7 +15,6 @@ from text_recognizer.train.gpu_util_sampler import GPUUtilizationSampler
 
 EARLY_STOPPING = True
 TENSORBOARD = False
-WANDB = True
 GPU_UTIL_SAMPLER = False
 
 
@@ -26,7 +25,8 @@ def train_model(
         epochs: int,
         batch_size: int,
         loss: Union[str, Callable],
-        gpu_ind: Optional[int]=None):
+        gpu_ind: Optional[int]=None,
+        use_wandb=False):
     model.compile(loss=loss, optimizer=RMSprop(), metrics=['accuracy'])
 
     callbacks = []
@@ -43,7 +43,7 @@ def train_model(
         tensorboard = TensorBoard(log_dir=f'logs/{time()}_{gpu_ind}')
         callbacks.append(tensorboard)
 
-    if WANDB:
+    if use_wandb:
         wandb = WandbCallback()
         callbacks.append(wandb)
 
