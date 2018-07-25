@@ -8,16 +8,15 @@ from text_recognizer.models.line_model import LineModel
 from text_recognizer.networks.cnn import lenet
 
 
-class LineLstmWithCtc:
-    pass
-    # TODO
-    
-
-
 class LineLstm(LineModel):
+    def __init__(self, window_width: int=14, window_stride: int=14):
+        super().__init__()
+        self.window_width = window_width
+        self.window_stride = window_stride
+
     @cachedproperty
     def model(self):
-        return create_sliding_window_rnn_model(self.input_shape, self.max_length, self.num_classes, 28, 28)
+        return create_sliding_window_rnn_model(self.input_shape, self.max_length, self.num_classes, self.window_width, self.window_stride)
 
 
 def create_sliding_window_rnn_model(input_shape, max_length, num_classes, window_width, window_stride):
@@ -28,19 +27,19 @@ def create_sliding_window_rnn_model(input_shape, max_length, num_classes, window
         patches = tf.transpose(patches, (0, 2, 1, 3))
         patches = tf.expand_dims(patches, -1)
         return patches
-    
-    image_height, image_width = input_shape    
+
+    image_height, image_width = input_shape
     image_input = Input(shape=input_shape)
     image_reshaped = Reshape((image_height, image_width, 1))(image_input)
     image_patches = Lambda(slide_window)(image_reshaped)  # (num_windows, image_height, window_width, 1)
     convnet = lenet(image_height, window_width)
     convnet_outputs = TimeDistributed(convnet)(image_patches)  # (num_windows, 128)
-    
+
     # LSTM outputting a single vector
     rnn_output = CuDNNLSTM(num_classes * max_length, return_sequences=False, go_backwards=True)(convnet_outputs) # (num_classes * max_length)
     reshaped_rnn_output = Reshape((max_length, num_classes))(rnn_output)
     softmaxed_outputs = TimeDistributed(Dense(num_classes, activation='softmax'))(reshaped_rnn_output)
-    
+
     model = KerasModel(inputs=image_input, outputs=softmaxed_outputs)
     model.summary()
     return model

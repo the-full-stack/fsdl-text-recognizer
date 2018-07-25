@@ -4,7 +4,7 @@ import numpy as np
 import tensorflow as tf
 
 from text_recognizer.datasets.emnist_lines import EmnistLinesDataset
-from text_recognizer.models.model import Model
+from text_recognizer.models.base import Model
 
 
 class LineModel(Model):

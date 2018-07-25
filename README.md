@@ -44,13 +44,21 @@ July 24 0120 Thinking about this order now:
     - Sequences: guided tour of IAM test set, then of the RNN solution, give them a chance to figure out CTC loss, then time to play around with dataset augmentation to get leaderboard on Gradescope
     - Infrastructure: guided tour of the experiment-running framework, GPU manager, and Weights & Biases
     - Free lab: a full hour to play around with what we have so far and try to get highest score
-    - Deployment 1: set up Docker, CI, and Flask-based web server, just running on local.
+    - Deployment 1: write tests, set up Docker, CI, and Flask-based web server, just running on local
     - Deployment 2: Guided tour of serverless and lambda-based deploy. They should all have their own endpoint running. Everyone tests out cursive.ai, then we switch up the image processing and add monitoring.
 July 24 0230
     Got a nice experimental framework coded up and working on the farm!
-    PICK UP AT: sync results to W&B. Then implement LineRNN
+    Next up: sync results to W&B. Then implement LineRNN
 July 24 1345
 - syncing results to W&B nicely, now going to implement LineRNN and then work on the convnet lecture
+
+July 24 2100
+- Able to successfully train LSTM with CTC loss now, thanks to Saurabh
+NEXT UP:
+- [ ] have the Model be responsible for training itself (because CTC needs special outputs in the dataset)
+- [ ] implement predict functionality for CTC model (as in notebook on the farm)
+- [ ] add character-accuracy metric to the CTC model for displaying in training and evaluation
+- [ ] add IAM dataset
 
 ## Tasks
 

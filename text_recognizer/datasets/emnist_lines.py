@@ -9,6 +9,7 @@ import nltk
 import numpy as np
 from tensorflow.keras.utils import to_categorical
 
+from text_recognizer.datasets.base import Dataset
 from text_recognizer.datasets.emnist import EmnistDataset
 from text_recognizer.datasets.sentences import SentenceGenerator
 
@@ -17,7 +18,7 @@ DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data' / 'processed
 ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_lines_essentials.json'
 
 
-class EmnistLinesDataset():
+class EmnistLinesDataset(Dataset):
     def __init__(self, max_length: int=32, max_overlap: float=0.4, num_train: int=10000, num_test: int=1000):
         self.emnist = EmnistDataset()
         self.mapping = self.emnist.mapping
