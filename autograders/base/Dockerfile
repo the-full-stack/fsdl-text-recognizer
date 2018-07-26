@@ -12,6 +12,6 @@ COPY Pipfile .
 COPY Pipfile.lock .
 RUN pipenv install --dev --deploy --system --keep-outdated
 
-COPY data/processed data
-COPY text_recognizer/tests tests
+COPY data/processed data/processed
+
 COPY autograders/base/run_tests.py .

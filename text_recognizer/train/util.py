@@ -50,6 +50,6 @@ def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gp
 
 
 def evaluate_model(model: Model, dataset: Dataset) -> float:
-    metric = model.evaluate(dataset.x_test, dataset.y_train)
+    metric = model.evaluate(dataset.x_test, dataset.y_test)
     print('Test metric:', metric)
     return metric
