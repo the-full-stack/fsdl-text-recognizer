@@ -27,7 +27,6 @@ def index():
 @app.route('/v1/predict', methods=['GET', 'POST'])
 def predict():
     image = _load_image()
-    print('Whatever')
     pred, conf = predictor.predict(image)
     return jsonify({'pred': str(pred), 'conf': float(conf)})
 

@@ -35,7 +35,7 @@ def _load_image():
         image_url = request.args.get('image_url')
         if image_url is None:
             return 'no image_url defined in query string'
-        return util.read_image(image_url) / 255
+        return util.read_image(image_url, grayscale=True) / 255
     else:
         raise ValueError('Unsupported HTTP method')
 
