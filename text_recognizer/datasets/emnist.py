@@ -46,9 +46,6 @@ class EmnistDataset(Dataset):
         self.num_classes = len(self.mapping)
         self.input_shape = essentials['input_shape']
 
-    def load_or_generate_data(self):
-        pass  # Just here for the interface
-
     @cachedproperty
     def data(self):
         if not os.path.exists(PROCESSED_DATA_FILENAME):

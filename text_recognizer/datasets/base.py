@@ -1,2 +1,3 @@
 class Dataset:
-    pass
+    def load_or_generate_data(self):
+        pass

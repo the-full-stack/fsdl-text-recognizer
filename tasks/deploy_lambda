@@ -1,6 +1,0 @@
-#!/bin/sh
-
-pipenv lock --requirements --keep-outdated > lambda/requirements.txt
-cd lambda
-sls plugin install -n serverless-python-requirements
-sls deploy -v

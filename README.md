@@ -2,6 +2,19 @@
 
 Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp](https://fullstackdeeplearning.com/bootcamp).
 
+## Lab 0
+
+- [15min] Get set up with AWS
+- [5min] Get set up with Gradescope
+
+## Lab 1
+
+- [10 min] Gather handwriting data
+- [10 min] Walk through the project structure so far
+- [ min]
+- [ min]
+- [ min] They write the test for emnist_mlp_predictor
+- [ min] They submit their thing to gradescope for autograding
 
 
 ## Quick Start

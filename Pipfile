@@ -12,15 +12,17 @@ numpy = "*"
 opencv-python-headless = "*"
 pytest = "*"
 requests = "*"
-tensorflow-gpu = "*"
+tensorflow = "*"  # NOTE: change this to tensorflow-gpu if needed
 
 [dev-packages]
 editdistance = "*"
 gpustat = "*"
+gradescope-utils = "*"
 jupyterlab = "*"
 matplotlib = "*"
 nltk = "*"
 pylint = "*"
+pyyaml = "*"
 redlock-py = "*"
 scipy = "*"
 wandb = "*"

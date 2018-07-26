@@ -1,1 +1,9 @@
+.git
+.pytest_cache
+api
+cursive_ai
 data
+!data/processed
+notebooks
+wandb
+wandb-debug.log

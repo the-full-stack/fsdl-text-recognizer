@@ -24,10 +24,11 @@ def lenet_all_conv(image_height: int, image_width: int, num_classes: Optional[in
     model.add(Conv2D(64, (3, 3), activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Dropout(0.25))
-
+    # Your code below here
     model.add(Conv2D(128, (image_height // 2 - 2, image_width // 2 - 2), activation='relu'))
     if num_classes:
         model.add(Dropout(0.5))
         model.add(Conv2D(num_classes, (1, 1), activation='softmax'))
     model.add(Flatten())
+    # Your code above here
     return model

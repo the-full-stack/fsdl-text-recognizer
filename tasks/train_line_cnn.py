@@ -13,8 +13,7 @@ from text_recognizer.train.util import evaluate_model, train_model
 def train():
     dataset = EmnistLinesDataset()
     dataset.load_or_generate_data()
-    model = LineCnnFixedWidth()
-    # model = LineCnnSlidingWindow()
+    model = LineCnnSlidingWindow()
     train_model(model, dataset, epochs=2, batch_size=32)
     model.save_weights()
     evaluate_model(model, dataset)

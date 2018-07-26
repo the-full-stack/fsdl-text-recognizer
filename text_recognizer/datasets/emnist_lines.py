@@ -4,7 +4,6 @@ import pathlib
 from typing import Tuple
 
 import h5py
-import matplotlib.pyplot as plt
 import nltk
 import numpy as np
 from tensorflow.keras.utils import to_categorical
