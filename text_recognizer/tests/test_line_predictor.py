@@ -13,6 +13,8 @@ class TestEmnistLinePredictor(unittest.TestCase):
       predictor = LinePredictor()
 
       for filename in SUPPORT_DIRNAME.glob('*.png'):
+        # TODO: use editdistance
+
         pred, conf = predictor.predict(str(filename))
         print(pred, conf, filename.stem)
         self.assertEqual(pred, filename.stem)
