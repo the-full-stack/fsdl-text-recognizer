@@ -4,7 +4,7 @@ lab1:
     - notebooks/02-train-emnist-mlp.ipynb
     - tasks/train_emnist_mlp.py
     - text_recognizer/__init__.py
-    - text_recognizer/emnist_mlp_predictor.py
+    - text_recognizer/emnist_predictor.py
     - text_recognizer/datasets/base.py
     - text_recognizer/datasets/emnist.py
     - text_recognizer/datasets/emnist_essentials.json
@@ -13,10 +13,11 @@ lab1:
     - text_recognizer/models/emnist_mlp.py
     - text_recognizer/models/emnist_mlp_weights.h5
     - text_recognizer/networks/mlp.py
+    - text_recognizer/tests/support/create_emnist_support_files.py
     - text_recognizer/tests/support/emnist/0.png
     - text_recognizer/tests/support/emnist/a.png
     - text_recognizer/tests/support/emnist/X.png
-    - text_recognizer/tests/test_emnist_mlp_predictor.py
+    - text_recognizer/tests/test_emnist_predictor.py
     - text_recognizer/train/util.py
     - text_recognizer/train/gpu_util_sampler.py
     - text_recognizer/util.py
@@ -24,25 +25,26 @@ lab1:
 lab2:
     - notebooks/03-emnist-lines.ipynb
     - notebooks/04-line-cnn.ipynb
-    - tasks/train_line_cnn.py
-    - text_recognizer/line_conv_predictor.py
     - text_recognizer/datasets/emnist_lines.py
     - text_recognizer/datasets/sentences.py
+    - text_recognizer/models/line_cnn_all_conv.py
     - text_recognizer/models/line_cnn_fixed_width.py
     - text_recognizer/models/line_cnn_sliding_window.py
-    - text_recognizer/models/line_cnn_all_conv.py
     - text_recognizer/networks/cnn.py
-    # TODO - text_recognizer/tests/support/emnist_lines/
-    # TODO - text_recognizer/tests/test_line_conv_predictor.py
 
 lab3:
     - notebooks/05-line-lstm.ipynb
     - notebooks/06-line-lstm-with-ctc.ipynb
-    - tasks/train_line_lstm.py
-    - text_recognizer/line_lstm_predictor.py
+    - tasks/train_line_lstm_with_ctc.py
+    - text_recognizer/line_predictor.py
     - text_recognizer/models/ctc_dataset_sequence.py
     - text_recognizer/models/line_lstm.py
     - text_recognizer/models/line_lstm_with_ctc.py
+    - text_recognizer/tests/support/create_emnist_lines_support_files.py
+    - "text_recognizer/tests/support/emnist_lines/770 was over.png"
+    - "text_recognizer/tests/support/emnist_lines/carry big sticks over Laos.png"
+    - "text_recognizer/tests/support/emnist_lines/edge on the.png"
+    - text_recognizer/tests/test_line_predictor.py
 
 lab4:
     - text_recognizer/train/gpu_manager.py
@@ -51,10 +53,13 @@ lab4:
     - tasks/run_experiment.py
 
 lab5:
+    - text_recognizer/models/dataset_sequence_with_augmentation.py
+
+lab6:
     - text_recognizer/api/app.py
     - text_recognizer/tests/test_api.py
 
-lab6:
+lab7:
     - api/readme.md
     - api/serverless.yml
     - tasks/deploy_api.sh

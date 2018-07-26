@@ -6,11 +6,11 @@ import flask
 from flask import Flask, request, jsonify
 import numpy as np
 
-from text_recognizer.emnist_mlp_predictor import EmnistMlpPredictor
+from text_recognizer.emnist_predictor import EmnistPredictor
 import text_recognizer.util as util
 
 app = Flask(__name__)
-predictor = EmnistMlpPredictor()
+predictor = EmnistPredictor()
 
 
 @app.route('/')
@@ -30,12 +30,12 @@ def _load_image():
         data = request.get_json()
         if data is None:
             return 'no json received'
-        return util.read_b64_image(data['image'], grayscale=True)
+        return util.read_b64_image(data['image'], grayscale=True) / 255
     elif request.method == 'GET':
         image_url = request.args.get('image_url')
         if image_url is None:
             return 'no image_url defined in query string'
-        return util.read_image(image_url)
+        return util.read_image(image_url) / 255
     else:
         raise ValueError('Unsupported HTTP method')
 

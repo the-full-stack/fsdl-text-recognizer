@@ -17,7 +17,7 @@ def create_emnist_lines_support_files():
     dataset = EmnistLinesDataset(max_overlap=0.4)
     dataset.load_or_generate_data()
 
-    for ind in [0, 1, 2]:
+    for ind in [0, 1, 3]:
         image = (dataset.x_test[ind] * 255).astype(np.uint8)
         label = ''.join(dataset.mapping[label] for label in np.argmax(dataset.y_test[ind], axis=-1).flatten()).strip(' _')
         print(label)

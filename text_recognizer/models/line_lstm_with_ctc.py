@@ -5,7 +5,7 @@ import editdistance
 import numpy as np
 import tensorflow as tf
 import tensorflow.keras.backend as K
-from tensorflow.python.ops import ctc_ops
+from tensorflow.python.client import device_lib
 from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, Input, MaxPooling2D, Permute, Reshape, TimeDistributed, Lambda, LSTM, GRU, CuDNNLSTM, Bidirectional
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import Model as KerasModel
@@ -13,6 +13,7 @@ from tensorflow.keras.models import Model as KerasModel
 from text_recognizer.models.ctc_dataset_sequence import CtcDatasetSequence
 from text_recognizer.models.line_model import LineModel
 from text_recognizer.networks.cnn import lenet
+from text_recognizer.networks.ctc import ctc_decode
 
 
 class LineLstmWithCtc(LineModel):
@@ -43,9 +44,9 @@ class LineLstmWithCtc(LineModel):
             shuffle=True
         )
 
-    def evaluate(self, x, y):
+    def evaluate(self, x, y, batch_size: int = 32) -> float:
         decoding_model = KerasModel(inputs=self.model.input, outputs=self.model.get_layer('ctc_decoded').output)
-        test_sequence = CtcDatasetSequence(x, y, 32, self.max_sequence_length)
+        test_sequence = CtcDatasetSequence(x, y, batch_size, self.max_sequence_length)
         preds = decoding_model.predict_generator(test_sequence)
         trues = np.argmax(y, -1)
         pred_strings = [''.join(self.mapping.get(label, '') for label in pred).strip() for pred in preds]
@@ -75,7 +76,10 @@ class LineLstmWithCtc(LineModel):
         decoded, log_prob = K.ctc_decode(softmax_output, np.array([64])) # TODO: don't hardcode 64: compute based on image and properties of self
         pred_raw = K.eval(decoded[0])[0]
         pred = ''.join(self.mapping[label] for label in pred_raw).strip()
-        conf = K.eval(K.softmax(log_prob))[0][0]
+        # conf = K.eval(K.softmax(log_prob))[0][0]
+        neg_sum_logit = K.eval(log_prob)[0][0]
+        conf = np.exp(neg_sum_logit) / (1 + np.exp(neg_sum_logit))
+        # TODO: not sure if conf calculation is correct
         return pred, conf
 
 
@@ -99,7 +103,10 @@ def create_sliding_window_rnn_with_ctc_model(input_shape, max_length, num_classe
     convnet = lenet(image_height, window_width)
     convnet_outputs = TimeDistributed(convnet)(image_patches)  # (num_windows, 128)
 
-    rnn_output = CuDNNLSTM(128, return_sequences=True)(convnet_outputs) # (sequence_length, 128)
+    if len(device_lib.list_local_devices()) > 1:
+        rnn_output = CuDNNLSTM(128, return_sequences=True)(convnet_outputs) # (sequence_length, 128)
+    else:
+        rnn_output = LSTM(128, return_sequences=True)(convnet_outputs) # (sequence_length, 128)
     softmax_output = TimeDistributed(Dense(num_classes, activation='softmax'), name='softmax_output')(rnn_output) # (sequence_length, 128)
 
     ctc_loss_output = Lambda(
@@ -115,36 +122,3 @@ def create_sliding_window_rnn_with_ctc_model(input_shape, max_length, num_classe
     model = KerasModel(inputs=[image_input, y_true, input_length, label_length], outputs=[ctc_loss_output, ctc_decoded_output])
     model.summary()
     return model
-
-
-def ctc_decode(y_pred, input_length):
-    """
-    Cut down from https://github.com/keras-team/keras/blob/master/keras/backend/tensorflow_backend.py#L4170
-
-    Decodes the output of a softmax.
-    Uses greedy (best path) search.
-
-    # Arguments
-        y_pred: tensor `(samples, time_steps, num_categories)`
-            containing the prediction, or output of the softmax.
-        input_length: tensor `(samples, )` containing the sequence length for
-            each batch item in `y_pred`.
-
-    # Returns
-        List: list of one element that contains the decoded sequence.
-    """
-    y_pred = tf.log(tf.transpose(y_pred, perm=[1, 0, 2]) + K.epsilon())
-    input_length = tf.to_int32((tf.squeeze(input_length, axis=-1)))
-
-    (decoded, _) = ctc_ops.ctc_greedy_decoder(inputs=y_pred, sequence_length=input_length)
-
-    st = decoded[0]
-    decoded_dense = tf.sparse_to_dense(st.indices, st.dense_shape, st.values, default_value=-1)
-
-    # Unfortunately, decoded_dense will be of different number of columns, depending on the decodings.
-    # We need to get it all in one standard shape, so let's pad if necessary.
-    max_length = 32 + 2  # giving 2 extra characters for CTC leeway
-    cols = tf.shape(decoded_dense)[-1]
-    def f1(): return tf.pad(decoded_dense, [[0, 0], [0, max_length - cols]], constant_values=-1)
-    def f2(): return decoded_dense
-    return tf.cond(tf.less(cols, max_length), f1, f2)

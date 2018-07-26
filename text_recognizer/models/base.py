@@ -21,7 +21,7 @@ class Model:
     def model(self) -> KerasModel:
         raise NotImplementedError
 
-    def fit(self, dataset, batch_size, epochs, callbacks):
+    def fit(self, dataset, batch_size, epochs, callbacks=[]):
         self.model.compile(loss=self.loss, optimizer=self.optimizer, metrics=self.metrics)
 
         train_sequence = DatasetSequence(dataset.x_train, dataset.y_train, batch_size)

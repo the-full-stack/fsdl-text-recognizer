@@ -22,4 +22,5 @@ class TestIntegrations(TestCase):
             'image': f'data:image/jpeg;base64,{b64_image.decode()}'
         })
         json_data = response.get_json()
-        assert json_data == {'conf': 1.0, 'pred': '0'}
+        self.assertLess(abs(json_data['conf'] - 0.64), 0.01)
+        self.assertEquals(json_data['pred'], '0')

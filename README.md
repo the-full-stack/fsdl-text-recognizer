@@ -10,12 +10,23 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 ## Lab 1
 
 - [10 min] Gather handwriting data
-- [10 min] Walk through the project structure so far
-- [ min]
-- [ min]
-- [ min] They write the test for emnist_mlp_predictor
+- [10 min] Walk through the project structure
+- [ min] They write the network in networks/mlp.py
+- [ min] They write the prediction function in emnist_predictor.py
 - [ min] They submit their thing to gradescope for autograding
 
+## Lab 2
+
+- [10 min] Walk through EMNIST line generation
+
+## Lab 3
+
+## Lab 4
+
+## Lab 5
+
+- [10 min] Introduce IAM dataset
+- [40 min] More-or-less free lab to try to get the highest character accuracy, via searching over model space and augmenting data generator
 
 ## Quick Start
 
@@ -109,7 +120,7 @@ text_recognizer/
                 emnist/
                     a.png
                     3.png
-            test_emnist_mlp_predict.py  # Lightweight test to ensure that the trained emnist_mlp correctly classifies a few data points.
+            test_emnist_predict.py  # Lightweight test to ensure that the trained emnist_mlp correctly classifies a few data points.
 
         web/                        # Web server for serving predictions.
             api.py

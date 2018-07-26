@@ -5,26 +5,26 @@ from gradescope_utils.autograder_utils.decorators import weight, leaderboard
 from gradescope_utils.autograder_utils.json_test_runner import JSONTestRunner
 
 from text_recognizer.datasets import EmnistDataset
-from text_recognizer.emnist_mlp_predictor import EmnistMlpPredictor
+from text_recognizer.emnist_predictor import EmnistPredictor
 from text_recognizer.models.emnist_mlp import EmnistMlp
 
 
 SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'tests' / 'support'
 
 
-class TestEmnistMlpPredictor(unittest.TestCase):
+class TestEmnistPredictor(unittest.TestCase):
     @weight(10)
     def test_filename(self):
-      predictor = EmnistMlpPredictor()
+      predictor = EmnistPredictor()
 
       for filename in SUPPORT_DIRNAME.glob('*.png'):
         pred, conf = predictor.predict(str(filename))
         print(pred, conf, filename.stem)
         self.assertEqual(pred, filename.stem)
-        self.assertGreater(conf, 0.9)
+        self.assertGreater(conf, 0.4)
 
 
-class TestEvaluateEmnistMlpPredictor(unittest.TestCase):
+class TestEvaluateEmnistPredictor(unittest.TestCase):
     @leaderboard("accuracy")
     def test_evaluate_accuracy(self, set_leaderboard_value=None):
         dataset = EmnistDataset()

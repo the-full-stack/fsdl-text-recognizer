@@ -14,7 +14,7 @@ class LinePredictor:
 
   def predict(self, image_or_filename: Union[np.ndarray, str]) -> Tuple[str, float]:
     if isinstance(image_or_filename, str):
-        image = util.read_image(image_or_filename, grayscale=True)
+        image = util.read_image(image_or_filename, grayscale=True) / 255.
     else:
         image = image_or_filename
     return self.model.predict_on_image(image)
