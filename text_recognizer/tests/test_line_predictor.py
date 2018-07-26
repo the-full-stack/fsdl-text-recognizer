@@ -1,15 +1,16 @@
+import editdistance
 import pathlib
 import unittest
 
-from text_recognizer.emnist_mlp_predictor import EmnistMlpPredictor
+from text_recognizer.line_predictor import LinePredictor
 
 
-SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support' / 'emnist'
+SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support' / 'lines'
 
 
-class TestEmnistMlpPredictor(unittest.TestCase):
+class TestEmnistLinePredictor(unittest.TestCase):
     def test_filename(self):
-      predictor = EmnistMlpPredictor()
+      predictor = LinePredictor()
 
       for filename in SUPPORT_DIRNAME.glob('*.png'):
         pred, conf = predictor.predict(str(filename))

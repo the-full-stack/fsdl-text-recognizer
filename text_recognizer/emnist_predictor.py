@@ -6,7 +6,7 @@ from text_recognizer.models.emnist_mlp import EmnistMlp
 import text_recognizer.util as util
 
 
-class EmnistMlpPredictor:
+class EmnistPredictor:
   def __init__(self):
     self.model = EmnistMlp()
     self.model.load_weights()

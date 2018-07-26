@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 boltons = "*"
+editdistance = "*"
 flask = "*"
 h5py = "*"
 inflection = "*"
@@ -15,7 +16,6 @@ requests = "*"
 tensorflow = "*"  # NOTE: change this to tensorflow-gpu if needed
 
 [dev-packages]
-editdistance = "*"
 gpustat = "*"
 gradescope-utils = "*"
 jupyterlab = "*"

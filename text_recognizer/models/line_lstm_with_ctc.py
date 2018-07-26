@@ -47,8 +47,9 @@ class LineLstmWithCtc(LineModel):
         decoding_model = KerasModel(inputs=self.model.input, outputs=self.model.get_layer('ctc_decoded').output)
         test_sequence = CtcDatasetSequence(x, y, 32, self.max_sequence_length)
         preds = decoding_model.predict_generator(test_sequence)
+        trues = np.argmax(y, -1)
         pred_strings = [''.join(self.mapping.get(label, '') for label in pred).strip() for pred in preds]
-        true_strings = [''.join(self.mapping.get(label, '') for label in true).strip() for true in y]
+        true_strings = [''.join(self.mapping.get(label, '') for label in true).strip() for true in trues]
         char_accuracies = [
             1 - editdistance.eval(true_string, pred_string) / len(pred_string)
             for true_string, pred_string in zip(pred_strings, true_strings)
