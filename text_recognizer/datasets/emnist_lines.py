@@ -4,13 +4,11 @@ import pathlib
 from typing import Tuple
 
 import h5py
-import nltk
 import numpy as np
 from tensorflow.keras.utils import to_categorical
 
 from text_recognizer.datasets.base import Dataset
 from text_recognizer.datasets.emnist import EmnistDataset
-from text_recognizer.datasets.sentences import SentenceGenerator
 
 
 DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data' / 'processed' / 'emnist_lines'
@@ -62,6 +60,8 @@ class EmnistLinesDataset(Dataset):
 
     def _generate_data(self):
         print('EmnistLinesDataset generating data...')
+
+        from text_recognizer.datasets.sentences import SentenceGenerator
         sentence_generator = SentenceGenerator(self.max_length)
 
         emnist = self.emnist
