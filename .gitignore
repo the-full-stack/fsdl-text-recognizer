@@ -41,3 +41,4 @@ wandb/*
 !wandb/settings
 
 # Misc
+.DS_Store
