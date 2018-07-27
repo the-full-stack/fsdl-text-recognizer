@@ -1,0 +1,2 @@
+https://1klwfmaohf.execute-api.us-west-2.amazonaws.com/dev/v1/predict
+https://ek7zdqzpwl.execute-api.us-west-2.amazonaws.com/dev/v1/predict
