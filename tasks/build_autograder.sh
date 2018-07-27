@@ -9,3 +9,4 @@ docker push sergeykarayev/fsdl-text-recognizer-labs:base
 # Build Lab 1 autograder
 docker build -t sergeykarayev/fsdl-text-recognizer-labs:lab1 -f autograders/lab1/Dockerfile .
 docker push sergeykarayev/fsdl-text-recognizer-labs:lab1
+# docker run -it sergeykarayev/fsdl-text-recognizer-labs:lab1 bash

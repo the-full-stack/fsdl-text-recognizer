@@ -45,10 +45,22 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 
 ## Lab 4
 
+- Weights & Biases and script to distribute jobs over multiple GPUs
+
 ## Lab 5
 
 - [10 min] Introduce IAM dataset
 - [40 min] More-or-less free lab to try to get the highest character accuracy, via searching over model space and augmenting data generator
+
+## Lab 6
+
+- Running a Flask web app
+- Dockerizing the flask web app (intro to Docker)
+
+## Lab 7
+
+- Deploying to lambda
+- Monitoring
 
 ## Quick Start
 

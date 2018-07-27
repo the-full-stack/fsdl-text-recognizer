@@ -1,4 +1,4 @@
-"""Module docstring."""
+#!/usr/bin/env python
 
 import base64
 import glob
