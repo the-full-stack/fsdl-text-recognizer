@@ -18,6 +18,7 @@ tensorflow = "*"  # NOTE: change this to tensorflow-gpu if needed
 [dev-packages]
 gpustat = "*"
 gradescope-utils = "*"
+grequests = "*"
 jupyterlab = "*"
 matplotlib = "*"
 nltk = "*"
