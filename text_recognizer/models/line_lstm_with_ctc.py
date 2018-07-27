@@ -1,3 +1,4 @@
+from functools import partial
 from typing import Tuple
 
 from boltons.cacheutils import cachedproperty
@@ -10,7 +11,7 @@ from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, Input, MaxP
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import Model as KerasModel
 
-from text_recognizer.models.ctc_dataset_sequence import CtcDatasetSequence
+from text_recognizer.models.dataset_sequence import DatasetSequence
 from text_recognizer.models.line_model import LineModel
 from text_recognizer.networks.cnn import lenet
 from text_recognizer.networks.ctc import ctc_decode
@@ -22,7 +23,8 @@ class LineLstmWithCtc(LineModel):
         self.window_width = window_width
         self.window_stride = window_stride
         # TODO: compute this in terms of window_width, window_stride, and self.input_shape
-        self.max_sequence_length = self.max_length * 2
+        max_sequence_length = self.max_length * 2
+        self.batch_format_fn = partial(format_batch, output_sequence_length=max_sequence_length)
 
     @cachedproperty
     def model(self):
@@ -31,8 +33,8 @@ class LineLstmWithCtc(LineModel):
     def fit(self, dataset, batch_size, epochs, callbacks):
         self.model.compile(loss=self.loss, optimizer=self.optimizer, metrics=self.metrics)
 
-        train_sequence = CtcDatasetSequence(dataset.x_train, dataset.y_train, batch_size, self.max_sequence_length)
-        test_sequence = CtcDatasetSequence(dataset.x_test, dataset.y_test, batch_size, self.max_sequence_length)
+        train_sequence = DatasetSequence(dataset.x_train, dataset.y_train, batch_size, format_fn=self.batch_format_fn)
+        test_sequence = DatasetSequence(dataset.x_test, dataset.y_test, batch_size, format_fn=self.batch_format_fn)
 
         self.model.fit_generator(
             train_sequence,
@@ -46,7 +48,7 @@ class LineLstmWithCtc(LineModel):
 
     def evaluate(self, x, y, batch_size: int=32) -> float:
         decoding_model = KerasModel(inputs=self.model.input, outputs=self.model.get_layer('ctc_decoded').output)
-        test_sequence = CtcDatasetSequence(x, y, batch_size, self.max_sequence_length)
+        test_sequence = DatasetSequence(x, y, batch_size, format_fn=format_fn)
         preds = decoding_model.predict_generator(test_sequence)
         trues = np.argmax(y, -1)
         pred_strings = [''.join(self.mapping.get(label, '') for label in pred).strip() for pred in preds]
@@ -74,13 +76,34 @@ class LineLstmWithCtc(LineModel):
         input_image = np.expand_dims(image, 0)
         softmax_output = softmax_output_fn([input_image, 0])[0]
         decoded, log_prob = K.ctc_decode(softmax_output, np.array([64])) # TODO: don't hardcode 64: compute based on image and properties of self
+
         pred_raw = K.eval(decoded[0])[0]
         pred = ''.join(self.mapping[label] for label in pred_raw).strip()
-        # conf = K.eval(K.softmax(log_prob))[0][0]
+
         neg_sum_logit = K.eval(log_prob)[0][0]
         conf = np.exp(neg_sum_logit) / (1 + np.exp(neg_sum_logit))
         # TODO: not sure if conf calculation is correct
+
         return pred, conf
+
+
+def format_batch(batch_x, batch_y, output_sequence_length):
+    """
+    Because CTC loss needs to be computed inside of the network, we include information about outputs in the inputs.
+    """
+    batch_size = batch_y.shape[0]
+    y_true = np.argmax(batch_y, axis=-1)
+    batch_inputs = {
+        'image': batch_x,
+        'y_true': y_true,
+        'input_length': np.ones((batch_size, 1)) * output_sequence_length,
+        'label_length': np.array([np.where(batch_y[ind, :, -1] == 1)[0][0] for ind in range(batch_size)])
+    }
+    batch_outputs = {
+        'ctc_loss': np.zeros(batch_size),  # dummy
+        'ctc_decoded': y_true
+    }
+    return batch_inputs, batch_outputs
 
 
 def create_sliding_window_rnn_with_ctc_model(input_shape, max_length, num_classes, window_width, window_stride):

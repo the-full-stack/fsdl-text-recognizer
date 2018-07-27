@@ -2,6 +2,22 @@
 
 Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp](https://fullstackdeeplearning.com/bootcamp).
 
+## Tasks / Ideas
+
+- [?] Refactor emnist_predictor to character_predictor
+
+- One strategy for how to progress through the labs is creating git branches via script:
+    - the subset_repo_for_lab script can generate branches instead of directories
+    - [ ] Strip out stuff between "your code here" lines in generating the lab subsets
+
+- [ ] make list of suggestions for what to try in the experiment lab
+
+- Looking into dataset augmentation:
+    - Don't think it makes sense to use tf.data.Dataset. Can point them to it for homework, though.
+    - Do need a solution for separating the input/output transformation code from the augmentation code.
+        - What probably makes the most sense is passing InputOutputFormatter and DataAugmenter as arguments to Dataset
+        - [x] refactor CtcDatasetSequence to simply pass a formatting function to DatasetSequence
+
 ## Lab 0
 
 - [15min] Get set up with AWS
@@ -17,9 +33,15 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 
 ## Lab 2
 
+- [10 min] They write the CNN version of char_model.py
 - [10 min] Walk through EMNIST line generation
+- [ min] They write fixed-width and TimeDistributed code
+- [ min] They write convnet code to use sliding window (they write sliding window part)
+- [ min] They write convnet code to be all conv and observe whether it's faster or not
 
 ## Lab 3
+
+- [10 min] They write the LSTM version
 
 ## Lab 4
 

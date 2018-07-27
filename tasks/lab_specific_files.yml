@@ -1,5 +1,7 @@
-lab1:
+1:
     - .gitignore
+    - Pipfile
+    - Pipfile.lock
     - notebooks/01-look-at-emnist.ipynb
     - notebooks/02-train-emnist-mlp.ipynb
     - tasks/train_emnist_mlp.py
@@ -22,7 +24,7 @@ lab1:
     - text_recognizer/train/gpu_util_sampler.py
     - text_recognizer/util.py
 
-lab2:
+2:
     - notebooks/03-emnist-lines.ipynb
     - notebooks/04-line-cnn.ipynb
     - text_recognizer/datasets/emnist_lines.py
@@ -32,7 +34,7 @@ lab2:
     - text_recognizer/models/line_cnn_sliding_window.py
     - text_recognizer/networks/cnn.py
 
-lab3:
+3:
     - notebooks/05-line-lstm.ipynb
     - notebooks/06-line-lstm-with-ctc.ipynb
     - tasks/train_line_lstm_with_ctc.py
@@ -41,25 +43,25 @@ lab3:
     - text_recognizer/models/line_lstm.py
     - text_recognizer/models/line_lstm_with_ctc.py
     - text_recognizer/tests/support/create_emnist_lines_support_files.py
-    - "text_recognizer/tests/support/emnist_lines/770 was over.png"
     - "text_recognizer/tests/support/emnist_lines/carry big sticks over Laos.png"
     - "text_recognizer/tests/support/emnist_lines/edge on the.png"
+    - "text_recognizer/tests/support/emnist_lines/much about rocky or.png"
     - text_recognizer/tests/test_line_predictor.py
 
-lab4:
+4:
     - text_recognizer/train/gpu_manager.py
     - experiments/sample_experiments.json
     - tasks/prepare_experiments.py
     - tasks/run_experiment.py
 
-lab5:
+5:
     - text_recognizer/models/dataset_sequence_with_augmentation.py
 
-lab6:
+6:
     - text_recognizer/api/app.py
     - text_recognizer/tests/test_api.py
 
-lab7:
+7:
     - api/readme.md
     - api/serverless.yml
     - tasks/deploy_api.sh
