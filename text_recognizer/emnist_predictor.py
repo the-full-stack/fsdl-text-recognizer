@@ -18,3 +18,6 @@ class EmnistPredictor:
     else:
         image = image_or_filename
     return self.model.predict_on_image(image)
+
+  def evaluate(self, dataset):
+    return self.model.evaluate(dataset.x_test, dataset.y_test)

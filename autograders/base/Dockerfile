@@ -10,7 +10,9 @@ COPY autograders/base/run_autograder /autograder/
 WORKDIR /autograder/source
 COPY Pipfile .
 COPY Pipfile.lock .
-RUN set -ex pipenv install --dev --deploy --system --keep-outdated
+ENV LC_ALL C.UTF-8
+ENV LANG C.UTF-8
+RUN pipenv install --dev --deploy --system --keep-outdated
 
 COPY data/processed data/processed
 

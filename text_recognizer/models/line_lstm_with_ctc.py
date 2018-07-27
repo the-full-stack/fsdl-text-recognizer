@@ -44,7 +44,7 @@ class LineLstmWithCtc(LineModel):
             shuffle=True
         )
 
-    def evaluate(self, x, y, batch_size: int = 32) -> float:
+    def evaluate(self, x, y, batch_size: int=32) -> float:
         decoding_model = KerasModel(inputs=self.model.input, outputs=self.model.get_layer('ctc_decoded').output)
         test_sequence = CtcDatasetSequence(x, y, batch_size, self.max_sequence_length)
         preds = decoding_model.predict_generator(test_sequence)
