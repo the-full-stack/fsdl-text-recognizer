@@ -14,6 +14,7 @@ class TestEvaluateEmnistLinesPredictor(unittest.TestCase):
         predictor = LinePredictor()
         dataset = EmnistLinesDataset(max_overlap=0.4)
         dataset.load_or_generate_data()
+        from IPython import embed; embed()
         t = time()
         metric = predictor.evaluate(dataset)
         time_taken = time() - t

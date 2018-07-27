@@ -1,8 +1,6 @@
 from time import time
 from typing import Callable, Optional, Union, Tuple
 
-from matplotlib.figure import Figure
-import matplotlib.pyplot as plt
 import numpy as np
 from tensorflow.keras.callbacks import EarlyStopping, TensorBoard
 from tensorflow.keras.optimizers import RMSprop

@@ -44,3 +44,7 @@ def _process_image(image):
     if image.shape != (28, 28):
         image = cv2.resize(image, (28, 28))
     return image
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8000, debug=True)

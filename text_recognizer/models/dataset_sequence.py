@@ -28,6 +28,6 @@ class DatasetSequence(Sequence):
             batch_x, batch_y = self.augment_fn(batch_x, batch_y)
 
         if self.format_fn:
-            batch_inputs, batch_outputs = self.format_fn(batch_x, batch_y)
+            batch_x, batch_y = self.format_fn(batch_x, batch_y)
 
-        return batch_inputs, batch_outputs
+        return batch_x, batch_y

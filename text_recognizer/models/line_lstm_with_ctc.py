@@ -48,8 +48,9 @@ class LineLstmWithCtc(LineModel):
 
     def evaluate(self, x, y, batch_size: int=32) -> float:
         decoding_model = KerasModel(inputs=self.model.input, outputs=self.model.get_layer('ctc_decoded').output)
-        test_sequence = DatasetSequence(x, y, batch_size, format_fn=format_fn)
+        test_sequence = DatasetSequence(x, y, batch_size, format_fn=self.batch_format_fn)
         preds = decoding_model.predict_generator(test_sequence)
+        from IPython import embed; embed()
         trues = np.argmax(y, -1)
         pred_strings = [''.join(self.mapping.get(label, '') for label in pred).strip() for pred in preds]
         true_strings = [''.join(self.mapping.get(label, '') for label in true).strip() for true in trues]

@@ -16,7 +16,7 @@ ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_line
 
 
 class EmnistLinesDataset(Dataset):
-    def __init__(self, max_length: int=32, max_overlap: float=0.4, num_train: int=10000, num_test: int=1000):
+    def __init__(self, max_length: int=32, max_overlap: float=0.4, num_train: int=5000, num_test: int=1000):
         self.emnist = EmnistDataset()
         self.mapping = self.emnist.mapping
         self.max_length = max_length
@@ -33,11 +33,10 @@ class EmnistLinesDataset(Dataset):
     def load_or_generate_data(self):
         np.random.seed(42)
 
-        if self.data_filename.exists():
-            self._load_data()
-        else:
-            self._generate_data()
-            self._save_data()
+        if not self.data_filename.exists():
+            self._generate_data('train')
+            self._generate_data('test')
+        self._load_data()
 
     def __repr__(self):
         return (
@@ -58,32 +57,29 @@ class EmnistLinesDataset(Dataset):
             self.x_test = f['x_test'][:]
             self.y_test = f['y_test'][:]
 
-    def _generate_data(self):
+    def _generate_data(self, split):
         print('EmnistLinesDataset generating data...')
 
         from text_recognizer.datasets.sentences import SentenceGenerator
         sentence_generator = SentenceGenerator(self.max_length)
 
         emnist = self.emnist
-        samples_by_char_train = samples_by_char(emnist.x_train, emnist.y_train_int, emnist.mapping)
-        samples_by_char_test = samples_by_char(emnist.x_test, emnist.y_test_int, emnist.mapping)
+        if split == 'train':
+            samples_by_char = get_samples_by_char(emnist.x_train, emnist.y_train_int, emnist.mapping)
+        else:
+            samples_by_char = get_samples_by_char(emnist.x_test, emnist.y_test_int, emnist.mapping)
 
-        self.x_train, y_train_str = create_dataset_of_images(self.num_train, samples_by_char_train, sentence_generator, self.max_overlap)
-        self.y_train = convert_strings_to_categorical_labels(y_train_str, emnist.inverse_mapping)
-        self.x_test, y_test_str = create_dataset_of_images(self.num_test, samples_by_char_test, sentence_generator, self.max_overlap)
-        self.y_test = convert_strings_to_categorical_labels(y_test_str, emnist.inverse_mapping)
+        num = self.num_train if split == 'train' else self.num_test
 
-    def _save_data(self):
-        print('EmnistLinesDataset saving data to HDF5...')
         DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
-        with h5py.File(self.data_filename, 'w') as f:
-            f.create_dataset('x_train', data=self.x_train, compression='lzf')
-            f.create_dataset('y_train', data=self.y_train, compression='lzf')
-            f.create_dataset('x_test', data=self.x_test, compression='lzf')
-            f.create_dataset('y_test', data=self.y_test, compression='lzf')
+        with h5py.File(self.data_filename, 'a') as f:
+            x, y = create_dataset_of_images(num, samples_by_char, sentence_generator, self.max_overlap)
+            y = convert_strings_to_categorical_labels(y, emnist.inverse_mapping)
+            f.create_dataset(f'x_{split}', data=x, compression='lzf')
+            f.create_dataset(f'y_{split}', data=y, compression='lzf')
 
 
-def samples_by_char(samples, labels, mapping):
+def get_samples_by_char(samples, labels, mapping):
     samples_by_char = defaultdict(list)
     for sample, label in zip(samples, labels.flatten()):
         samples_by_char[mapping[label]].append(sample)

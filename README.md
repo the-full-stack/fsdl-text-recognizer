@@ -18,6 +18,10 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
         - What probably makes the most sense is passing InputOutputFormatter and DataAugmenter as arguments to Dataset
         - [x] refactor CtcDatasetSequence to simply pass a formatting function to DatasetSequence
 
+July 27 1520:
+Problem: running out of memory on CircleCI because it's generating EmnistLines dataset.
+Also checked it out on JupyterHub and it also gets killed, dang.
+
 ## Lab 0
 
 - [15min] Get set up with AWS
