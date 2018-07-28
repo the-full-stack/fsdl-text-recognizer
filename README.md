@@ -35,7 +35,10 @@ How should it be handled when student writes code between "Your code here" lines
 One strategy that can help us retain sanity is to start off with the JupyterHub setup so that everyone is able to get going immediately, but have them set up on AWS by Sunday (which gives us a couple of extra days to figure it out) so that they can do Docker builds and see Flask run inside a Docker container.
 
 July 28 0047:
-CURRENT TASK is debugging high memory use in emnist_lines creation (I have a breakpoint and want to observe memory use as I create first test than train)
+currently debugging high memory use in emnist_lines creation (I have a breakpoint and want to observe memory use as I create first test than train)
+
+July 28 0150
+Did some code reorg (moved stuff into admin/), mocked out more of the labs, and fixed the high memory usage by switching to uint8 from float32
 
 ## To install on JupyterHub or a new instance
 
@@ -52,6 +55,7 @@ CURRENT TASK is debugging high memory use in emnist_lines creation (I have a bre
 
 - [? 10 min] Gather handwriting data
 - [10 min] Walk through the project structure
+    - talk about DatasetSequence and uint8 vs float32 memory
 - [ min] They write the network in networks/mlp.py
 - [ min] They write the prediction function in character_predictor.py
 - [ min] They submit their thing to gradescope for autograding

@@ -2,7 +2,7 @@ import base64
 import pathlib
 from unittest import TestCase
 
-from text_recognizer.api.app import app
+from api.app import app
 
 
 REPO_DIRNAME = pathlib.Path(__file__).parents[2].resolve()
@@ -24,5 +24,5 @@ class TestIntegrations(TestCase):
             'image': f'data:image/jpeg;base64,{b64_image.decode()}'
         })
         json_data = response.get_json()
-        self.assertLess(abs(json_data['conf'] - 0.64), 0.01)
+        self.assertLess(abs(json_data['conf'] - 0.53), 0.01)
         self.assertEquals(json_data['pred'], '0')
