@@ -5,7 +5,9 @@ from unittest import TestCase
 from text_recognizer.api.app import app
 
 
-SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support' / 'emnist'
+REPO_DIRNAME = pathlib.Path(__file__).parents[2].resolve()
+SUPPORT_DIRNAME = REPO_DIRNAME / 'text_recognizer' / 'tests'/ 'support' / 'emnist'
+
 
 class TestIntegrations(TestCase):
     def setUp(self):

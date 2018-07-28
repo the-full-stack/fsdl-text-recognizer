@@ -4,7 +4,7 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 
 ## Tasks / Ideas
 
-- [?] Refactor emnist_predictor to character_predictor
+- [?] Refactor character_predictor to character_predictor
 
 - One strategy for how to progress through the labs is creating git branches via script:
     - the subset_repo_for_lab script can generate branches instead of directories
@@ -22,6 +22,24 @@ July 27 1520:
 Problem: running out of memory on CircleCI because it's generating EmnistLines dataset.
 Also checked it out on JupyterHub and it also gets killed, dang.
 
+July 27 1930:
+Another problem with JupyterHub is that building the API deploy package via serverless is that I can't use "dockerizepip" inside of docker, and therefore get this error:
+```
+Unable to import module 'wsgi': /tmp/sls-py-req/cv2/cv2.cpython-36m-x86_64-linux-gnu.so: ELF load command address/offset not properly aligned
+```
+So I'm looking into just doing stuff on AWS by having each participant launch an instance tagged with their username.
+
+July 27 2130:
+How should it be handled when student writes code between "Your code here" lines? When they check out the next branch, they would get conflicts.
+- [ ] consult with Ibrahim
+One strategy that can help us retain sanity is to start off with the JupyterHub setup so that everyone is able to get going immediately, but have them set up on AWS by Sunday (which gives us a couple of extra days to figure it out) so that they can do Docker builds and see Flask run inside a Docker container.
+
+## To install on JupyterHub or a new instance
+
+- sudo apt-get install htop ssh redis-server awscli
+- npm install -g serverless
+- pip3 install pipenv
+
 ## Lab 0
 
 - [15min] Get set up with AWS
@@ -29,10 +47,10 @@ Also checked it out on JupyterHub and it also gets killed, dang.
 
 ## Lab 1
 
-- [10 min] Gather handwriting data
+- [? 10 min] Gather handwriting data
 - [10 min] Walk through the project structure
 - [ min] They write the network in networks/mlp.py
-- [ min] They write the prediction function in emnist_predictor.py
+- [ min] They write the prediction function in character_predictor.py
 - [ min] They submit their thing to gradescope for autograding
 
 ## Lab 2
@@ -55,16 +73,19 @@ Also checked it out on JupyterHub and it also gets killed, dang.
 
 - [10 min] Introduce IAM dataset
 - [40 min] More-or-less free lab to try to get the highest character accuracy, via searching over model space and augmenting data generator
+    - They can set their best model to be the official line_predictor model and submit to Gradescope to leaderboard it
 
 ## Lab 6
 
+- Adding CI via CircleCI (assuming I solve the memory issues)
 - Running a Flask web app
 - Dockerizing the flask web app (intro to Docker)
 
 ## Lab 7
 
 - Deploying to lambda
-- Monitoring
+- Seeing it work on your phone via cursive.ai
+- TODO: Monitoring (add trello task for someone)
 
 ## Quick Start
 

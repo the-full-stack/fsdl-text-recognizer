@@ -3,15 +3,15 @@ from time import time
 import unittest
 
 from text_recognizer.datasets.emnist import EmnistDataset
-from text_recognizer.emnist_predictor import EmnistPredictor
+from text_recognizer.character_predictor import CharacterPredictor
 
 
 SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support' / 'emnist'
 
 
-class TestEvaluateEmnistPredictor(unittest.TestCase):
+class TestEvaluateCharacterPredictor(unittest.TestCase):
     def test_evaluate(self):
-        predictor = EmnistPredictor()
+        predictor = CharacterPredictor()
         dataset = EmnistDataset()
         t = time()
         metric = predictor.evaluate(dataset)

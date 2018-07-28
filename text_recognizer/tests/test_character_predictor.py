@@ -1,15 +1,15 @@
 import pathlib
 import unittest
 
-from text_recognizer.emnist_predictor import EmnistPredictor
+from text_recognizer.character_predictor import CharacterPredictor
 
 
 SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support' / 'emnist'
 
 
-class TestEmnistPredictor(unittest.TestCase):
+class TestCharacterPredictor(unittest.TestCase):
     def test_filename(self):
-      predictor = EmnistPredictor()
+      predictor = CharacterPredictor()
 
       for filename in SUPPORT_DIRNAME.glob('*.png'):
         pred, conf = predictor.predict(str(filename))

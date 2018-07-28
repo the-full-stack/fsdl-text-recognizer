@@ -12,11 +12,11 @@ import flask
 from flask import Flask, request, jsonify
 import numpy as np
 
-from text_recognizer.emnist_predictor import EmnistPredictor
+from text_recognizer.character_predictor import CharacterPredictor
 import text_recognizer.util as util
 
 app = Flask(__name__)
-predictor = EmnistPredictor()
+predictor = CharacterPredictor()
 
 
 @app.route('/')
