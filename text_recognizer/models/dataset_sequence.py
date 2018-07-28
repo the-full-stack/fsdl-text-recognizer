@@ -21,8 +21,11 @@ class DatasetSequence(Sequence):
         begin = idx * self.batch_size
         end = (idx + 1) * self.batch_size
 
-        batch_x = np.take(self.x, range(begin, end), axis=0, mode='clip')
-        batch_y = np.take(self.y, range(begin, end), axis=0, mode='clip')
+        # batch_x = np.take(self.x, range(begin, end), axis=0, mode='clip')
+        # batch_y = np.take(self.y, range(begin, end), axis=0, mode='clip')
+
+        batch_x = self.x[begin:end]
+        batch_y = self.y[begin:end]
 
         if batch_x.dtype == np.uint8:
             batch_x = (batch_x / 255).astype(np.float32)
