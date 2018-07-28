@@ -36,12 +36,12 @@ def _load_image():
         data = request.get_json()
         if data is None:
             return 'no json received'
-        return util.read_b64_image(data['image'], grayscale=True) / 255
+        return util.read_b64_image(data['image'], grayscale=True)
     elif request.method == 'GET':
         image_url = request.args.get('image_url')
         if image_url is None:
             return 'no image_url defined in query string'
-        return util.read_image(image_url, grayscale=True) / 255
+        return util.read_image(image_url, grayscale=True)
     else:
         raise ValueError('Unsupported HTTP method')
 

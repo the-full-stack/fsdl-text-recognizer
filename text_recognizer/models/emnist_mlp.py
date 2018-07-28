@@ -32,6 +32,8 @@ class EmnistMlp(Model):
 
     def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
         # Your code below here
+        if image.dtype == np.uint8:
+            image = (image / 255).astype(np.float32)
         pred_raw = self.model.predict(np.expand_dims(image, 0), batch_size=1).flatten()
         ind = np.argmax(pred_raw)
         conf = pred_raw[ind]

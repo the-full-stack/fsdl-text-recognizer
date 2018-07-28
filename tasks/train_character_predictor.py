@@ -7,7 +7,7 @@ import numpy as np
 
 from text_recognizer.datasets.emnist import EmnistDataset
 from text_recognizer.models.emnist_mlp import EmnistMlp
-from text_recognizer.train.util import evaluate_model, train_model
+from training.util import evaluate_model, train_model
 
 
 def train():

@@ -74,6 +74,8 @@ class LineLstmWithCtc(LineModel):
             [self.model.get_layer('image').input, K.learning_phase()],
             [self.model.get_layer('softmax_output').output]
         )
+        if image.dtype == np.uint8:
+            image = (image / 255).astype(np.float32)
         input_image = np.expand_dims(image, 0)
         softmax_output = softmax_output_fn([input_image, 0])[0]
         decoded, log_prob = K.ctc_decode(softmax_output, np.array([64])) # TODO: don't hardcode 64: compute based on image and properties of self

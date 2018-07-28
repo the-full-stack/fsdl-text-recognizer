@@ -6,7 +6,7 @@ os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 import numpy as np
 
 from text_recognizer.datasets.emnist_lines import EmnistLinesDataset
-from text_recognizer.train.util import evaluate_model, train_model
+from training.util import evaluate_model, train_model
 
 # from text_recognizer.models.line_cnn_all_conv import LineCnnAllConv
 # MODEL = LineCnnAllConv

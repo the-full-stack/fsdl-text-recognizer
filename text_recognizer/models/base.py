@@ -37,9 +37,10 @@ class Model:
             shuffle=True
         )
 
-    def evaluate(self, x, y):
-        preds = self.model.predict(x)
-        return np.mean(np.argmax(preds, -1) == np.argmax(y, -1))
+    def evaluate(self, dataset):
+        sequence = DatasetSequence(dataset.x_test, dataset.y_test)
+        preds = self.model.predict_generator(sequence)
+        return np.mean(np.argmax(preds, -1) == np.argmax(dataset.y_test, -1))
 
     @property
     def loss(self):

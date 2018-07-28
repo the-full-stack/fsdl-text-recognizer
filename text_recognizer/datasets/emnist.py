@@ -64,11 +64,11 @@ class EmnistDataset(Dataset):
 
     @cachedproperty
     def x_train(self):
-        return self.data['x_train'].astype('float32') / 255
+        return self.data['x_train']
 
     @cachedproperty
     def x_test(self):
-        return self.data['x_test'].astype('float32') / 255
+        return self.data['x_test']
 
     @cachedproperty
     def y_train(self):
@@ -120,10 +120,10 @@ def _download_and_process_emnist():
     x_test = data['dataset']['test'][0, 0]['images'][0, 0].reshape(-1, 28, 28).swapaxes(1, 2)
     y_test = data['dataset']['test'][0, 0]['labels'][0, 0]
     with h5py.File(PROCESSED_DATA_FILENAME, 'w') as f:
-        f.create_dataset('x_train', data=x_train, compression='lzf')
-        f.create_dataset('y_train', data=y_train, compression='lzf')
-        f.create_dataset('x_test', data=x_test, compression='lzf')
-        f.create_dataset('y_test', data=y_test, compression='lzf')
+        f.create_dataset('x_train', data=x_train, dtype='u1', compression='lzf')
+        f.create_dataset('y_train', data=y_train, dtype='u1', compression='lzf')
+        f.create_dataset('x_test', data=x_test, dtype='u1', compression='lzf')
+        f.create_dataset('y_test', data=y_test, dtype='u1', compression='lzf')
 
     print('Saving essential dataset parameters...')
     mapping = {int(k): chr(v) for k, v in data['dataset']['mapping'][0, 0]}

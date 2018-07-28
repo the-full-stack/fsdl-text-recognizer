@@ -34,6 +34,9 @@ How should it be handled when student writes code between "Your code here" lines
 - [ ] consult with Ibrahim
 One strategy that can help us retain sanity is to start off with the JupyterHub setup so that everyone is able to get going immediately, but have them set up on AWS by Sunday (which gives us a couple of extra days to figure it out) so that they can do Docker builds and see Flask run inside a Docker container.
 
+July 28 0047:
+CURRENT TASK is debugging high memory use in emnist_lines creation (I have a breakpoint and want to observe memory use as I create first test than train)
+
 ## To install on JupyterHub or a new instance
 
 - sudo apt-get install htop ssh redis-server awscli
@@ -72,6 +75,7 @@ One strategy that can help us retain sanity is to start off with the JupyterHub 
 ## Lab 5
 
 - [10 min] Introduce IAM dataset
+- [10 min] Introduce image preprocessing via https://keras.io/preprocessing/image/#image-preprocessing
 - [40 min] More-or-less free lab to try to get the highest character accuracy, via searching over model space and augmenting data generator
     - They can set their best model to be the official line_predictor model and submit to Gradescope to leaderboard it
 

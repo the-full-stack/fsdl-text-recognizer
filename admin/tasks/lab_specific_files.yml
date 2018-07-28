@@ -4,8 +4,9 @@
     - Pipfile.lock
     - notebooks/01-look-at-emnist.ipynb
     - notebooks/02-train-emnist-mlp.ipynb
-    - tasks/train_emnist_mlp.py
+    - tasks/train_character_predictor.py
     - text_recognizer/__init__.py
+    - text_recognizer/util.py
     - text_recognizer/character_predictor.py
     - text_recognizer/datasets/base.py
     - text_recognizer/datasets/emnist.py
@@ -20,9 +21,8 @@
     - text_recognizer/tests/support/emnist/a.png
     - text_recognizer/tests/support/emnist/X.png
     - text_recognizer/tests/test_character_predictor.py
-    - text_recognizer/train/util.py
-    - text_recognizer/train/gpu_util_sampler.py
-    - text_recognizer/util.py
+    - training/util.py
+    - training/gpu_util_sampler.py
 
 2:
     - notebooks/03-emnist-lines.ipynb
@@ -49,13 +49,13 @@
     - text_recognizer/tests/test_line_predictor.py
 
 4:
-    - text_recognizer/train/gpu_manager.py
+    - training/gpu_manager.py
     - experiments/sample_experiments.json
     - tasks/prepare_experiments.py
     - tasks/run_experiment.py
 
 5:
-    - text_recognizer/models/dataset_sequence_with_augmentation.py
+    - datasets/iam_lines.py
 
 6:
     - text_recognizer/api/app.py

@@ -34,6 +34,7 @@ class EmnistLinesDataset(Dataset):
         np.random.seed(42)
 
         if not self.data_filename.exists():
+            from IPython import embed; embed()
             self._generate_data('train')
             self._generate_data('test')
         self._load_data()
@@ -75,8 +76,8 @@ class EmnistLinesDataset(Dataset):
         with h5py.File(self.data_filename, 'a') as f:
             x, y = create_dataset_of_images(num, samples_by_char, sentence_generator, self.max_overlap)
             y = convert_strings_to_categorical_labels(y, emnist.inverse_mapping)
-            f.create_dataset(f'x_{split}', data=x, compression='lzf')
-            f.create_dataset(f'y_{split}', data=y, compression='lzf')
+            f.create_dataset(f'x_{split}', data=x, dtype='u1', compression='lzf')
+            f.create_dataset(f'y_{split}', data=y, dtype='u1', compression='lzf')
 
 
 def get_samples_by_char(samples, labels, mapping):
@@ -87,7 +88,7 @@ def get_samples_by_char(samples, labels, mapping):
 
 
 def select_letter_samples_for_string(string, samples_by_char):
-    zero_image = np.zeros((28, 28), 'float32')
+    zero_image = np.zeros((28, 28), np.uint8)
     sample_image_by_char = {}
     for char in string:
         if char in sample_image_by_char:
@@ -105,7 +106,7 @@ def construct_image_from_string(string: str, samples_by_char: dict, max_overlap:
     H, W = sampled_images[0].shape
     oW = int(overlap * W)
     noW = W - oW
-    concatenated_image = np.zeros((H, W * N), 'float32')
+    concatenated_image = np.zeros((H, W * N), np.uint8)
     x = 0
     for image in sampled_images:
         concatenated_image[:, x:(x + W)] += image
@@ -116,7 +117,7 @@ def construct_image_from_string(string: str, samples_by_char: dict, max_overlap:
 def create_dataset_of_images(N, samples_by_char, sentence_generator, max_overlap):
     sample_label = sentence_generator.generate()
     sample_image = construct_image_from_string(sample_label, samples_by_char, 0)  # Note that sample_image has 0 overlap
-    images = np.zeros((N, sample_image.shape[0], sample_image.shape[1]), 'float32')
+    images = np.zeros((N, sample_image.shape[0], sample_image.shape[1]), np.uint8)
     labels = []
     for n in range(N):
         label = sentence_generator.generate()

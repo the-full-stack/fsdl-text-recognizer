@@ -19,6 +19,8 @@ class LineModel(Model):
         self.input_shape = dataset.input_shape
 
     def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
+        if image.dtype == np.uint8:
+            image = (image / 255).astype(np.float32)
         pred_raw = self.model.predict(np.expand_dims(image, 0), batch_size=1).squeeze()
         pred = convert_pred_raw_to_string(pred_raw, self.mapping)
         conf = np.min(np.max(pred_raw, axis=-1)) # The least confident of the predictions.

@@ -9,7 +9,7 @@ from wandb.keras import WandbCallback
 
 from text_recognizer.datasets.base import Dataset
 from text_recognizer.models.base import Model
-from text_recognizer.train.gpu_util_sampler import GPUUtilizationSampler
+from training.gpu_util_sampler import GPUUtilizationSampler
 
 
 EARLY_STOPPING = True
@@ -48,6 +48,6 @@ def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gp
 
 
 def evaluate_model(model: Model, dataset: Dataset) -> float:
-    metric = model.evaluate(dataset.x_test, dataset.y_test)
+    metric = model.evaluate(dataset)
     print('Test metric:', metric)
     return metric
