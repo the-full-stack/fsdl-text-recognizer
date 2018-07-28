@@ -8,8 +8,7 @@ sls plugin install -n serverless-wsgi
 sls plugin install -n serverless-python-requirements
 # edit serverless.yml and app.py
 pipenv install
-pipenv shell
-sls wsgi serve
+pipenv run sls wsgi serve
 # see stuff work on localhost
 
 sls plugin install -n serverless-domain-manager
