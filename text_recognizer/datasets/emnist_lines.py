@@ -16,7 +16,7 @@ ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_line
 
 
 class EmnistLinesDataset(Dataset):
-    def __init__(self, max_length: int=32, max_overlap: float=0.4, num_train: int=5000, num_test: int=1000):
+    def __init__(self, max_length: int=32, max_overlap: float=0.4, num_train: int=20000, num_test: int=2000):
         self.emnist = EmnistDataset()
         self.mapping = self.emnist.mapping
         self.max_length = max_length
@@ -34,7 +34,6 @@ class EmnistLinesDataset(Dataset):
         np.random.seed(42)
 
         if not self.data_filename.exists():
-            from IPython import embed; embed()
             self._generate_data('train')
             self._generate_data('test')
         self._load_data()
