@@ -2,49 +2,17 @@
 
 Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp](https://fullstackdeeplearning.com/bootcamp).
 
-## Tasks / Ideas
-
-- [?] Refactor character_predictor to character_predictor
-
-- One strategy for how to progress through the labs is creating git branches via script:
-    - the subset_repo_for_lab script can generate branches instead of directories
-    - [ ] Strip out stuff between "your code here" lines in generating the lab subsets
-
-- [ ] make list of suggestions for what to try in the experiment lab
-
-- Looking into dataset augmentation:
-    - Don't think it makes sense to use tf.data.Dataset. Can point them to it for homework, though.
-    - Do need a solution for separating the input/output transformation code from the augmentation code.
-        - What probably makes the most sense is passing InputOutputFormatter and DataAugmenter as arguments to Dataset
-        - [x] refactor CtcDatasetSequence to simply pass a formatting function to DatasetSequence
-
-July 27 1520:
-Problem: running out of memory on CircleCI because it's generating EmnistLines dataset.
-Also checked it out on JupyterHub and it also gets killed, dang.
-
-July 27 1930:
-Another problem with JupyterHub is that building the API deploy package via serverless is that I can't use "dockerizepip" inside of docker, and therefore get this error:
-```
-Unable to import module 'wsgi': /tmp/sls-py-req/cv2/cv2.cpython-36m-x86_64-linux-gnu.so: ELF load command address/offset not properly aligned
-```
-So I'm looking into just doing stuff on AWS by having each participant launch an instance tagged with their username.
-
-July 27 2130:
-How should it be handled when student writes code between "Your code here" lines? When they check out the next branch, they would get conflicts.
-- [ ] consult with Ibrahim
-One strategy that can help us retain sanity is to start off with the JupyterHub setup so that everyone is able to get going immediately, but have them set up on AWS by Sunday (which gives us a couple of extra days to figure it out) so that they can do Docker builds and see Flask run inside a Docker container.
-
-July 28 0047:
-currently debugging high memory use in emnist_lines creation (I have a breakpoint and want to observe memory use as I create first test than train)
-
-July 28 0150
-Did some code reorg (moved stuff into admin/), mocked out more of the labs, and fixed the high memory usage by switching to uint8 from float32
-
-## To install on JupyterHub or a new instance
-
-- sudo apt-get install htop ssh redis-server awscli
-- npm install -g serverless
-- pip3 install pipenv
+- In this lab we will build a handwriting recognition system from scratch, and deploy it as a web service.
+- We will use Keras with Tensorflow backend as the underlying framework.
+- The framework will not lock us in to many design choices, and can easily be replaced with, for example, PyTorch.
+- We will structure the project in a way that will scale with future development and allow us to run experiments.
+- We will evaluate both convolutional and sequence methods for the task, and will see an example of how to compute loss in a more advanced way.
+- Throughout development, we will submit our project code to Gradescope for autograding and leaderboard.
+- We will run experiments on multiple GPUs, and store results to an online experiment management platform.
+- We will set up continuous integration system for our codebase, which will check functionality of code and evaluate the model about to be deployed.
+- We will package up the prediction system as a REST API, deployable as a Docker container.
+- We will deploy the prediction system as a serverless function to Amazon Lambda.
+- Lastly, we will set up monitoring that alerts us when the incoming data distribution changes.
 
 ## Lab 0
 

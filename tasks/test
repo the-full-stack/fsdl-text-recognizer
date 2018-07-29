@@ -1,1 +1,0 @@
-pipenv run pytest text_recognizer

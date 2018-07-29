@@ -8,7 +8,7 @@ def run_experiments(filename):
         experiments_config = json.load(f)
     num_experiments = len(experiments_config['experiments'])
     for ind in range(num_experiments):
-        print(f'pipenv run python tasks/run_experiment.py --gpu=-1 {filename} {ind}')
+        print(f'pipenv run python training/run_experiment.py --gpu=-1 {filename} {ind}')
 
 
 if __name__ == '__main__':
