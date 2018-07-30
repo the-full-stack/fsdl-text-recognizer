@@ -45,9 +45,3 @@ def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gp
         print(f'GPU utilization: {round(np.mean(gpu_utilizations), 2)} +- {round(np.std(gpu_utilizations), 2)}')
 
     return model
-
-
-def evaluate_model(model: Model, dataset: Dataset) -> float:
-    metric = model.evaluate(dataset)
-    print('Test metric:', metric)
-    return metric

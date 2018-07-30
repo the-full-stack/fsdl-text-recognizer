@@ -27,6 +27,7 @@
     - notebooks/04-line-cnn.ipynb
     - text_recognizer/datasets/emnist_lines.py
     - text_recognizer/datasets/sentences.py
+    - text_recognizer/models/line_model.py
     - text_recognizer/models/line_cnn_all_conv.py
     - text_recognizer/models/line_cnn_fixed_width.py
     - text_recognizer/models/line_cnn_sliding_window.py

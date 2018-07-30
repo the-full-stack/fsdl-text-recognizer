@@ -15,6 +15,7 @@ def create_emnist_support_files():
     SUPPORT_DIRNAME.mkdir()
 
     dataset = EmnistDataset()
+    dataset.load_or_generate_data()
 
     for ind in [1, 2, 4]:
         image = (dataset.x_test[ind] * 255).astype(np.uint8)

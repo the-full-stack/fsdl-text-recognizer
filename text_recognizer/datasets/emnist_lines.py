@@ -11,7 +11,7 @@ from text_recognizer.datasets.base import Dataset
 from text_recognizer.datasets.emnist import EmnistDataset
 
 
-DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data' / 'processed' / 'emnist_lines'
+DATA_DIRNAME = Dataset.data_dirname() / 'processed' / 'emnist_lines'
 ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_lines_essentials.json'
 
 
@@ -64,6 +64,7 @@ class EmnistLinesDataset(Dataset):
         sentence_generator = SentenceGenerator(self.max_length)
 
         emnist = self.emnist
+        emnist.load_or_generate_data()
         if split == 'train':
             samples_by_char = get_samples_by_char(emnist.x_train, emnist.y_train_int, emnist.mapping)
         else:

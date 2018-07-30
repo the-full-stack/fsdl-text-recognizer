@@ -13,6 +13,7 @@ class TestEvaluateCharacterPredictor(unittest.TestCase):
     def test_evaluate(self):
         predictor = CharacterPredictor()
         dataset = EmnistDataset()
+        dataset.load_or_generate_data()
         t = time()
         metric = predictor.evaluate(dataset)
         time_taken = time() - t

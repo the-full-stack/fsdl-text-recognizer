@@ -7,8 +7,9 @@ from typing import Optional
 import nltk
 import numpy as np
 
-DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data'
-NLTK_DATA_DIRNAME = DATA_DIRNAME / 'raw' / 'nltk'
+from text_recognizer.datasets.base import Dataset
+
+NLTK_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'nltk'
 
 
 class SentenceGenerator():

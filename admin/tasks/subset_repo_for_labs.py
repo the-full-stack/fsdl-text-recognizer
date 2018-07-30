@@ -20,19 +20,13 @@ import shutil
 import yaml
 
 
-REPO_DIRNAME = pathlib.Path(__file__).parents[1].resolve()
-INFO_FILENAME = REPO_DIRNAME / 'tasks' / 'lab_specific_files.yml'
-
-
-def create_directory(output_dirname, lab_number):
-
-    if output_dir.exists():
-        shutil.rmtree(output_dir)
+REPO_DIRNAME = pathlib.Path(__file__).parents[2].resolve()
+INFO_FILENAME = REPO_DIRNAME / 'admin' / 'tasks' / 'lab_specific_files.yml'
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('output_dirname', type=str, help='Where to output the lab subset directories.')
+    parser.add_argument('--output_dirname', default='_labs', help='Where to output the lab subset directories.')
     args = parser.parse_args()
 
     with open(INFO_FILENAME) as f:
@@ -41,6 +35,8 @@ if __name__ == '__main__':
     output_dir = pathlib.Path(args.output_dirname)
     if output_dir.exists():
         shutil.rmtree(output_dir)
+
+    shutil.copytree(REPO_DIRNAME / 'data', output_dir / 'data')
 
     for lab_number in info.keys():
         lab_output_dir = output_dir / f'lab{lab_number}'
@@ -55,7 +51,7 @@ if __name__ == '__main__':
             shutil.copy(path, new_path)
             new_paths.append(new_path)
 
-        # Strip out stuff between "Your code here" blocks
+        # Strip out stuff between "Your code here" blocks and change data dirname path
         beginning_comment = f'# Your code below here \(Lab {lab_number}\)'
         ending_comment = f'# Your code above here \(Lab {lab_number}\)'
         for path in new_paths:
@@ -63,12 +59,12 @@ if __name__ == '__main__':
                 continue
             with open(path) as f:
                 contents = f.read()
-            if not re.search(beginning_comment, contents):
-                continue
             filtered_lines = []
             filtering = False
             for line in contents.split('\n'):
                 if not filtering:
+                    if line == "        return pathlib.Path(__file__).parents[2].resolve() / 'data'":
+                        line = "        return pathlib.Path(__file__).parents[3].resolve() / 'data'"
                     filtered_lines.append(line)
                 if re.search(beginning_comment, line):
                     filtering = True
