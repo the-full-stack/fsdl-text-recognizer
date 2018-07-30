@@ -26,7 +26,8 @@ custom:
   customDomain:
     domainName: cursive.ai
     hostedZoneId: ZY9AETNBV8YF6
-    endpointType: regional # otherwise, certificate needs to be in us-east-1
+    endpointType: edge
+    stage: ${self:provider.stage}
 
 plugins:
   - serverless-wsgi
