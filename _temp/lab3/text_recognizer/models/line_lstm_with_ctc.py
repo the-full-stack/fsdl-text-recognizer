@@ -50,10 +50,7 @@ class LineLstmWithCtc(LineModel):
         decoding_model = KerasModel(inputs=self.model.input, outputs=self.model.get_layer('ctc_decoded').output)
         test_sequence = DatasetSequence(x, y, batch_size, format_fn=self.batch_format_fn)
         # Your code below here (Lab 3)
-        preds = decoding_model.predict_generator(test_sequence)
-        trues = np.argmax(y, -1)
-        pred_strings = [''.join(self.mapping.get(label, '') for label in pred).strip() for pred in preds]
-        true_strings = [''.join(self.mapping.get(label, '') for label in true).strip() for true in trues]
+
         # Your code above here (Lab 3)
         char_accuracies = [
             1 - editdistance.eval(true_string, pred_string) / len(pred_string)
@@ -81,16 +78,6 @@ class LineLstmWithCtc(LineModel):
             image = (image / 255).astype(np.float32)
 
         # Your code below here (Lab 3)
-        input_image = np.expand_dims(image, 0)
-        softmax_output = softmax_output_fn([input_image, 0])[0]
-        decoded, log_prob = K.ctc_decode(softmax_output, np.array([self.input_sequence_length]))
-
-        pred_raw = K.eval(decoded[0])[0]
-        pred = ''.join(self.mapping[label] for label in pred_raw).strip()
-
-        neg_sum_logit = K.eval(log_prob)[0][0]
-        conf = np.exp(neg_sum_logit) / (1 + np.exp(neg_sum_logit))
-        # TODO: not sure if conf calculation is correct
 
         # Your code above here (Lab 3)
         return pred, conf
@@ -134,12 +121,7 @@ def create_sliding_window_rnn_with_ctc_model(input_shape, max_length, num_classe
     lstm_fn = CuDNNLSTM if gpu_present else LSTM
 
     # Your code below here (Lab 3)
-    image_reshaped = Reshape((image_height, image_width, 1))(image_input)
-    image_patches = Lambda(slide_window)(image_reshaped)  # (num_windows, image_height, window_width, 1)
-    convnet = lenet(image_height, window_width)
-    convnet_outputs = TimeDistributed(convnet)(image_patches)  # (num_windows, 128)
-    lstm_output = lstm_fn(128, return_sequences=True)(convnet_outputs)  # (sequence_length, 128)
-    softmax_output = TimeDistributed(Dense(num_classes, activation='softmax'), name='softmax_output')(lstm_output) # (sequence_length, 128)
+
     # Your code above here (Lab 3)
 
     ctc_loss_output = Lambda(

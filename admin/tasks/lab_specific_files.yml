@@ -1,10 +1,8 @@
 1:
-    - .gitignore
-    - Pipfile
-    - Pipfile.lock
     - notebooks/01-look-at-emnist.ipynb
     - notebooks/02-train-emnist-mlp.ipynb
     - tasks/train_character_predictor.py
+    - tasks/run_prediction_tests.sh
     - text_recognizer/__init__.py
     - text_recognizer/util.py
     - text_recognizer/character_predictor.py
@@ -39,9 +37,9 @@
     - notebooks/06-line-lstm-with-ctc.ipynb
     - tasks/train_line_predictor.py
     - text_recognizer/line_predictor.py
-    - text_recognizer/models/ctc_dataset_sequence.py
     - text_recognizer/models/line_lstm.py
     - text_recognizer/models/line_lstm_with_ctc.py
+    - text_recognizer/networks/ctc.py
     - text_recognizer/tests/support/create_emnist_lines_support_files.py
     - "text_recognizer/tests/support/emnist_lines/carry big sticks over Laos.png"
     - "text_recognizer/tests/support/emnist_lines/edge on the.png"
@@ -49,18 +47,23 @@
     - text_recognizer/tests/test_line_predictor.py
 
 4:
+    - tasks/run_sample_experiments.sh
     - training/gpu_manager.py
-    - experiments/sample_experiments.json
-    - tasks/prepare_experiments.py
-    - tasks/run_experiment.py
+    - training/experiments/sample.json
+    - training/prepare_experiments.py
+    - training/run_experiment.py
 
 5:
     - datasets/iam_lines.py
 
 6:
-    - text_recognizer/api/app.py
-    - text_recognizer/api/tests/test_app.py
-    - text_recognizer/api/Dockerfile
+    - .circleci/config.yml
+    - api/app.py
+    - api/tests/test_app.py
+    - api/Dockerfile
+    - tasks/build_api_docker.sh
+    - tasks/run_validation_tests.sh
+    - tasks/test_api.sh
 
 7:
     - api/readme.md
