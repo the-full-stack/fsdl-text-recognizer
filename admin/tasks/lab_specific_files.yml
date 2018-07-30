@@ -54,7 +54,7 @@
     - training/run_experiment.py
 
 5:
-    - datasets/iam_lines.py
+    - text_recognizer/datasets/iam_lines.py
 
 6:
     - .circleci/config.yml
@@ -68,4 +68,4 @@
 7:
     - api/readme.md
     - api/serverless.yml
-    - tasks/deploy_api.sh
+    - tasks/deploy_api_to_lambda.sh
