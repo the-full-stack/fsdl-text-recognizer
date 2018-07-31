@@ -46,3 +46,54 @@ def read_b64_image(b64_string, grayscale=False):
 
 def write_image(image, filename):
     cv2.imwrite(filename, image)
+
+
+def resize(image, scale_factor):
+    """
+    Resize image.
+    OpenCV does not resize in place, hence need to copy and return in case
+    scale_factor is 1 to maintain consistency in behaviour
+    """
+    if scale_factor == 1:
+        return image.copy()
+    return cv2.resize(
+        image,
+        dsize=None,
+        fx=scale_factor,
+        fy=scale_factor,
+        interpolation=cv2.INTER_AREA
+    )
+
+
+def binarize_image(img):
+    """
+    If img is not black and white, return binarized using Otsu's method.
+    """
+    if len(np.unique(img)) > 2:
+        _, img = cv2.threshold(img, 128, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
+    return img
+
+
+def crop_image_region(image, region=None):
+    """
+    Input
+        image (2d ndarray of uint8)
+        region (dict): must contain 'x1', 'x2', 'y1', 'y2' keys
+                       note that 'units' key can be given, with '%' as a valid value
+    Output
+        image_region (2d ndarray of uint8)
+    """
+    if not region:
+        return image
+    H, W = image.shape[:2]
+    if 'units' in region and region['units'] == '%':
+        y1 = int(max(0, float(region['y1'])) * H / 100.)
+        y2 = int(min(100, float(region['y2'])) * H / 100.)
+        x1 = int(max(0, float(region['x1'])) * W / 100.)
+        x2 = int(min(100, float(region['x2'])) * W / 100.)
+    else:
+        y1 = max(0, int(region['y1']))
+        y2 = min(H, int(region['y2']))
+        x1 = max(0, int(region['x1']))
+        x2 = min(W, int(region['x2']))
+    return image[y1:y2, x1:x2]
