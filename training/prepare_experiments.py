@@ -9,9 +9,9 @@ def run_experiments(experiments_filename):
         experiments_config = json.load(f)
     num_experiments = len(experiments_config['experiments'])
     for ind in range(num_experiments):
-        experiment_config = json.dumps(experiments_config['experiments'][ind])
+        experiment_config = experiments_config['experiments'][ind]
         experiment_config['experiment_group'] = experiments_config['experiment_group']
-        print(f"pipenv run python training/run_experiment.py --gpu=-1 '{experiment_config}'")
+        print(f"pipenv run python training/run_experiment.py --gpu=-1 '{json.dumps(experiment_config)}'")
 
 
 if __name__ == '__main__':
