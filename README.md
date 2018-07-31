@@ -16,7 +16,7 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 
 ## Tasks
 
-Note: all tasks are to be run from the top-level repo directory.
+- [ ] make Model class take a Dataset class (so that different datasets can be used with different models)
 
 ## Lab 0
 

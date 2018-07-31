@@ -2,6 +2,7 @@
 IAM LINES dataset.
 """
 import pathlib
+from urllib.request import urlretrieve
 
 from boltons.cacheutils import cachedproperty
 import h5py
@@ -13,8 +14,8 @@ from text_recognizer.datasets.emnist import EmnistDataset
 
 DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data'
 PROCESSED_DATA_DIRNAME = DATA_DIRNAME / 'processed' / 'iam_lines'
-PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'lwitlrt.h5'
-
+PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'iam_lines.h5'
+PROCESSED_DATA_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/iam_lines.h5'
 
 class IamLinesDataset(Dataset):
     """
@@ -37,6 +38,10 @@ class IamLinesDataset(Dataset):
         self.num_classes = len(self.mapping)
 
     def load_or_generate_data(self):
+        if not PROCESSED_DATA_FILENAME.exists():
+            PROCESSED_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
+            print('Downloading IAM lines...')
+            urlretrieve(PROCESSED_DATA_URL, PROCESSED_DATA_FILENAME)
         with h5py.File(PROCESSED_DATA_FILENAME) as f:
             self.x_train = f['x_train'][:]
             self.y_train_int = f['y_train'][:]
@@ -62,5 +67,7 @@ class IamLinesDataset(Dataset):
 
 
 if __name__ == '__main__':
-    data = IamLinesDataset()
-    print(data)
+    dataset = IamLinesDataset()
+    dataset.load_or_generate_data()
+    print(dataset)
+    from IPython import embed; embed()

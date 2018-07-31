@@ -16,7 +16,7 @@ ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_line
 
 
 class EmnistLinesDataset(Dataset):
-    def __init__(self, max_length: int=32, max_overlap: float=0.4, num_train: int=20000, num_test: int=2000):
+    def __init__(self, max_length: int=34, max_overlap: float=0.4, num_train: int=20000, num_test: int=2000):
         self.emnist = EmnistDataset()
         self.mapping = self.emnist.mapping
         self.max_length = max_length

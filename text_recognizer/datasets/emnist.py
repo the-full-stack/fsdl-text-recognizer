@@ -5,7 +5,7 @@ import json
 import os
 import pathlib
 import shutil
-import urllib.request
+from urllib.request import urlretrieve
 import zipfile
 
 from boltons.cacheutils import cachedproperty
@@ -79,7 +79,7 @@ def _download_and_process_emnist():
 
     if not os.path.exists('matlab.zip'):
         print('Downloading EMNIST...')
-        urllib.request.urlretrieve(RAW_URL, 'matlab.zip')
+        urlretrieve(RAW_URL, 'matlab.zip')
 
     print('Unzipping EMNIST and loading .mat file...')
     zip_file = zipfile.ZipFile('matlab.zip', 'r')

@@ -18,7 +18,7 @@ from text_recognizer.networks.ctc import ctc_decode
 
 
 class LineLstmWithCtc(LineModel):
-    def __init__(self, window_width: int=14, window_stride: int=14):
+    def __init__(self, window_width: int=15, window_stride: int=15):
         super().__init__()
         self.window_width = window_width
         self.window_stride = window_stride

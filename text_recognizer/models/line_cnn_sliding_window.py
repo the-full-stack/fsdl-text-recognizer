@@ -17,6 +17,7 @@ class LineCnnSlidingWindow(LineModel):
         super().__init__()
         self.window_fraction = window_fraction
         self.window_stride = window_stride
+        self.max_length = 97 # TODO: fix by making models take a dataset
 
     @cachedproperty
     def model(self):
