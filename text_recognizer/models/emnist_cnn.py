@@ -12,7 +12,7 @@ from text_recognizer.networks.cnn import lenet
 
 
 class EmnistCnn(Model):
-    def __init__(self, layer_size: int=128, dropout_amount: float=0.2):
+    def __init__(self):
         np.random.seed(42)
         tensorflow.set_random_seed(42)
 
@@ -20,9 +20,6 @@ class EmnistCnn(Model):
         self.mapping = data.mapping
         self.num_classes = len(self.mapping)
         self.input_shape = data.input_shape
-
-        self.layer_size = layer_size
-        self.dropout_amount = dropout_amount
 
     @cachedproperty
     def model(self):

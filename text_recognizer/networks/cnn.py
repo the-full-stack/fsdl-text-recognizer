@@ -8,7 +8,7 @@ from tensorflow.keras.models import Sequential, Model
 def lenet(image_height: int, image_width: int, num_classes: Optional[int] = None, expand_dims: bool=False) -> Model:
     model = Sequential()
     if expand_dims:
-        model.add(Lambda(lambda x: tf.expand_dims(x, -1), input_shape=(image_height, image_width, 1)))
+        model.add(Lambda(lambda x: tf.expand_dims(x, -1), input_shape=(image_height, image_width)))
     model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', input_shape=(image_height, image_width, 1)))
     model.add(Conv2D(64, (3, 3), activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))

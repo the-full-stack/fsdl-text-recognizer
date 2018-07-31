@@ -24,7 +24,7 @@ def create_sliding_window_rnn_model(input_shape, max_length, num_classes, window
     def slide_window_bound(image, window_width=window_width, window_stride=window_stride):
         return slide_window(image, window_width, window_stride)
 
-    encoder_dim = num_classes * max_length
+    encoder_dim = num_classes * max_length // 8
     decoder_dim = num_classes
 
     image_height, image_width = input_shape
@@ -41,6 +41,7 @@ def create_sliding_window_rnn_model(input_shape, max_length, num_classes, window
     encoder_output = lstm(encoder_dim, return_sequences=False)(convnet_outputs) # (lstm_dim)
     repeated_encoding = RepeatVector(max_length)(encoder_output) # (max_length, lstm_dim)
     decoder_output = lstm(decoder_dim, return_sequences=True)(repeated_encoding)
+    # TODO: try backwarding here and then reversing the sequence?
     # Your code above here (Lab 3)
 
     softmax_outputs = TimeDistributed(Dense(num_classes, activation='softmax'))(decoder_output) # (max_length, num_classes)
