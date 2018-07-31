@@ -14,21 +14,6 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 - We will deploy the prediction system as a serverless function to Amazon Lambda.
 - Lastly, we will set up monitoring that alerts us when the incoming data distribution changes.
 
-PICK UP AT: GET LAB 1, 2, 3, 4 FULLY READY TO GO FOR MOSTAFA AND IGNASI
-    - Make instructions for what to do and make sure that it can all be auto-graded with leaderboards
-    - Start with subsets as copies of rep
-
-July 29:
-- make all assignments on Gradescope
-- sync up with W&B re: jupyterhub and be able to use it with mostafa and ignasi
-- sync up with ibrahim or arjun re: making IAM accounts for all attendees so that they can deploy to lambda (they can name-space their functions)
-- sync up with Michael re: borrowing camera to record video
-- sync up with Saurabh re: IAM dataset and next task (ImagePreProcessor for data augmentation)
-- draft first half of vision applications lecture in the evening
-
-LAB SUBSETS SOLUTION:
-- each lab begins in its own directory. if students want to carry their own code over between labs, they can manually do it. this avoids git conflicts. to not have to re-initialize the data directory, the data directory is one level up from the labs. there is a command to check out the next lab (but for today, we can just start with all lab subsets in one dir)
-
 ## Tasks
 
 Note: all tasks are to be run from the top-level repo directory.
@@ -41,29 +26,45 @@ Note: all tasks are to be run from the top-level repo directory.
 ## Lab 1 (60 min)
 
 - [10 min] Gather handwriting data
+- [5 min] Pipfile and pipenv
 - [15 min] Walk through the project structure
     - talk about Dataset and uint8 vs float32 memory
     - talk about DatasetSequence and generators vs having all data in memory
+        - make sure to explain that this enables a separate thread to load the data
     - talk about Keras callbacks: EarlyStopping, GPUUtilization, Tensorboard
 - [15 min] They write the network in networks/mlp.py and the prediction function in character_predictor.py, and train it
 - [5 min] They push code to Github and submit to gradescope for autograding
 
+TASKS
+- [ ] rename model to network
+- [ ] make pre-processing logic in predict() and fit()/evaluate() should be shared
+- [ ] Mostafa suggests that big datasets cannot be stored in one file. will have to shard over multiple files
+- [ ] increasing GPU utiliation: can incerase batch or number of workers that preprocess data
+
 ## Lab 2 (60 min)
 
-- [10 min] They write the CNN version of char_model.py
-- [10 min] Walk through EMNIST line generation
-- [ min] They write fixed-width and TimeDistributed code
+- [10 min] They write the CNN version of emnist_cnn.py
+- [10 min] Walk through EMNIST line generation and fixed-width approach
+    - Make sure to cover what the label and the loss are
 - [ min] They write convnet code to use sliding window (they write sliding window part)
 - [ min] They write convnet code to be all conv and observe whether it's faster or not
+
+- [ ] make sure to specify that padding has to be 'same'
+- [ ] make a slide explaining the all-conv idea
 
 ## Lab 3 (60 min)
 
 - [10 min] They write the LSTM version
 
+- [ ] be able to answer what the CTC token is doing
+- [ ] be able to answer how loss is backprop'd through: to the first repeated char or for all of them?
+- [ ] write output shapes for all lines in the network
+
 ## Lab 4 (30 min)
 
 - Weights & Biases and script to distribute jobs over multiple GPUs
-
+- [ ] talk about distributing training of a single model (in addition to multiple experiments)
+mple
 ## Lab 5 (60 min)
 
 - [10 min] Introduce IAM dataset

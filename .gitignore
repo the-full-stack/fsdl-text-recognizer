@@ -43,3 +43,4 @@ wandb/*
 # Misc
 .DS_Store
 _labs
+logs

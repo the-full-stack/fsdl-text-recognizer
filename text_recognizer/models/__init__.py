@@ -1,4 +1,5 @@
 from .emnist_mlp import EmnistMlp
+from .emnist_cnn import EmnistCnn
 from .line_cnn_all_conv import LineCnnAllConv
 from .line_cnn_fixed_width import LineCnnFixedWidth
 from .line_cnn_sliding_window import LineCnnSlidingWindow
