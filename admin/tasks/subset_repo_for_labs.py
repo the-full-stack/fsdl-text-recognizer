@@ -6,9 +6,9 @@ The script creates a subset of files corresponding to labs with index less than 
 as specified in lab_specific_files.yml
 
 Furthermore, it also strips out text between blocks like
-    # Your code below here (lab1)
+    # Your code below (Lab1)
     # <content>
-    # Your code above here (lab1)
+    # Your code above (Lab1)
 for labs with index greater than or equal to the one given.
 
 """
@@ -19,18 +19,20 @@ import shutil
 
 import yaml
 
-
+MAX_LAB_NUMBER = 10
 REPO_DIRNAME = pathlib.Path(__file__).parents[2].resolve()
 INFO_FILENAME = REPO_DIRNAME / 'admin' / 'tasks' / 'lab_specific_files.yml'
 
 
-def _filter_your_code_blocks(lines):
+def _filter_your_code_blocks(lines, lab_number):
     """
     Strip out stuff between "Your code here" blocks.
     """
+    beginning_comment = f'# Your code below \(Lab {lab_number}\)'
+    ending_comment = f'# Your code above \(Lab {lab_number}\)'
     filtered_lines = []
     filtering = False
-    for line in contents.split('\n'):
+    for line in lines:
         if not filtering:
             filtered_lines.append(line)
         if re.search(beginning_comment, line):
@@ -39,6 +41,23 @@ def _filter_your_code_blocks(lines):
         if re.search(ending_comment, line):
             filtered_lines.append(line)
             filtering = False
+    return filtered_lines
+
+
+def _filter_hidden_blocks(lines, lab_number):
+    lab_numbers_to_hide = f"[{'|'.join(str(num) for num in range(lab_number, MAX_LAB_NUMBER))}]"
+    beginning_comment = f'# Hide lines below until Lab {lab_numbers_to_hide}'
+    ending_comment = f'# Hide lines above until Lab {lab_numbers_to_hide}'
+    filtered_lines = []
+    filtering = False
+    for line in lines:
+        if re.search(beginning_comment, line):
+            filtering = True
+        if re.search(ending_comment, line):
+            filtering = False
+            continue
+        if not filtering:
+            filtered_lines.append(line)
     return filtered_lines
 
 
@@ -78,17 +97,17 @@ if __name__ == '__main__':
             shutil.copy(path, new_path)
             new_paths.append(new_path)
 
-        beginning_comment = f'# Your code below here \(Lab {lab_number}\)'
-        ending_comment = f'# Your code above here \(Lab {lab_number}\)'
+        # Process copied Python files
         for path in new_paths:
             if path.suffix != '.py':
                 continue
+
             with open(path) as f:
-                contents = f.read()
-            lines = contents.split('\n')
-            filtered_lines = _filter_your_code_blocks(lines)
-            # TODO: also hide lines
-            filtered_lines = _replace_data_dirname(filtered_lines)
+                lines = f.read().split('\n')
+
+            lines = _filter_your_code_blocks(lines, lab_number)
+            lines = _filter_hidden_blocks(lines, lab_number)
+            lines = _replace_data_dirname(lines)
 
             with open(path, 'w') as f:
-                f.write('\n'.join(filtered_lines))
+                f.write('\n'.join(lines))

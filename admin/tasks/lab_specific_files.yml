@@ -9,8 +9,8 @@
     - text_recognizer/datasets/base.py
     - text_recognizer/datasets/emnist.py
     - text_recognizer/datasets/emnist_essentials.json
+    - text_recognizer/datasets/sequence.py
     - text_recognizer/models/base.py
-    - text_recognizer/models/dataset_sequence.py
     - text_recognizer/models/emnist_mlp.py
     - text_recognizer/models/emnist_mlp_weights.h5
     - text_recognizer/networks/mlp.py
@@ -28,6 +28,7 @@
     - notebooks/04-line-cnn.ipynb
     - text_recognizer/datasets/emnist_lines.py
     - text_recognizer/datasets/sentences.py
+    - text_recognizer/models/emnist_cnn.py
     - text_recognizer/models/line_model.py
     - text_recognizer/models/line_cnn_all_conv.py
     - text_recognizer/models/line_cnn_fixed_width.py
