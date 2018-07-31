@@ -138,19 +138,18 @@ def _download_and_process_emnist():
 
 
 def _augment_emnist_mapping(mapping):
-    """
-    We should augment the mapping with three extra characters:
+    """Augment the mapping with extra symbols."""
+    # symbols in IAM dataset
+    extra_symbols = [' ', '!', '"', '#', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '?']
 
-    - ' ' for space between words
-    - '_' for padding around the line
-    - '?' for all unknown characters
-    """
+    # padding symbol
+    extra_symbols.append('_')
+
     max_key = max(mapping.keys())
-    extra_mapping = {
-        max_key + 1: ' ',
-        max_key + 2: '?',
-        max_key + 3: '_'
-    }
+    extra_mapping = {}
+    for i, symbol in enumerate(extra_symbols):
+        extra_mapping[max_key + 1 + i] = symbol
+
     return {**mapping, **extra_mapping}
 
 
