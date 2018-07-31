@@ -24,6 +24,33 @@ REPO_DIRNAME = pathlib.Path(__file__).parents[2].resolve()
 INFO_FILENAME = REPO_DIRNAME / 'admin' / 'tasks' / 'lab_specific_files.yml'
 
 
+def _filter_your_code_blocks(lines):
+    """
+    Strip out stuff between "Your code here" blocks.
+    """
+    filtered_lines = []
+    filtering = False
+    for line in contents.split('\n'):
+        if not filtering:
+            filtered_lines.append(line)
+        if re.search(beginning_comment, line):
+            filtering = True
+            filtered_lines.append('')
+        if re.search(ending_comment, line):
+            filtered_lines.append(line)
+            filtering = False
+    return filtered_lines
+
+
+def _replace_data_dirname(lines):
+    filtered_lines = []
+    for line in lines:
+        if line == "        return pathlib.Path(__file__).parents[2].resolve() / 'data'":
+            line = "        return pathlib.Path(__file__).parents[3].resolve() / 'data'"
+        filtered_lines.append(line)
+    return filtered_lines
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--output_dirname', default='_labs', help='Where to output the lab subset directories.')
@@ -51,7 +78,6 @@ if __name__ == '__main__':
             shutil.copy(path, new_path)
             new_paths.append(new_path)
 
-        # Strip out stuff between "Your code here" blocks and change data dirname path
         beginning_comment = f'# Your code below here \(Lab {lab_number}\)'
         ending_comment = f'# Your code above here \(Lab {lab_number}\)'
         for path in new_paths:
@@ -59,18 +85,10 @@ if __name__ == '__main__':
                 continue
             with open(path) as f:
                 contents = f.read()
-            filtered_lines = []
-            filtering = False
-            for line in contents.split('\n'):
-                if not filtering:
-                    if line == "        return pathlib.Path(__file__).parents[2].resolve() / 'data'":
-                        line = "        return pathlib.Path(__file__).parents[3].resolve() / 'data'"
-                    filtered_lines.append(line)
-                if re.search(beginning_comment, line):
-                    filtering = True
-                    filtered_lines.append('')
-                if re.search(ending_comment, line):
-                    filtered_lines.append(line)
-                    filtering = False
+            lines = contents.split('\n')
+            filtered_lines = _filter_your_code_blocks(lines)
+            # TODO: also hide lines
+            filtered_lines = _replace_data_dirname(filtered_lines)
+
             with open(path, 'w') as f:
                 f.write('\n'.join(filtered_lines))

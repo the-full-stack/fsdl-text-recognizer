@@ -28,11 +28,15 @@ class GPUManager(object):
             time.sleep(GPU_LOCK_TIMEOUT / 1000)
 
     def _get_free_gpu(self):
-        available_gpu_inds = [
-            gpu.index
-            for gpu in gpustat.GPUStatCollection.new_query()
-            if not gpu.processes
-        ]
+        try:
+            available_gpu_inds = [
+                gpu.index
+                for gpu in gpustat.GPUStatCollection.new_query()
+                if not gpu.processes
+            ]
+        except Exception:
+            return [0]  # Return dummy GPU index if no CUDA GPUs are installed
+
         if available_gpu_inds:
             gpu_ind = np.random.choice(available_gpu_inds)
             if self.verbose:

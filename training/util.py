@@ -13,8 +13,8 @@ from training.gpu_util_sampler import GPUUtilizationSampler
 
 
 EARLY_STOPPING = True
-TENSORBOARD = False
-GPU_UTIL_SAMPLER = False
+TENSORBOARD = True
+GPU_UTIL_SAMPLER = True
 
 
 def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gpu_ind: Optional[int]=None, use_wandb=False) -> Model:

@@ -20,6 +20,7 @@
     - text_recognizer/tests/support/emnist/X.png
     - text_recognizer/tests/test_character_predictor.py
     - training/util.py
+    - training/run_experiment.py
     - training/gpu_util_sampler.py
 
 2:
@@ -52,7 +53,6 @@
     - training/gpu_manager.py
     - training/experiments/sample.json
     - training/prepare_experiments.py
-    - training/run_experiment.py
 
 5:
     - text_recognizer/datasets/iam_lines.py
