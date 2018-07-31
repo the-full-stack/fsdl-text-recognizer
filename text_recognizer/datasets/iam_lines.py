@@ -76,7 +76,7 @@ class IamLinesDataset(Dataset):
 
     def __repr__(self):
         return (
-            'EMNIST Dataset\n'
+            'IAM Lines Dataset\n'
             f'Num classes: {self.num_classes}\n'
             f'Mapping: {self.mapping}\n'
             f'Train: {self.x_train.shape} {self.y_train.shape}\n'
