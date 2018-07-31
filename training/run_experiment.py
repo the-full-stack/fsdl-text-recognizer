@@ -67,7 +67,7 @@ if __name__ == '__main__':
         help="Provide index of GPU to use."
     )
     parser.add_argument(
-        "--save_weights",
+        "--save",
         type=bool,
         default=False,
         help="If true, then final weights will be saved to canonical, version-controlled location"
@@ -87,4 +87,4 @@ if __name__ == '__main__':
 
     experiment_config = json.loads(args.experiment_config)
     os.environ["CUDA_VISIBLE_DEVICES"] = f'{args.gpu}'
-    run_experiment(experiment_config, args.save_weights, args.gpu)
+    run_experiment(experiment_config, args.save, args.gpu)
