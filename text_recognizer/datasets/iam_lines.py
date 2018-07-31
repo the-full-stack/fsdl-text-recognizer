@@ -1,5 +1,5 @@
 """
-EMNIST dataset. Downloads from NIST website and saves as .npz file if not already present.
+IAM LINES dataset.
 """
 import pathlib
 
@@ -13,17 +13,21 @@ from text_recognizer.datasets.emnist import EmnistDataset
 
 DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data'
 PROCESSED_DATA_DIRNAME = DATA_DIRNAME / 'processed' / 'iam_lines'
-PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'byclass.h5'
+PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'lwitlrt.h5'
 
 
 class IamLinesDataset(Dataset):
     """
-    "The EMNIST dataset is a set of handwritten character digits derived from the NIST Special Database 19
-    and converted to a 28x28 pixel image format and dataset structure that directly matches the MNIST dataset."
-    From https://www.nist.gov/itl/iad/image-group/emnist-dataset
+    "The IAM Lines dataset, first published at the ICDAR 1999, contains forms of unconstrained handwritten text,
+    which were scanned at a resolution of 300dpi and saved as PNG images with 256 gray levels.
+    From http://www.fki.inf.unibe.ch/databases/iam-handwriting-database
 
     The data split we will use is
-    EMNIST ByClass: 814,255 characters. 62 unbalanced classes.
+    IAM lines Large Writer Independent Text Line Recognition Task (lwitlrt): 9,862 text lines.
+        The validation set has been merged into the train set.
+        The train set has 7,101 lines from 326 writers.
+        The test set has 1,861 lines from 128 writers.
+        The text lines of all data sets are mutually exclusive, thus each writer has contributed to one set only.
 
     Note that we use cachedproperty because data takes time to load.
     """
