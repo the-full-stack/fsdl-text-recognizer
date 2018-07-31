@@ -7,27 +7,28 @@ from tensorflow.keras.models import Model as KerasModel
 from tensorflow.keras.optimizers import RMSprop
 
 from text_recognizer.datasets.base import Dataset
-from text_recognizer.models.dataset_sequence import DatasetSequence
+from text_recognizer.datasets.sequence import DatasetSequence
 
 
 DIRNAME = pathlib.Path(__file__).parents[0].resolve()
 
 
 class Model:
+    """Base class, to be subclassed by predictors for specific type of data."""
     def weights_filename(self):
         model_name = inflection.underscore(self.__class__.__name__)
         return str(DIRNAME / f'{model_name}_weights.h5')
 
-    def model(self) -> KerasModel:
+    def network(self) -> KerasModel:
         raise NotImplementedError
 
     def fit(self, dataset, batch_size, epochs, callbacks=[]):
-        self.model.compile(loss=self.loss, optimizer=self.optimizer, metrics=self.metrics)
+        self.network.compile(loss=self.loss, optimizer=self.optimizer, metrics=self.metrics)
 
         train_sequence = DatasetSequence(dataset.x_train, dataset.y_train, batch_size)
         test_sequence = DatasetSequence(dataset.x_test, dataset.y_test, batch_size)
 
-        self.model.fit_generator(
+        self.network.fit_generator(
             train_sequence,
             epochs=epochs,
             callbacks=callbacks,
@@ -39,7 +40,8 @@ class Model:
 
     def evaluate(self, x, y):
         sequence = DatasetSequence(x, y)
-        preds = self.model.predict_generator(sequence)
+        preds = self.network.predict_generator(sequence)
+        # TODO: use evaluate_generator after getting rid of CTC
         return np.mean(np.argmax(preds, -1) == np.argmax(y, -1))
 
     @property
@@ -55,7 +57,7 @@ class Model:
         return ['accuracy']
 
     def load_weights(self):
-        self.model.load_weights(self.weights_filename())
+        self.network.load_weights(self.weights_filename())
 
     def save_weights(self):
-        self.model.save_weights(self.weights_filename())
+        self.network.save_weights(self.weights_filename())

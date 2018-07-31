@@ -22,18 +22,18 @@ class EmnistCnn(Model):
         self.input_shape = data.input_shape
 
     @cachedproperty
-    def model(self):
-        model = lenet(self.input_shape[0], self.input_shape[1], self.num_classes, expand_dims=True)
-        model.summary()
-        return model
+    def network(self):
+        network = lenet(self.input_shape[0], self.input_shape[1], self.num_classes, expand_dims=True)
+        network.summary()
+        return network
 
     def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
-        # Your code below here
+        # Your code below (Lab 2)
         if image.dtype == np.uint8:
             image = (image / 255).astype(np.float32)
-        pred_raw = self.model.predict(np.expand_dims(image, 0), batch_size=1).flatten()
+        pred_raw = self.network.predict(np.expand_dims(image, 0), batch_size=1).flatten()
         ind = np.argmax(pred_raw)
         conf = pred_raw[ind]
         pred = self.mapping[ind]
-        # Your code above here
+        # Your code above (Lab 2)
         return pred, conf

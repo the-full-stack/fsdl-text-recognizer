@@ -37,12 +37,12 @@ def create_sliding_window_rnn_model(input_shape, max_length, num_classes, window
     gpu_present = len(device_lib.list_local_devices()) > 1
     lstm = CuDNNLSTM if gpu_present else LSTM
 
-    # Your code below here (Lab 3)
+    # Your code below (Lab 3)
     encoder_output = lstm(encoder_dim, return_sequences=False)(convnet_outputs) # (lstm_dim)
     repeated_encoding = RepeatVector(max_length)(encoder_output) # (max_length, lstm_dim)
     decoder_output = lstm(decoder_dim, return_sequences=True)(repeated_encoding)
     # TODO: try backwarding here and then reversing the sequence?
-    # Your code above here (Lab 3)
+    # Your code above (Lab 3)
 
     softmax_outputs = TimeDistributed(Dense(num_classes, activation='softmax'))(decoder_output) # (max_length, num_classes)
     model = KerasModel(inputs=image_input, outputs=softmax_outputs)

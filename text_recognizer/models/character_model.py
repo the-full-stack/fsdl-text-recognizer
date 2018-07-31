@@ -12,7 +12,7 @@ from text_recognizer.networks.mlp import mlp
 
 
 class EmnistMlp(Model):
-    def __init__(self, layer_size: int=128, dropout_amount: float=0.2):
+    def __init__(self, dataset, network_fn, layer_size: int=128, dropout_amount: float=0.2):
         np.random.seed(42)
         tensorflow.set_random_seed(42)
 

@@ -11,7 +11,7 @@ from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, Input, MaxP
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import Model as KerasModel
 
-from text_recognizer.models.dataset_sequence import DatasetSequence
+from text_recognizer.datasets.sequence import DatasetSequence
 from text_recognizer.models.line_model import LineModel
 from text_recognizer.networks.cnn import lenet
 from text_recognizer.networks.ctc import ctc_decode
@@ -27,16 +27,16 @@ class LineLstmWithCtc(LineModel):
         self.batch_format_fn = partial(format_batch, input_sequence_length=self.input_sequence_length)
 
     @cachedproperty
-    def model(self):
+    def network(self):
         return create_sliding_window_rnn_with_ctc_model(self.input_shape, self.max_length, self.num_classes, self.window_width, self.window_stride)
 
     def fit(self, dataset, batch_size, epochs, callbacks):
-        self.model.compile(loss=self.loss, optimizer=self.optimizer, metrics=self.metrics)
+        self.network.compile(loss=self.loss, optimizer=self.optimizer, metrics=self.metrics)
 
         train_sequence = DatasetSequence(dataset.x_train, dataset.y_train, batch_size, format_fn=self.batch_format_fn)
         test_sequence = DatasetSequence(dataset.x_test, dataset.y_test, batch_size, format_fn=self.batch_format_fn)
 
-        self.model.fit_generator(
+        self.network.fit_generator(
             train_sequence,
             epochs=epochs,
             callbacks=callbacks,
@@ -47,14 +47,14 @@ class LineLstmWithCtc(LineModel):
         )
 
     def evaluate(self, x, y, batch_size: int=32) -> float:
-        decoding_model = KerasModel(inputs=self.model.input, outputs=self.model.get_layer('ctc_decoded').output)
+        decoding_model = KerasModel(inputs=self.network.input, outputs=self.network.get_layer('ctc_decoded').output)
         test_sequence = DatasetSequence(x, y, batch_size, format_fn=self.batch_format_fn)
-        # Your code below here (Lab 3)
+        # Your code below (Lab 3)
         preds = decoding_model.predict_generator(test_sequence)
         trues = np.argmax(y, -1)
         pred_strings = [''.join(self.mapping.get(label, '') for label in pred).strip() for pred in preds]
         true_strings = [''.join(self.mapping.get(label, '') for label in true).strip() for true in trues]
-        # Your code above here (Lab 3)
+        # Your code above (Lab 3)
         char_accuracies = [
             1 - editdistance.eval(true_string, pred_string) / len(pred_string)
             for true_string, pred_string in zip(pred_strings, true_strings)
@@ -74,13 +74,13 @@ class LineLstmWithCtc(LineModel):
 
     def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
         softmax_output_fn = K.function(
-            [self.model.get_layer('image').input, K.learning_phase()],
-            [self.model.get_layer('softmax_output').output]
+            [self.network.get_layer('image').input, K.learning_phase()],
+            [self.network.get_layer('softmax_output').output]
         )
         if image.dtype == np.uint8:
             image = (image / 255).astype(np.float32)
 
-        # Your code below here (Lab 3)
+        # Your code below (Lab 3)
         input_image = np.expand_dims(image, 0)
         softmax_output = softmax_output_fn([input_image, 0])[0]
         decoded, log_prob = K.ctc_decode(softmax_output, np.array([self.input_sequence_length]))
@@ -92,7 +92,7 @@ class LineLstmWithCtc(LineModel):
         conf = np.exp(neg_sum_logit) / (1 + np.exp(neg_sum_logit))
         # TODO: not sure if conf calculation is correct
 
-        # Your code above here (Lab 3)
+        # Your code above (Lab 3)
         return pred, conf
 
 
@@ -133,14 +133,14 @@ def create_sliding_window_rnn_with_ctc_model(input_shape, max_length, num_classe
     gpu_present = len(device_lib.list_local_devices()) > 1
     lstm_fn = CuDNNLSTM if gpu_present else LSTM
 
-    # Your code below here (Lab 3)
+    # Your code below (Lab 3)
     image_reshaped = Reshape((image_height, image_width, 1))(image_input)
     image_patches = Lambda(slide_window)(image_reshaped)  # (num_windows, image_height, window_width, 1)
     convnet = lenet(image_height, window_width)
     convnet_outputs = TimeDistributed(convnet)(image_patches)  # (num_windows, 128)
     lstm_output = lstm_fn(128, return_sequences=True)(convnet_outputs)  # (sequence_length, 128)
     softmax_output = TimeDistributed(Dense(num_classes, activation='softmax'), name='softmax_output')(lstm_output) # (sequence_length, 128)
-    # Your code above here (Lab 3)
+    # Your code above (Lab 3)
 
     ctc_loss_output = Lambda(
         lambda x: K.ctc_batch_cost(x[0], x[1], x[2], x[3]),
