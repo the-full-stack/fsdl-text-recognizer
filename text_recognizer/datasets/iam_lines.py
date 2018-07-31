@@ -36,43 +36,20 @@ class IamLinesDataset(Dataset):
         self.inverse_mapping = {v: k for k, v in self.mapping.items()}
         self.num_classes = len(self.mapping)
 
-    @cachedproperty
-    def data(self):
+    def load_or_generate_data(self):
         with h5py.File(PROCESSED_DATA_FILENAME) as f:
-            x_train = f['x_train'][:]
-            y_train = f['y_train'][:]
-            x_test = f['x_test'][:]
-            y_test = f['y_test'][:]
-        return {
-            'x_train': x_train,
-            'y_train': y_train,
-            'x_test': x_test,
-            'y_test': y_test
-        }
-
-    @cachedproperty
-    def x_train(self):
-        return self.data['x_train']
-
-    @cachedproperty
-    def x_test(self):
-        return self.data['x_test']
+            self.x_train = f['x_train'][:]
+            self.y_train_int = f['y_train'][:]
+            self.x_test = f['x_test'][:]
+            self.y_test_int = f['y_test'][:]
 
     @cachedproperty
     def y_train(self):
-        return to_categorical(self.data['y_train'], self.num_classes)
-
-    @cachedproperty
-    def y_train_int(self):
-        return self.data['y_train']
+        return to_categorical(self.y_train_int, self.num_classes)
 
     @cachedproperty
     def y_test(self):
-        return to_categorical(self.data['y_test'], self.num_classes)
-
-    @cachedproperty
-    def y_test_int(self):
-        return self.data['y_test']
+        return to_categorical(self.y_test_int, self.num_classes)
 
     def __repr__(self):
         return (
