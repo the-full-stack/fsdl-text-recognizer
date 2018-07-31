@@ -18,8 +18,9 @@ from text_recognizer.datasets.base import Dataset
 
 RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
 
-RAW_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'emnist'
-PROCESSED_DATA_DIRNAME = Dataset.data_dirname() / 'processed' / 'emnist'
+DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data'
+RAW_DATA_DIRNAME = DATA_DIRNAME / 'raw' / 'emnist'
+PROCESSED_DATA_DIRNAME = DATA_DIRNAME / 'processed' / 'emnist'
 PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'byclass.h5'
 ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_essentials.json'
 
@@ -32,6 +33,8 @@ class EmnistDataset(Dataset):
 
     The data split we will use is
     EMNIST ByClass: 814,255 characters. 62 unbalanced classes.
+
+    Note that we use cachedproperty because data takes time to load.
     """
     def __init__(self):
         if not os.path.exists(ESSENTIALS_FILENAME):
@@ -43,22 +46,45 @@ class EmnistDataset(Dataset):
         self.num_classes = len(self.mapping)
         self.input_shape = essentials['input_shape']
 
-    def load_or_generate_data(self):
+    @cachedproperty
+    def data(self):
         if not os.path.exists(PROCESSED_DATA_FILENAME):
             _download_and_process_emnist()
         with h5py.File(PROCESSED_DATA_FILENAME) as f:
-            self.x_train = f['x_train'][:]
-            self.y_train_int = f['y_train'][:]
-            self.x_test = f['x_test'][:]
-            self.y_test_int = f['y_test'][:]
+            x_train = f['x_train'][:]
+            y_train = f['y_train'][:]
+            x_test = f['x_test'][:]
+            y_test = f['y_test'][:]
+        return {
+            'x_train': x_train,
+            'y_train': y_train,
+            'x_test': x_test,
+            'y_test': y_test
+        }
+
+    @cachedproperty
+    def x_train(self):
+        return self.data['x_train']
+
+    @cachedproperty
+    def x_test(self):
+        return self.data['x_test']
 
     @cachedproperty
     def y_train(self):
-        return to_categorical(self.y_train_int, self.num_classes)
+        return to_categorical(self.data['y_train'], self.num_classes)
+
+    @cachedproperty
+    def y_train_int(self):
+        return self.data['y_train']
 
     @cachedproperty
     def y_test(self):
-        return to_categorical(self.y_test_int, self.num_classes)
+        return to_categorical(self.data['y_test'], self.num_classes)
+
+    @cachedproperty
+    def y_test_int(self):
+        return self.data['y_test']
 
     def __repr__(self):
         return (
@@ -66,6 +92,8 @@ class EmnistDataset(Dataset):
             f'Num classes: {self.num_classes}\n'
             f'Mapping: {self.mapping}\n'
             f'Input shape: {self.input_shape}\n'
+            f'Train: {self.x_train.shape} {self.y_train.shape}\n'
+            f'Test: {self.x_test.shape} {self.y_test.shape}\n'
         )
 
 
@@ -110,23 +138,21 @@ def _download_and_process_emnist():
 
 
 def _augment_emnist_mapping(mapping):
-    """
-    We should augment the mapping with three extra characters:
+    """Augment the mapping with extra symbols."""
+    # symbols in IAM dataset
+    extra_symbols = [' ', '!', '"', '#', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '?']
 
-    - ' ' for space between words
-    - '_' for padding around the line
-    - '?' for all unknown characters
-    """
+    # padding symbol
+    extra_symbols.append('_')
+
     max_key = max(mapping.keys())
-    extra_mapping = {
-        max_key + 1: ' ',
-        max_key + 2: '?',
-        max_key + 3: '_'
-    }
+    extra_mapping = {}
+    for i, symbol in enumerate(extra_symbols):
+        extra_mapping[max_key + 1 + i] = symbol
+
     return {**mapping, **extra_mapping}
 
 
 if __name__ == '__main__':
     data = EmnistDataset()
-    data.load_or_generate_data()
     print(data)
