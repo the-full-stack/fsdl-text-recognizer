@@ -26,19 +26,24 @@ class LineModel(Model):
         true_strings = [''.join(self.data.mapping.get(int(label), '') for label in true).strip() for true in trues]
         # Your code above here (Lab 3)
         char_accuracies = [
-            1 - editdistance.eval(true_string, pred_string) / len(pred_string)
+            1 - editdistance.eval(true_string, pred_string) / len(true_string)
             for true_string, pred_string in zip(pred_strings, true_strings)
         ]
         if verbose:
             sorted_ind = np.argsort(char_accuracies)
             print("Least accurate predictions:")
-            for ind in sorted_ind[:10]:
+            for ind in sorted_ind[:5]:
                 print(f'True: {true_strings[ind]}')
                 print(f'Pred: {pred_strings[ind]}')
             print("Most accurate predictions:")
-            for ind in sorted_ind[-10:]:
+            for ind in sorted_ind[-5:]:
                 print(f'True: {true_strings[ind]}')
                 print(f'Pred: {pred_strings[ind]}')
+            print("Random predictions:")
+            for ind in np.random.randint(0, len(char_accuracies), 5):
+                print(f'True: {true_strings[ind]}')
+                print(f'Pred: {pred_strings[ind]}')
+
         mean_accuracy = np.mean(char_accuracies)
         return mean_accuracy
 

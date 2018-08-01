@@ -16,8 +16,8 @@ from text_recognizer.networks.misc import slide_window
 def line_cnn_sliding_window(
         input_shape: Tuple[int, ...],
         output_shape: Tuple[int, ...],
-        window_width: float=16,
-        window_stride: float=8) -> KerasModel:
+        window_width: float=20,
+        window_stride: float=14) -> KerasModel:
     """
     Input is an image with shape (image_height, image_width)
     Output is of shape (output_length, num_classes)
