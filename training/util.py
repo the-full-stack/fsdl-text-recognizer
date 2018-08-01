@@ -25,7 +25,7 @@ def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gp
         early_stopping = EarlyStopping(monitor='val_loss', min_delta=0.01, patience=3, verbose=1, mode='auto')
         callbacks.append(early_stopping)
 
-    if GPU_UTIL_SAMPLER:
+    if GPU_UTIL_SAMPLER and gpu_ind:
         gpu_utilization = GPUUtilizationSampler(gpu_ind)
         callbacks.append(gpu_utilization)
 

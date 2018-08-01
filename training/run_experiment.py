@@ -49,7 +49,8 @@ def run_experiment(experiment_config, save_weights, gpu_ind):
         model,
         dataset,
         epochs=experiment_config['train_args']['epochs'],
-        batch_size=experiment_config['train_args']['batch_size']
+        batch_size=experiment_config['train_args']['batch_size'],
+        gpu_ind=gpu_ind
     )
     score = model.evaluate(dataset.x_test, dataset.y_test)
     print(f'Test evaluation: {score}')
