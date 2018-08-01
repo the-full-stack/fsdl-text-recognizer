@@ -16,7 +16,7 @@ ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_line
 
 
 class EmnistLinesDataset(Dataset):
-    def __init__(self, max_length: int=16, max_overlap: float=0.33, num_train: int=10000, num_test: int=1000):
+    def __init__(self, max_length: int=34, max_overlap: float=0.33, num_train: int=10000, num_test: int=1000):
         self.emnist = EmnistDataset()
         self.mapping = self.emnist.mapping
         self.max_length = max_length
@@ -112,7 +112,7 @@ def construct_image_from_string(string: str, samples_by_char: dict, max_overlap:
     for image in sampled_images:
         concatenated_image[:, x:(x + W)] += image
         x += noW
-    return np.minimum(1, concatenated_image)
+    return np.minimum(255, concatenated_image)
 
 
 def create_dataset_of_images(N, samples_by_char, sentence_generator, max_overlap):

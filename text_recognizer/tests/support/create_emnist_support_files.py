@@ -18,7 +18,7 @@ def create_emnist_support_files():
     dataset.load_or_generate_data()
 
     for ind in [1, 2, 4]:
-        image = (dataset.x_test[ind] * 255).astype(np.uint8)
+        image = dataset.x_test[ind]
         label = dataset.mapping[np.argmax(dataset.y_test[ind])]
         util.write_image(image, str(SUPPORT_DIRNAME / f'{label}.png'))
 

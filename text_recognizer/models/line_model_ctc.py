@@ -10,7 +10,7 @@ import tensorflow.keras.backend as K
 from tensorflow.keras.models import Model as KerasModel
 
 from text_recognizer.datasets.sequence import DatasetSequence
-from text_recognizer.datasets.emnist_lines import EmnistLinesDataset
+from text_recognizer.datasets import EmnistLinesDataset, IamLinesDataset
 from text_recognizer.models.base import Model
 from text_recognizer.networks.line_lstm_ctc import line_lstm_ctc
 
@@ -18,6 +18,15 @@ from text_recognizer.networks.line_lstm_ctc import line_lstm_ctc
 class LineModelCtc(Model):
     def __init__(self, dataset_cls: type=EmnistLinesDataset, network_fn: Callable=line_lstm_ctc, dataset_args: Dict=None, network_args: Dict=None):
         """Define the default dataset and network values for this model."""
+        default_dataset_args = {'max_length': 34}
+        if dataset_args is None:
+            dataset_args = {}
+        dataset_args = {**default_dataset_args, **dataset_args}
+
+        default_network_args = {'window_width': 14, 'window_stride': 7}
+        if network_args is None:
+            network_args = {}
+        network_args = {**default_network_args, **network_args}
         super().__init__(dataset_cls, network_fn, dataset_args, network_args)
         self.batch_format_fn = format_batch_ctc
 
@@ -72,7 +81,8 @@ class LineModelCtc(Model):
         # Your code below here (Lab 3)
         input_image = np.expand_dims(image, 0)
         softmax_output = softmax_output_fn([input_image, 0])[0]
-        input_length = np.array([softmax_output.shape[0]])
+
+        input_length = np.array([softmax_output.shape[1]])
         max_output_length = self.data.output_shape[0]
         decoded, log_prob = K.ctc_decode(softmax_output, input_length, max_output_length)
 
@@ -84,6 +94,7 @@ class LineModelCtc(Model):
         # TODO: not sure if conf calculation is correct
 
         # Your code above here (Lab 3)
+
         return pred, conf
 
 

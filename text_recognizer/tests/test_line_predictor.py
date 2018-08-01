@@ -5,7 +5,7 @@ import unittest
 from text_recognizer.line_predictor import LinePredictor
 
 
-SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support' / 'emnist_lines'
+SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support' / 'iam_lines'
 
 
 class TestEmnistLinePredictor(unittest.TestCase):
