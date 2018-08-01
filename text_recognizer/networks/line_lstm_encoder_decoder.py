@@ -19,9 +19,9 @@ def line_lstm_encoder_decoder_sw(input_shape, output_shape, window_width=20, win
     output_length, num_classes = output_shape
 
     if encoder_dim is None:
-        encoder_dim = num_classes * output_length
+        encoder_dim = 128
     if decoder_dim is None:
-        decoder_dim = num_classes * 4
+        decoder_dim = 128
 
     image_input = Input(shape=input_shape)
     # (image_height, image_width)
@@ -43,12 +43,12 @@ def line_lstm_encoder_decoder_sw(input_shape, output_shape, window_width=20, win
     lstm = CuDNNLSTM if gpu_present else LSTM
 
     # Your code below (Lab 3)
-    encoder_output = lstm(encoder_dim, return_sequences=False)(convnet_outputs)
+    encoder_output = lstm(encoder_dim, return_sequences=False, go_backwards=True)(convnet_outputs)
     # (encoder_dim)
     repeated_encoding = RepeatVector(output_length)(encoder_output)
     # (max_length, encoder_dim)
     decoder_output = lstm(decoder_dim, return_sequences=True)(repeated_encoding)
-    decoder_output = lstm(decoder_dim, return_sequences=True)(decoder_output)
+    # decoder_output_dropout = Dropout(0.2)(decoder_output)
     # (output_length, decoder_dim)
     # Your code above (Lab 3)
 

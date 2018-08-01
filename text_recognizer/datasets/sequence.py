@@ -18,6 +18,7 @@ class DatasetSequence(Sequence):
         return int(np.ceil(len(self.x) / float(self.batch_size)))
 
     def __getitem__(self, idx):
+        # idx = 0  # If you want to intentionally overfit to just one batch
         begin = idx * self.batch_size
         end = (idx + 1) * self.batch_size
 

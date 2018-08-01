@@ -1,0 +1,23 @@
+{
+    "experiment_group": "AllConv vs SlidingWindow 2",
+    "experiments": [
+        {
+            "dataset": "EmnistLinesDataset",
+            "model": "LineModel",
+            "network": "line_lstm_encoder_decoder_sw",
+            "network_args": {
+                "window_width": 14,
+                "window_stride": 14
+            }
+        },
+        {
+            "dataset": "EmnistLinesDataset",
+            "model": "LineModel",
+            "network": "line_lstm_encoder_decoder_sw",
+            "network_args": {
+                "window_width": 20,
+                "window_stride": 10
+            }
+        }
+    ]
+}
