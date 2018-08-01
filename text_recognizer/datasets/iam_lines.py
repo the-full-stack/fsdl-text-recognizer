@@ -72,4 +72,3 @@ if __name__ == '__main__':
     dataset = IamLinesDataset()
     dataset.load_or_generate_data()
     print(dataset)
-    from IPython import embed; embed()

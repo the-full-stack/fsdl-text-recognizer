@@ -10,6 +10,18 @@ from text_recognizer.models.base import Model
 from text_recognizer.networks import line_cnn_sliding_window
 
 
+def loss_ignoring_blanks(target, output):
+    """This is categorical crossentropy, but with targets that correspond to the padding symbol not counting."""
+    import tensorflow.keras.backend as K
+    output /= tf.reduce_sum(output, -1, True)
+    _epsilon = tf.convert_to_tensor(K.epsilon(), output.dtype.base_dtype)
+    output = tf.clip_by_value(output, _epsilon, 1. - _epsilon)
+    prod = target * tf.log(output)
+    # TODO
+    loss = - tf.reduce_sum(prod, -1)
+    return loss
+
+
 class LineModel(Model):
     def __init__(self, dataset_cls: type=EmnistLinesDataset, network_fn: Callable=line_cnn_sliding_window, network_args: Dict=None):
         """Define the default dataset and network values for this model."""
@@ -31,15 +43,15 @@ class LineModel(Model):
         ]
         if verbose:
             sorted_ind = np.argsort(char_accuracies)
-            print("Least accurate predictions:")
+            print("\nLeast accurate predictions:")
             for ind in sorted_ind[:5]:
                 print(f'True: {true_strings[ind]}')
                 print(f'Pred: {pred_strings[ind]}')
-            print("Most accurate predictions:")
+            print("\nMost accurate predictions:")
             for ind in sorted_ind[-5:]:
                 print(f'True: {true_strings[ind]}')
                 print(f'Pred: {pred_strings[ind]}')
-            print("Random predictions:")
+            print("\nRandom predictions:")
             for ind in np.random.randint(0, len(char_accuracies), 5):
                 print(f'True: {true_strings[ind]}')
                 print(f'Pred: {pred_strings[ind]}')
@@ -55,4 +67,5 @@ class LineModel(Model):
         conf = np.min(np.max(pred_raw, axis=-1)) # The least confident of the predictions.
         return pred, conf
 
-    loss = 'categorical_crossentropy'
+    # def loss(self):
+    #     return loss_ignoring_blanks

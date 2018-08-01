@@ -25,15 +25,18 @@ class Model:
         self.network = network_fn(self.data.input_shape, self.data.output_shape, **network_args)
         self.network.summary()
 
+        self.batch_augment_fn = None
+        self.batch_format_fn = None
+
     @property
     def weights_filename(self):
         return str(DIRNAME / f'{self.name}_weights.h5')
 
     def fit(self, dataset, batch_size=32, epochs=10, callbacks=[]):
-        self.network.compile(loss=self.loss, optimizer=self.optimizer, metrics=self.metrics)
+        self.network.compile(loss=self.loss(), optimizer=self.optimizer(), metrics=self.metrics())
 
-        train_sequence = DatasetSequence(dataset.x_train, dataset.y_train, batch_size)
-        test_sequence = DatasetSequence(dataset.x_test, dataset.y_test, batch_size)
+        train_sequence = DatasetSequence(dataset.x_train, dataset.y_train, batch_size, augment_fn=self.batch_augment_fn, format_fn=self.batch_format_fn)
+        test_sequence = DatasetSequence(dataset.x_test, dataset.y_test, batch_size, augment_fn=self.batch_augment_fn, format_fn=self.batch_format_fn)
 
         self.network.fit_generator(
             train_sequence,
@@ -51,15 +54,12 @@ class Model:
         # TODO: use evaluate_generator after getting rid of CTC
         return np.mean(np.argmax(preds, -1) == np.argmax(y, -1))
 
-    @property
     def loss(self):
         return 'categorical_crossentropy'
 
-    @cachedproperty
     def optimizer(self):
         return RMSprop()
 
-    @property
     def metrics(self):
         return ['accuracy']
 
