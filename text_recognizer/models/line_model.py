@@ -34,12 +34,12 @@ class LineModel(Model):
         preds_raw = self.network.predict_generator(sequence)
         trues = np.argmax(y, -1)
         preds = np.argmax(preds_raw, -1)
-        pred_strings = [''.join(self.data.mapping.get(int(label), '') for label in pred).strip() for pred in preds]
-        true_strings = [''.join(self.data.mapping.get(int(label), '') for label in true).strip() for true in trues]
+        pred_strings = [''.join(self.data.mapping.get(label, '') for label in pred).strip(' |_') for pred in preds]
+        true_strings = [''.join(self.data.mapping.get(label, '') for label in true).strip(' |_') for true in trues]
         # Your code above here (Lab 3)
         char_accuracies = [
             1 - editdistance.eval(true_string, pred_string) / len(true_string)
-            for true_string, pred_string in zip(pred_strings, true_strings)
+            for pred_string, true_string in zip(pred_strings, true_strings)
         ]
         if verbose:
             sorted_ind = np.argsort(char_accuracies)
@@ -55,7 +55,6 @@ class LineModel(Model):
             for ind in np.random.randint(0, len(char_accuracies), 5):
                 print(f'True: {true_strings[ind]}')
                 print(f'Pred: {pred_strings[ind]}')
-
         mean_accuracy = np.mean(char_accuracies)
         return mean_accuracy
 
