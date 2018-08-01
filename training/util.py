@@ -38,7 +38,7 @@ def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gp
     history = model.fit(dataset, batch_size, epochs, callbacks)
     print('Training took {:2f} s'.format(time() - t))
 
-    if GPU_UTIL_SAMPLER:
+    if GPU_UTIL_SAMPLER and gpu_ind:
         gpu_utilizations = gpu_utilization.samples
         print(f'GPU utilization: {round(np.mean(gpu_utilizations), 2)} +- {round(np.std(gpu_utilizations), 2)}')
 

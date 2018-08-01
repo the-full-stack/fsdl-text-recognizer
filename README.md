@@ -55,6 +55,8 @@ TASKS
 ## Lab 3 (60 min)
 
 - [10 min] They write the LSTM version
+- [10 min] They run on IAM
+- [10 min] They augment dataset to get highest performance
 
 - [ ] be able to answer what the CTC token is doing
 - [ ] be able to answer how loss is backprop'd through: to the first repeated char or for all of them?

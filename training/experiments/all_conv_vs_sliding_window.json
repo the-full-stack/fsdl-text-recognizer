@@ -1,13 +1,13 @@
 {
-    "experiment_group": "AllConv vs SlidingWindow",
+    "experiment_group": "AllConv vs SlidingWindow 2",
     "experiments": [
         {
             "dataset": "EmnistLinesDataset",
             "model": "LineModel",
             "network": "line_cnn_all_conv",
             "network_args": {
-                "window_width": 20,
-                "window_stride": 10
+                "window_width": 14,
+                "window_stride": 14
             }
         },
         {
@@ -15,8 +15,8 @@
             "model": "LineModel",
             "network": "line_cnn_sliding_window",
             "network_args": {
-                "window_width": 20,
-                "window_stride": 10
+                "window_width": 14,
+                "window_stride": 7
             }
         },
         {
@@ -24,8 +24,8 @@
             "model": "LineModel",
             "network": "line_cnn_all_conv",
             "network_args": {
-                "window_width": 20,
-                "window_stride": 5
+                "window_width": 14,
+                "window_stride": 14
             }
         },
         {
@@ -33,8 +33,8 @@
             "model": "LineModel",
             "network": "line_cnn_sliding_window",
             "network_args": {
-                "window_width": 20,
-                "window_stride": 5
+                "window_width": 14,
+                "window_stride": 7
             }
         }
     ]

@@ -19,20 +19,21 @@ def line_cnn_all_conv(
 
     model = Sequential()
     model.add(Reshape((image_height, image_width, 1), input_shape=input_shape))
-    model.add(Conv2D(32, kernel_size=(3, 3), activation='relu', padding='same'))
-    model.add(Conv2D(64, (3, 3), activation='relu', padding='same'))
+    model.add(Conv2D(32, kernel_size=(3, 3), activation='relu'))
+    model.add(Conv2D(64, (3, 3), activation='relu'))
     model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(0.22))
+    model.add(Dropout(0.2))
     # So far, this is the same as LeNet. At this point, LeNet would flatten and Dense 128.
 
-    new_height = image_height // 2
-    new_window_width = window_width // 2
+    new_height = image_height // 2 - 2
+    new_width = image_width // 2 - 2
+    new_window_width = window_width // 2 - 2
     new_window_stride = window_stride // 2
-    model.add(Conv2D(128, (new_height, new_window_width), (1, new_window_stride), activation='relu', padding='valid'))
+    model.add(Conv2D(128, (new_height, new_window_width), (1, new_window_stride), activation='relu'))
     model.add(Dropout(0.2))
     # (1, num_windows, 128)
 
-    num_windows = int((image_width - window_width) / window_stride) + 1
+    num_windows = int((new_width - new_window_width) / new_window_stride) + 1
     width = int(num_windows / output_length)
 
     model.add(Reshape((num_windows, 128, 1)))

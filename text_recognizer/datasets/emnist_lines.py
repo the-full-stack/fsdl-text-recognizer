@@ -52,7 +52,7 @@ class EmnistLinesDataset(Dataset):
 
     def _load_data(self):
         print('EmnistLinesDataset loading data from HDF5...')
-        with h5py.File(self.data_filename) as f:
+        with h5py.File(self.data_filename, 'r') as f:
             self.x_train = f['x_train'][:]
             self.y_train = f['y_train'][:]
             self.x_test = f['x_test'][:]
@@ -74,7 +74,7 @@ class EmnistLinesDataset(Dataset):
         num = self.num_train if split == 'train' else self.num_test
 
         DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
-        with h5py.File(self.data_filename, 'a') as f:
+        with h5py.File(self.data_filename, 'w') as f:
             x, y = create_dataset_of_images(num, samples_by_char, sentence_generator, self.max_overlap)
             y = convert_strings_to_categorical_labels(y, emnist.inverse_mapping)
             f.create_dataset(f'x_{split}', data=x, dtype='u1', compression='lzf')

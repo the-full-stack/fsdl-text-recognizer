@@ -47,7 +47,7 @@ class EmnistDataset(Dataset):
     def load_or_generate_data(self):
         if not os.path.exists(PROCESSED_DATA_FILENAME):
             _download_and_process_emnist()
-        with h5py.File(PROCESSED_DATA_FILENAME) as f:
+        with h5py.File(PROCESSED_DATA_FILENAME, 'r') as f:
             self.x_train = f['x_train'][:]
             self.y_train_int = f['y_train'][:]
             self.x_test = f['x_test'][:]

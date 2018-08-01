@@ -42,7 +42,7 @@ class IamLinesDataset(Dataset):
             PROCESSED_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
             print('Downloading IAM lines...')
             urlretrieve(PROCESSED_DATA_URL, PROCESSED_DATA_FILENAME)
-        with h5py.File(PROCESSED_DATA_FILENAME) as f:
+        with h5py.File(PROCESSED_DATA_FILENAME, 'r') as f:
             self.x_train = f['x_train'][:]
             self.y_train_int = f['y_train'][:]
             self.x_test = f['x_test'][:]
