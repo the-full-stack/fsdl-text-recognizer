@@ -35,38 +35,28 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 - [15 min] They write the network in networks/mlp.py and the prediction function in character_predictor.py, and train it
 - [5 min] They push code to Github and submit to gradescope for autograding
 
-TASKS
-- [x] rename model to network
-- [ ] make pre-processing logic in predict() and fit()/evaluate() should be shared
-- [ ] Mostafa suggests that big datasets cannot be stored in one file. will have to shard over multiple files
-- [ ] increasing GPU utilization: can increase batch or number of workers that preprocess data
+Things to note
+- increasing GPU utilization can be achieved by increasing batch size, or number of workers
 
 ## Lab 2 (60 min)
 
-- [10 min] They write the CNN version of emnist_cnn.py
-- [10 min] Walk through EMNIST line generation and fixed-width approach
+- [10 min] They write and train the CNN version of character_model
+- [15 min] Walk through EMNIST line generation and fixed-width approach
     - Make sure to cover what the label and the loss are
-- [ min] They write convnet code to use sliding window (they write sliding window part)
-- [ min] They write convnet code to be all conv and observe whether it's faster or not
+- [15 min] They write convnet code to use sliding window (they write sliding window part)
+- [15 min] They write convnet code to be all conv and observe whether it's faster or not
 
-- [ ] make sure to specify that padding has to be 'same'
 - [ ] make a slide explaining the all-conv idea
 
 ## Lab 3 (60 min)
 
-- [10 min] They write the LSTM version
+- [10 min] They write the basic encoder-decoder LSTM version
+- [15 min] Walk through the CTC loss version, and they write some part of it
 - [10 min] They run on IAM
-- [10 min] They augment dataset to get highest performance
-
-- [ ] be able to answer what the CTC token is doing
-- [ ] be able to answer how loss is backprop'd through: to the first repeated char or for all of them?
-- [ ] write output shapes for all lines in the network
 
 ## Lab 4 (30 min)
 
 - Weights & Biases and script to distribute jobs over multiple GPUs
-- [ ] talk about distributing training of a single model (in addition to multiple experiments)
-mple
 
 ## Lab 5 (60 min)
 
@@ -76,20 +66,23 @@ mple
     - They can set their best model to be the official line_predictor model and submit to Gradescope to leaderboard it
 
 Ideas for things to try:
+- Augment dataset to get highest performance
+- Pre-train on EMnistLines and then fine-tune on IAM
 - More general encoder-decoder architecture (teacher training)
--
 
 ## Lab 6 (30 min)
 
 - [10 min] Adding CI via CircleCI
-- [10 min] Running a Flask web app locally
+- [10 min] Writing a Dockerfile and pushing it to DockerHub for the CI to use
 
-## Lab 7 (60 min)
+## Lab 7 (90 min)
 
-- [10 min] Dockerizing the flask web app
-- Deploying to lambda
-- Seeing it work on your phone via cursive.ai
-- Add monitoring dashboard and alarms
+- [15 min] Running a Flask web app locally
+    - show CURLing to it, etc
+- [10 min] Dockerizing the Flask web app
+- [15 min] Deploying to lambda: first do it myself, then have everyone do it, and test via CURL
+- [5 min] Have them go to cursive.ai and submit that way
+- [10 min] Add monitoring dashboard and alarms
 
 ## Quick Start
 

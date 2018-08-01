@@ -16,6 +16,10 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     image_height, image_width = input_shape
     output_length, num_classes = output_shape
 
+    num_windows = int((image_width - window_width) / window_stride) + 1
+    if num_windows < output_length:
+        raise ValueError(f'Window width/stride need to generate at least {output_length} windows (currently {num_windows})')
+
     image_input = Input(shape=input_shape, name='image')
     y_true = Input(shape=(output_length,), name='y_true')
     input_length = Input(shape=(1,), name='input_length')
@@ -38,7 +42,6 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     softmax_output = TimeDistributed(Dense(num_classes, activation='softmax'), name='softmax_output')(lstm_output) # (num_windows, 128)
     # Your code above here (Lab 3)
 
-    num_windows = int((image_width - window_width) / window_stride) + 1
     def temp(x, num_windows=num_windows):
         return x * num_windows
     input_length_processed = Lambda(temp)(input_length)
