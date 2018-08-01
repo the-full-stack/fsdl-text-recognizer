@@ -37,7 +37,7 @@ def line_cnn_sliding_window(
     )(image_reshaped)
     # (num_windows, image_height, window_width, 1)
 
-    # Make a LeNet and get rid of the top softmax layer and preceding dropout
+    # Make a LeNet and get rid of the top two layers (softmax and dropout)
     convnet = lenet((image_height, window_width, 1), (num_classes,))
     convnet = KerasModel(inputs=convnet.inputs, outputs=convnet.layers[-2].output)
 
@@ -51,7 +51,7 @@ def line_cnn_sliding_window(
     # width = floor(num_windows / output_length)
     # Note that it will likely produce too many items in the output sequence, so take only output_length.
 
-    # Your code below here (Lab 2)
+    ##### Your code below (Lab 2)
     num_windows = int((image_width - window_width) / window_stride) + 1
     width = int(num_windows / output_length)
 
@@ -63,7 +63,7 @@ def line_cnn_sliding_window(
 
     # Since we floor'd the calculation of width, we might have too many items in the sequence. Take only output_length.
     softmax_output = Lambda(lambda x: x[:, :output_length, :])(squeezed_conved_convnet_outputs)
-    # Your code above here (Lab 2)
+    ##### Your code above (Lab 2)
 
     model = KerasModel(inputs=image_input, outputs=softmax_output)
     model.summary()

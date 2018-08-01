@@ -42,12 +42,12 @@ class LineModelCtc(Model):
         decoding_model = KerasModel(inputs=self.network.input, outputs=self.network.get_layer('ctc_decoded').output)
         test_sequence = DatasetSequence(x, y, batch_size, format_fn=self.batch_format_fn)
 
-        # Your code below here (Lab 3)
+        ##### Your code below (Lab 3)
         preds = decoding_model.predict_generator(test_sequence)
         trues = np.argmax(y, -1)
         pred_strings = [''.join(self.data.mapping.get(label, '') for label in pred).strip(' |_') for pred in preds]
         true_strings = [''.join(self.data.mapping.get(label, '') for label in true).strip(' |_') for true in trues]
-        # Your code above here (Lab 3)
+        ##### Your code above (Lab 3)
 
         char_accuracies = [
             1 - editdistance.eval(true_string, pred_string) / len(true_string)
@@ -78,7 +78,7 @@ class LineModelCtc(Model):
         if image.dtype == np.uint8:
             image = (image / 255).astype(np.float32)
 
-        # Your code below here (Lab 3)
+        ##### Your code below (Lab 3)
         input_image = np.expand_dims(image, 0)
         softmax_output = softmax_output_fn([input_image, 0])[0]
 
@@ -93,7 +93,7 @@ class LineModelCtc(Model):
         conf = np.exp(neg_sum_logit) / (1 + np.exp(neg_sum_logit))
         # TODO: not sure if conf calculation is correct
 
-        # Your code above here (Lab 3)
+        ##### Your code above (Lab 3)
 
         return pred, conf
 

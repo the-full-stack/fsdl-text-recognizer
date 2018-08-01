@@ -6,9 +6,9 @@ The script creates a subset of files corresponding to labs with index less than 
 as specified in lab_specific_files.yml
 
 Furthermore, it also strips out text between blocks like
-    # Your code below (Lab1)
+    ##### Your code below (Lab1)
     # <content>
-    # Your code above (Lab1)
+    ##### Your code above (Lab1)
 for labs with index greater than or equal to the one given.
 
 """
@@ -28,8 +28,8 @@ def _filter_your_code_blocks(lines, lab_number):
     """
     Strip out stuff between "Your code here" blocks.
     """
-    beginning_comment = f'# Your code below \(Lab {lab_number}\)'
-    ending_comment = f'# Your code above \(Lab {lab_number}\)'
+    beginning_comment = f'##### Your code below \(Lab {lab_number}\)'
+    ending_comment = f'##### Your code above \(Lab {lab_number}\)'
     filtered_lines = []
     filtering = False
     for line in lines:
@@ -45,7 +45,7 @@ def _filter_your_code_blocks(lines, lab_number):
 
 
 def _filter_hidden_blocks(lines, lab_number):
-    lab_numbers_to_hide = f"[{'|'.join(str(num) for num in range(lab_number, MAX_LAB_NUMBER))}]"
+    lab_numbers_to_hide = f"[{'|'.join(str(num) for num in range(lab_number + 1, MAX_LAB_NUMBER))}]"
     beginning_comment = f'# Hide lines below until Lab {lab_numbers_to_hide}'
     ending_comment = f'# Hide lines above until Lab {lab_numbers_to_hide}'
     filtered_lines = []

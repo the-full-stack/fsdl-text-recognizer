@@ -28,15 +28,15 @@ class LineModel(Model):
         super().__init__(dataset_cls, network_fn, dataset_args, network_args)
 
     def evaluate(self, x, y, verbose=True):
-        # Your code should produce pred_strings and true_strings
-        # Your code below here (Lab 3)
+        ##### Your code should produce pred_strings and true_strings
+        ##### Your code below (Lab 3)
         sequence = DatasetSequence(x, y)
         preds_raw = self.network.predict_generator(sequence)
         trues = np.argmax(y, -1)
         preds = np.argmax(preds_raw, -1)
         pred_strings = [''.join(self.data.mapping.get(label, '') for label in pred).strip(' |_') for pred in preds]
         true_strings = [''.join(self.data.mapping.get(label, '') for label in true).strip(' |_') for true in trues]
-        # Your code above here (Lab 3)
+        ##### Your code above (Lab 3)
         char_accuracies = [
             1 - editdistance.eval(true_string, pred_string) / len(true_string)
             for pred_string, true_string in zip(pred_strings, true_strings)

@@ -12,12 +12,13 @@ def mlp(input_shape: Tuple[int, ...],
     """Simple multi-layer perceptron."""
     num_classes = output_shape[0]
 
-    # Your code below (Lab 1)
     model = Sequential()
+    ##### Your code below (Lab 1)
     model.add(Flatten(input_shape=input_shape))
     for _ in range(num_layers):
         model.add(Dense(layer_size, activation='relu'))
         model.add(Dropout(dropout_amount))
     model.add(Dense(num_classes, activation='softmax'))
-    # Your code above (Lab 1)
+    ##### Your code above (Lab 1)
+
     return model

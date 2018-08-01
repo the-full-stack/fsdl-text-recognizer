@@ -10,7 +10,7 @@ from text_recognizer.networks.lenet import lenet
 from text_recognizer.networks.misc import slide_window
 
 
-def line_lstm_encoder_decoder_sw(input_shape, output_shape, window_width=20, window_stride=14, decoder_dim=None, encoder_dim=None):
+def line_lstm_sw(input_shape, output_shape, window_width=20, window_stride=14, decoder_dim=None, encoder_dim=None):
     # Here is another way to pass arguments to the Keras Lambda function
     def slide_window_bound(image, window_width=window_width, window_stride=window_stride):
         return slide_window(image, window_width, window_stride)
@@ -42,7 +42,7 @@ def line_lstm_encoder_decoder_sw(input_shape, output_shape, window_width=20, win
     gpu_present = len(device_lib.list_local_devices()) > 1
     lstm = CuDNNLSTM if gpu_present else LSTM
 
-    # Your code below (Lab 3)
+    ##### Your code below (Lab 3)
     encoder_output = lstm(encoder_dim, return_sequences=False, go_backwards=True)(convnet_outputs)
     # (encoder_dim)
     repeated_encoding = RepeatVector(output_length)(encoder_output)
@@ -50,7 +50,7 @@ def line_lstm_encoder_decoder_sw(input_shape, output_shape, window_width=20, win
     decoder_output = lstm(decoder_dim, return_sequences=True)(repeated_encoding)
     # decoder_output_dropout = Dropout(0.2)(decoder_output)
     # (output_length, decoder_dim)
-    # Your code above (Lab 3)
+    ##### Your code above (Lab 3)
 
     softmax_output = TimeDistributed(Dense(num_classes, activation='softmax'))(decoder_output)
     # (max_length, num_classes)

@@ -1,24 +1,27 @@
 1:
     - notebooks/01-look-at-emnist.ipynb
     - notebooks/02-train-emnist-mlp.ipynb
-    - tasks/train_character_predictor.py
+    - tasks/train_character_predictor.sh
     - tasks/run_prediction_tests.sh
     - text_recognizer/__init__.py
     - text_recognizer/util.py
     - text_recognizer/character_predictor.py
+    - text_recognizer/datasets/__init__.py
     - text_recognizer/datasets/base.py
     - text_recognizer/datasets/emnist.py
     - text_recognizer/datasets/emnist_essentials.json
     - text_recognizer/datasets/sequence.py
+    - text_recognizer/models/__init__.py
     - text_recognizer/models/base.py
-    - text_recognizer/models/emnist_mlp.py
-    - text_recognizer/models/emnist_mlp_weights.h5
+    - text_recognizer/models/character_model.py
+    - text_recognizer/networks/__init__.py
     - text_recognizer/networks/mlp.py
     - text_recognizer/tests/support/create_emnist_support_files.py
     - text_recognizer/tests/support/emnist/0.png
     - text_recognizer/tests/support/emnist/a.png
     - text_recognizer/tests/support/emnist/X.png
     - text_recognizer/tests/test_character_predictor.py
+    - text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5
     - training/util.py
     - training/run_experiment.py
     - training/gpu_util_sampler.py
@@ -28,25 +31,25 @@
     - notebooks/04-line-cnn.ipynb
     - text_recognizer/datasets/emnist_lines.py
     - text_recognizer/datasets/sentences.py
-    - text_recognizer/models/emnist_cnn.py
     - text_recognizer/models/line_model.py
-    - text_recognizer/models/line_cnn_all_conv.py
-    - text_recognizer/models/line_cnn_fixed_width.py
-    - text_recognizer/models/line_cnn_sliding_window.py
-    - text_recognizer/networks/cnn.py
+    - text_recognizer/networks/line_cnn_all_conv.py
+    - text_recognizer/networks/line_cnn_sliding_window.py
+    - text_recognizer/networks/lenet.py
+    - text_recognizer/networks/misc.py
+    - text_recognizer/tests/support/create_emnist_lines_support_files.py
+    - "text_recognizer/tests/support/emnist_lines/Corsi left for.png"
+    - "text_recognizer/tests/support/emnist_lines/do that In.png"
+    - "text_recognizer/tests/support/emnist_lines/or if used the results.png"
 
 3:
     - notebooks/05-line-lstm.ipynb
     - notebooks/06-line-lstm-with-ctc.ipynb
-    - tasks/train_line_predictor.py
+    - tasks/train_line_predictor.sh
     - text_recognizer/line_predictor.py
-    - text_recognizer/models/line_lstm.py
-    - text_recognizer/models/line_lstm_with_ctc.py
+    - text_recognizer/models/line_model_ctc.py
+    - text_recognizer/networks/line_lstm.py
+    - text_recognizer/networks/line_lstm_ctc.py
     - text_recognizer/networks/ctc.py
-    - text_recognizer/tests/support/create_emnist_lines_support_files.py
-    - "text_recognizer/tests/support/emnist_lines/carry big sticks over Laos.png"
-    - "text_recognizer/tests/support/emnist_lines/edge on the.png"
-    - "text_recognizer/tests/support/emnist_lines/much about rocky or.png"
     - text_recognizer/tests/test_line_predictor.py
 
 4:
@@ -57,6 +60,10 @@
 
 5:
     - text_recognizer/datasets/iam_lines.py
+    - text_recognizer/tests/support/create_iam_lines_support_files.py
+    - "text_recognizer/tests/support/iam_lines/and came into the livingroom, where.png"
+    - "text_recognizer/tests/support/iam_lines/He rose from his breakfast-nook bench.png"
+    - "text_recognizer/tests/support/iam_lines/his entrance. He came, almost falling.png"
 
 6:
     - .circleci/config.yml
