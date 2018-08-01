@@ -10,7 +10,7 @@ from text_recognizer.datasets.base import Dataset
 from text_recognizer.datasets.sequence import DatasetSequence
 
 
-DIRNAME = pathlib.Path(__file__).parents[0].resolve()
+DIRNAME = pathlib.Path(__file__).parents[1].resolve() / 'weights'
 
 
 class Model:
@@ -32,6 +32,7 @@ class Model:
 
     @property
     def weights_filename(self):
+        DIRNAME.mkdir(parents=True, exist_ok=True)
         return str(DIRNAME / f'{self.name}_weights.h5')
 
     def fit(self, dataset, batch_size=32, epochs=10, callbacks=[]):
