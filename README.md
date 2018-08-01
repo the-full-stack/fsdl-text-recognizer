@@ -33,6 +33,7 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
         - make sure to explain that this enables a separate thread to load the data
     - talk about Keras callbacks: EarlyStopping, GPUUtilization, Tensorboard
 - [15 min] They write the network in networks/mlp.py and the prediction function in character_predictor.py, and train it
+    - more precisely, the predict_on_image() function in models/character_model.py
 - [5 min] They push code to Github and submit to gradescope for autograding
 
 Things to note
@@ -40,11 +41,14 @@ Things to note
 
 ## Lab 2 (60 min)
 
-- [10 min] They write and train the CNN version of character_model
 - [15 min] Walk through EMNIST line generation and fixed-width approach
     - Make sure to cover what the label and the loss are
-- [15 min] They write convnet code to use sliding window (they write sliding window part)
+- [15 min] They write convnet code to use sliding window
 - [15 min] They write convnet code to be all conv and observe whether it's faster or not
+
+```
+training/run_experiment.py '{"dataset": "EmnistLinesDataset", "model": "LineModel", "network": "line_cnn_sliding_window"}'
+```
 
 - [ ] make a slide explaining the all-conv idea
 

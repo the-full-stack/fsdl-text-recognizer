@@ -1,7 +1,6 @@
 import pathlib
 from typing import Tuple
 
-from boltons.cacheutils import cachedproperty
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, Input, MaxPooling2D, Permute, Reshape, TimeDistributed, Lambda, ZeroPadding2D

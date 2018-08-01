@@ -13,6 +13,7 @@ def mlp(input_shape: Tuple[int, ...],
     num_classes = output_shape[0]
 
     model = Sequential()
+    ## maybe mention that input_shape needs to be passed to the first layer of the model ?? - it can be a confusing common error
     ##### Your code below (Lab 1)
     model.add(Flatten(input_shape=input_shape))
     for _ in range(num_layers):
