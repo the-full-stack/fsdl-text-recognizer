@@ -16,9 +16,9 @@ from text_recognizer.networks.line_lstm_ctc import line_lstm_ctc
 
 
 class LineModelCtc(Model):
-    def __init__(self, dataset_cls: type=EmnistLinesDataset, network_fn: Callable=line_lstm_ctc, network_args: Dict=None):
+    def __init__(self, dataset_cls: type=EmnistLinesDataset, network_fn: Callable=line_lstm_ctc, dataset_args: Dict=None, network_args: Dict=None):
         """Define the default dataset and network values for this model."""
-        super().__init__(dataset_cls, network_fn, network_args)
+        super().__init__(dataset_cls, network_fn, dataset_args, network_args)
         self.batch_format_fn = format_batch_ctc
 
     def loss(self):
@@ -72,7 +72,9 @@ class LineModelCtc(Model):
         # Your code below here (Lab 3)
         input_image = np.expand_dims(image, 0)
         softmax_output = softmax_output_fn([input_image, 0])[0]
-        decoded, log_prob = K.ctc_decode(softmax_output, np.array([softmax_output.shape[0]]))
+        input_length = np.array([softmax_output.shape[0]])
+        max_output_length = self.data.output_shape[0]
+        decoded, log_prob = K.ctc_decode(softmax_output, input_length, max_output_length)
 
         pred_raw = K.eval(decoded[0])[0]
         pred = ''.join(self.data.mapping[label] for label in pred_raw).strip()
@@ -91,11 +93,20 @@ def format_batch_ctc(batch_x, batch_y):
     """
     batch_size = batch_y.shape[0]
     y_true = np.argmax(batch_y, axis=-1)
+
+    label_lengths = []
+    for ind in range(batch_size):
+        empty_at = np.where(batch_y[ind, :, -1] == 1)[0]
+        if len(empty_at) > 0:
+            label_lengths.append(empty_at[0])
+        else:
+            label_lengths.append(batch_y.shape[1])
+
     batch_inputs = {
         'image': batch_x,
         'y_true': y_true,
         'input_length': np.ones((batch_size, 1)),  # dummy, will be set to num_windows in network
-        'label_length': np.array([np.where(batch_y[ind, :, -1] == 1)[0][0] for ind in range(batch_size)])
+        'label_length': np.array(label_lengths)
     }
     batch_outputs = {
         'ctc_loss': np.zeros(batch_size),  # dummy

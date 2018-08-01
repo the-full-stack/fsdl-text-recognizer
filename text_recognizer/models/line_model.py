@@ -23,9 +23,9 @@ def loss_ignoring_blanks(target, output):
 
 
 class LineModel(Model):
-    def __init__(self, dataset_cls: type=EmnistLinesDataset, network_fn: Callable=line_cnn_sliding_window, network_args: Dict=None):
+    def __init__(self, dataset_cls: type=EmnistLinesDataset, network_fn: Callable=line_cnn_sliding_window, dataset_args: Dict=None, network_args: Dict=None):
         """Define the default dataset and network values for this model."""
-        super().__init__(dataset_cls, network_fn, network_args)
+        super().__init__(dataset_cls, network_fn, dataset_args, network_args)
 
     def evaluate(self, x, y, verbose=True):
         # Your code should produce pred_strings and true_strings

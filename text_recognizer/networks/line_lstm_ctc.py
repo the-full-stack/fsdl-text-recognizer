@@ -49,7 +49,7 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     )([y_true, softmax_output, input_length_processed, label_length])
 
     ctc_decoded_output = Lambda(
-        lambda x: ctc_decode(x[0], x[1]),
+        lambda x: ctc_decode(x[0], x[1], output_length),
         name='ctc_decoded'
     )([softmax_output, input_length_processed])
 

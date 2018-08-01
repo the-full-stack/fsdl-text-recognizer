@@ -15,10 +15,12 @@ DIRNAME = pathlib.Path(__file__).parents[0].resolve()
 
 class Model:
     """Base class, to be subclassed by predictors for specific type of data."""
-    def __init__(self, dataset_cls: type, network_fn: Callable, network_args: Dict=None):
+    def __init__(self, dataset_cls: type, network_fn: Callable, dataset_args: Dict=None, network_args: Dict=None):
         self.name = f'{self.__class__.__name__}_{dataset_cls.__name__}_{network_fn.__name__}'
 
-        self.data = dataset_cls()
+        if dataset_args is None:
+            dataset_args = {}
+        self.data = dataset_cls(**dataset_args)
 
         if network_args is None:
             network_args = {}

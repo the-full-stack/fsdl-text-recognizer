@@ -3,7 +3,7 @@ import tensorflow.keras.backend as K
 from tensorflow.python.ops import ctc_ops
 
 
-def ctc_decode(y_pred, input_length):
+def ctc_decode(y_pred, input_length, max_output_length):
     """
     Cut down from https://github.com/keras-team/keras/blob/master/keras/backend/tensorflow_backend.py#L4170
 
@@ -15,6 +15,7 @@ def ctc_decode(y_pred, input_length):
             containing the prediction, or output of the softmax.
         input_length: tensor `(samples, )` containing the sequence length for
             each batch item in `y_pred`.
+        max_output_length: int giving the max output sequence length
 
     # Returns
         List: list of one element that contains the decoded sequence.
@@ -29,7 +30,7 @@ def ctc_decode(y_pred, input_length):
 
     # Unfortunately, decoded_dense will be of different number of columns, depending on the decodings.
     # We need to get it all in one standard shape, so let's pad if necessary.
-    max_length = 32 + 2  # giving 2 extra characters for CTC leeway
+    max_length = max_output_length + 2  # giving 2 extra characters for CTC leeway
     cols = tf.shape(decoded_dense)[-1]
     def f1(): return tf.pad(decoded_dense, [[0, 0], [0, max_length - cols]], constant_values=-1)
     def f2(): return decoded_dense

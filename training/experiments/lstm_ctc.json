@@ -1,5 +1,5 @@
 {
-    "experiment_group": "LineCtc",
+    "experiment_group": "LineCtc2",
     "experiments": [
         {
             "dataset": "EmnistLinesDataset",
