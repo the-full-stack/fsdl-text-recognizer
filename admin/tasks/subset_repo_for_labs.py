@@ -13,6 +13,7 @@ for labs with index greater than or equal to the one given.
 
 """
 import argparse
+import os
 import pathlib
 import re
 import shutil
@@ -80,9 +81,15 @@ if __name__ == '__main__':
 
     output_dir = pathlib.Path(args.output_dirname)
     if output_dir.exists():
-        shutil.rmtree(output_dir)
+        for root, dirs, files in os.walk(output_dir):
+            for f in files:
+                os.unlink(os.path.join(root, f))
+            for d in dirs:
+                shutil.rmtree(os.path.join(root, d))
 
     shutil.copytree(REPO_DIRNAME / 'data', output_dir / 'data')
+    shutil.copy('Pipfile', output_dir)
+    shutil.copy('Pipfile.lock', output_dir)
 
     for lab_number in info.keys():
         lab_output_dir = output_dir / f'lab{lab_number}'
