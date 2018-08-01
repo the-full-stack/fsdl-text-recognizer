@@ -10,7 +10,7 @@ from text_recognizer.networks.lenet import lenet
 from text_recognizer.networks.misc import slide_window
 
 
-def line_lstm_encoder_decoder_sw(input_shape, output_shape, window_width, window_stride):
+def line_lstm_encoder_decoder_sw(input_shape, output_shape, window_width=14, window_stride=10, decoder_dim=None, encoder_dim=None):
     # Here is another way to pass arguments to the Keras Lambda function
     def slide_window_bound(image, window_width=window_width, window_stride=window_stride):
         return slide_window(image, window_width, window_stride)
@@ -18,8 +18,10 @@ def line_lstm_encoder_decoder_sw(input_shape, output_shape, window_width, window
     image_height, image_width = input_shape
     output_length, num_classes = output_shape
 
-    encoder_dim = num_classes * output_length // 8
-    decoder_dim = num_classes
+    if encoder_dim is None:
+        encoder_dim = num_classes * output_length
+    if decoder_dim is None:
+        decoder_dim = num_classes * 4
 
     image_input = Input(shape=input_shape)
     # (image_height, image_width)
@@ -46,6 +48,7 @@ def line_lstm_encoder_decoder_sw(input_shape, output_shape, window_width, window
     repeated_encoding = RepeatVector(output_length)(encoder_output)
     # (max_length, encoder_dim)
     decoder_output = lstm(decoder_dim, return_sequences=True)(repeated_encoding)
+    decoder_output = lstm(decoder_dim, return_sequences=True)(decoder_output)
     # (output_length, decoder_dim)
     # Your code above (Lab 3)
 

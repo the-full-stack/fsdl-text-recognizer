@@ -19,10 +19,11 @@ class LineModel(Model):
         # Your code should produce pred_strings and true_strings
         # Your code below here (Lab 3)
         sequence = DatasetSequence(x, y)
-        preds = self.network.predict_generator(sequence)
+        preds_raw = self.network.predict_generator(sequence)
         trues = np.argmax(y, -1)
-        pred_strings = [''.join(self.data.mapping.get(label, '') for label in pred).strip() for pred in preds]
-        true_strings = [''.join(self.data.mapping.get(label, '') for label in true).strip() for true in trues]
+        preds = np.argmax(preds_raw, -1)
+        pred_strings = [''.join(self.data.mapping.get(int(label), '') for label in pred).strip() for pred in preds]
+        true_strings = [''.join(self.data.mapping.get(int(label), '') for label in true).strip() for true in trues]
         # Your code above here (Lab 3)
         char_accuracies = [
             1 - editdistance.eval(true_string, pred_string) / len(pred_string)
