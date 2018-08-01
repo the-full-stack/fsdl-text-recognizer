@@ -6,7 +6,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import Model as KerasModel
 
 from text_recognizer.models.line_model import LineModel
-from text_recognizer.networks.cnn import lenet
+from text_recognizer.networks.lenet import lenet
 from text_recognizer.networks.misc import slide_window
 
 
@@ -47,5 +47,4 @@ def create_sliding_window_rnn_model(input_shape, max_length, num_classes, window
 
     softmax_outputs = TimeDistributed(Dense(num_classes, activation='softmax'))(decoder_output) # (max_length, num_classes)
     model = KerasModel(inputs=image_input, outputs=softmax_outputs)
-    model.summary()
     return model

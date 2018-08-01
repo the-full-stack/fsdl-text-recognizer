@@ -9,7 +9,7 @@ from tensorflow.keras.models import Model, Sequential
 from tensorflow.keras.models import Model as KerasModel
 
 from text_recognizer.models.line_model import LineModel
-from text_recognizer.networks.cnn import lenet
+from text_recognizer.networks.lenet import lenet
 from text_recognizer.networks.misc import slide_window
 
 

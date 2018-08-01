@@ -9,7 +9,7 @@ from tensorflow.keras.models import load_model
 from text_recognizer.models.base import Model
 from text_recognizer.datasets.emnist import EmnistDataset
 from text_recognizer.networks.mlp import mlp
-from text_recognizer.networks.cnn import lenet
+from text_recognizer.networks.lenet import lenet
 
 
 class CharacterModel(Model):
