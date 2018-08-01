@@ -72,8 +72,9 @@ if __name__ == '__main__':
     )
     parser.add_argument(
         "--save",
-        type=bool,
         default=False,
+        dest='save',
+        action='store_true',
         help="If true, then final weights will be saved to canonical, version-controlled location"
     )
     parser.add_argument(

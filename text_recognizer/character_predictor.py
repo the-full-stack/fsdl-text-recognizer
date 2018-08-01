@@ -2,13 +2,13 @@ from typing import Tuple, Union
 
 import numpy as np
 
-from text_recognizer.models.emnist_mlp import EmnistMlp
+from text_recognizer.models import CharacterModel
 import text_recognizer.util as util
 
 
 class CharacterPredictor:
   def __init__(self):
-    self.model = EmnistMlp()
+    self.model = CharacterModel()
     self.model.load_weights()
     self.model.network._make_predict_function()  # Bug https://github.com/keras-team/keras/issues/6462
 

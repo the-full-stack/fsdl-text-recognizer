@@ -42,6 +42,7 @@ class EmnistDataset(Dataset):
         self.inverse_mapping = {v: k for k, v in self.mapping.items()}
         self.num_classes = len(self.mapping)
         self.input_shape = essentials['input_shape']
+        self.output_shape = (self.num_classes,)
 
     def load_or_generate_data(self):
         if not os.path.exists(PROCESSED_DATA_FILENAME):

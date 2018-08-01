@@ -1,7 +1,7 @@
+from typing import Callable, Dict
 import pathlib
 
 from boltons.cacheutils import cachedproperty
-import inflection
 import numpy as np
 from tensorflow.keras.models import Model as KerasModel
 from tensorflow.keras.optimizers import RMSprop
@@ -15,12 +15,19 @@ DIRNAME = pathlib.Path(__file__).parents[0].resolve()
 
 class Model:
     """Base class, to be subclassed by predictors for specific type of data."""
-    def weights_filename(self):
-        model_name = inflection.underscore(self.__class__.__name__)
-        return str(DIRNAME / f'{model_name}_weights.h5')
+    def __init__(self, dataset_cls: type, network_fn: Callable, network_args: Dict=None):
+        self.name = f'{self.__class__.__name__}_{dataset_cls.__name__}_{network_fn.__name__}'
 
-    def network(self) -> KerasModel:
-        raise NotImplementedError
+        self.data = dataset_cls()
+
+        if network_args is None:
+            network_args = {}
+        self.network = network_fn(self.data.input_shape, self.data.output_shape, **network_args)
+        self.network.summary()
+
+    @property
+    def weights_filename(self):
+        return str(DIRNAME / f'{self.name}_weights.h5')
 
     def fit(self, dataset, batch_size=32, epochs=10, callbacks=[]):
         self.network.compile(loss=self.loss, optimizer=self.optimizer, metrics=self.metrics)
@@ -57,7 +64,7 @@ class Model:
         return ['accuracy']
 
     def load_weights(self):
-        self.network.load_weights(self.weights_filename())
+        self.network.load_weights(self.weights_filename)
 
     def save_weights(self):
-        self.network.save_weights(self.weights_filename())
+        self.network.save_weights(self.weights_filename)

@@ -24,6 +24,16 @@ If your password is not accepted, it may be because you have two-factor authenti
 Follow directions here to generate a token you can use instead of your password on the command line: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
 Make sure you store the token (e.g. in your password manager)!
 
+## Training the network
+
+```sh
+# Train a canonical model and save the weights
+pipenv run training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp"}'
+
+# Or try a larger MLP, with a smaller batch size
+pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 8}} "train_args": {"batch_size": 32}'
+```
+
 ## Submitting to Gradescope
 
 Go to https://gradescope.com/courses/21098/assignments and click the lab you want to submit to.

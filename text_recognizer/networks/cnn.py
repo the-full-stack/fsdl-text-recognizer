@@ -5,7 +5,9 @@ from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, Input, Lamb
 from tensorflow.keras.models import Sequential, Model
 
 
-def lenet(input_shape: Tuple[int, ...], num_classes: Optional[int]=None) -> Model:
+def lenet(input_shape: Tuple[int, ...], output_shape: Tuple[int, ...]) -> Model:
+    num_classes = output_shape[0]
+
     model = Sequential()
 
     if len(input_shape) < 3:
@@ -18,9 +20,8 @@ def lenet(input_shape: Tuple[int, ...], num_classes: Optional[int]=None) -> Mode
     model.add(Dropout(0.2))
     model.add(Flatten())
     model.add(Dense(128, activation='relu'))
-    if num_classes:
-        model.add(Dropout(0.2))
-        model.add(Dense(num_classes, activation='softmax'))
+    model.add(Dropout(0.2))
+    model.add(Dense(num_classes, activation='softmax'))
     return model
 
 
@@ -38,17 +39,3 @@ def lenet_all_conv(image_height: int, image_width: int, num_classes: Optional[in
     model.add(Flatten())
     # Your lab2 code above here
     return model
-
-
-def slide_window(image, window_width, window_stride):
-    """
-    Takes (image_height, image_width, 1) input,
-    Returns (num_windows, image_height, window_width, 1) output, where
-    num_windows is floor((image_width - window_width) / window_stride) + 1
-    """
-    kernel = [1, 1, window_width, 1]
-    strides = [1, 1, window_stride, 1]
-    patches = tf.extract_image_patches(image, kernel, strides, [1, 1, 1, 1], 'SAME')
-    patches = tf.transpose(patches, (0, 2, 1, 3))
-    patches = tf.expand_dims(patches, -1)
-    return patches

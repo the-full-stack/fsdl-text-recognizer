@@ -23,6 +23,7 @@ class EmnistLinesDataset(Dataset):
         self.max_overlap = max_overlap
         self.num_classes = len(self.mapping)
         self.input_shape = (self.emnist.input_shape[0], self.emnist.input_shape[1] * self.max_length)
+        self.output_shape = (self.max_length, self.num_classes)
         self.num_train = num_train
         self.num_test = num_test
 
