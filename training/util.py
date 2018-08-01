@@ -18,7 +18,7 @@ EARLY_STOPPING = True
 GPU_UTIL_SAMPLER = True
 
 
-def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gpu_ind: Optional[int]=None) -> Model:
+def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gpu_ind: Optional[int]=None, use_wandb=False) -> Model:
     callbacks = []
 
     if EARLY_STOPPING:
@@ -30,8 +30,9 @@ def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gp
         callbacks.append(gpu_utilization)
 
     # Hide lines below until Lab 4
-    wandb = WandbCallback()
-    callbacks.append(wandb)
+    if use_wandb:
+        wandb = WandbCallback()
+        callbacks.append(wandb)
     # Hide lines above until Lab 4
 
     model.network.summary()

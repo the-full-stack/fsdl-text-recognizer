@@ -18,7 +18,7 @@ DEFAULT_TRAIN_ARGS = {
 }
 
 
-def run_experiment(experiment_config, save_weights, gpu_ind):
+def run_experiment(experiment_config, save_weights, gpu_ind, use_wandb=True):
     print(f'Running experiment with config {experiment_config} on GPU {gpu_ind}')
 
     datasets_module = importlib.import_module('text_recognizer.datasets')
@@ -42,8 +42,9 @@ def run_experiment(experiment_config, save_weights, gpu_ind):
     experiment_config['gpu_ind'] = gpu_ind
 
     # Hide lines below until Lab 4
-    wandb.init()
-    wandb.config.update(experiment_config)
+    if use_wandb:
+        wandb.init()
+        wandb.config.update(experiment_config)
     # Hide lines above until Lab 4
 
     train_model(
@@ -51,13 +52,15 @@ def run_experiment(experiment_config, save_weights, gpu_ind):
         dataset,
         epochs=experiment_config['train_args']['epochs'],
         batch_size=experiment_config['train_args']['batch_size'],
-        gpu_ind=gpu_ind
+        gpu_ind=gpu_ind,
+        use_wandb=use_wandb
     )
     score = model.evaluate(dataset.x_test, dataset.y_test)
     print(f'Test evaluation: {score}')
 
     # Hide lines below until Lab 4
-    wandb.log({'test_metric': score})
+    if use_wandb:
+        wandb.log({'test_metric': score})
     # Hide lines above until Lab 4
 
     if save_weights:
