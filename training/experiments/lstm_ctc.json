@@ -1,0 +1,65 @@
+{
+    "experiment_group": "LineCtc",
+    "experiments": [
+        {
+            "dataset": "EmnistLinesDataset",
+            "model": "LineModelCtc",
+            "network": "line_lstm_ctc",
+            "network_args": {
+                "window_width": 28,
+                "window_stride": 14
+            }
+        },
+        {
+            "dataset": "EmnistLinesDataset",
+            "model": "LineModelCtc",
+            "network": "line_lstm_ctc",
+            "network_args": {
+                "window_width": 14,
+                "window_stride": 7
+            }
+        },
+        {
+            "dataset": "EmnistLinesDataset",
+            "dataset_args": {
+                "max_length": 34
+            },
+            "model": "LineModelCtc",
+            "network": "line_lstm_ctc",
+            "network_args": {
+                "window_width": 28,
+                "window_stride": 14
+            }
+        },
+        {
+            "dataset": "EmnistLinesDataset",
+            "dataset_args": {
+                "max_length": 34
+            },
+            "model": "LineModelCtc",
+            "network": "line_lstm_ctc",
+            "network_args": {
+                "window_width": 14,
+                "window_stride": 7
+            }
+        },
+        {
+            "dataset": "IamLinesDataset",
+            "model": "LineModelCtc",
+            "network": "line_lstm_ctc",
+            "network_args": {
+                "window_width": 28,
+                "window_stride": 14
+            }
+        },
+        {
+            "dataset": "IamLinesDataset",
+            "model": "LineModelCtc",
+            "network": "line_lstm_ctc",
+            "network_args": {
+                "window_width": 14,
+                "window_stride": 7
+            }
+        }
+    ]
+}
