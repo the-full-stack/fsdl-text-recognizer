@@ -1,5 +1,6 @@
 from .emnist_mlp import EmnistMlp
 # Hide lines below until Lab 2
+from .character_model import CharacterModel
 from .emnist_cnn import EmnistCnn
 from .line_cnn_all_conv import LineCnnAllConv
 from .line_cnn_fixed_width import LineCnnFixedWidth

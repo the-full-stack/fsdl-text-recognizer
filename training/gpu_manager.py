@@ -32,7 +32,7 @@ class GPUManager(object):
             available_gpu_inds = [
                 gpu.index
                 for gpu in gpustat.GPUStatCollection.new_query()
-                if not gpu.processes
+                if gpu.memory_used < 0.5 * gpu.memory_total
             ]
         except Exception:
             return [0]  # Return dummy GPU index if no CUDA GPUs are installed

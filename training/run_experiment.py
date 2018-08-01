@@ -29,7 +29,11 @@ def run_experiment(experiment_config, save_weights, gpu_ind):
 
     models_module = importlib.import_module('text_recognizer.models')
     model_class_ = getattr(models_module, experiment_config['model'])
-    model = model_class_(**experiment_config.get('model_args', {}))
+
+    networks_module = importlib.import_module('text_recognizer.networks')
+    network_fn_ = getattr(networks_module, experiment_config['network'])
+    network_args = experiment_config.get('network_args', {})
+    model = model_class_(dataset_cls=dataset_class_, network_fn=network_fn_, network_args=network_args)
     print(model)
 
     experiment_config['train_args'] = {**DEFAULT_TRAIN_ARGS, **experiment_config.get('train_args', {})}

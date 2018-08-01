@@ -1,5 +1,5 @@
 import pathlib
-from typing import Tuple
+from typing import Callable, Dict, Tuple
 
 from boltons.cacheutils import cachedproperty
 import numpy as np
@@ -9,26 +9,16 @@ from tensorflow.keras.models import load_model
 from text_recognizer.models.base import Model
 from text_recognizer.datasets.emnist import EmnistDataset
 from text_recognizer.networks.mlp import mlp
+from text_recognizer.networks.cnn import lenet
 
 
-class EmnistMlp(Model):
-    def __init__(self, dataset, network_fn, layer_size: int=128, dropout_amount: float=0.2):
-        np.random.seed(42)
-        tensorflow.set_random_seed(42)
-
-        data = EmnistDataset()
-        self.mapping = data.mapping
-        self.num_classes = len(self.mapping)
-        self.input_shape = data.input_shape
-
-        self.layer_size = layer_size
-        self.dropout_amount = dropout_amount
-
-    @cachedproperty
-    def network(self):
-        network = mlp(self.num_classes, self.input_shape, self.layer_size, self.dropout_amount)
-        network.summary()
-        return network
+class CharacterModel(Model):
+    def __init__(self, dataset_cls: type, network_fn: Callable, network_args: Dict=None):
+        if network_args is None:
+            network_args = {}
+        self.data = dataset_cls()
+        self.network = network_fn(self.data.input_shape, self.data.num_classes, **network_args)
+        self.network.summary()
 
     def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
         # Your code below (Lab 1)
@@ -40,3 +30,10 @@ class EmnistMlp(Model):
         pred = self.mapping[ind]
         # Your code above (Lab 1)
         return pred, conf
+
+
+if __name__ == '__main__':
+    char_model = CharacterModel(EmnistDataset, lenet)
+    dataset = EmnistDataset()
+    dataset.load_or_generate_data()
+    char_model.fit(dataset)
