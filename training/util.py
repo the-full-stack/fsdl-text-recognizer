@@ -25,7 +25,7 @@ def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gp
         early_stopping = EarlyStopping(monitor='val_loss', min_delta=0.01, patience=3, verbose=1, mode='auto')
         callbacks.append(early_stopping)
 
-    if GPU_UTIL_SAMPLER and gpu_ind:
+    if GPU_UTIL_SAMPLER and gpu_ind is not None:
         gpu_utilization = GPUUtilizationSampler(gpu_ind)
         callbacks.append(gpu_utilization)
 
@@ -38,7 +38,7 @@ def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gp
     history = model.fit(dataset, batch_size, epochs, callbacks)
     print('Training took {:2f} s'.format(time() - t))
 
-    if GPU_UTIL_SAMPLER and gpu_ind:
+    if GPU_UTIL_SAMPLER and gpu_ind is not None:
         gpu_utilizations = gpu_utilization.samples
         print(f'GPU utilization: {round(np.mean(gpu_utilizations), 2)} +- {round(np.std(gpu_utilizations), 2)}')
 

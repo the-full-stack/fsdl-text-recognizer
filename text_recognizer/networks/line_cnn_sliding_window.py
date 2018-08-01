@@ -5,7 +5,7 @@ from boltons.cacheutils import cachedproperty
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, Input, MaxPooling2D, Permute, Reshape, TimeDistributed, Lambda, ZeroPadding2D
-from tensorflow.keras.models import Model, Sequential
+from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import Model as KerasModel
 
 from text_recognizer.models.line_model import LineModel
@@ -39,7 +39,7 @@ def line_cnn_sliding_window(
 
     # Make a LeNet and get rid of the top softmax layer and preceding dropout
     convnet = lenet((image_height, window_width, 1), (num_classes,))
-    convnet = Model(inputs=convnet.inputs, outputs=convnet.layers[-2].output)
+    convnet = KerasModel(inputs=convnet.inputs, outputs=convnet.layers[-2].output)
 
     convnet_outputs = TimeDistributed(convnet)(image_patches)
     # (num_windows, 128)
