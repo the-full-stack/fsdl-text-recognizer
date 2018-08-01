@@ -36,10 +36,10 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 - [5 min] They push code to Github and submit to gradescope for autograding
 
 TASKS
-- [ ] rename model to network
+- [x] rename model to network
 - [ ] make pre-processing logic in predict() and fit()/evaluate() should be shared
 - [ ] Mostafa suggests that big datasets cannot be stored in one file. will have to shard over multiple files
-- [ ] increasing GPU utiliation: can incerase batch or number of workers that preprocess data
+- [ ] increasing GPU utilization: can increase batch or number of workers that preprocess data
 
 ## Lab 2 (60 min)
 
@@ -65,6 +65,7 @@ TASKS
 - Weights & Biases and script to distribute jobs over multiple GPUs
 - [ ] talk about distributing training of a single model (in addition to multiple experiments)
 mple
+
 ## Lab 5 (60 min)
 
 - [10 min] Introduce IAM dataset
@@ -72,14 +73,18 @@ mple
 - [40 min] More-or-less free lab to try to get the highest character accuracy, via searching over model space and augmenting data generator
     - They can set their best model to be the official line_predictor model and submit to Gradescope to leaderboard it
 
+Ideas for things to try:
+- More general encoder-decoder architecture (teacher training)
+-
+
 ## Lab 6 (30 min)
 
 - [10 min] Adding CI via CircleCI
 - [10 min] Running a Flask web app locally
-- [10 min] Dockerizing the flask web app
 
 ## Lab 7 (60 min)
 
+- [10 min] Dockerizing the flask web app
 - Deploying to lambda
 - Seeing it work on your phone via cursive.ai
 - Add monitoring dashboard and alarms

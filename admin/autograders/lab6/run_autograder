@@ -1,6 +1,0 @@
-#!/bin/sh
-
-cp -r /autograder/submission/api /autograder_source
-cp -r /autograder/submission/text_recognizer /autograder/source/
-cd /autograder/source
-python3 run_tests.py > /autograder/results/results.json
