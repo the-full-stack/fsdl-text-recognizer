@@ -16,7 +16,7 @@ ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_line
 
 
 class EmnistLinesDataset(Dataset):
-    def __init__(self, max_length: int=34, max_overlap: float=0.4, num_train: int=20000, num_test: int=2000):
+    def __init__(self, max_length: int=16, max_overlap: float=0.33, num_train: int=10000, num_test: int=1000):
         self.emnist = EmnistDataset()
         self.mapping = self.emnist.mapping
         self.max_length = max_length
@@ -74,7 +74,7 @@ class EmnistLinesDataset(Dataset):
         num = self.num_train if split == 'train' else self.num_test
 
         DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
-        with h5py.File(self.data_filename, 'w') as f:
+        with h5py.File(self.data_filename, 'a') as f:
             x, y = create_dataset_of_images(num, samples_by_char, sentence_generator, self.max_overlap)
             y = convert_strings_to_categorical_labels(y, emnist.inverse_mapping)
             f.create_dataset(f'x_{split}', data=x, dtype='u1', compression='lzf')
@@ -121,7 +121,13 @@ def create_dataset_of_images(N, samples_by_char, sentence_generator, max_overlap
     images = np.zeros((N, sample_image.shape[0], sample_image.shape[1]), np.uint8)
     labels = []
     for n in range(N):
-        label = sentence_generator.generate()
+        label = None
+        for _ in range(5):  # Try 5 times to generate before actually erroring
+            try:
+                label = sentence_generator.generate()
+                break
+            except Exception:
+                pass
         images[n] = construct_image_from_string(label, samples_by_char, max_overlap)
         labels.append(label)
     return images, labels

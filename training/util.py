@@ -34,6 +34,8 @@ def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gp
     callbacks.append(wandb)
     # Hide lines above until Lab 4
 
+    model.network.summary()
+
     t = time()
     history = model.fit(dataset, batch_size, epochs, callbacks)
     print('Training took {:2f} s'.format(time() - t))

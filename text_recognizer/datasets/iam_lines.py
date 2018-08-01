@@ -36,6 +36,8 @@ class IamLinesDataset(Dataset):
         self.mapping = EmnistDataset().mapping
         self.inverse_mapping = {v: k for k, v in self.mapping.items()}
         self.num_classes = len(self.mapping)
+        self.input_shape = (28, 952)
+        self.output_shape = (97, self.num_classes)
 
     def load_or_generate_data(self):
         if not PROCESSED_DATA_FILENAME.exists():
