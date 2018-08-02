@@ -14,14 +14,20 @@
 
 ## Next
 
+- [ ] make a little slide for my approach to sliding window cnn
+
 - [ ] save experiment json along with weights, and just call it canonical_character_predictor_weights.py and canonical_character_predictor_config.py
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
-- [ ] Support variable-width image input in the LSTM model
 - [ ] have networks take more arguments, like lstm_dim and stuff
+
+- [ ] @saurabh support variable-width image input in the LSTM model
+
+- [ ] @arjun don't copy the trained weights over to lab1, but do copy it over to solutions
 
 - [ ] figure out wandb situation: why does it need to be checked into git? (if it's not, message to `wandb init` pops up every time)
 
-- [ ] clean up notebooks: don't need as many, just need to show data and some training
+- [ ] @saurabh clean up notebooks: don't need as many, just need to show data and some training
+
 - [ ] try using only lowercase characters: that will make emnist a better training experience, and probably boost emnistlines accuracies, too
     - [ ] or, can try class_weight in training
 

@@ -39,15 +39,15 @@ class LineModelCtc(Model):
         return None
 
     def evaluate(self, x, y, batch_size: int=32, verbose=True) -> float:
-        decoding_model = KerasModel(inputs=self.network.input, outputs=self.network.get_layer('ctc_decoded').output)
         test_sequence = DatasetSequence(x, y, batch_size, format_fn=self.batch_format_fn)
 
-        ##### Your code below (Lab 3)
+        # We can use the `ctc_decoded` layer that is part of our model here.
+        decoding_model = KerasModel(inputs=self.network.input, outputs=self.network.get_layer('ctc_decoded').output)
         preds = decoding_model.predict_generator(test_sequence)
+
         trues = np.argmax(y, -1)
         pred_strings = [''.join(self.data.mapping.get(label, '') for label in pred).strip(' |_') for pred in preds]
         true_strings = [''.join(self.data.mapping.get(label, '') for label in true).strip(' |_') for true in trues]
-        ##### Your code above (Lab 3)
 
         char_accuracies = [
             1 - editdistance.eval(true_string, pred_string) / len(true_string)
@@ -78,6 +78,7 @@ class LineModelCtc(Model):
         if image.dtype == np.uint8:
             image = (image / 255).astype(np.float32)
 
+        # Get the prediction and confidence using softmax_output_fn, passing the right input into it.
         ##### Your code below (Lab 3)
         input_image = np.expand_dims(image, 0)
         softmax_output = softmax_output_fn([input_image, 0])[0]
@@ -91,8 +92,6 @@ class LineModelCtc(Model):
 
         neg_sum_logit = K.eval(log_prob)[0][0]
         conf = np.exp(neg_sum_logit) / (1 + np.exp(neg_sum_logit))
-        # TODO: not sure if conf calculation is correct
-
         ##### Your code above (Lab 3)
 
         return pred, conf

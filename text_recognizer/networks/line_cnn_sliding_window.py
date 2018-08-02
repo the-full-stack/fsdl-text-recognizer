@@ -16,8 +16,8 @@ from text_recognizer.networks.misc import slide_window
 def line_cnn_sliding_window(
         input_shape: Tuple[int, ...],
         output_shape: Tuple[int, ...],
-        window_width: float=20,
-        window_stride: float=14) -> KerasModel:
+        window_width: float=16,
+        window_stride: float=10) -> KerasModel:
     """
     Input is an image with shape (image_height, image_width)
     Output is of shape (output_length, num_classes)
@@ -44,14 +44,15 @@ def line_cnn_sliding_window(
     convnet_outputs = TimeDistributed(convnet)(image_patches)
     # (num_windows, 128)
 
+    # Now we have to get to (output_length, num_classes) shape. One way to do it is to do another sliding window with
+    # width = floor(num_windows / output_length)
+    # Note that this will likely produce too many items in the output sequence, so take only output_length,
+    # and watch out that width is at least 2 (else we will only be able to predict on the first half of the line)
+
+    ##### Your code below (Lab 2)
     convnet_outputs_extra_dim = Lambda(lambda x: tf.expand_dims(x, -1))(convnet_outputs)
     # (num_windows, 128, 1)
 
-    # Now we have to get to (output_length, num_classes) shape. One way to do it is to do another sliding window with
-    # width = floor(num_windows / output_length)
-    # Note that it will likely produce too many items in the output sequence, so take only output_length.
-
-    ##### Your code below (Lab 2)
     num_windows = int((image_width - window_width) / window_stride) + 1
     width = int(num_windows / output_length)
 

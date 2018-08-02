@@ -27,23 +27,50 @@ Make sure you store the token (e.g. in your password manager)!
 ## Setting up Python environment
 
 In the repo, run `pipenv install --dev` to install all required packages into a virtual environment.
+
 Make sure to precede all commands with `pipenv run` from now on, to make sure that you are using the correct environment.
 (You could run `pipenv shell` to activate the environment in your terminal session, instead.)
 
 ## Training the network
 
-```sh
-# Train a canonical model and save the weights
-pipenv run training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp"}'
+You will have to add a tiny bit of code to `text_recognizer/models/mlp.py` before being able to train.
+When you finish, you can train a canonical model and save the weights:
 
-# Or try a larger MLP, with a smaller batch size
-pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 8}} "train_args": {"batch_size": 32}'
+```sh
+pipenv run training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp"}'
 ```
+
+You can also run the above command as a shortcut: `tasks/train_character_predictor.py`
+
+Just for fun, you can try a larger MLP, with a larger batch size
+
+```sh
+pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 8}} "train_args": {"batch_size": 256}'
+```
+
+## Testing
+
+Your network is trained, but you need to write a bit more code to get the `CharacterModel` to predict using it.
+Open up `text_recognizer/models/character_model.py` and write some code there to make it work.
+You can test that it works by running
+
+```sh
+pipenv run pytest -s text_recognizer/tests/test_character_predictor.py
+```
+
+Or, use the shorthand `tasks/run_prediction_tests.sh`
 
 ## Submitting to Gradescope
 
-Go to https://gradescope.com/courses/21098/assignments and click the lab you want to submit to.
-Submit via github: select your fork of the `fsdl-text-recognizer-project` repo and the master branch, and submit.
+Before submitting to Gradescope, commit and push your changes:
+
+```sh
+git commit -am "my work"
+git push mine master
+```
+
+Now go to https://gradescope.com/courses/21098/assignments and click on Lab 1.
+Select the Github submission option, and there select your fork of the `fsdl-text-recognizer-project` repo and the master branch, and click Submit.
 Don't forget to enter a name for the leaderboard :)
 
 The autograder should finish in <1 min, and display the results.
