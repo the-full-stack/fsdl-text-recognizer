@@ -12,9 +12,9 @@ Furthermore, it also strips out text between blocks like
 for labs with index greater than or equal to the one given.
 
 It also strips text between blocks like
-    ###### Hide liness below until Lab 2
+    ###### Hide lines below until Lab 2
     # <content>
-    ##### Hide liness above until Lab 2
+    ##### Hide lines above until Lab 2
 for labs with index greater than the one given.
 
 NOTE that the stripping is only performed on .py files.
@@ -56,8 +56,8 @@ def _filter_your_code_blocks(lines, lab_number):
 
 def _filter_hidden_blocks(lines, lab_number):
     lab_numbers_to_hide = f"[{'|'.join(str(num) for num in range(lab_number + 1, MAX_LAB_NUMBER))}]"
-    beginning_comment = f'##### Hide liness below until Lab {lab_numbers_to_hide}'
-    ending_comment = f'##### Hide liness above until Lab {lab_numbers_to_hide}'
+    beginning_comment = f'##### Hide lines below until Lab {lab_numbers_to_hide}'
+    ending_comment = f'##### Hide lines above until Lab {lab_numbers_to_hide}'
     filtered_lines = []
     filtering = False
     for line in lines:
@@ -107,7 +107,7 @@ def _process_new_files(new_paths, lab_number, filter_your_code=True, filter_hidd
             lines = _replace_data_dirname(lines)
 
         with open(path, 'w') as f:
-            f.write('\n'.join(lines))
+            f.write('\n'.join(lines) + '\n')
 
 
 def subset_repo(info):

@@ -24,6 +24,12 @@ If your password is not accepted, it may be because you have two-factor authenti
 Follow directions here to generate a token you can use instead of your password on the command line: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
 Make sure you store the token (e.g. in your password manager)!
 
+## Setting up Python environment
+
+In the repo, run `pipenv install --dev` to install all required packages into a virtual environment.
+Make sure to precede all commands with `pipenv run` from now on, to make sure that you are using the correct environment.
+(You could run `pipenv shell` to activate the environment in your terminal session, instead.)
+
 ## Training the network
 
 ```sh
