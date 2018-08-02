@@ -1,5 +1,7 @@
 ## Now
 
+- [ ] code hiding doesn't seem to work
+
 - [x] output solutions in subset_repo
 
 - [ ] subset EMNIST so that it's balanced but still has 65 characters
@@ -27,6 +29,8 @@
 - [ ] figure out wandb situation: why does it need to be checked into git? (if it's not, message to `wandb init` pops up every time)
 
 - [ ] @saurabh clean up notebooks: don't need as many, just need to show data and some training
+
+- [ ] improve accuracy everywhere we can
 
 - [ ] try using only lowercase characters: that will make emnist a better training experience, and probably boost emnistlines accuracies, too
     - [ ] or, can try class_weight in training
