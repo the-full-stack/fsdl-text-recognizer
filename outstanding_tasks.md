@@ -1,11 +1,27 @@
 ## Now
 
-- [x] hide future labs from current lab
-- [x] upload emnist matlab.zip to S3 to that it's faster to download
+- [x] output solutions in subset_repo
 
-- [ ] is it easy to support variable-length inputs?
+- [ ] create repo that people can clone, add their code, and submit their fork to gradescope
+    - [x] make sure can update contents of repo easily with `admin/tasks/subset_repo_into_labs.sh` script
+    - make sure that can submit repo to autograder
+
+- [ ] write clear (but still minimal) instructions for what they are supposed to do in lab 1, 2, and 3
+
+- [ ] write files to discuss for every lab, and new lines that appear, for myself as notes
+
+## Next
+
+- [ ] save experiment json along with weights, and just call it canonical_character_predictor_weights.py and canonical_character_predictor_config.py
+    - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
+- [ ] Support variable-width image input in the LSTM model
+- [ ] have networks take more arguments, like lstm_dim and stuff
+- [ ] clean up notebooks: don't need as many, just need to show data and some training
 
 ## Arjun
+
+Thursday:
+- [ ] go through everything as an attendee and make sure it all works
 
 Friday night:
 - [ ] get `sls deploy` working from api/ on jupyterhub (see email thread with Chris)

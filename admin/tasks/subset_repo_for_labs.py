@@ -11,6 +11,13 @@ Furthermore, it also strips out text between blocks like
     ##### Your code above (Lab1)
 for labs with index greater than or equal to the one given.
 
+It also strips text between blocks like
+    ###### Hide liness below until Lab 2
+    # <content>
+    ##### Hide liness above until Lab 2
+for labs with index greater than the one given.
+
+NOTE that the stripping is only performed on .py files.
 """
 import argparse
 import os
@@ -49,8 +56,8 @@ def _filter_your_code_blocks(lines, lab_number):
 
 def _filter_hidden_blocks(lines, lab_number):
     lab_numbers_to_hide = f"[{'|'.join(str(num) for num in range(lab_number + 1, MAX_LAB_NUMBER))}]"
-    beginning_comment = f'# Hide lines below until Lab {lab_numbers_to_hide}'
-    ending_comment = f'# Hide lines above until Lab {lab_numbers_to_hide}'
+    beginning_comment = f'##### Hide liness below until Lab {lab_numbers_to_hide}'
+    ending_comment = f'##### Hide liness above until Lab {lab_numbers_to_hide}'
     filtered_lines = []
     filtering = False
     for line in lines:
@@ -73,6 +80,69 @@ def _replace_data_dirname(lines):
     return filtered_lines
 
 
+def _copy_files_for_lab(info, lab_number, lab_output_dir):
+    selected_paths = sum([info.get(number, []) for number in range(lab_number + 1)], [])
+    new_paths = []
+    for path in selected_paths:
+        new_path = lab_output_dir / path
+        new_path.parents[0].mkdir(parents=True, exist_ok=True)
+        shutil.copy(path, new_path)
+        new_paths.append(new_path)
+    return new_paths
+
+
+def _process_new_files(new_paths, lab_number, filter_your_code=True, filter_hidden=True, replace_data_dirname=True):
+    for path in new_paths:
+        if path.suffix != '.py':
+            continue
+
+        with open(path) as f:
+            lines = f.read().split('\n')
+
+        if filter_your_code:
+            lines = _filter_your_code_blocks(lines, lab_number)
+        if filter_hidden:
+            lines = _filter_hidden_blocks(lines, lab_number)
+        if replace_data_dirname:
+            lines = _replace_data_dirname(lines)
+
+        with open(path, 'w') as f:
+            f.write('\n'.join(lines))
+
+
+def subset_repo(info):
+    """See module docstring."""
+    output_dir = pathlib.Path(args.output_dirname)
+    if output_dir.exists():
+        for d in glob.glob(f'{str(output_dir)}/lab*'):
+            shutil.rmtree(d)
+        if os.path.exists(output_dir / 'data'):
+            shutil.rmtree(output_dir / 'data')
+        if os.path.exists(output_dir / 'Pipfile'):
+            os.remove(output_dir / 'Pipfile')
+        if os.path.exists(output_dir / 'Pipfile.lock'):
+            os.remove(output_dir / 'Pipfile.lock')
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    shutil.copytree(REPO_DIRNAME / 'data', output_dir / 'data')
+    shutil.copy('Pipfile', output_dir)
+    shutil.copy('Pipfile.lock', output_dir)
+
+    # To be filled-out
+    for lab_number in info.keys():
+        lab_output_dir = output_dir / f'lab{lab_number}'
+        lab_output_dir.mkdir(parents=True)
+        new_paths = _copy_files_for_lab(info, lab_number, lab_output_dir)
+        _process_new_files(new_paths, lab_number)
+
+    # Solutions
+    for lab_number in info.keys():
+        lab_output_dir = output_dir / f'lab{lab_number}_sln'
+        lab_output_dir.mkdir(parents=True)
+        new_paths = _copy_files_for_lab(info, lab_number, lab_output_dir)
+        _process_new_files(new_paths, lab_number, filter_your_code=False)
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--output_dirname', default='_labs', help='Where to output the lab subset directories.')
@@ -81,42 +151,4 @@ if __name__ == '__main__':
     with open(INFO_FILENAME) as f:
         info = yaml.load(f.read())
 
-    output_dir = pathlib.Path(args.output_dirname)
-    if output_dir.exists():
-        for d in glob.glob(f'{str(output_dir)}/lab*'):
-            shutil.rmtree(d)
-        shutil.rmtree(output_dir / 'data')
-        os.remove(output_dir / 'Pipfile')
-        os.remove(output_dir / 'Pipfile.lock')
-
-    shutil.copytree(REPO_DIRNAME / 'data', output_dir / 'data')
-    shutil.copy('Pipfile', output_dir)
-    shutil.copy('Pipfile.lock', output_dir)
-
-    for lab_number in info.keys():
-        lab_output_dir = output_dir / f'lab{lab_number}'
-        lab_output_dir.mkdir(parents=True)
-
-        # Copy selected files
-        selected_paths = sum([info.get(number, []) for number in range(lab_number + 1)], [])
-        new_paths = []
-        for path in selected_paths:
-            new_path = lab_output_dir / path
-            new_path.parents[0].mkdir(parents=True, exist_ok=True)
-            shutil.copy(path, new_path)
-            new_paths.append(new_path)
-
-        # Process copied Python files
-        for path in new_paths:
-            if path.suffix != '.py':
-                continue
-
-            with open(path) as f:
-                lines = f.read().split('\n')
-
-            lines = _filter_your_code_blocks(lines, lab_number)
-            lines = _filter_hidden_blocks(lines, lab_number)
-            lines = _replace_data_dirname(lines)
-
-            with open(path, 'w') as f:
-                f.write('\n'.join(lines))
+    subset_repo(info)

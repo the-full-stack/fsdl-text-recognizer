@@ -54,13 +54,10 @@ Things to note
 training/run_experiment.py '{"dataset": "EmnistLinesDataset", "model": "LineModel", "network": "line_cnn_sliding_window"}'
 ```
 
-- [ ] make a slide explaining the all-conv idea
-
 ## Lab 3 (60 min)
 
 - [10 min] They write the basic encoder-decoder LSTM version
 - [15 min] Walk through the CTC loss version, and they write some part of it
-- [10 min] They run on IAM
 
 ## Lab 4 (30 min)
 
@@ -75,8 +72,9 @@ training/run_experiment.py '{"dataset": "EmnistLinesDataset", "model": "LineMode
 
 Ideas for things to try:
 - Augment dataset to get highest performance
-- Pre-train on EMnistLines and then fine-tune on IAM
+- Pre-train on EmnistLines and then fine-tune on IAM
 - More general encoder-decoder architecture (teacher training)
+- Experiment with hyperparams
 
 ## Lab 6 (30 min)
 
@@ -85,6 +83,7 @@ Ideas for things to try:
 
 ## Lab 7 (90 min)
 
+- [10 min] Be able to take any length line with the LSTM model
 - [15 min] Running a Flask web app locally
     - show CURLing to it, etc
 - [10 min] Dockerizing the Flask web app
