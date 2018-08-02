@@ -1,7 +1,6 @@
 import pathlib
 from typing import Tuple
 
-from boltons.cacheutils import cachedproperty
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, Input, MaxPooling2D, Permute, Reshape, TimeDistributed, Lambda, ZeroPadding2D
@@ -30,7 +29,7 @@ def line_cnn_all_conv(
     # In your calculation of the necessary filter size,
     # remember that padding is set to 'valid' (by default) in the network above.
 
-    #### Your code below (Lab 2)
+    ##### Your code below (Lab 2)
     # (image_height // 2 - 2, image_width // 2 - 2, 64)
     new_height = image_height // 2 - 2
     new_width = image_width // 2 - 2
@@ -43,7 +42,7 @@ def line_cnn_all_conv(
     num_windows = int((new_width - new_window_width) / new_window_stride) + 1
 
     model.add(Reshape((num_windows, 128, 1)))
-    #### Your code above (Lab 2)
+    ##### Your code above (Lab 2)
     # (num_windows, 128, 1)
 
     # Now we can use the same code we wrote in line_cnn_sliding_window:

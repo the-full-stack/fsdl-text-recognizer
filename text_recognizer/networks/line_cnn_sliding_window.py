@@ -37,7 +37,7 @@ def line_cnn_sliding_window(
     )(image_reshaped)
     # (num_windows, image_height, window_width, 1)
 
-    # Make a LeNet and get rid of the top two layers (softmax and dropout)
+    # Make a LeNet and get rid of the last two layers (softmax and dropout)
     convnet = lenet((image_height, window_width, 1), (num_classes,))
     convnet = KerasModel(inputs=convnet.inputs, outputs=convnet.layers[-2].output)
 
