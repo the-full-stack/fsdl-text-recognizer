@@ -51,8 +51,7 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
 
     lstm_output = lstm_fn(128, return_sequences=True)(convnet_outputs)  # (num_windows, 128)
 
-    softmax_output = TimeDistributed(Dense(num_classes, activation='softmax'), name='softmax_output')(lstm_output)
-    # (num_windows, num_classes)
+    softmax_output = Dense(num_classes, activation='softmax', name='softmax_output')(lstm_output) # (num_windows, num_classes)
     ##### Your code above (Lab 3)
 
     def temp(x, num_windows=num_windows):
