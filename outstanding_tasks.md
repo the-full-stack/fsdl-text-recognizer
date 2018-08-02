@@ -12,7 +12,15 @@
 
 - [ ] write files to discuss for every lab, and new lines that appear, for myself as notes
 
-- [ ] make sure lab3 works
+- [] make sure lab3 works
+
+- [ ] @arjun @ibrahim the lab3 evaluator runs out of memory
+    - [ ] MAYBE if data is already processed it wont
+    - YEP, it won't
+
+- [ ] @arjun limit the number of samples that samples_by_char takes, to limit memory usage
+
+- [ ] push base autograder image that has emnist_lines and iam_lines in processed
 
 - [ ] make sure lab4 works
 
