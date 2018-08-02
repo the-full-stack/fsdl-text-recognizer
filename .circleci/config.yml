@@ -35,12 +35,12 @@ jobs:
       - run:
           name: run package tests
           command: |
-            PYTHONPATH=. pipenv run pytest text_recognizer/tests/*
+            PYTHONPATH=. pipenv run pytest -s text_recognizer/tests/*
 
       - run:
           name: run training/evaluation tests
           command: |
-            PYTHONPATH=. pipenv run pytest tests/*
+            PYTHONPATH=. pipenv run pytest -s evaluation/*
 
       - store_artifacts:
           path: test-reports
