@@ -1,6 +1,6 @@
 .git
 .pytest_cache
-api
+node_modules
 cursive_ai
 data
 !data/processed

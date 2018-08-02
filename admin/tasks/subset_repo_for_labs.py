@@ -14,6 +14,7 @@ for labs with index greater than or equal to the one given.
 """
 import argparse
 import os
+import glob
 import pathlib
 import re
 import shutil
@@ -29,8 +30,9 @@ def _filter_your_code_blocks(lines, lab_number):
     """
     Strip out stuff between "Your code here" blocks.
     """
-    beginning_comment = f'##### Your code below \(Lab {lab_number}\)'
-    ending_comment = f'##### Your code above \(Lab {lab_number}\)'
+    lab_numbers_to_strip = f"[{'|'.join(str(num) for num in range(lab_number, MAX_LAB_NUMBER))}]"
+    beginning_comment = f'##### Your code below \(Lab {lab_numbers_to_strip}\)'
+    ending_comment = f'##### Your code above \(Lab {lab_numbers_to_strip}\)'
     filtered_lines = []
     filtering = False
     for line in lines:
@@ -81,11 +83,11 @@ if __name__ == '__main__':
 
     output_dir = pathlib.Path(args.output_dirname)
     if output_dir.exists():
-        for root, dirs, files in os.walk(output_dir):
-            for f in files:
-                os.unlink(os.path.join(root, f))
-            for d in dirs:
-                shutil.rmtree(os.path.join(root, d))
+        for d in glob.glob(f'{str(output_dir)}/lab*'):
+            shutil.rmtree(d)
+        shutil.rmtree(output_dir / 'data')
+        os.remove(output_dir / 'Pipfile')
+        os.remove(output_dir / 'Pipfile.lock')
 
     shutil.copytree(REPO_DIRNAME / 'data', output_dir / 'data')
     shutil.copy('Pipfile', output_dir)

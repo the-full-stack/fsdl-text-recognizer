@@ -1,6 +1,39 @@
-# Lambda Deployment
+# Deployment
+
+## Running web server in Docker
+
+Execute this from top-level repo:
 
 ```sh
+docker build -t USERNAME/text-recognizer-api -f api/Dockerfile .
+```
+
+Then you can run the server as
+
+```sh
+docker run -p 8000:8000 -it USERNAME/text-recognizer-api
+```
+
+## Lambda deployment
+
+```sh
+# First, install dependencies specified in package.json
+npm install
+
+# Edit serverless.yml to call the service with your own name
+# e.g. text-recognizer-sergeyk
+
+# Then, run this and you should see a message asking you to set up AWS credentials
+sls info
+
+# Install your credentials by going to https://379872101858.signin.aws.amazon.com/console and logging in with the email you used to register for this bootcamp and the password that we set for you
+# Go to IAM, Users, click on yourself, and Create Access Key. Put the key/secret in the command below
+sls config credentials --provider aws --key AKIAIOSFODNN7EXAMPLE --secret wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+
+# Now you should be ready to deploy
+pipenv run sls deploy -v
+```
+
 # Run flask app locally
 PYTHONPATH=.. pipenv run sls wsgi serve
 
@@ -11,7 +44,7 @@ curl "${API_URL}/v1/predict?image_url=https://s3-us-west-2.amazonaws.com/fsdl-pu
 curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i ../text_recognizer/tests/support/emnist/0.png)'" }'
 ```
 
-# Lambda Deployment (OLD)
+## Lambda Deployment as a non-wsgi function
 
 ```bash
 # Build the package without deploying it
