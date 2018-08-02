@@ -17,9 +17,10 @@
     - text_recognizer/networks/__init__.py
     - text_recognizer/networks/mlp.py
     - text_recognizer/tests/support/create_emnist_support_files.py
-    - text_recognizer/tests/support/emnist/0.png
-    - text_recognizer/tests/support/emnist/a.png
-    - text_recognizer/tests/support/emnist/X.png
+    - text_recognizer/tests/support/emnist/3.png
+    - text_recognizer/tests/support/emnist/9.png
+    - text_recognizer/tests/support/emnist/C.png
+    - text_recognizer/tests/support/emnist/d.png
     - text_recognizer/tests/test_character_predictor.py
     - text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5
     - training/util.py
