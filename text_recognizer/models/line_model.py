@@ -17,7 +17,7 @@ def loss_ignoring_blanks(target, output):
     _epsilon = tf.convert_to_tensor(K.epsilon(), output.dtype.base_dtype)
     output = tf.clip_by_value(output, _epsilon, 1. - _epsilon)
     prod = target * tf.log(output)
-    # TODO
+    # TODO ??
     loss = - tf.reduce_sum(prod, -1)
     return loss
 
@@ -34,6 +34,7 @@ class LineModel(Model):
         preds_raw = self.network.predict_generator(sequence)
         trues = np.argmax(y, -1)
         preds = np.argmax(preds_raw, -1)
+        ## Stripping of the 3 characters. How does IAM lines deal with that?
         pred_strings = [''.join(self.data.mapping.get(label, '') for label in pred).strip(' |_') for pred in preds]
         true_strings = [''.join(self.data.mapping.get(label, '') for label in true).strip(' |_') for true in trues]
         ##### Your code above (Lab 3)
