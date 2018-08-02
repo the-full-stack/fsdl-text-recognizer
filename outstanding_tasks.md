@@ -1,18 +1,26 @@
 ## Now
 
-- [ ] code hiding doesn't seem to work
-
 - [x] output solutions in subset_repo
+- [-] subset EMNIST so that it's balanced but still has 65 characters
+    - Tried, but I don't think it's any better (lower final accuracy)
 
-- [ ] subset EMNIST so that it's balanced but still has 65 characters
-
-- [ ] create repo that people can clone, add their code, and submit their fork to gradescope
+- [x] create repo that people can clone, add their code, and submit their fork to gradescope
     - [x] make sure can update contents of repo easily with `admin/tasks/subset_repo_into_labs.sh` script
     - make sure that can submit repo to autograder
 
 - [ ] write clear (but still minimal) instructions for what they are supposed to do in lab 1, 2, and 3
 
 - [ ] write files to discuss for every lab, and new lines that appear, for myself as notes
+
+- [ ] make sure lab3 works
+
+- [ ] make sure lab4 works
+
+- [ ] make sure lab6 works (circleci)
+
+- [ ] make sure lab7 works
+
+- [ ] make sure lab5 works (probably need to solve the problem saving files)
 
 ## Next
 
@@ -32,10 +40,16 @@
 
 - [ ] improve accuracy everywhere we can
 
+- [ ] run a big sample experiment on the farm to generate data that i can show off on W&B
+
+- [ ] find solution to tensorflow vs tensorflow-gpu in Pipfile
+    - could set it to tensorflow-gpu in subset_repo, but then have to re-generate Pipfile
+
 - [ ] try using only lowercase characters: that will make emnist a better training experience, and probably boost emnistlines accuracies, too
     - [ ] or, can try class_weight in training
 
 ## Arjun
+
 
 Thursday:
 - [ ] go through everything as an attendee and make sure it all works
@@ -44,6 +58,9 @@ Friday night:
 - [ ] get `sls deploy` working from api/ on jupyterhub (see email thread with Chris)
 
 Saturday:
+- [ ] make IAM users for the deployment stuff tomorrow
+- [ ] decide where to put AWS credit
+
 - [ ] set up basic monitoring for the lambda functions
 - [ ] set up data distribution shift monitoring (just by logging the average value of input and creating a LogMetric for it)
 - [ ] test it out with the `admin/endpoint_tester` script that John wrote

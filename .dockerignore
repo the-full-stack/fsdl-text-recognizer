@@ -1,5 +1,6 @@
 .git
 .pytest_cache
+.serverless
 node_modules
 cursive_ai
 data

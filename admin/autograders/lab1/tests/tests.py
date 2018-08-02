@@ -5,10 +5,9 @@ from gradescope_utils.autograder_utils.decorators import weight, leaderboard
 
 from text_recognizer.datasets import EmnistDataset
 from text_recognizer.character_predictor import CharacterPredictor
-from text_recognizer.models.emnist_mlp import EmnistMlp
 
 
-SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'tests' / 'support'
+SUPPORT_DIRNAME = pathlib.Path(__file__).parents[1].resolve() / 'test_support' / 'emnist'
 
 
 class TestCharacterPredictor(unittest.TestCase):
@@ -20,7 +19,6 @@ class TestCharacterPredictor(unittest.TestCase):
         pred, conf = predictor.predict(str(filename))
         print(pred, conf, filename.stem)
         self.assertEqual(pred, filename.stem)
-        self.assertGreater(conf, 0.4)
 
 
 class TestEvaluateCharacterPredictor(unittest.TestCase):

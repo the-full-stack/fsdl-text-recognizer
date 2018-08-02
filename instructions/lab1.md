@@ -26,7 +26,11 @@ Make sure you store the token (e.g. in your password manager)!
 
 ## Setting up Python environment
 
-In the repo, run `pipenv install --dev` to install all required packages into a virtual environment.
+Now you should be in the repo.
+
+Due to an annoying lack of a feature in pipenv, open Pipfile, and change `tensorflow` to `tensorflow-gpu`.
+
+Run `pipenv install --dev` to install all required packages into a virtual environment.
 
 Make sure to precede all commands with `pipenv run` from now on, to make sure that you are using the correct environment.
 (You could run `pipenv shell` to activate the environment in your terminal session, instead.)
@@ -72,6 +76,8 @@ git push mine master
 Now go to https://gradescope.com/courses/21098/assignments and click on Lab 1.
 Select the Github submission option, and there select your fork of the `fsdl-text-recognizer-project` repo and the master branch, and click Submit.
 Don't forget to enter a name for the leaderboard :)
+
+The autograder treats code that is in `lab1/text_recognizer` as your submission, so make sure your code is indeed there.
 
 The autograder should finish in <1 min, and display the results.
 Your name will show up in the Leaderboard.
