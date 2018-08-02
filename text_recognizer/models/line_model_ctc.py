@@ -118,7 +118,6 @@ def format_batch_ctc(batch_x, batch_y):
     batch_inputs = {
         'image': batch_x,
         'y_true': y_true,
-        'input_length': np.ones((batch_size, 1)),  # dummy, will be set to num_windows in network
         'label_length': np.array(label_lengths)
     }
     batch_outputs = {
