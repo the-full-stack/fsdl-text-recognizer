@@ -111,11 +111,11 @@ if __name__ == '__main__':
     )
     args = parser.parse_args()
 
-    ##### Hide code below until Lab 4
+    ##### Hide lines below until Lab 4
     if args.gpu < 0:
         gpu_manager = GPUManager()
         args.gpu = gpu_manager.get_free_gpu()  # Blocks until one is available
-    ##### Hide code above until Lab 4
+    ##### Hide lines above until Lab 4
 
     experiment_config = json.loads(args.experiment_config)
     os.environ["CUDA_VISIBLE_DEVICES"] = f'{args.gpu}'
