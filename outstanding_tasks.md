@@ -2,6 +2,8 @@
 
 - [x] output solutions in subset_repo
 
+- [ ] subset EMNIST so that it's balanced but still has 65 characters
+
 - [ ] create repo that people can clone, add their code, and submit their fork to gradescope
     - [x] make sure can update contents of repo easily with `admin/tasks/subset_repo_into_labs.sh` script
     - make sure that can submit repo to autograder
@@ -17,6 +19,7 @@
 - [ ] Support variable-width image input in the LSTM model
 - [ ] have networks take more arguments, like lstm_dim and stuff
 - [ ] clean up notebooks: don't need as many, just need to show data and some training
+- [ ] try using only lowercase characters
 
 ## Arjun
 

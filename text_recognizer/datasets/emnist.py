@@ -71,7 +71,7 @@ class EmnistDataset(Dataset):
         )
 
 
-def _download_and_process_emnist():
+def _download_and_process_emnist(sample_to_balance=False):
     import scipy.io
 
     RAW_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
@@ -93,6 +93,11 @@ def _download_and_process_emnist():
     y_train = data['dataset']['train'][0, 0]['labels'][0, 0]
     x_test = data['dataset']['test'][0, 0]['images'][0, 0].reshape(-1, 28, 28).swapaxes(1, 2)
     y_test = data['dataset']['test'][0, 0]['labels'][0, 0]
+
+    if sample_to_balance:
+        x_train, y_train = _sample_to_balance(x_train, y_train)
+        x_test, y_test = _sample_to_balance(x_test, y_test)
+
     with h5py.File(PROCESSED_DATA_FILENAME, 'w') as f:
         f.create_dataset('x_train', data=x_train, dtype='u1', compression='lzf')
         f.create_dataset('y_train', data=y_train, dtype='u1', compression='lzf')
@@ -109,6 +114,19 @@ def _download_and_process_emnist():
     shutil.rmtree('matlab')
 
     print('EMNIST downloaded and processed')
+
+
+def _sample_to_balance(x, y):
+    num_to_sample = int(np.bincount(y.flatten()).mean())
+    all_sampled_inds = []
+    for label in np.unique(y.flatten()):
+        inds = np.where(y == label)[0]
+        sampled_inds = np.unique(np.random.choice(inds, num_to_sample))
+        all_sampled_inds.append(sampled_inds)
+    ind = np.concatenate(all_sampled_inds)
+    x_sampled = x[ind]
+    y_sampled = y[ind]
+    return x_sampled, y_sampled
 
 
 def _augment_emnist_mapping(mapping):

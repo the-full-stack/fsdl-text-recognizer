@@ -127,6 +127,7 @@ def subset_repo(info):
     shutil.copytree(REPO_DIRNAME / 'data', output_dir / 'data')
     shutil.copy('Pipfile', output_dir)
     shutil.copy('Pipfile.lock', output_dir)
+    shutil.copy('.gitignore', output_dir)
 
     # To be filled-out
     for lab_number in info.keys():
