@@ -62,6 +62,7 @@
 
 5:
     - text_recognizer/datasets/iam_lines.py
+    - tasks/train_lstm_line_predictor_on_iam.sh
     - text_recognizer/tests/support/create_iam_lines_support_files.py
     - "text_recognizer/tests/support/iam_lines/and came into the livingroom, where.png"
     - "text_recognizer/tests/support/iam_lines/He rose from his breakfast-nook bench.png"

@@ -22,8 +22,11 @@
 - [ ] make sure lab4 works
 
 - [ ] make sure lab6 works (circleci)
+    - [ ] get circleci humming again
 
 - [ ] make sure lab7 works
+    - [ ] get flask and lambda to be working again on basic characterpredictor
+    - [ ] use LinePredictor and update test scripts to CURL sample line files
 
 - [ ] make sure lab5 works (probably need to solve the problem saving files)
 
