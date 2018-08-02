@@ -12,7 +12,7 @@ SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support' / 'emn
 class TestEvaluateEmnistLinesPredictor(unittest.TestCase):
     def test_evaluate(self):
         predictor = LinePredictor()
-        dataset = EmnistLinesDataset(max_overlap=0.4)
+        dataset = EmnistLinesDataset()
         dataset.load_or_generate_data()
         t = time()
         metric = predictor.evaluate(dataset)
