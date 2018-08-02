@@ -1,5 +1,11 @@
 ## Now
 
+- [ ] make sure that stuff runs in Jupyter notebook
+
+- [ ] let's actually not have Pipfile.lock under version control
+
+- [ ] @arjun data/ autograder image docker thing
+
 - [x] output solutions in subset_repo
 - [-] subset EMNIST so that it's balanced but still has 65 characters
     - Tried, but I don't think it's any better (lower final accuracy)
@@ -12,23 +18,30 @@
 
 - [ ] write files to discuss for every lab, and new lines that appear, for myself as notes
 
-- [] make sure lab3 works
+- [x] make sure lab3 works
 
 - [o] @arjun @ibrahim the lab3 evaluator runs out of memory
-    - Ibrahim is going to give me an option to go up to 3GB
+    - Aug 2 14:30 Ibrahim is going to give me an option to go up to 3GB
+    - even with 3GB it crashed, but now due to a different error: std:bad_alloc (which is from tensorflow)
+        - Ibrahim can make the instances bigger
 
 - [x] push base autograder image that has emnist_lines and iam_lines in processed
 
 - [ ] make sure lab4 works
 
 - [ ] make sure lab6 works (circleci)
-    - [ ] get circleci humming again
+    - [x] get circleci humming again
+    - [ ] write instructions for lab6
 
 - [ ] make sure lab7 works
     - [ ] get flask and lambda to be working again on basic characterpredictor
     - [ ] use LinePredictor and update test scripts to CURL sample line files
 
 - [ ] make sure lab5 works (probably need to solve the problem saving files)
+
+- [ ] @saurabh be able to accept variable-length image inputs (at least for the lstm_ctc model)
+- [ ] @saurabh clean up notebooks: don't need as many, just need to show data
+- [ ] @saurabh improve accuracy everywhere we can
 
 ## Next
 
@@ -38,20 +51,11 @@
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
 - [ ] have networks take more arguments, like lstm_dim and stuff
 
-- [ ] @saurabh support variable-width image input in the LSTM model
-
 - [ ] @arjun don't copy the trained weights over to lab1, but do copy it over to solutions
 
 - [ ] figure out wandb situation: why does it need to be checked into git? (if it's not, message to `wandb init` pops up every time)
 
-- [ ] @saurabh clean up notebooks: don't need as many, just need to show data and some training
-
-- [ ] improve accuracy everywhere we can
-
 - [ ] run a big sample experiment on the farm to generate data that i can show off on W&B
-
-- [ ] find solution to tensorflow vs tensorflow-gpu in Pipfile
-    - could set it to tensorflow-gpu in subset_repo, but then have to re-generate Pipfile
 
 - [ ] try using only lowercase characters: that will make emnist a better training experience, and probably boost emnistlines accuracies, too
     - [ ] or, can try class_weight in training
@@ -59,15 +63,10 @@
 ## Arjun
 
 
-Thursday:
 - [ ] go through everything as an attendee and make sure it all works
 
-Friday night:
-- [ ] get `sls deploy` working from api/ on jupyterhub (see email thread with Chris)
-
-Saturday:
-- [ ] make IAM users for the deployment stuff tomorrow
-- [ ] decide where to put AWS credit
+- [ ] make IAM users for the deployment stuff Sunday
+- [ ] decide where to put AWS credit (team@fullstackdeeplearning.com)?
 
 - [ ] set up basic monitoring for the lambda functions
 - [ ] set up data distribution shift monitoring (just by logging the average value of input and creating a LogMetric for it)

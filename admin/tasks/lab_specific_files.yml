@@ -1,6 +1,8 @@
 1:
     # - notebooks/01-look-at-emnist.ipynb
     # - notebooks/02-train-emnist-mlp.ipynb
+    - instructions/lab1.md
+    - tasks/setup_gpu_env.sh
     - tasks/train_character_predictor.sh
     - tasks/run_prediction_tests.sh
     - text_recognizer/__init__.py
@@ -29,6 +31,7 @@
 2:
     # - notebooks/03-emnist-lines.ipynb
     # - notebooks/04-line-cnn.ipynb
+    - instructions/lab2.md
     - tasks/train_cnn_line_predictor.sh
     - text_recognizer/datasets/emnist_lines.py
     - text_recognizer/datasets/sentences.py
@@ -45,6 +48,7 @@
 3:
     # - notebooks/05-line-lstm.ipynb
     # - notebooks/06-line-lstm-with-ctc.ipynb
+    - instructions/lab3.md
     - tasks/train_lstm_line_predictor.sh
     - text_recognizer/line_predictor.py
     - text_recognizer/models/line_model_ctc.py

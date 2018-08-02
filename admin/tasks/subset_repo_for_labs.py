@@ -118,16 +118,14 @@ def subset_repo(info):
             shutil.rmtree(d)
         if os.path.exists(output_dir / 'data'):
             shutil.rmtree(output_dir / 'data')
-        if os.path.exists(output_dir / 'Pipfile'):
-            os.remove(output_dir / 'Pipfile')
-        if os.path.exists(output_dir / 'Pipfile.lock'):
-            os.remove(output_dir / 'Pipfile.lock')
 
     output_dir.mkdir(parents=True, exist_ok=True)
     shutil.copytree(REPO_DIRNAME / 'data', output_dir / 'data')
-    shutil.copy('Pipfile', output_dir)
-    shutil.copy('Pipfile.lock', output_dir)
+
+    shutil.copy('Pipfile-gpu', output_dir / 'Pipfile')
+    shutil.copy('Pipfile.lock-gpu', output_dir / 'Pipfile.lock')
     shutil.copy('.gitignore', output_dir)
+    shutil.copy('instructions/readme.md', output_dir)
 
     # To be filled-out
     for lab_number in info.keys():

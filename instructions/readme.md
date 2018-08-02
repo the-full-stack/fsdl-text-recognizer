@@ -1,0 +1,53 @@
+# Full Stack Deep Learning Labs
+
+Welcome!
+
+## W&B Jupyter Hub instructions
+
+Go to https://app.wandb.ai/profile and enter the code that we will share with you at the session into Access Code field.
+This will drop you into a JupyterLab instance with a couple of GPUs that you will use in these labs.
+
+## Checking out the repo
+
+Start by cloning the repo and going into it
+
+```
+git clone https://github.com/gradescope/fsdl-text-recognizer-project.git
+cd fsdl-text-recognizer-project
+```
+
+If you already have the repo in your home directory, then simply go into it and pull the latest version.
+
+```sh
+cd fsdl-text-recognizer-project
+git pull origin master
+```
+
+Now click Fork in the top right of this Github repo page: https://github.com/gradescope/fsdl-text-recognizer-project.
+Select your personal account to fork to, and note down your USERNAME, which will be right after https://github.com in the URL that you will be taken to.
+
+Add your fork as a remote of the repo and push to it:
+
+```sh
+git remote add mine https://github.com/USERNAME/fsdl-text-recognizer-project.git
+git push mine master
+```
+
+This should prompt you to enter your Github username and password.
+If your password is not accepted, it may be because you have two-factor authentication enabled.
+Follow directions here to generate a token you can use instead of your password on the command line: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
+Make sure you store the token (e.g. in your password manager), as you will not be able to see it again.
+
+## Setting up the Python environment
+
+Due to an annoying lack of a feature in pipenv, open Pipfile, and change `tensorflow` to `tensorflow-gpu`.
+
+Run `pipenv install --dev` to install all required packages into a virtual environment.
+
+Make sure to precede all commands with `pipenv run` from now on, to make sure that you are using the correct environment.
+Or, you could run `pipenv shell` to activate the environment in your terminal session, instead.
+Remember to do that in every terminal session you start.
+
+## Ready
+
+Now you should be setup for the labs. The instructions for each lab are in instructions/ directory inside of the lab.

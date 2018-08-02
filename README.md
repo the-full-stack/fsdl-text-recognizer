@@ -14,15 +14,6 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 - We will deploy the prediction system as a serverless function to Amazon Lambda.
 - Lastly, we will set up monitoring that alerts us when the incoming data distribution changes.
 
-## Tasks
-
-- [ ] make Model class take a Dataset class (so that different datasets can be used with different models)
-
-## Lab 0
-
-- [15min] Get set up with AWS
-- [5min] Get set up with Gradescope
-
 ## Lab 1 (60 min)
 
 - [10 min] Gather handwriting data
@@ -79,17 +70,16 @@ Ideas for things to try:
 ## Lab 6 (30 min)
 
 - [10 min] Adding CI via CircleCI
-- [10 min] Writing a Dockerfile and pushing it to DockerHub for the CI to use
+- [15 min] Running a Flask web app locally
+    - show CURLing to it, etc
 
 ## Lab 7 (90 min)
 
-- [10 min] Be able to take any length line with the LSTM model
-- [15 min] Running a Flask web app locally
-    - show CURLing to it, etc
 - [10 min] Dockerizing the Flask web app
 - [15 min] Deploying to lambda: first do it myself, then have everyone do it, and test via CURL
 - [5 min] Have them go to cursive.ai and submit that way
 - [10 min] Add monitoring dashboard and alarms
+- [10 min] Be able to take any length line with the LSTM model
 
 ## Quick Start
 

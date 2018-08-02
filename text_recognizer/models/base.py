@@ -52,9 +52,8 @@ class Model:
         )
 
     def evaluate(self, x, y):
-        sequence = DatasetSequence(x, y)
+        sequence = DatasetSequence(x, y, batch_size=16)  # Use a small batch size to use less memory
         preds = self.network.predict_generator(sequence)
-        # TODO: use evaluate_generator after getting rid of CTC
         return np.mean(np.argmax(preds, -1) == np.argmax(y, -1))
 
     def loss(self):
