@@ -17,10 +17,9 @@
     - text_recognizer/networks/__init__.py
     - text_recognizer/networks/mlp.py
     - text_recognizer/tests/support/create_emnist_support_files.py
-    - text_recognizer/tests/support/emnist/3.png
-    - text_recognizer/tests/support/emnist/9.png
-    - text_recognizer/tests/support/emnist/C.png
-    - text_recognizer/tests/support/emnist/d.png
+    - text_recognizer/tests/support/emnist/8.png
+    - text_recognizer/tests/support/emnist/U.png
+    - text_recognizer/tests/support/emnist/e.png
     - text_recognizer/tests/test_character_predictor.py
     - text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5
     - training/util.py
@@ -30,6 +29,7 @@
 2:
     # - notebooks/03-emnist-lines.ipynb
     # - notebooks/04-line-cnn.ipynb
+    - tasks/train_cnn_line_predictor.sh
     - text_recognizer/datasets/emnist_lines.py
     - text_recognizer/datasets/sentences.py
     - text_recognizer/models/line_model.py
@@ -45,7 +45,7 @@
 3:
     # - notebooks/05-line-lstm.ipynb
     # - notebooks/06-line-lstm-with-ctc.ipynb
-    - tasks/train_line_predictor.sh
+    - tasks/train_lstm_line_predictor.sh
     - text_recognizer/line_predictor.py
     - text_recognizer/models/line_model_ctc.py
     - text_recognizer/networks/line_lstm.py
