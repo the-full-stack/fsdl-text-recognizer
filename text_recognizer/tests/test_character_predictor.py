@@ -13,6 +13,6 @@ class TestCharacterPredictor(unittest.TestCase):
 
       for filename in SUPPORT_DIRNAME.glob('*.png'):
         pred, conf = predictor.predict(str(filename))
-        print(pred, conf, filename.stem)
+        print(f'Prediction: {pred} at confidence: {conf} for image with character {filename.stem}')
         self.assertEqual(pred, filename.stem)
         # self.assertGreater(conf, 0.9)
