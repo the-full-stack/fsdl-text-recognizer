@@ -24,6 +24,7 @@
     - Aug 2 14:30 Ibrahim is going to give me an option to go up to 3GB
     - even with 3GB it crashed, but now due to a different error: std:bad_alloc (which is from tensorflow)
         - Ibrahim can make the instances bigger
+        - Sergey a small batch_size on the evaluate code
 
 - [x] push base autograder image that has emnist_lines and iam_lines in processed
 

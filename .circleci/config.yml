@@ -33,12 +33,12 @@ jobs:
             - ~/.local
 
       - run:
-          name: run package tests
+          name: run prediction tests
           command: |
             PYTHONPATH=. pipenv run pytest -s text_recognizer/tests/*
 
       - run:
-          name: run training/evaluation tests
+          name: run evaluation tests
           command: |
             PYTHONPATH=. pipenv run pytest -s evaluation/*
 

@@ -1,2 +1,2 @@
 #!/bin/sh
-pipenv run pytest training/tests/evaluate_*
+pipenv run pytest -s evaluation/

@@ -41,7 +41,7 @@ class LineModelCtc(Model):
         """We could probably pass in a custom character accuracy metric for 'ctc_decoded' output here."""
         return None
 
-    def evaluate(self, x, y, batch_size: int=32, verbose=True) -> float:
+    def evaluate(self, x, y, batch_size: int=16, verbose=True) -> float:
         test_sequence = DatasetSequence(x, y, batch_size, format_fn=self.batch_format_fn)
 
         # We can use the `ctc_decoded` layer that is part of our model here.
