@@ -18,8 +18,12 @@
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
 - [ ] Support variable-width image input in the LSTM model
 - [ ] have networks take more arguments, like lstm_dim and stuff
+
+- [ ] figure out wandb situation: why does it need to be checked into git? (if it's not, message to `wandb init` pops up every time)
+
 - [ ] clean up notebooks: don't need as many, just need to show data and some training
-- [ ] try using only lowercase characters
+- [ ] try using only lowercase characters: that will make emnist a better training experience, and probably boost emnistlines accuracies, too
+    - [ ] or, can try class_weight in training
 
 ## Arjun
 

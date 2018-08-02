@@ -117,6 +117,7 @@ def _download_and_process_emnist(sample_to_balance=False):
 
 
 def _sample_to_balance(x, y):
+    """Because the dataset is not balanced, we take at most the mean number of instances per class."""
     num_to_sample = int(np.bincount(y.flatten()).mean())
     all_sampled_inds = []
     for label in np.unique(y.flatten()):
