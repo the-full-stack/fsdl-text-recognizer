@@ -52,6 +52,7 @@
     - text_recognizer/networks/line_lstm_ctc.py
     - text_recognizer/networks/ctc.py
     - text_recognizer/tests/test_line_predictor.py
+    - text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5
 
 4:
     - tasks/run_sample_experiments.sh

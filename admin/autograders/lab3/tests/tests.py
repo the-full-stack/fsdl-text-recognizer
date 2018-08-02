@@ -11,7 +11,7 @@ from text_recognizer.line_predictor import LinePredictor
 SUPPORT_DIRNAME = pathlib.Path(__file__).parents[1].resolve() / 'test_support' / 'emnist_lines'
 
 
-class TestCharacterPredictor(unittest.TestCase):
+class TestLinePredictor(unittest.TestCase):
     @weight(10)
     def test_filename(self):
         predictor = LinePredictor()
@@ -23,7 +23,7 @@ class TestCharacterPredictor(unittest.TestCase):
             self.assertLess(editdistance.eval(pred, filename), 0.2)
 
 
-class TestEvaluateCharacterPredictor(unittest.TestCase):
+class TestEvaluateLinePredictor(unittest.TestCase):
     @leaderboard("accuracy")
     def test_evaluate_accuracy(self, set_leaderboard_value=None):
         predictor = LinePredictor()
