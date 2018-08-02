@@ -26,8 +26,8 @@ class TestCharacterPredictor(unittest.TestCase):
 class TestEvaluateCharacterPredictor(unittest.TestCase):
     @leaderboard("accuracy")
     def test_evaluate_accuracy(self, set_leaderboard_value=None):
+        predictor = CharacterPredictor()
         dataset = EmnistDataset()
         dataset.load_or_generate_data()
-        model = EmnistMlp()
-        metric = model.evaluate(dataset.x_test, dataset.y_test)
+        metric = predictor.evaluate(dataset)
         set_leaderboard_value(metric)

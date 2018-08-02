@@ -16,7 +16,8 @@ from tensorflow.keras.utils import to_categorical
 from text_recognizer.datasets.base import Dataset
 
 
-RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
+#RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
+RAW_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/matlab.zip'  # should be a little faster
 
 RAW_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'emnist'
 PROCESSED_DATA_DIRNAME = Dataset.data_dirname() / 'processed' / 'emnist'
@@ -130,3 +131,5 @@ if __name__ == '__main__':
     data = EmnistDataset()
     data.load_or_generate_data()
     print(data)
+    print(data.x_train.shape, data.y_train.shape)
+    print(data.x_test.shape, data.y_test.shape)

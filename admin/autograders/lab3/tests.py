@@ -11,10 +11,10 @@ from text_recognizer.models.emnist_mlp import EmnistMlp
 SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'tests' / 'support'
 
 
-class TestCharacterPredictor(unittest.TestCase):
+class TestLinePredictor(unittest.TestCase):
     @weight(10)
     def test_filename(self):
-      predictor = CharacterPredictor()
+      predictor = LinePredictor()
 
       for filename in SUPPORT_DIRNAME.glob('*.png'):
         pred, conf = predictor.predict(str(filename))
@@ -23,10 +23,10 @@ class TestCharacterPredictor(unittest.TestCase):
         self.assertGreater(conf, 0.4)
 
 
-class TestEvaluateCharacterPredictor(unittest.TestCase):
+class TestEvaluateLinePredictor(unittest.TestCase):
     @leaderboard("accuracy")
     def test_evaluate_accuracy(self, set_leaderboard_value=None):
-        dataset = EmnistDataset()
+        dataset = EmnistLinesDataset()
         dataset.load_or_generate_data()
         model = EmnistMlp()
         metric = model.evaluate(dataset.x_test, dataset.y_test)

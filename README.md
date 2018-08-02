@@ -27,6 +27,7 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 
 - [10 min] Gather handwriting data
 - [5 min] Pipfile and pipenv
+- [5 min] Have them download EMNIST and talk about downloading data from raw and then processing it into processed
 - [15 min] Walk through the project structure
     - talk about Dataset and uint8 vs float32 memory
     - talk about DatasetSequence and generators vs having all data in memory
@@ -34,6 +35,9 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
     - talk about Keras callbacks: EarlyStopping, GPUUtilization, Tensorboard
 - [15 min] They write the network in networks/mlp.py and the prediction function in character_predictor.py, and train it
 - [5 min] They push code to Github and submit to gradescope for autograding
+
+Current problem:
+- EMNIST MLP is not training well: val loss doesn't stedily go down, and only 75% performance (84% for Lenet)
 
 Things to note
 - increasing GPU utilization can be achieved by increasing batch size, or number of workers
