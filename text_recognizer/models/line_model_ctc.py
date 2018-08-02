@@ -10,13 +10,16 @@ import tensorflow.keras.backend as K
 from tensorflow.keras.models import Model as KerasModel
 
 from text_recognizer.datasets.sequence import DatasetSequence
-from text_recognizer.datasets import EmnistLinesDataset, IamLinesDataset
+from text_recognizer.datasets import EmnistLinesDataset
+##### Hide lines below until Lab 5
+from text_recognizer.datasets import IamLinesDataset
+##### Hide lines above until Lab 5
 from text_recognizer.models.base import Model
 from text_recognizer.networks.line_lstm_ctc import line_lstm_ctc
 
 
 class LineModelCtc(Model):
-    def __init__(self, dataset_cls: type=IamLinesDataset, network_fn: Callable=line_lstm_ctc, dataset_args: Dict=None, network_args: Dict=None):
+    def __init__(self, dataset_cls: type=EmnistLinesDataset, network_fn: Callable=line_lstm_ctc, dataset_args: Dict=None, network_args: Dict=None):
         """Define the default dataset and network values for this model."""
         default_dataset_args = {}
         if dataset_args is None:

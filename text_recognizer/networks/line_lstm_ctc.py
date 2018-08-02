@@ -28,18 +28,31 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     gpu_present = len(device_lib.list_local_devices()) > 1
     lstm_fn = CuDNNLSTM if gpu_present else LSTM
 
+    # slide_window and extract image patches from image_input. Pass a convolutional model over each image patch to
+    # generate a feature per image patch. Pass these features through one or more lstm layers. Convert the lstm outputs
+    # to softmax outputs.
+    # Note that lstms expect a input of shape (num_batch_size, num_timesteps, feature_length).
+
     ##### Your code below (Lab 3)
     image_reshaped = Reshape((image_height, image_width, 1))(image_input)
+    # (image_height, image_width, 1)
+
     image_patches = Lambda(
         slide_window,
         arguments={'window_width': window_width, 'window_stride': window_stride}
-    )(image_reshaped)  # (num_windows, image_height, window_width, 1)
+    )(image_reshaped)
+    # (num_windows, image_height, window_width, 1)
+
+    # Make a LeNet and get rid of the last two layers (softmax and dropout)
     convnet = lenet((image_height, window_width, 1), (num_classes,))
     convnet = KerasModel(inputs=convnet.inputs, outputs=convnet.layers[-2].output)
 
     convnet_outputs = TimeDistributed(convnet)(image_patches)  # (num_windows, 128)
+
     lstm_output = lstm_fn(128, return_sequences=True)(convnet_outputs)  # (num_windows, 128)
-    softmax_output = TimeDistributed(Dense(num_classes, activation='softmax'), name='softmax_output')(lstm_output) # (num_windows, 128)
+
+    softmax_output = TimeDistributed(Dense(num_classes, activation='softmax'), name='softmax_output')(lstm_output)
+    # (num_windows, num_classes)
     ##### Your code above (Lab 3)
 
     def temp(x, num_windows=num_windows):
