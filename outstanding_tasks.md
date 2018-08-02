@@ -14,13 +14,10 @@
 
 - [] make sure lab3 works
 
-- [ ] @arjun @ibrahim the lab3 evaluator runs out of memory
-    - [ ] MAYBE if data is already processed it wont
-    - YEP, it won't
+- [o] @arjun @ibrahim the lab3 evaluator runs out of memory
+    - Ibrahim is going to give me an option to go up to 3GB
 
-- [ ] @arjun limit the number of samples that samples_by_char takes, to limit memory usage
-
-- [ ] push base autograder image that has emnist_lines and iam_lines in processed
+- [x] push base autograder image that has emnist_lines and iam_lines in processed
 
 - [ ] make sure lab4 works
 

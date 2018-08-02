@@ -28,9 +28,10 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     gpu_present = len(device_lib.list_local_devices()) > 1
     lstm_fn = CuDNNLSTM if gpu_present else LSTM
 
-    # slide_window and extract image patches from image_input. Pass a convolutional model over each image patch to
-    # generate a feature per image patch. Pass these features through one or more lstm layers. Convert the lstm outputs
-    # to softmax outputs.
+    # Your code should use slide_window and extract image patches from image_input.
+    # Pass a convolutional model over each image patch to generate a feature vector per window.
+    # Pass these features through one or more LSTM layers.
+    # Convert the lstm outputs to softmax outputs.
     # Note that lstms expect a input of shape (num_batch_size, num_timesteps, feature_length).
 
     ##### Your code below (Lab 3)
@@ -46,17 +47,20 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     # Make a LeNet and get rid of the last two layers (softmax and dropout)
     convnet = lenet((image_height, window_width, 1), (num_classes,))
     convnet = KerasModel(inputs=convnet.inputs, outputs=convnet.layers[-2].output)
+    convnet_outputs = TimeDistributed(convnet)(image_patches)
+    # (num_windows, 128)
 
-    convnet_outputs = TimeDistributed(convnet)(image_patches)  # (num_windows, 128)
+    lstm_output = lstm_fn(128, return_sequences=True)(convnet_outputs)
+    # (num_windows, 128)
 
-    lstm_output = lstm_fn(128, return_sequences=True)(convnet_outputs)  # (num_windows, 128)
-
-    softmax_output = Dense(num_classes, activation='softmax', name='softmax_output')(lstm_output) # (num_windows, num_classes)
+    softmax_output = Dense(num_classes, activation='softmax', name='softmax_output')(lstm_output)
+    # (num_windows, num_classes)
     ##### Your code above (Lab 3)
 
-    def temp(x, num_windows=num_windows):
-        return x * num_windows
-    input_length_processed = Lambda(temp)(input_length)
+    input_length_processed = Lambda(
+        lambda x, num_windows=None: x * num_windows,
+        arguments={'num_windows': num_windows}
+    )(input_length)
 
     ctc_loss_output = Lambda(
         lambda x: K.ctc_batch_cost(x[0], x[1], x[2], x[3]),
