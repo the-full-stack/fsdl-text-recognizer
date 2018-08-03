@@ -41,6 +41,13 @@ Pushing will prompt you to enter your Github username and password.
 If your password is not accepted, it may be because you have two-factor authentication enabled.
 Follow directions here to generate a token you can use instead of your password on the command line: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
 Make sure you store the token (e.g. in your password manager), as you will not be able to see it again.
+If you want to avoid entering the token with each git push, you can run the following command to cache your credentials:
+
+```sh
+git config --global credential.helper cache
+```
+
+Note that if you do cache your credentials, we recommend you delete this token after the bootcamp.
 
 ## Setting up the Python environment
 
