@@ -133,6 +133,7 @@ def subset_repo(info):
         lab_output_dir.mkdir(parents=True)
         new_paths = _copy_files_for_lab(info, lab_number, lab_output_dir)
         _process_new_files(new_paths, lab_number)
+        shutil.copy(f'instructions/lab{lab_number}.md', output_dir / f'lab{lab_number}' / 'readme.md')
 
     # Solutions
     for lab_number in info.keys():
@@ -140,7 +141,7 @@ def subset_repo(info):
         lab_output_dir.mkdir(parents=True)
         new_paths = _copy_files_for_lab(info, lab_number, lab_output_dir)
         _process_new_files(new_paths, lab_number, filter_your_code=False)
-
+        shutil.copy(f'instructions/lab{lab_number}.md', output_dir / f'lab{lab_number}_sln' / 'readme.md')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

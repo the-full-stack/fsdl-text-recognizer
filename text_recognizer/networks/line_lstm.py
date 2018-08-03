@@ -10,7 +10,7 @@ from text_recognizer.networks.lenet import lenet
 from text_recognizer.networks.misc import slide_window
 
 
-def line_lstm_sw(input_shape, output_shape, window_width=20, window_stride=14, decoder_dim=None, encoder_dim=None):
+def line_lstm(input_shape, output_shape, window_width=20, window_stride=14, decoder_dim=None, encoder_dim=None):
     # Here is another way to pass arguments to the Keras Lambda function
     def slide_window_bound(image, window_width=window_width, window_stride=window_stride):
         return slide_window(image, window_width, window_stride)

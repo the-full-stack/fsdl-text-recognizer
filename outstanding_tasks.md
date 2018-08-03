@@ -6,7 +6,7 @@
 
 - [ ] write files to discuss for every lab, and new lines that appear, for myself as notes
 
-- [ ] make sure lab4 works
+- [ ] make sure lab4 works on jupyterlab
 
 - [ ] make sure lab6 works (circleci)
     - [x] get circleci humming again
@@ -21,11 +21,11 @@
 - [ ] @saurabh be able to accept variable-length image inputs (at least for the lstm_ctc model)
     - done, need to verify that it works
 
-- [ ] @saurabh clean up notebooks: don't need as many, just need to show data
-
 - [ ] @saurabh improve accuracy everywhere we can
 
 ## Next
+
+- [ ] @arjun have a plan for dealing with merge conflicts in fsdl-text-recognition-project
 
 - [ ] make a little slide for my approach to sliding window cnn
 

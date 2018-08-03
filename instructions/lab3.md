@@ -29,3 +29,8 @@ pipenv run pytest -s text_recognizer/tests/test_line_predictor.py
 ```
 
 Or you can do `tasks/run_prediction_tests.sh`, which will also run the CharacterModel tests.
+
+## Things to try
+
+If you have time left over, or want to play around with this later on, you can try using the `line_lstm` network, defined in `text_recognizer/networks/line_lstm.py`.
+Code up an encoder-decoder architecture, for example!

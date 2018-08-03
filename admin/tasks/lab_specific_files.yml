@@ -1,6 +1,5 @@
 1:
     - notebooks/01-look-at-emnist.ipynb
-    - instructions/lab1.md
     - tasks/train_character_predictor.sh
     - tasks/run_prediction_tests.sh
     - text_recognizer/__init__.py
@@ -28,7 +27,6 @@
 
 2:
     - notebooks/02-look-at-emnist-lines.ipynb
-    - instructions/lab2.md
     - tasks/train_cnn_line_predictor.sh
     - text_recognizer/datasets/emnist_lines.py
     - text_recognizer/datasets/sentences.py
@@ -43,7 +41,6 @@
     - "text_recognizer/tests/support/emnist_lines/or if used the results.png"
 
 3:
-    - instructions/lab3.md
     - tasks/train_lstm_line_predictor.sh
     - text_recognizer/line_predictor.py
     - text_recognizer/models/line_model_ctc.py
@@ -76,8 +73,6 @@
     - tasks/build_api_docker.sh
     - tasks/run_validation_tests.sh
     - tasks/test_api.sh
-
-7:
     - api/readme.md
     - api/serverless.yml
     - tasks/deploy_api_to_lambda.sh
