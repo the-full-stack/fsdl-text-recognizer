@@ -39,7 +39,7 @@ It will take a couple of minutes to train your model.
 Just for fun, you could also try a larger MLP, with a smaller batch size:
 
 ```sh
-pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 8}} "train_args": {"batch_size": 128}'
+pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 8}, "train_args": {"batch_size": 128}}'
 ```
 
 ## Testing
@@ -58,9 +58,10 @@ Testing should finish quickly.
 
 ## Submitting to Gradescope
 
-Before submitting to Gradescope, commit and push your changes:
+Before submitting to Gradescope, add your trained weights, commit, and push your changes:
 
 ```sh
+git add text_recognizer
 git commit -am "my lab1 work"
 git push mine master
 ```
