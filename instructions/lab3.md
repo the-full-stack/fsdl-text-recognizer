@@ -3,7 +3,7 @@
 In this lab we'll keep working with the EmnistLines dataset.
 
 We will be implementing LSTM model with CTC loss.
-CTC loss needs to be implemented kind of strangely in Keras: by passing in all required data to compute the loss as inputs to the network (including the true label).
+CTC loss needs to be implemented kind of strangely in Keras: we need to pass in all required data to compute the loss as inputs to the network (including the true label).
 This is an example of a multi-input / multi-output network.
 
 The relevant files to review are `models/line_model_ctc.py`, which shows the batch formatting that needs to happen for the CTC loss to be computed inside of the network, `networks/line_lstm_ctc.py`, which has the network definition.
