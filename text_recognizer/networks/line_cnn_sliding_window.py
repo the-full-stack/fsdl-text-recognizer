@@ -33,7 +33,7 @@ def line_cnn_sliding_window(
 
     image_patches = Lambda(
         slide_window,
-        arguments={'window_width': window_width, 'window_stride': window_stride}
+        arguments={'image_height': image_height, 'window_width': window_width, 'window_stride': window_stride}
     )(image_reshaped)
     # (num_windows, image_height, window_width, 1)
 

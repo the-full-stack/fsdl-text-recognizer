@@ -12,17 +12,30 @@ from text_recognizer.networks.misc import slide_window
 from text_recognizer.networks.ctc import ctc_decode
 
 
+def get_input_length_tensor(image_patches, num_windows_static):
+    """Return input_length_tensor of shape (batch_size, 1) with values num_windows."""
+    batch_size = K.shape(image_patches)[0]
+
+    if num_windows_static > 0:
+        input_length_tensor = K.ones((batch_size, 1), dtype='float32') * num_windows_static
+
+    else:
+        print('Variable num window')
+        ##### Your code below (Lab 3)
+        num_windows = K.shape(image_patches)[1]
+        input_length_tensor = K.ones((batch_size, 1), dtype='float32') * K.cast(num_windows, dtype='float32')
+        ##### Your code above (Lab 3)
+
+    return input_length_tensor
+
+
 def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     image_height, image_width = input_shape
+    # image_width = None
     output_length, num_classes = output_shape
 
-    num_windows = int((image_width - window_width) / window_stride) + 1
-    if num_windows < output_length:
-        raise ValueError(f'Window width/stride need to generate at least {output_length} windows (currently {num_windows})')
-
-    image_input = Input(shape=input_shape, name='image')
+    image_input = Input(shape=(image_height, image_width), name='image')
     y_true = Input(shape=(output_length,), name='y_true')
-    input_length = Input(shape=(1,), name='input_length')
     label_length = Input(shape=(1,), name='label_length')
 
     gpu_present = len(device_lib.list_local_devices()) > 1
@@ -33,14 +46,16 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     # Pass these features through one or more LSTM layers.
     # Convert the lstm outputs to softmax outputs.
     # Note that lstms expect a input of shape (num_batch_size, num_timesteps, feature_length).
+    softmax_output = None
 
     ##### Your code below (Lab 3)
-    image_reshaped = Reshape((image_height, image_width, 1))(image_input)
+    image_reshaped = Lambda(lambda x: K.expand_dims(x, axis=-1))(image_input)
     # (image_height, image_width, 1)
 
     image_patches = Lambda(
         slide_window,
-        arguments={'window_width': window_width, 'window_stride': window_stride}
+        arguments={'image_height': image_height, 'window_width': window_width, 'window_stride': window_stride},
+        name='slide_window'
     )(image_reshaped)
     # (num_windows, image_height, window_width, 1)
 
@@ -57,23 +72,34 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     # (num_windows, num_classes)
     ##### Your code above (Lab 3)
 
-    input_length_processed = Lambda(
-        lambda x, num_windows=None: x * num_windows,
-        arguments={'num_windows': num_windows}
-    )(input_length)
+
+    ### Computing ctc loss and decoding softmax output below
+    # This needs input_length tensor of shape (batch_size, 1) with num_windows of each batch image.
+    if image_width is not None:
+        # num_windows is the same for every batch
+        num_windows_static = int((image_width - window_width) / window_stride) + 1
+    else:
+        # num_windows changes for every batch and hence we compute it inside the lambda function get_input_length_tensor
+        num_windows_static = -1
+
+
+    input_length = Lambda(
+        get_input_length_tensor,
+        arguments={'num_windows_static': num_windows_static}
+    )(image_patches)
 
     ctc_loss_output = Lambda(
         lambda x: K.ctc_batch_cost(x[0], x[1], x[2], x[3]),
         name='ctc_loss'
-    )([y_true, softmax_output, input_length_processed, label_length])
+    )([y_true, softmax_output, input_length, label_length])
 
     ctc_decoded_output = Lambda(
         lambda x: ctc_decode(x[0], x[1], output_length),
         name='ctc_decoded'
-    )([softmax_output, input_length_processed])
+    )([softmax_output, input_length])
 
     model = KerasModel(
-        inputs=[image_input, y_true, input_length, label_length],
+        inputs=[image_input, y_true, label_length],
         outputs=[ctc_loss_output, ctc_decoded_output]
     )
     return model

@@ -10,14 +10,14 @@ The relevant files to review are `text_recognizer/models/line_model_ctc.py`, whi
 
 ## Train LSTM model with CTC loss
 
-You need to write code in `text_recognizer/networks/line_lstm.py` to make training work.
+You need to write code in `text_recognizer/networks/line_lstm_ctc.py` to make training work.
 Training can be done via
 
 ```sh
 pipenv run python training/run_experiment.py --save '{"dataset": "EmnistLinesDataset", "model": "LineModelCtc", "network": "line_lstm_ctc"}'
 ```
 
-or the shortcut `tasks/train_line_predictor.sh`
+or the shortcut `tasks/train_lstm_line_predictor.sh`
 
 ## Make sure the model is able to predict
 

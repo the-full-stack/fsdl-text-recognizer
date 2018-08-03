@@ -1,7 +1,8 @@
 import tensorflow as tf
+import tensorflow.keras.backend as K
 
 
-def slide_window(image, window_width, window_stride):
+def slide_window(image, image_height, window_width, window_stride):
     """
     Takes (image_height, image_width, 1) input,
     Returns (num_windows, image_height, window_width, 1) output, where
@@ -11,5 +12,10 @@ def slide_window(image, window_width, window_stride):
     strides = [1, 1, window_stride, 1]
     patches = tf.extract_image_patches(image, kernel, strides, [1, 1, 1, 1], 'VALID')
     patches = tf.transpose(patches, (0, 2, 1, 3))
-    patches = tf.expand_dims(patches, -1)
+
+    batch_size = K.shape(patches)[0]
+    num_windows = K.shape(patches)[1]
+
+    expected_shape = (batch_size, num_windows, image_height, window_width, 1)
+    patches = K.reshape(patches, shape=expected_shape)
     return patches
