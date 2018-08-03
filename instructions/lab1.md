@@ -28,7 +28,7 @@ We have a notebook showing what it looks like: `notebooks/01-look-at-emnist.ipyn
 You will have to add a little bit of code to `text_recognizer/networks/mlp.py` before being able to train.
 When you finish writing your code, you can train a canonical model and save the weights.
 
-You can run the shortcut command `tasks/train_character_predictor.py`, which runs the following:
+You can run the shortcut command `tasks/train_character_predictor.sh`, which runs the following:
 
 ```sh
 pipenv run training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp",  "train_args": {"batch_size": 256}}'

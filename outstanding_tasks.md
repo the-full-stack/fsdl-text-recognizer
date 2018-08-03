@@ -1,7 +1,9 @@
 ## Now
 
-- [ ] go through labs 1-3 as an attendee in jupyterlab and make sure it all works
-- [ ] push clean commit history
+- [ ] get flask running correctly and using LinePredictor
+    - [ ] deploy via serverless
+
+- [ ] make autograder for lab 5: simply use the existing tests for line predictor, and also add a new evaluate function on iam
 
 ## Next
 
@@ -66,3 +68,5 @@ Nice-to-have:
 - [x] be ready with a backup plan of running stuff on the farm
 - [x] write clear (but still minimal) instructions for what they are supposed to do in lab 1, 2, and 3
 - [x] don't copy the trained weights over to lab1, but do copy it over to solutions
+- [x] go through labs 1-3 as an attendee in jupyterlab and make sure it all works
+- [x] push clean commit history
