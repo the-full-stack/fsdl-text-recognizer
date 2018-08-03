@@ -14,8 +14,8 @@ def slide_window(image, image_height, window_width, window_stride):
     patches = tf.transpose(patches, (0, 2, 1, 3))
 
     batch_size = K.shape(patches)[0]
-    num_unroll = K.shape(patches)[1]
+    num_windows = K.shape(patches)[1]
 
-    expected_shape = (batch_size, num_unroll, image_height, window_width, 1)
+    expected_shape = (batch_size, num_windows, image_height, window_width, 1)
     patches = K.reshape(patches, shape=expected_shape)
     return patches
