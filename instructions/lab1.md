@@ -1,10 +1,15 @@
 # Lab 1 Instructions
 
+## Tour of the codebase
+
+I am going to give you a tour of the codebase.
+Before we get started, please run `python text_recognizer/datasets/emnist.py` to kick off download of the EMNIST dataset, which can take a few minutes.
 
 ## Training the network
 
 You will have to add a tiny bit of code to `text_recognizer/networks/mlp.py` before being able to train.
-When you finish writing your code, you can train a canonical model and save the weights. It will take about 5 minutes to download the dataset and train your model:
+When you finish writing your code, you can train a canonical model and save the weights.
+It will take a few minutes to download the dataset (if you didn't already run the command above) and train your model:
 
 ```sh
 pipenv run training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp"}'
