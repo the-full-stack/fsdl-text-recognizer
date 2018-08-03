@@ -2,7 +2,7 @@
 
 ## LeNet
 
-Add enough code to `lenet.py` to be able to run
+Add enough code to `networks/lenet.py` to be able to run
 
 ```sh
 pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "lenet"}'
