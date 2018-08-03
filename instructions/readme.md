@@ -7,6 +7,8 @@ Welcome!
 Go to https://app.wandb.ai/profile and enter the code that we will share with you at the session into Access Code field.
 This will drop you into a JupyterLab instance with a couple of GPUs that you will use in these labs.
 
+**From now on, everything you do will be in that instance.**
+
 ## Checking out the repo
 
 Start by cloning the repo and going into it
@@ -39,8 +41,6 @@ Follow directions here to generate a token you can use instead of your password 
 Make sure you store the token (e.g. in your password manager), as you will not be able to see it again.
 
 ## Setting up the Python environment
-
-Due to an annoying lack of a feature in pipenv, open Pipfile, and change `tensorflow` to `tensorflow-gpu`.
 
 Run `pipenv install --dev` to install all required packages into a virtual environment.
 

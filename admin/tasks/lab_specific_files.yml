@@ -2,7 +2,6 @@
     # - notebooks/01-look-at-emnist.ipynb
     # - notebooks/02-train-emnist-mlp.ipynb
     - instructions/lab1.md
-    - tasks/setup_gpu_env.sh
     - tasks/train_character_predictor.sh
     - tasks/run_prediction_tests.sh
     - text_recognizer/__init__.py
