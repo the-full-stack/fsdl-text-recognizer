@@ -1,9 +1,11 @@
 # Lab 1: Plumbing
 
+To start with lab1, `cd lab1`.
+
 ## Tour of the codebase
 
-I am going to give you a tour of the codebase.
-Before we get started, please run `python text_recognizer/datasets/emnist.py` to kick off download of the EMNIST dataset, which can take a few minutes.
+I am going to give you a tour of the codebase, but before we get started, please run `pipenv run python text_recognizer/datasets/emnist.py` to kick off download of the EMNIST dataset.
+This can take a few minutes.
 
 We will cover:
 - Overall layout: datasets, models, networks, weights, predictor, and training harness

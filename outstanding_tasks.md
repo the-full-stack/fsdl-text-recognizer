@@ -1,9 +1,7 @@
 ## Now
 
-
-- [ ] go through labs 1-3 as an attendee and make sure it all works
-
-- [ ] make a little slide for my approach to sliding window cnn (there's one in the vision applications lecture)
+- [ ] go through labs 1-3 as an attendee in jupyterlab and make sure it all works
+- [ ] push clean commit history
 
 ## Next
 
@@ -11,7 +9,6 @@
 - [ ] make sure lab5 works (probably need to solve the problem of how to save files)
 - [ ] save experiment json along with weights, and just call it canonical_character_predictor_weights.py and canonical_character_predictor_config.py
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
-
 
 - [ ] make sure lab4 works on jupyterlab (for a fresh user)
 

@@ -31,11 +31,13 @@ Select your personal account to fork to, and note down your USERNAME, which will
 Add your fork as a remote of the repo and push to it:
 
 ```sh
-git remote add mine https://github.com/USERNAME/fsdl-text-recognizer-project.git
+git remote add mine https://github.com//fsdl-text-recognizer-project.git
 git push mine master
 ```
 
-This should prompt you to enter your Github username and password.
+(If you face some kind of issue, you can `git remote rm mine` and then add it again.)
+
+Pushing will prompt you to enter your Github username and password.
 If your password is not accepted, it may be because you have two-factor authentication enabled.
 Follow directions here to generate a token you can use instead of your password on the command line: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
 Make sure you store the token (e.g. in your password manager), as you will not be able to see it again.
@@ -50,4 +52,7 @@ Remember to do that in every terminal session you start.
 
 ## Ready
 
-Now you should be setup for the labs. The instructions for each lab are in instructions/ directory inside of the lab.
+Now you should be setup for the labs. The instructions for each lab are in readme files in their folders.
+
+You will notice that there are solutions for all the labs right here in the repo, too.
+If you get stuck, you are welcome to take a look!
