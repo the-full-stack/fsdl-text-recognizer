@@ -18,6 +18,8 @@ from text_recognizer.datasets.base import Dataset
 
 #RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
 RAW_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/matlab.zip'  # should be a little faster
+PROCESSED_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/byclass.h5'  # should be a little faster
+
 
 RAW_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'emnist'
 PROCESSED_DATA_DIRNAME = Dataset.data_dirname() / 'processed' / 'emnist'
@@ -71,11 +73,17 @@ class EmnistDataset(Dataset):
         )
 
 
-def _download_and_process_emnist(sample_to_balance=False):
+def _download_and_process_emnist(download_processed=True, sample_to_balance=False):
     import scipy.io
 
     RAW_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
     PROCESSED_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
+
+    if download_processed:
+        os.chdir(PROCESSED_DATA_DIRNAME)
+        print('Downloading EMNIST (processed)...')
+        urlretrieve(PROCESSED_URL, 'byclass.h5')
+        return
 
     os.chdir(RAW_DATA_DIRNAME)
 
