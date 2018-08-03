@@ -19,8 +19,8 @@
     - text_recognizer/tests/support/emnist/8.png
     - text_recognizer/tests/support/emnist/U.png
     - text_recognizer/tests/support/emnist/e.png
-    - text_recognizer/tests/test_character_predictor.py
     - text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5
+    - text_recognizer/tests/test_character_predictor.py
     - training/util.py
     - training/run_experiment.py
     - training/gpu_util_sampler.py
@@ -64,15 +64,15 @@
     - "text_recognizer/tests/support/iam_lines/and came into the livingroom, where.png"
     - "text_recognizer/tests/support/iam_lines/He rose from his breakfast-nook bench.png"
     - "text_recognizer/tests/support/iam_lines/his entrance. He came, almost falling.png"
+    - text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5
 
 6:
     - .circleci/config.yml
     - api/app.py
     - api/tests/test_app.py
     - api/Dockerfile
+    - api/serverless.yml
     - tasks/build_api_docker.sh
+    - tasks/deploy_api_to_lambda.sh
     - tasks/run_validation_tests.sh
     - tasks/test_api.sh
-    - api/readme.md
-    - api/serverless.yml
-    - tasks/deploy_api_to_lambda.sh

@@ -3,12 +3,16 @@ from typing import Tuple, Union
 import numpy as np
 
 from text_recognizer.models import LineModelCtc
+from text_recognizer.datasets import EmnistLinesDataset
+##### Hide lines below until Lab 5
+from text_recognizer.datasets import IamLinesDataset
+##### Hide lines above until Lab 5
 import text_recognizer.util as util
 
 
 class LinePredictor:
-    def __init__(self):
-        self.model = LineModelCtc()
+    def __init__(self, dataset_cls=EmnistLinesDataset):
+        self.model = LineModelCtc(dataset_cls=dataset_cls)
         self.model.load_weights()
         self.model.network._make_predict_function()    # Bug https://github.com/keras-team/keras/issues/6462
 

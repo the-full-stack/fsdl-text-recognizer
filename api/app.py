@@ -12,11 +12,11 @@ import flask
 from flask import Flask, request, jsonify
 import numpy as np
 
-from text_recognizer.character_predictor import CharacterPredictor
+from text_recognizer.character_predictor import LinePredictor
 import text_recognizer.util as util
 
 app = Flask(__name__)
-predictor = CharacterPredictor()
+predictor = LinePredictor()
 
 
 @app.route('/')
@@ -27,6 +27,7 @@ def index():
 @app.route('/v1/predict', methods=['GET', 'POST'])
 def predict():
     image = _load_image()
+    # LOG SOME IMAGE STATISTIC
     pred, conf = predictor.predict(image)
     return jsonify({'pred': str(pred), 'conf': float(conf)})
 

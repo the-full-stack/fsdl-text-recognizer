@@ -127,7 +127,7 @@ def subset_repo(info):
     shutil.copy('.gitignore', output_dir)
     shutil.copy('instructions/readme.md', output_dir)
 
-    # To be filled-out
+    # Labs
     for lab_number in info.keys():
         lab_output_dir = output_dir / f'lab{lab_number}'
         lab_output_dir.mkdir(parents=True)
@@ -135,13 +135,18 @@ def subset_repo(info):
         _process_new_files(new_paths, lab_number)
         shutil.copy(f'instructions/lab{lab_number}.md', output_dir / f'lab{lab_number}' / 'readme.md')
 
-    # Solutions
+    # Solutions versions
     for lab_number in info.keys():
         lab_output_dir = output_dir / f'lab{lab_number}_sln'
         lab_output_dir.mkdir(parents=True)
         new_paths = _copy_files_for_lab(info, lab_number, lab_output_dir)
         _process_new_files(new_paths, lab_number, filter_your_code=False)
         shutil.copy(f'instructions/lab{lab_number}.md', output_dir / f'lab{lab_number}_sln' / 'readme.md')
+
+    os.remove(output_dir / 'lab1/text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5')
+    os.remove(output_dir / 'lab3/text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5')
+    os.remove(output_dir / 'lab5/text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5')
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

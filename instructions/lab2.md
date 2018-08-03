@@ -8,6 +8,8 @@ Add enough code to `lenet.py` to be able to run
 pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "lenet"}'
 ```
 
+Training will take a few minutes to train.
+
 You should see an improvement in accuracy compared to the MLP model we trained in the previous lab.
 
 ## Emnist Lines
@@ -22,6 +24,7 @@ Add code to `text_recognizer/networks/line_cnn_sliding_window.py` to make the fo
 pipenv run training/run_experiment.py '{"dataset": "EmnistLinesDataset", "model": "LineModel", "network": "line_cnn_sliding_window"}'
 ```
 
+
 You should be able to get to ~70% character accuracy with the default params.
 
 ## Train an all-conv model on EmnistLines
@@ -33,7 +36,7 @@ Write code in `text_recognizer/networks/line_cnn_all_conv.py` to make this happe
 When you train with
 
 ```sh
-pipenv run training/run_experiment.py '{"dataset": "EmnistLinesDataset", "model": "LineModel", "network": "line_cnn_all_conv"}'
+pipenv run training/run_experiment.py '{"dataset": "EmnistLinesDataset", "model": "LineModel", "network": "line_cnn_all_conv", "network_args": {"window_width": 16, "window_stride": 8}}'
 ```
 
 You should be getting roughly the same accuracy, and see slightly shorter runtimes: for me, it's 77ms/step vs 100ms/step for the previous model.

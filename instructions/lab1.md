@@ -1,26 +1,42 @@
-# Lab 1 Instructions
+# Lab 1: Plumbing
 
 ## Tour of the codebase
 
 I am going to give you a tour of the codebase.
 Before we get started, please run `python text_recognizer/datasets/emnist.py` to kick off download of the EMNIST dataset, which can take a few minutes.
 
+We will cover:
+- Overall layout: datasets, models, networks, weights, predictor, and training harness
+- EmnistDataset
+- DatasetSequence
+- CharacterModel
+- mlp
+- CharacterPredictor
+- run_experiment.py
+
+## A look at the data
+
+EMNIST stands for Extended Mini-NIST :)
+It has many samples of all English letters and digits, all nicely cropped and presented in the MNIST format.
+We have a notebook showing what it looks like: `notebooks/01-look-at-emnist.ipynb`
+
 ## Training the network
 
-You will have to add a tiny bit of code to `text_recognizer/networks/mlp.py` before being able to train.
+You will have to add a little bit of code to `text_recognizer/networks/mlp.py` before being able to train.
 When you finish writing your code, you can train a canonical model and save the weights.
-It will take a few minutes to download the dataset (if you didn't already run the command above) and train your model:
+
+You can run the shortcut command `tasks/train_character_predictor.py`, which runs the following:
 
 ```sh
-pipenv run training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp"}'
+pipenv run training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp",  "train_args": {"batch_size": 256}}'
 ```
 
-You can also run the above command as a shortcut: `tasks/train_character_predictor.py`
+It will take a couple of minutes to train your model.
 
-Just for fun, you can try a larger MLP, with a larger batch size
+Just for fun, you could also try a larger MLP, with a smaller batch size:
 
 ```sh
-pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 8}} "train_args": {"batch_size": 256}'
+pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 8}} "train_args": {"batch_size": 128}'
 ```
 
 ## Testing
@@ -42,7 +58,7 @@ Testing should finish quickly.
 Before submitting to Gradescope, commit and push your changes:
 
 ```sh
-git commit -am "my work"
+git commit -am "my lab1 work"
 git push mine master
 ```
 
