@@ -15,6 +15,7 @@ We will cover:
 - mlp
 - CharacterPredictor
 - run_experiment.py
+- training/util.py
 
 ## A look at the data
 
@@ -64,7 +65,7 @@ git commit -am "my lab1 work"
 git push mine master
 ```
 
-Now go to https://gradescope.com/courses/21098/assignments and click on Lab 1.
+Now go to https://gradescope.com/courses/21098 and click on Lab 1.
 Select the Github submission option, and there select your fork of the `fsdl-text-recognizer-project` repo and the master branch, and click Submit.
 Don't forget to enter a name for the leaderboard :)
 

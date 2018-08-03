@@ -1,6 +1,10 @@
 # Lab 2
 
+In this lab we will implement convolutional networks: first for character recognition, and then for recognizing text in an image of a handwritten line.
+
 ## LeNet
+
+To warm up, let's implement an old classic.
 
 Add enough code to `networks/lenet.py` to be able to run
 
@@ -8,13 +12,13 @@ Add enough code to `networks/lenet.py` to be able to run
 pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "lenet"}'
 ```
 
-Training will take a few minutes to train.
-
-You should see an improvement in accuracy compared to the MLP model we trained in the previous lab.
+Training will take about six minutes.
+Leave it running while we go on to look at EmnistLines.
 
 ## Emnist Lines
 
-(Explain generating the dataset, look at the notebook)
+We are generating synthetic data from composing EMNIST characters into a line, sampling text from the Brown corpus!
+We can see the results by opening up `notebooks/02-look-at-emnist-lines.ipynb`.
 
 ## Train a Sliding Window LeNet on EmnistLines
 

@@ -6,11 +6,11 @@ We will be implementing LSTM model with CTC loss.
 CTC loss needs to be implemented kind of strangely in Keras: by passing in all required data to compute the loss as inputs to the network (including the true label).
 This is an example of a multi-input / multi-output network.
 
-The relevant files to review are `text_recognizer/models/line_model_ctc.py`, which shows the batch formatting that needs to happen for the CTC loss to be computed inside of the network.
+The relevant files to review are `models/line_model_ctc.py`, which shows the batch formatting that needs to happen for the CTC loss to be computed inside of the network, `networks/line_lstm_ctc.py`, which has the network definition.
 
 ## Train LSTM model with CTC loss
 
-You need to write code in `text_recognizer/networks/line_lstm_ctc.py` to make training work.
+You need to write code in `networks/line_lstm_ctc.py` to make training work.
 Training can be done via
 
 ```sh
@@ -21,7 +21,7 @@ or the shortcut `tasks/train_lstm_line_predictor.sh`
 
 ## Make sure the model is able to predict
 
-You will also need to write some code in `text_recognizer/models/line_model_ctc.py` to predict on images.
+You will also need to write some code in `models/line_model_ctc.py` to predict on images.
 After that, you should see tests pass when you run
 
 ```sh
