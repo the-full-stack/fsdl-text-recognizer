@@ -3,8 +3,8 @@
 
 ## Training the network
 
-You will have to add a tiny bit of code to `text_recognizer/models/mlp.py` before being able to train.
-When you finish, you can train a canonical model and save the weights:
+You will have to add a tiny bit of code to `text_recognizer/networks/mlp.py` before being able to train.
+When you finish writing your code, you can train a canonical model and save the weights. It will take about 5 minutes to download the dataset and train your model:
 
 ```sh
 pipenv run training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp"}'
@@ -20,7 +20,7 @@ pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "Ch
 
 ## Testing
 
-Your network is trained, but you need to write a bit more code to get the `CharacterModel` to predict using it.
+Your network is trained, but you need to write a bit more code to get the `CharacterModel` to use it to predict.
 Open up `text_recognizer/models/character_model.py` and write some code there to make it work.
 You can test that it works by running
 
@@ -29,6 +29,8 @@ pipenv run pytest -s text_recognizer/tests/test_character_predictor.py
 ```
 
 Or, use the shorthand `tasks/run_prediction_tests.sh`
+
+Testing should finish quickly.
 
 ## Submitting to Gradescope
 
