@@ -30,6 +30,27 @@ pipenv run pytest -s text_recognizer/tests/test_line_predictor.py
 
 Or you can do `tasks/run_prediction_tests.sh`, which will also run the CharacterModel tests.
 
+## Submitting to Gradescope
+
+Before submitting to Gradescope, add your trained weights to the repo, commit and push your changes:
+
+```sh
+git add text_recognizer
+git commit -am "my lab3 work"
+git push mine master
+```
+
+Now go to https://gradescope.com/courses/21098 and click on Lab 3.
+Select your fork of the `fsdl-text-recognizer-project` repo, and click Submit.
+Don't forget to enter a name for the leaderboard :)
+
+The autograder treats code that is in `lab3/text_recognizer` as your submission, so make sure your code is indeed there.
+
+The autograder should finish in a couple of minutes, and display the results.
+Your name will show up in the Leaderboard.
+
+While you wait for the autograder to complete, feel free to try some experiments!
+
 ## Things to try
 
 If you have time left over, or want to play around with this later on, you can try using the `line_lstm` network, defined in `text_recognizer/networks/line_lstm.py`.

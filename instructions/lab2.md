@@ -22,7 +22,7 @@ We can see the results by opening up `notebooks/02-look-at-emnist-lines.ipynb`.
 
 ## Train a Sliding Window LeNet on EmnistLines
 
-Add code to `text_recognizer/networks/line_cnn_sliding_window.py` to make the following command train successfully.
+Add code to `networks/line_cnn_sliding_window.py` to make the following command train successfully.
 
 ```sh
 pipenv run training/run_experiment.py '{"dataset": "EmnistLinesDataset", "model": "LineModel", "network": "line_cnn_sliding_window"}'
@@ -36,7 +36,7 @@ You should be able to get to ~70% character accuracy with the default params.
 
 The previous model works, but is inefficient, as it re-does convolutions from scratch in every window.
 Because we are using a simple LeNet, we can convert the whole model into all convolutions.
-Write code in `text_recognizer/networks/line_cnn_all_conv.py` to make this happen.
+Write code in `networks/line_cnn_all_conv.py` to make this happen.
 
 When you train with
 
