@@ -87,8 +87,7 @@ class LineModelCtc(Model):
         softmax_output = softmax_output_fn([input_image, 0])[0]
 
         input_length = np.array([softmax_output.shape[1]])
-        max_output_length = self.data.output_shape[0]
-        decoded, log_prob = K.ctc_decode(softmax_output, input_length, max_output_length)
+        decoded, log_prob = K.ctc_decode(softmax_output, input_length, greedy=True)
 
         pred_raw = K.eval(decoded[0])[0]
         pred = ''.join(self.data.mapping[label] for label in pred_raw).strip()

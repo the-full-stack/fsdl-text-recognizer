@@ -7,7 +7,7 @@ You will have to add a tiny bit of code to `text_recognizer/networks/mlp.py` bef
 When you finish writing your code, you can train a canonical model and save the weights. It will take about 5 minutes to download the dataset and train your model:
 
 ```sh
-pipenv run training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp"}'
+pipenv run python training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp"}'
 ```
 
 You can also run the above command as a shortcut: `tasks/train_character_predictor.py`
@@ -15,7 +15,7 @@ You can also run the above command as a shortcut: `tasks/train_character_predict
 Just for fun, you can try a larger MLP, with a larger batch size
 
 ```sh
-pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 8}} "train_args": {"batch_size": 256}'
+pipenv run python training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 8}} "train_args": {"batch_size": 256}'
 ```
 
 ## Testing

@@ -16,18 +16,13 @@ ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_line
 
 
 class EmnistLinesDataset(Dataset):
-    def __init__(self, max_length: int=34, max_overlap: float=0.33, variable_width=False, num_train: int=10000, num_test: int=1000):
+    def __init__(self, max_length: int=34, max_overlap: float=0.33, num_train: int=10000, num_test: int=1000):
         self.emnist = EmnistDataset()
         self.mapping = self.emnist.mapping
         self.max_length = max_length
         self.max_overlap = max_overlap
         self.num_classes = len(self.mapping)
-        if variable_width:
-            print('Image width is None')
-            image_width = None
-        else:
-            image_width = self.emnist.input_shape[1] * self.max_length
-        self.input_shape = (self.emnist.input_shape[0], image_width)
+        self.input_shape = (self.emnist.input_shape[0], self.emnist.input_shape[1] * self.max_length)
         self.output_shape = (self.max_length, self.num_classes)
         self.num_train = num_train
         self.num_test = num_test

@@ -12,26 +12,15 @@ from text_recognizer.networks.misc import slide_window
 from text_recognizer.networks.ctc import ctc_decode
 
 
-def get_input_length_tensor(image_patches, num_windows_static):
+def get_input_length_tensor(image_patches, num_windows):
     """Return input_length_tensor of shape (batch_size, 1) with values num_windows."""
     batch_size = K.shape(image_patches)[0]
-
-    if num_windows_static > 0:
-        input_length_tensor = K.ones((batch_size, 1), dtype='float32') * num_windows_static
-
-    else:
-        print('Variable num window')
-        ##### Your code below (Lab 3)
-        num_windows = K.shape(image_patches)[1]
-        input_length_tensor = K.ones((batch_size, 1), dtype='float32') * K.cast(num_windows, dtype='float32')
-        ##### Your code above (Lab 3)
-
+    input_length_tensor = K.ones((batch_size, 1), dtype='float32') * num_windows
     return input_length_tensor
 
 
 def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     image_height, image_width = input_shape
-    # image_width = None
     output_length, num_classes = output_shape
 
     image_input = Input(shape=(image_height, image_width), name='image')
@@ -72,20 +61,12 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     # (num_windows, num_classes)
     ##### Your code above (Lab 3)
 
-
     ### Computing ctc loss and decoding softmax output below
-    # This needs input_length tensor of shape (batch_size, 1) with num_windows of each batch image.
-    if image_width is not None:
-        # num_windows is the same for every batch
-        num_windows_static = int((image_width - window_width) / window_stride) + 1
-    else:
-        # num_windows changes for every batch and hence we compute it inside the lambda function get_input_length_tensor
-        num_windows_static = -1
-
+    num_windows = int((image_width - window_width) / window_stride) + 1
 
     input_length = Lambda(
         get_input_length_tensor,
-        arguments={'num_windows_static': num_windows_static}
+        arguments={'num_windows': num_windows}
     )(image_patches)
 
     ctc_loss_output = Lambda(

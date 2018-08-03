@@ -47,7 +47,6 @@
     - tasks/train_lstm_line_predictor.sh
     - text_recognizer/line_predictor.py
     - text_recognizer/models/line_model_ctc.py
-    - text_recognizer/networks/line_lstm.py
     - text_recognizer/networks/line_lstm_ctc.py
     - text_recognizer/networks/ctc.py
     - text_recognizer/tests/test_line_predictor.py
