@@ -9,10 +9,10 @@ To warm up, let's implement an old classic.
 Add enough code to `networks/lenet.py` to be able to run
 
 ```sh
-pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "lenet"}'
+pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "lenet", "train_args": {"epochs": 1}}'
 ```
 
-Training will take about six minutes.
+Training the single epoch will take about 2 minutes (that's why we only do one epoch in this lab :)).
 Leave it running while we go on to look at EmnistLines.
 
 ## Emnist Lines
