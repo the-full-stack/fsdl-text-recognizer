@@ -8,6 +8,14 @@ First, we will get a Flask web server up and running and serving predictions.
 pipenv run python api/app.py
 ```
 
+Now we can send some test images to it
+
+```
+export API_URL=http://0.0.0.0:8000
+curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i ../text_recognizer/tests/support/emnist/0.png)'" }'
+```
+
+
 ## Running web server in Docker
 
 Execute this from top-level repo:

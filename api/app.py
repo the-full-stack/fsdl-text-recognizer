@@ -12,7 +12,7 @@ import flask
 from flask import Flask, request, jsonify
 import numpy as np
 
-from text_recognizer.character_predictor import LinePredictor
+from text_recognizer.line_predictor import LinePredictor
 import text_recognizer.util as util
 
 app = Flask(__name__)
@@ -28,6 +28,7 @@ def index():
 def predict():
     image = _load_image()
     # LOG SOME IMAGE STATISTIC
+    from IPython import embed; embed()
     pred, conf = predictor.predict(image)
     return jsonify({'pred': str(pred), 'conf': float(conf)})
 
