@@ -4,14 +4,55 @@ In this lab, we will get familiar with Weights & Biases, and start using an expe
 
 ## Weights & Biases
 
-The first thing to do is run `wandb init`, where you can set your user id and create a new project.
+You'll notice some new lines in `training/run_experiment.py` now: importing and initializing `wandb`, the Weights & Biases package.
 
-Now, if you look at `training/run_experiment.py` file, you'll notice that we are going to be syncing to W&B.
+Because of this, you need to run  `wandb init`, where you can set your user id and create a new project.
 
-Let's run a quick experiment: `tasks/train_character_predictor.sh`
+Now let's test it out with a quick experiment: run `tasks/train_character_predictor.sh`
 
 When it completes, you should see some new output from W&B, and a link to go check out the run.
 
+Let's do that! You'll see the experiment progressing in W&B.
+
+Let's launch another experiment in a different terminal window, on a different GPU.
+Open up another terminal (by clicking File->New->Terminal), `cd fsdl-text-recognizer-project/lab4`, and launch the same experiment, but with a bigger batch size:
+
+```sh
+pipenv run python training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "train_args": {"batch_size": 512}}' --gpu=1
+```
+
+Note the `--gpu=1` flag at the end. Because the default gpu index is 0, if we launched this experiment without the flag, it would try allocating on the GPU that's already in use. With the flag, it runs on a different GPU.
+
+You can now go to https://app.wandb.ai, click into your project, and see both runs happening at the same time!
+
 ## Running multiple experiments
 
-TODO
+It would be nice to be able to define multiple experiments and then just queue them up for training.
+We can do that with the `training/prepare_experiments.sh` framework.
+
+Let's check it out. Run `tasks/prepare_sample_experiments.sh` or `pipenv run training/prepare_experiments.py training/experiments/sample.json`
+
+You should see the following:
+
+```
+pipenv run python training/run_experiment.py --gpu=-1 '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 2}, "train_args": {"batch_size": 256}, "experiment_group": "Sample Experiments 2"}'
+pipenv run python training/run_experiment.py --gpu=-1 '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 4}, "train_args": {"batch_size": 256}, "experiment_group": "Sample Experiments 2"}'
+pipenv run python training/run_experiment.py --gpu=-1 '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "lenet", "network_args": {"num_layers": 4}, "train_args": {"batch_size": 256}, "experiment_group": "Sample Experiments 2"}'
+```
+
+Each line corresponds to an experiment. The `--gpu=-1` flag makes use of a new file in this lab: `training/gpu_manager.py`, which finds an unused GPU, or waits until one is available.
+
+Because of this behavior, we can run all these lines in parallel:
+
+```sh
+tasks/prepare_sample_experiments.sh | parallel -j2
+```
+
+This will run experiments two at a time, and as soon as one is finished, another one will start.
+
+Although you can't see output in the terminal, you can confirm that the experiments are running by going to Weights and Biases.
+
+## More cool things about W&B
+
+- `pipenv run wandb restore <run_id>` will check out the code and the best model
+- sample project showing cool plots: https://app.wandb.ai/wandb/face-emotion?view=default
