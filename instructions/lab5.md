@@ -1,6 +1,13 @@
 # Lab 5: Experimentation
 
-In this lab we will introduce the IAM handwriting dataset, and give you a chance to try out different things, run experiments, and review results on wandb.
+In this lab we will introduce the IAM handwriting dataset, and give you a chance to try out different things, run experiments, and review results on W&B.
+
+## W&B Setup
+
+First, let's set up W&B again. We're going to do it a little differently this time. Run `wandb init`. For the team, choose fsdl, and for the project, name it `fsdl-text-recognizer-project`.
+
+This will let us all share a project. We'll be able to see all of our runs, including network parameters and performance.
+
 
 ## IAM Dataset
 
@@ -20,4 +27,4 @@ Training longer will keep improving: the same settings get to 60% accuracy in 40
 
 For the rest of the lab, let's just play around with different things and see if we can improve performance quickly.
 
-https://app.wandb.ai/gradescope/fsdl-text-recognizer-project
+You can see all of our training runs here: https://app.wandb.ai/fsdl/fsdl-text-recognizer-project
