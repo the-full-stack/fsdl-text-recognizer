@@ -48,43 +48,78 @@ tasks/build_api_docker.sh
 Then you can run the server as
 
 ```sh
-docker run -p 8000:8000 --name api -it --rm text-recognizer-api
+docker run -p 8000:8000 --name api -it --rm text_recognizer_api
 ```
 
-If needed, you can connect to a running server by doing
+You can run the same curl commands as you did when you ran the flask server earlier, and see that you're getting the same results.
 
-TODO
+
+If needed, you can connect to your running docker container by running:
 
 ```sh
 docker exec -it api bash
 ```
 
+You can shut down your docker container now.
+
 ## Lambda deployment
 
+Now we're going to deploy our text recognizer app. We're going to use AWS Lambda, using the serverless framework.
+
+First, `cd` into the `lab6/api` directory and install the dependencies for serverless:
+
 ```sh
-# First, install dependencies specified in package.json
 npm install
+```
 
-# Edit serverless.yml to call the service with your own name
-# e.g. text-recognizer-sergeyk
+Next, we'll need to configure serverless. Edit `serverless.yml` and change the service name on the first line (you can use your Github username for USERNAME):
 
-# Then, run this and you should see a message asking you to set up AWS credentials
-sls info
+```
+service: text-recognizer-USERNAME
+```
 
-# Install your credentials by going to https://379872101858.signin.aws.amazon.com/console and logging in with the email you used to register for this bootcamp and the password that we set for you
-# Go to IAM, Users, click on yourself, and Create Access Key. Put the key/secret in the command below
+Next, run `sls info`. You'll see a message asking you to set up your AWS credentials. We sent an email to you with your AWS credentials (let us know if you can't find it).
+Note that emailing credentials is generally a bad idea. You usually want to handle credentials in a more secure fashion.
+We're only doing it in this case because your credentials give you very limited access and are for a temporary AWS account.
+
+You can also go to https://379872101858.signin.aws.amazon.com/console and log in with the email you used to register (and the password we emailed you), and create your own credentials if you prefer.
+
+Edit and the command below and substitute your credentials for the placeholders:
+
+```
 sls config credentials --provider aws --key AKIAIOSFODNN7EXAMPLE --secret wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+```
 
-# Now you should be ready to deploy
+Now you've got everything configured, so let's deploy your API to Lambda. Serverless will package up your flask API before deploying it.
+It will install all of the python packages in a docker container that matches the environment lambda uses, to make sure the compiled code is compatible.
+This will take 3-5 minutes. This command will package up and deploy your flask API:
+
+```
 pipenv run sls deploy -v
 ```
 
-# Run flask app locally
-PYTHONPATH=.. pipenv run sls wsgi serve
+Near the end of the output of the deploy command, you'll see links to your API endpoint. Copy the top one (the one that doesn't end in `{proxy+}`).
 
-# Test with curl
+As before, we can test out our API by running a few curl commands (from the `lab6` directory). We need to change the `API_URL` first though to point it at Lambda:
+
+```
+export API_URL="https://REPLACE_THIS.execute-api.us-west-2.amazonaws.com/dev/"
+curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -w0 -i text_recognizer/tests/support/emnist_lines/or\ if\ used\ the\ results.png)'" }'
+curl "${API_URL}/v1/predict?image_url=http://s3-us-west-2.amazonaws.com/fsdl-public-assets/emnist_lines/or%2Bif%2Bused%2Bthe%2Bresults.png"
+```
+
+In addition to deploying to AWS, serverless lets you test out everything locally as well.
+We'll make sure everything works locally first. We're going to use serverless to run the flask API locally:
+We have to have already run `sls deploy`, because this relies on the package being created already.
+
+```sh
+PYTHONPATH=.. pipenv run sls wsgi serve
+```
+
+Again, we can test out our API by running a few curl commands after changing the `API_URL` (from the `lab6` directory):
+
+```
 export API_URL=http://0.0.0.0:5000
-export API_URL="https://1klwfmaohf.execute-api.us-west-2.amazonaws.com/dev/"
-curl "${API_URL}/v1/predict?image_url=https://s3-us-west-2.amazonaws.com/fsdl-public-assets/0.png"
-curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i ../text_recognizer/tests/support/emnist/0.png)'" }'
+curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -w0 -i text_recognizer/tests/support/emnist_lines/or\ if\ used\ the\ results.png)'" }'
+curl "${API_URL}/v1/predict?image_url=http://s3-us-west-2.amazonaws.com/fsdl-public-assets/emnist_lines/or%2Bif%2Bused%2Bthe%2Bresults.png"
 ```

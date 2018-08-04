@@ -34,7 +34,7 @@ custom:
     packRequirements: false
   pythonRequirements:
     dockerizePip: true
-    slim: true
+    slim: false
     noDeploy:
       - "pytest"
     slimPatterns:
