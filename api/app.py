@@ -11,12 +11,18 @@ import tempfile
 import flask
 from flask import Flask, request, jsonify
 import numpy as np
+from tensorflow.keras import backend
 
 from text_recognizer.line_predictor import LinePredictor
+from text_recognizer.datasets import IamLinesDataset
 import text_recognizer.util as util
 
 app = Flask(__name__)
-predictor = LinePredictor()
+
+# Tensorflow bug: https://github.com/keras-team/keras/issues/2397
+with backend.get_session().graph.as_default() as g:
+    predictor = LinePredictor()
+    # predictor = LinePredictor(dataset_cls=IamLinesDataset)
 
 
 @app.route('/')
@@ -27,9 +33,10 @@ def index():
 @app.route('/v1/predict', methods=['GET', 'POST'])
 def predict():
     image = _load_image()
+    with backend.get_session().graph.as_default() as g:
+        pred, conf = predictor.predict(image)
     # LOG SOME IMAGE STATISTIC
-    from IPython import embed; embed()
-    pred, conf = predictor.predict(image)
+    # LOG CONFIDENCE
     return jsonify({'pred': str(pred), 'conf': float(conf)})
 
 
@@ -49,4 +56,4 @@ def _load_image():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=8000, debug=False)

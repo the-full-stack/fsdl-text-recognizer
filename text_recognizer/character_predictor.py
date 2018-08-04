@@ -10,7 +10,6 @@ class CharacterPredictor:
   def __init__(self):
     self.model = CharacterModel()
     self.model.load_weights()
-    self.model.network._make_predict_function()  # Bug https://github.com/keras-team/keras/issues/6462
 
   def predict(self, image_or_filename: Union[np.ndarray, str]) -> Tuple[str, float]:
     if isinstance(image_or_filename, str):

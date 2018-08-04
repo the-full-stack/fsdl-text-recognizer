@@ -12,22 +12,33 @@ Now we can send some test images to it
 
 ```
 export API_URL=http://0.0.0.0:8000
-curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i ../text_recognizer/tests/support/emnist/0.png)'" }'
+curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i text_recognizer/tests/support/emnist_lines/or\ if\ used\ the\ results.png)'" }'
 ```
 
+<!-- If instantiated with `IamLinesDataset`
+
+curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i text_recognizer/tests/support/iam_lines/He\ rose\ from\ his\ breakfast-nook\ bench.png)'" }' -->
 
 ## Running web server in Docker
 
 Execute this from top-level repo:
 
 ```sh
-docker build -t USERNAME/text-recognizer-api -f api/Dockerfile .
+docker build -t text-recognizer-api -f api/Dockerfile .
 ```
 
 Then you can run the server as
 
 ```sh
-docker run -p 8000:8000 -it USERNAME/text-recognizer-api
+docker run -p 8000:8000 --name api -it text-recognizer-api
+```
+
+If needed, you can connect to a running server by doing
+
+TODO
+
+```sh
+docker exec -it api bash
 ```
 
 ## Lambda deployment

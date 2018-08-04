@@ -7,7 +7,10 @@ RUN apt-get update && apt-get install python3-pip -y && pip3 install pipenv
 # Copy build dir to /repo
 RUN set -ex && mkdir /repo
 WORKDIR /repo
-COPY . .
+COPY text_recognizer/ .
+COPY api/ .
+COPY Pipfile .
+COPY Pipfile.lock .
 
 # Install Python dependencies
 ENV LC_ALL C.UTF-8
