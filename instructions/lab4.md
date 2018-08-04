@@ -6,13 +6,20 @@ In this lab, we will get familiar with Weights & Biases, and start using an expe
 
 You'll notice some new lines in `training/run_experiment.py` now: importing and initializing `wandb`, the Weights & Biases package.
 
-Because of this, you need to run  `wandb init`, where you can set your user id and create a new project.
+Because of this, you need to run  `wandb init`. For the team, you can choose your W&B username, and for the project, you can name it `fsdl-text-recognizer-project`.
+Note that `wandb init` will give you some instructions about lines to add to your training script. You can ignore that, as we've already done so as described above.
 
 Now let's test it out with a quick experiment: run `tasks/train_character_predictor.sh`
 
-When it completes, you should see some new output from W&B, and a link to go check out the run.
+When the run starts, you'll see some output from `wandb` that looks like this:
 
-Let's do that! You'll see the experiment progressing in W&B.
+```
+wandb: Started W&B process version 0.6.17 with PID <xxxx>
+wandb: Syncing https://api.wandb.ai/<USERNAME>/fsdl-text-recognizer-project/runs/<xxxxxx>
+```
+
+Click on the link in the second line (you may need to scroll up a bit), and check out the progress as your model trains. Don't stay there too long though!
+Head back and kick off another experiment -- you'll be able to see both runs happen in parallel.
 
 Let's launch another experiment in a different terminal window, on a different GPU.
 Open up another terminal (by clicking File->New->Terminal), `cd fsdl-text-recognizer-project/lab4`, and launch the same experiment, but with a bigger batch size:
@@ -23,12 +30,12 @@ pipenv run python training/run_experiment.py --save '{"dataset": "EmnistDataset"
 
 Note the `--gpu=1` flag at the end. Because the default gpu index is 0, if we launched this experiment without the flag, it would try allocating on the GPU that's already in use. With the flag, it runs on a different GPU.
 
-You can now go to https://app.wandb.ai, click into your project, and see both runs happening at the same time!
+You can now go to https://app.wandb.ai, click into your project, and see both runs happening at the same time! We'll show you how you can add a chart to visualize all of your training runs.
 
 ## Running multiple experiments
 
 It would be nice to be able to define multiple experiments and then just queue them up for training.
-We can do that with the `training/prepare_experiments.sh` framework.
+We can do that with the `training/prepare_experiments.py` framework.
 
 Let's check it out. Run `tasks/prepare_sample_experiments.sh` or `pipenv run training/prepare_experiments.py training/experiments/sample.json`
 
@@ -48,7 +55,7 @@ Because of this behavior, we can run all these lines in parallel:
 tasks/prepare_sample_experiments.sh | parallel -j2
 ```
 
-This will run experiments two at a time, and as soon as one is finished, another one will start.
+This will run experiments two at a time, and as soon as one finishes, another one will start.
 
 Although you can't see output in the terminal, you can confirm that the experiments are running by going to Weights and Biases.
 
