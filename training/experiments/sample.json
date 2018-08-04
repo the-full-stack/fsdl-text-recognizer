@@ -27,11 +27,8 @@
             "dataset": "EmnistDataset",
             "model": "CharacterModel",
             "network": "lenet",
-            "network_args": {
-                "num_layers": 4
-            },
             "train_args": {
-                "batch_size": 256
+                "batch_size": 128
             }
         }
     ]
