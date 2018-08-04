@@ -70,3 +70,7 @@ export API_URL="https://1klwfmaohf.execute-api.us-west-2.amazonaws.com/dev/"
 curl "${API_URL}/v1/predict?image_url=https://s3-us-west-2.amazonaws.com/fsdl-public-assets/0.png"
 curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i ../text_recognizer/tests/support/emnist/0.png)'" }'
 ```
+
+## Notes for arjun
+
+- text_recognizer/tests/support/create_emnist_lines... to create more files
