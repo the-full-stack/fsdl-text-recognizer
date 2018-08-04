@@ -19,3 +19,5 @@ For me, training for 8 epochs gets test set character accuracy of ~40%, and take
 Training longer will keep improving: the same settings get to 60% accuracy in 40 epochs: https://app.wandb.ai/sergeyk/fsdl-text-recognizer/runs/a6ucf77m
 
 For the rest of the lab, let's just play around with different things and see if we can improve performance quickly.
+
+https://app.wandb.ai/gradescope/fsdl-text-recognizer-project

@@ -1,0 +1,4 @@
+FSDL Questions
+
+- how to debug model implementation (unit tests per layer?)
+- Igor will be here all August and wants to take the exam in person
