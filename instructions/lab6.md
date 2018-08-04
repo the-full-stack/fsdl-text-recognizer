@@ -8,29 +8,47 @@ First, we will get a Flask web server up and running and serving predictions.
 pipenv run python api/app.py
 ```
 
-Now we can send some test images to it
+Open up another terminal tab (click on the '+' button under 'File' to open the
+launcher). In this terminal, we'll send some a test image to the web server
+we're running in the first terminal. Make sure to `cd` into the `lab6` directory
+in this new terminal.
 
 ```
 export API_URL=http://0.0.0.0:8000
-curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i text_recognizer/tests/support/emnist_lines/or\ if\ used\ the\ results.png)'" }'
+curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -w0 -i text_recognizer/tests/support/emnist_lines/or\ if\ used\ the\ results.png)'" }'
 ```
 
+If you want to look at the image you just sent, you can navigate to
+`lab6/text_recognizer/tests/support/emnist_lines` in the file browser on the
+left, and open the image.
+
+We can also send a request specifying a URL to an image:
+```
+curl "${API_URL}/v1/predict?image_url=http://s3-us-west-2.amazonaws.com/fsdl-public-assets/emnist_lines/or%2Bif%2Bused%2Bthe%2Bresults.png"
+```
+
+You can shut down your flask server now.
 <!-- If instantiated with `IamLinesDataset`
 
 curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i text_recognizer/tests/support/iam_lines/He\ rose\ from\ his\ breakfast-nook\ bench.png)'" }' -->
 
 ## Running web server in Docker
 
-Execute this from top-level repo:
+Now, we'll build a docker image with our application. Docker can be a
+convenient way to package up your application with all of its dependencies so
+it can be easily deployed. The Dockerfile in `api/Dockerfile` defines how we're
+building the docker image.
+
+Still in the `lab6` directory, run:
 
 ```sh
-docker build -t text-recognizer-api -f api/Dockerfile .
+tasks/build_api_docker.sh
 ```
 
 Then you can run the server as
 
 ```sh
-docker run -p 8000:8000 --name api -it text-recognizer-api
+docker run -p 8000:8000 --name api -it --rm text-recognizer-api
 ```
 
 If needed, you can connect to a running server by doing
