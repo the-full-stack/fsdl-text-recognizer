@@ -4,7 +4,7 @@ In this lab we will introduce the IAM handwriting dataset, and give you a chance
 
 ## W&B Setup
 
-First, let's set up W&B again. We're going to do it a little differently this time. Run `wandb init`. For the team, choose fsdl, and for the project, name it `fsdl-text-recognizer-project`.
+First, let's set up W&B -- a little differently this time. Run `wandb init` inside of the `lab5` directory. For the team, choose fsdl, and for the project, name it `fsdl-text-recognizer-project`.
 
 This will let us all share a project. We'll be able to see all of our runs, including network parameters and performance.
 
