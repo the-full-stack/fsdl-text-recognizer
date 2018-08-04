@@ -2,9 +2,11 @@
 
 In this lab, we will get familiar with Weights & Biases, and start using an experiment-running framework that will make it easy to distribute work onto multiple GPUs.
 
+Before getting started, make sure to `git pull` to ensure you have the latest version of the labs and instructions!
+
 ## Weights & Biases
 
-You'll notice some new lines in `training/run_experiment.py` now: importing and initializing `wandb`, the Weights & Biases package.
+In lab4, you'll notice some new lines in `training/run_experiment.py` now: we are now importing and initializing `wandb`, the Weights & Biases package.
 
 Because of this, you need to run  `wandb init`. For the team, you can choose your W&B username, and for the project, you can name it `fsdl-text-recognizer-project`.
 Note that `wandb init` will give you some instructions about lines to add to your training script. You can ignore that, as we've already done so as described above.
