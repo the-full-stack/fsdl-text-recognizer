@@ -2,6 +2,8 @@
 
 - [ ] make sure circleci works in own fork on fresh account
 
+- [ ] potentially switch to iamlines for lab 6
+
 ## Lab 6: what to cover
 
 - Set up CircleCI in their own fork
@@ -17,3 +19,5 @@
 - Now, we're going to build it as a Docker container
     - go through each line
     - cover .dockerignore
+
+- Now, we're going to deploy to Lambda
