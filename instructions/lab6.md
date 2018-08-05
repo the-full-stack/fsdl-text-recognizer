@@ -47,8 +47,9 @@ pipenv run python api/app.py
 
 Open up another terminal tab (click on the '+' button under 'File' to open the
 launcher). In this terminal, we'll send some a test image to the web server
-we're running in the first terminal. Make sure to `cd` into the `lab6` directory
-in this new terminal.
+we're running in the first terminal.
+
+**Make sure to `cd` into the `lab6` directory in this new terminal.**
 
 ```
 export API_URL=http://0.0.0.0:8000
@@ -66,18 +67,21 @@ curl "${API_URL}/v1/predict?image_url=http://s3-us-west-2.amazonaws.com/fsdl-pub
 
 You can shut down your flask server now.
 
-## Adding tests for web server
+## Adding web server tests
 
 The web server code should have a unit test just like the rest of our code.
 
-Let's check it out: the tests are in `api/tests/test_app.py`, and you can run them with `tasks/test_api.sh`
+Let's check it out: the tests are in `api/tests/test_app.py`.
+You can run them with
+
+```sh
+tasks/test_api.sh
+```
 
 ## Running web server in Docker
 
-Now, we'll build a docker image with our application. Docker can be a
-convenient way to package up your application with all of its dependencies so
-it can be easily deployed. The Dockerfile in `api/Dockerfile` defines how we're
-building the docker image.
+Now, we'll build a docker image with our application.
+The Dockerfile in `api/Dockerfile` defines how we're building the docker image.
 
 Still in the `lab6` directory, run:
 
@@ -85,13 +89,21 @@ Still in the `lab6` directory, run:
 tasks/build_api_docker.sh
 ```
 
-Then you can run the server as
+This should take a couple of minutes to complete.
+
+When it's finished, you can run the server with
 
 ```sh
 docker run -p 8000:8000 --name api -it --rm text_recognizer_api
 ```
 
 You can run the same curl commands as you did when you ran the flask server earlier, and see that you're getting the same results.
+
+```
+curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -w0 -i text_recognizer/tests/support/emnist_lines/or\ if\ used\ the\ results.png)'" }'
+
+curl "${API_URL}/v1/predict?image_url=http://s3-us-west-2.amazonaws.com/fsdl-public-assets/emnist_lines/or%2Bif%2Bused%2Bthe%2Bresults.png"
+```
 
 If needed, you can connect to your running docker container by running:
 
@@ -101,18 +113,19 @@ docker exec -it api bash
 
 You can shut down your docker container now.
 
-We could deploy this container to, for example, AWS Elastic Container Service.
+We could deploy this container to, for example, AWS Elastic Container Service or Kubernetes.
 Feel free to do that as an exercise after the bootcamp!
 
 In this lab, we will deploy the app as a package to AWS Lambda.
 
 ## Lambda deployment
 
-To deploy to AWS Lambda, we ar egong to use the `serverless` framework.
+To deploy to AWS Lambda, we are going to use the `serverless` framework.
 
-First, `cd` into the `lab6/api` directory and install the dependencies for serverless:
+First, let's go into the `api` directory and install the dependencies for serverless:
 
 ```sh
+cd api
 npm install
 ```
 
@@ -123,8 +136,9 @@ service: text-recognizer-USERNAME
 ```
 
 Next, run `sls info`. You'll see a message asking you to set up your AWS credentials. We sent an email to you with your AWS credentials (let us know if you can't find it).
-Note that emailing credentials is generally a bad idea. You usually want to handle credentials in a more secure fashion.
-We're only doing it in this case because your credentials give you very limited access and are for a temporary AWS account.
+
+Note that emailing credentials is a bad idea. You usually want to handle credentials in a more secure fashion.
+We're only doing it in this case because your credentials give you limited access and are for a temporary AWS account.
 
 You can also go to https://379872101858.signin.aws.amazon.com/console and log in with the email you used to register (and the password we emailed you), and create your own credentials if you prefer.
 
@@ -152,36 +166,28 @@ curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data 
 curl "${API_URL}/v1/predict?image_url=http://s3-us-west-2.amazonaws.com/fsdl-public-assets/emnist_lines/or%2Bif%2Bused%2Bthe%2Bresults.png"
 ```
 
+If the POST request fails, it's probably because you are in `api` and not in the top-level `lab6` directory.
+
 You'll want to run the curl commands a couple of times -- the first execution may time out, because the function has to "warm up."
 After the first request, it will stay warm for 10-60 minutes.
-
-In addition to deploying to AWS, serverless lets you test out everything locally as well.
-We'll make sure everything works locally first. We're going to use serverless to run the flask API locally:
-We have to have already run `sls deploy`, because this relies on the package being created already.
-
-```sh
-PYTHONPATH=.. pipenv run sls wsgi serve
-```
-
-Again, we can test out our API by running a few curl commands after changing the `API_URL` (from the `lab6` directory):
-
-```
-export API_URL=http://0.0.0.0:5000
-curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -w0 -i text_recognizer/tests/support/emnist_lines/or\ if\ used\ the\ results.png)'" }'
-curl "${API_URL}/v1/predict?image_url=http://s3-us-west-2.amazonaws.com/fsdl-public-assets/emnist_lines/or%2Bif%2Bused%2Bthe%2Bresults.png"
-```
 
 ## Lambda monitoring
 
 We're going to check the logs and set up monitoring for your deployed API. In order to make the monitoring more interesting, we're going to simulate people using your API.
-In order for us to do that, please go to https://goo.gl/forms/YQCXTI2k5R5Stq3u2 and submit your endpoint. It should look like this (ending in "/dev/"):
+
+**In order for us to do that, you need to go to https://goo.gl/forms/YQCXTI2k5R5Stq3u2 and submit your endpoint URL.**
+It should look like this (ending in "/dev/"):
 ```
 https://REPLACE_THIS.execute-api.us-west-2.amazonaws.com/dev/
 ```
 
-If you haven't already sent a few requests to your endpoint, you should do so as described above.
+If you haven't already sent a few requests to your endpoint, you should do so using the curl commands above.
 
 Next, log in to the AWS Console at https://379872101858.signin.aws.amazon.com/console (you should've gotten an email with your username and password).
+
+**Make sure that you switch into the Oregon region (also known as `us-west-2`) using the dropdown menu in the top right corner.**
+
+
 
 Once you're in, click on 'Services' and go to 'CloudWatch' under 'Management Tools.' Click on 'Logs' in the left sidebar. This will have several log groups -- one for each of us.
 You can filter for yours by entering `/aws/lambda/text-recognizer-USERNAME-dev-api` (you need to enter the whole thing, not just your username).
@@ -197,7 +203,7 @@ Now, we need to add a pattern for parsing our metric out of the logs. Here's one
 [level=METRIC, metric_name=confidence, metric_value]
 ```
 Click on 'Assign Metric.'
-Now, we need to name the metric and tell it what the data source is. Enter 'USERNAME_confidence' in the box (replace USERNAME as usual). Click on 'Show advanced metric settings,' and for Metric Value, click on $metric_value to populate the text box. Hit 'Create Filter.'
+Now, we need to name the metric and tell it what the data source is. Enter 'USERNAME_confidence' in the 'Metric name' box (replace USERNAME as usual). Click on 'Show advanced metric settings,' and for Metric Value, click on $metric_value to populate the text box. Hit 'Create Filter.'
 Since we're already here, let's go ahead and make another metric filter for the mean intensity. You can use this Filter Pattern:
 ```
 [level=METRIC, metric_name=mean_intensity, metric_value]
@@ -208,14 +214,19 @@ Now we have a couple of metric filters set up.
 Unfortunately, Metric Filters only apply to new log entries, so go back to your terminal and send a few more requests to your endpoint.
 
 Now we can make a dashboard that shows our metrics. Click on 'Dashboards' in the left sidebar. Click 'Create Dashboard.' Name your dashboard your USERNAME.
+
 We're going to add a few widgets to your dashboard. For the first widget, select 'Line'. In the search box, search for your username.
 Click on 'Lambda > By Function Name' in the search results, and select the checkbox for 'Invocations.' This'll make a plot showing you much your API is being called.
+
 Let's add another widget -- select Line again. Go back to the Lambda metrics and select 'Duration' this time.
+
 Lastly, let's plot our custom metrics. Add one more 'Line' widget, search for your username again, and click on 'LogMetrics' and then 'Metrics with no dimensions'.
 Check two checkboxes: `USERNAME_confidence` and `USERNAME_mean_intensity.` Before hitting Create, click on the 'Graphed Metrics' tab above, and under the 'Y Axis' column,
 select the right arrow for one of the metrics (it doesn't matter which one). Now hit create.
 
 Feel free to resize and reorder your widgets.
+
+Make sure to save your dashboard -- else it won't persist across sessions.
 
 You can play with your API here a bit while we turn on the traffic for everyone. Double check that you've submitted your endpoint to the Google form above.
 
@@ -226,3 +237,7 @@ If you're curious, you can add a metric filter to show memory usage with this pa
 ```
 [report_name="REPORT", request_id_name="RequestId:", request_id_value, duration_name="Duration:", duration_value, duration_unit="ms", billed_duration_name_1="Billed", bill_duration_name_2="Duration:", billed_duration_value, billed_duration_unit="ms", memory_size_name_1="Memory", memory_size_name_2="Size:", memory_size_value, memory_size_unit="MB", max_memory_used_name_1="Max", max_memory_used_name_2="Memory", max_memory_used_name_3="Used:", max_memory_used_value, max_memory_used_unit="MB"]
 ```
+
+You can name it `USERNAME_memory`. Select `$max_memory_used_value` for the metric value.
+
+Make sure to save your dashboard!
