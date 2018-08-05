@@ -1,4 +1,41 @@
-# Lab 6/7: Deployment
+# Lab 6/7: Testing and Deployment
+
+As always, the first thing to do is `git pull` :)
+
+In this lab, we will
+
+- Add evaluation tests
+- Set up continuous integration via CircleCI, and see our commits pass/fail
+- Run our LinePredictor as a web app, and send it some requests
+- Dockerize our web app
+- Deploy our web app as a serverless function to AWS Lambda
+- Look at basic metrics and set up a more advanced one
+- Experience something going wrong in our deployed service, and catching it with metrics
+
+This lab has quite a few new files. We'll go through them in order.
+
+## Setting up CircleCI
+
+The relevant new files for setting up continuous integration are
+
+- `evaluation/evaluate_character_predictor.py`
+- `evaluation/evaluate_line_predictor.py`
+- `tasks/run_validation_tests.sh`
+
+There is one additional file that is outside of the lab6 directory (in the top-level directory): `.circleci/config.yml`
+
+Let's set up CircleCI first and then look at the new evaluation files.
+
+Go to https://circleci.com and log in with your Github account.
+Click on Add Project. Select your fork of the `fsdl-text-recognizer-project` repo.
+It will ask you to place the `config.yml` file in the repo.
+Good news -- it's already there, so you can just hit the "Start building" button.
+
+While CircleCI starts the build, let's look at the `config.yml` file.
+
+Let's also check out the new validation test files: they simply evaluate the trained predictors on respective test sets, and make sure they are above threshold accuracy.
+
+Now that CircleCI is done building, let's push a commit so that we can see it build again, and check out the nice green chechmark in our commit history (https://github.com/sergeyktest/fsdl-text-recognizer-project/commits/master)
 
 ## Serving predictions from a web server
 
