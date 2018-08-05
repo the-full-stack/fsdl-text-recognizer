@@ -93,7 +93,7 @@ class LineModelCtc(Model):
         pred = ''.join(self.data.mapping[label] for label in pred_raw).strip()
 
         neg_sum_logit = K.eval(log_prob)[0][0]
-        conf = np.exp(neg_sum_logit) / (1 + np.exp(neg_sum_logit))
+        conf = np.exp(-neg_sum_logit)
         ##### Your code above (Lab 3)
 
         return pred, conf

@@ -1,8 +1,3 @@
-## Lab 6: tasks
-
-- [ ] make sure circleci works in own fork on fresh account
-    - [ ] make circleci use non-gpu tensorflow
-
 ## Lab 6: what to cover
 
 - Show the winning run on IamLines
@@ -13,7 +8,6 @@
     - Show what it does (marks the commit)
     - Push a commit that makes it fail
     - Push another commit that makes it pass
-    - [ ] would be nice to compare evaluation against past performance: maybe upload to S3?
 
 - Live-code the Flask web app, explaining what's going on
 - At the end, should be able to CURL the app running locally with a GET request and a POST request
@@ -23,3 +17,8 @@
     - cover .dockerignore
 
 - Now, we're going to deploy to Lambda
+
+
+## Collecting endpoints
+
+https://docs.google.com/forms/d/1Gwc-UPpfKJXGn14PIeWysK_R9CycCVW-RCXc9MEWtc8/viewform?ts=5b6698cd&edit_requested=true
