@@ -73,6 +73,8 @@
     - api/Dockerfile
     - api/serverless.yml
     - api/package.json
+    - evaluation/evaluate_character_predictor.py
+    - evaluation/evaluate_line_predictor.py
     - tasks/build_api_docker.sh
     - tasks/deploy_api_to_lambda.sh
     - tasks/run_validation_tests.sh

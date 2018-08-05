@@ -4,9 +4,11 @@ FROM ubuntu:18.04
 # Install pipenv
 RUN apt-get update && apt-get install python3-pip -y && pip3 install pipenv
 
-# Copy build dir to /repo
+# Create the working directory
 RUN set -ex && mkdir /repo
 WORKDIR /repo
+
+# Copy only the relevant directories to the working diretory
 COPY text_recognizer/ ./text_recognizer
 COPY api/ ./api
 

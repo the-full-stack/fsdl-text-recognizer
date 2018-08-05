@@ -28,9 +28,6 @@ curl "${API_URL}/v1/predict?image_url=http://s3-us-west-2.amazonaws.com/fsdl-pub
 ```
 
 You can shut down your flask server now.
-<!-- If instantiated with `IamLinesDataset`
-
-curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -i text_recognizer/tests/support/iam_lines/He\ rose\ from\ his\ breakfast-nook\ bench.png)'" }' -->
 
 ## Running web server in Docker
 
@@ -53,7 +50,6 @@ docker run -p 8000:8000 --name api -it --rm text_recognizer_api
 
 You can run the same curl commands as you did when you ran the flask server earlier, and see that you're getting the same results.
 
-
 If needed, you can connect to your running docker container by running:
 
 ```sh
@@ -62,9 +58,14 @@ docker exec -it api bash
 
 You can shut down your docker container now.
 
+We could deploy this container to, for example, AWS Elastic Container Service.
+Feel free to do that as an exercise after the bootcamp!
+
+In this lab, we will deploy the app as a package to AWS Lambda.
+
 ## Lambda deployment
 
-Now we're going to deploy our text recognizer app. We're going to use AWS Lambda, using the serverless framework.
+To deploy to AWS Lambda, we ar egong to use the `serverless` framework.
 
 First, `cd` into the `lab6/api` directory and install the dependencies for serverless:
 
@@ -84,13 +85,13 @@ We're only doing it in this case because your credentials give you very limited 
 
 You can also go to https://379872101858.signin.aws.amazon.com/console and log in with the email you used to register (and the password we emailed you), and create your own credentials if you prefer.
 
-Edit and the command below and substitute your credentials for the placeholders:
+Edit the command below and substitute your credentials for the placeholders:
 
 ```
 sls config credentials --provider aws --key AKIAIOSFODNN7EXAMPLE --secret wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
 ```
 
-Now you've got everything configured, so let's deploy your API to Lambda. Serverless will package up your flask API before deploying it.
+Now you've got everything configured, and are ready to deploy. Serverless will package up your flask API before deploying it.
 It will install all of the python packages in a docker container that matches the environment lambda uses, to make sure the compiled code is compatible.
 This will take 3-5 minutes. This command will package up and deploy your flask API:
 
@@ -107,6 +108,9 @@ export API_URL="https://REPLACE_THIS.execute-api.us-west-2.amazonaws.com/dev/"
 curl -X POST "${API_URL}/v1/predict" -H 'Content-Type: application/json' --data '{ "image": "data:image/png;base64,'$(base64 -w0 -i text_recognizer/tests/support/emnist_lines/or\ if\ used\ the\ results.png)'" }'
 curl "${API_URL}/v1/predict?image_url=http://s3-us-west-2.amazonaws.com/fsdl-public-assets/emnist_lines/or%2Bif%2Bused%2Bthe%2Bresults.png"
 ```
+
+You'll want to run the curl commands a couple of times -- the first execution will take much longer than the second, because the function has to "warm up."
+After the first request, it will stay warm for 10-60 minutes.
 
 In addition to deploying to AWS, serverless lets you test out everything locally as well.
 We'll make sure everything works locally first. We're going to use serverless to run the flask API locally:
