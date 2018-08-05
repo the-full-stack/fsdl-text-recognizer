@@ -1,3 +1,1 @@
-https://s3-us-west-2.amazonaws.com/fsdl-public-assets/0.png
-https://s3-us-west-2.amazonaws.com/fsdl-public-assets/X.png
-https://s3-us-west-2.amazonaws.com/fsdl-public-assets/a.png
+http://s3-us-west-2.amazonaws.com/fsdl-public-assets/emnist_lines/or%2Bif%2Bused%2Bthe%2Bresults.png

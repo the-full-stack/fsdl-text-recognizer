@@ -35,8 +35,8 @@ def predict():
     image = _load_image()
     with backend.get_session().graph.as_default() as g:
         pred, conf = predictor.predict(image)
-    # LOG SOME IMAGE STATISTIC
-    # LOG CONFIDENCE
+        print("METRIC confidence {}".format(conf))
+        print("METRIC mean_intensity {}".format(image.mean()))
     return jsonify({'pred': str(pred), 'conf': float(conf)})
 
 
