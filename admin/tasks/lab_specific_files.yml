@@ -67,7 +67,6 @@
     - text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5
 
 6:
-    - .circleci/config.yml
     - api/app.py
     - api/tests/test_app.py
     - api/Dockerfile

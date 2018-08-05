@@ -143,6 +143,10 @@ def subset_repo(info):
         _process_new_files(new_paths, lab_number, filter_your_code=False)
         shutil.copy(f'instructions/lab{lab_number}.md', output_dir / f'lab{lab_number}_sln' / 'readme.md')
 
+    if lab_number == 6:
+        (output_dir / '.circleci').mkdir(exist_ok=True)
+        shutil.copy('.circleci/config.yml.for-lab', output_dir / '.circleci' / 'config.yml')
+
     os.remove(output_dir / 'lab1/text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5')
     os.remove(output_dir / 'lab3/text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5')
     os.remove(output_dir / 'lab5/text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5')

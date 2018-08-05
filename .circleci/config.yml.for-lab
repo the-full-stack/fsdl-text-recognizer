@@ -20,7 +20,8 @@ jobs:
           command: |
             sudo pip install --upgrade pip
             sudo pip install pipenv
-            pipenv sync --dev
+            sed -i 's/tensorflow-gpu/tensorflow/' Pipfile
+            pipenv install --dev
 
       - save_cache:
           key: cache-{{ checksum "Pipfile.lock" }}
@@ -30,12 +31,12 @@ jobs:
       - run:
           name: run prediction tests
           command: |
-            PYTHONPATH=. pipenv run pytest -s text_recognizer/tests/*
+            cd lab6 && PYTHONPATH=. pipenv run pytest -s text_recognizer/tests/*
 
       - run:
           name: run evaluation tests
           command: |
-            PYTHONPATH=. pipenv run pytest -s evaluation/*
+            cd lab6 && PYTHONPATH=. pipenv run pytest -s evaluation/*
 
       - store_artifacts:
           path: test-reports
