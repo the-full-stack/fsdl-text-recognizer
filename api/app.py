@@ -37,6 +37,7 @@ def predict():
         pred, conf = predictor.predict(image)
         print("METRIC confidence {}".format(conf))
         print("METRIC mean_intensity {}".format(image.mean()))
+        print("INFO pred {}".format(pred))
     return jsonify({'pred': str(pred), 'conf': float(conf)})
 
 
@@ -50,6 +51,7 @@ def _load_image():
         image_url = request.args.get('image_url')
         if image_url is None:
             return 'no image_url defined in query string'
+        print("INFO url {}".format(image_url))
         return util.read_image(image_url, grayscale=True)
     else:
         raise ValueError('Unsupported HTTP method')
