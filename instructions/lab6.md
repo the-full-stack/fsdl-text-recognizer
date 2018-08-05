@@ -29,6 +29,12 @@ curl "${API_URL}/v1/predict?image_url=http://s3-us-west-2.amazonaws.com/fsdl-pub
 
 You can shut down your flask server now.
 
+## Adding tests for web server
+
+The web server code should have a unit test just like the rest of our code.
+
+Let's check it out: the tests are in `api/tests/test_app.py`, and you can run them with `tasks/test_api.sh`
+
 ## Running web server in Docker
 
 Now, we'll build a docker image with our application. Docker can be a
