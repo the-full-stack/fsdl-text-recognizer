@@ -187,8 +187,6 @@ Next, log in to the AWS Console at https://379872101858.signin.aws.amazon.com/co
 
 **Make sure that you switch into the Oregon region (also known as `us-west-2`) using the dropdown menu in the top right corner.**
 
-
-
 Once you're in, click on 'Services' and go to 'CloudWatch' under 'Management Tools.' Click on 'Logs' in the left sidebar. This will have several log groups -- one for each of us.
 You can filter for yours by entering `/aws/lambda/text-recognizer-USERNAME-dev-api` (you need to enter the whole thing, not just your username).
 Click on yours. You'll some log streams. If you click on one, you'll see some logs for requests to your API. Each log entry starts with START and ends with REPORT. The REPORT line has some interesting information about the API call, including memory usage and duration.

@@ -1,6 +1,7 @@
 ## Lab 6: what to cover
 
 - Show the winning run on IamLines
+- State that we should actually write out the prediction lines after every epoch
 
 - Set up CircleCI in their own fork
     - Introduce evaluation tests

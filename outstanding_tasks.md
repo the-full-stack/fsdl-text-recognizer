@@ -1,52 +1,14 @@
 ## Now
 
-- [ ] get flask running correctly and using LinePredictor
-    - [ ] deploy via serverless
-
-- [ ] make autograder for lab 5: simply use the existing tests for line predictor, and also add a new evaluate function on iam
-
 ## Next
-
-@arjun
-- [ ] make sure lab5 works (probably need to solve the problem of how to save files)
-- [ ] save experiment json along with weights, and just call it canonical_character_predictor_weights.py and canonical_character_predictor_config.py
-    - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
-
-- [ ] make sure lab4 works on jupyterlab (for a fresh user)
-
-- [ ] have networks take more arguments, like lstm_dim and stuff
-
-- [ ] make sure lab6 works (circleci)
-    - [x] get circleci humming again
-    - [ ] write instructions for lab6
-
-- [ ] make sure lab7 works
-    - [ ] get flask and lambda to be working again on basic CharacterPredictor
-    - [ ] use LinePredictor and update test scripts to CURL sample line files
-
-## Arjun
-
-- [ ] go through everything as an attendee and make sure it all works
-
-- [ ] make IAM users for the deployment stuff Sunday
-    - would be nice if they could log in to console to see the metrics of their lambda function
-
-- [ ] apply AWS credit to team@fullstackdeeplearning.com account
-
-- [ ] deploy your own lambda (either from lab6) or just from the main repo
-
-- [ ] set up data distribution shift monitoring (just by logging the average value of input and creating a LogMetric for it)
-
-- [ ] test the logging out with the `admin/endpoint_tester` script
-
-Nice-to-have:
-- [ ] test out cursive.ai image splitting into lines and see if it actually works from a phone picture
 
 ## Later
 
-- [ ] make pre-processing logic in predict() and fit()/evaluate() should be shared
+- [ ] save experiment json along with weights, and just call it canonical_character_predictor_weights.py and canonical_character_predictor_config.py
+    - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
+- [ ] share pre-processing logic in predict() and fit()/evaluate()
 - [ ] store dataset over multiple files
-
+- [ ] test out cursive.ai image splitting into lines and see if it actually works from a phone picture
 
 ## Done
 
@@ -70,3 +32,18 @@ Nice-to-have:
 - [x] don't copy the trained weights over to lab1, but do copy it over to solutions
 - [x] go through labs 1-3 as an attendee in jupyterlab and make sure it all works
 - [x] push clean commit history
+- [x] make sure lab5 works (probably need to solve the problem of how to save files)
+- [x] make sure lab4 works on jupyterlab (for a fresh user)
+- [x] make sure lab6 works (circleci)
+    - [x] get circleci humming again
+    - [x] write instructions for lab6
+- [x] make sure lab7 works
+    - [x] get flask and lambda to be working again on basic CharacterPredictor
+    - [x] use LinePredictor and update test scripts to CURL sample line files
+- [x] @arjun go through everything as an attendee and make sure it all works
+- [x] @arjun make IAM users for the deployment stuff Sunday
+- [x] apply AWS credit to team@fullstackdeeplearning.com account
+- [x] deploy your own lambda (either from lab6) or just from the main repo
+- [x] set up data distribution shift monitoring (just by logging the average value of input and creating a LogMetric for it)
+- [x] test the logging out with the `admin/endpoint_tester` script
+- [x] make autograder for lab 5: simply use the existing tests for line predictor, and also add a new evaluate function on iam
