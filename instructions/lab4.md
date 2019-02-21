@@ -30,9 +30,11 @@ Open up another terminal (by clicking File->New->Terminal), `cd fsdl-text-recogn
 pipenv run python training/run_experiment.py --save '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "train_args": {"batch_size": 512}}' --gpu=1
 ```
 
-Note the `--gpu=1` flag at the end. Because the default gpu index is 0, if we launched this experiment without the flag, it would try allocating on the GPU that's already in use. With the flag, it runs on a different GPU.
+Note the `--gpu=1` flag at the end. Because the default gpu index is 0, if we launched this experiment without the flag, it would try allocating on the GPU that's already in use.
+With the flag, it runs on a different GPU.
 
-You can now go to https://app.wandb.ai, click into your project, and see both runs happening at the same time! We'll show you how you can add a chart to visualize all of your training runs.
+You can now go to https://app.wandb.ai, click into your project, and see both runs happening at the same time!
+We'll show you how you can add a chart to visualize all of your training runs.
 
 ## Running multiple experiments
 
@@ -49,7 +51,8 @@ pipenv run python training/run_experiment.py --gpu=-1 '{"dataset": "EmnistDatase
 pipenv run python training/run_experiment.py --gpu=-1 '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "lenet", "train_args": {"batch_size": 256}, "experiment_group": "Sample Experiments 2"}'
 ```
 
-Each line corresponds to an experiment. The `--gpu=-1` flag makes use of a new file in this lab: `training/gpu_manager.py`, which finds an unused GPU, or waits until one is available.
+Each line corresponds to an experiment.
+The `--gpu=-1` flag makes use of a new file in this lab: `training/gpu_manager.py`, which finds an unused GPU, or waits until one is available.
 
 Because of this behavior, we can run all these lines in parallel:
 
