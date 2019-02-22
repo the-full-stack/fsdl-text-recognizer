@@ -1,6 +1,6 @@
 # Text Recognizer
 
-Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp](https://fullstackdeeplearning.com/bootcamp).
+Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp](https://fullstackdeeplearning.com).
 
 - In this lab we will build a handwriting recognition system from scratch, and deploy it as a web service.
 - We will use Keras with Tensorflow backend as the underlying framework.
