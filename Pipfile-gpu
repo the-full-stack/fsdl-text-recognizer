@@ -10,20 +10,20 @@ flask = "*"
 h5py = "*"
 numpy = "*"
 opencv-python-headless = "*"
-pytest = "*"
 requests = "*"
 tensorflow-gpu = "*"
-# It's annoying that we can't specify non-gpu installation if CUDA is not present.
-# One solution could be https://github.com/ed-alertedh/multiple-pipenv-example/tree/master/pipenv
 
 [dev-packages]
 gpustat = "*"
 gradescope-utils = "*"
-grequests = "*"
+grequests = "*" # admin
 jupyterlab = "*"
 matplotlib = "*"
+mypy = "*"
 nltk = "*"
+pycodestyle = "*"
 pylint = "*"
+pytest = "*"
 pyyaml = "*"
 redlock-py = "*"
 scipy = "*"

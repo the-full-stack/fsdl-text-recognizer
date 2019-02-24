@@ -37,6 +37,7 @@ var/
 
 # W&B
 wandb-debug.log
+wandb
 
 # Misc
 .DS_Store
