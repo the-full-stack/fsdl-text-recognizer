@@ -29,8 +29,9 @@ jobs:
 
       - run:
           name: run linting
+          halt_build_on_fail: false
           command: |
-            PYTHONPATH=. ./tasks/lint.sh || true
+            PYTHONPATH=. ./tasks/lint.sh
 
       - run:
           name: run prediction tests

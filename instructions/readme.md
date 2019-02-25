@@ -26,7 +26,7 @@ Welcome!
 - [x] set up linting
 - [x] get rid of sliding-window cnn
 - [x] get rid of non-ctc lstm
-- [ ] get to 100% linted
+- [x] get to ~100% linted
 - [ ] add training tests
 - [ ] take some screenshots of looking at IAM dataset
 - [ ] add metadata.toml and download data in a separate script, not from dataset python file directly

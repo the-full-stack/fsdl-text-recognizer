@@ -4,7 +4,7 @@ set -euo pipefail
 echo "pipenv check"
 pipenv check
 
-# echo "pylint"
+echo "pylint"
 pipenv run pylint api text_recognizer training
 
 echo "pycodestyle"

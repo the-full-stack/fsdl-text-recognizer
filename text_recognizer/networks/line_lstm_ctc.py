@@ -23,7 +23,7 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     input_length = Input(shape=(1,), name='input_length')
     label_length = Input(shape=(1,), name='label_length')
 
-    gpu_present = len(device_lib.list_local_devices()) > 1
+    gpu_present = len(device_lib.list_local_devices()) > 2
     lstm_fn = CuDNNLSTM if gpu_present else LSTM
 
     # Your code should use slide_window and extract image patches from image_input.
