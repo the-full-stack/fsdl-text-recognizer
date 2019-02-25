@@ -8,7 +8,9 @@ First, let's set up W&B -- a little differently this time. Run `wandb init` insi
 
 This will let us all share a project. We'll be able to see all of our runs, including network parameters and performance.
 
-## IAM Dataset
+## IAM Lines Dataset
+
+TODO: show raw data first, then explain that we're going to load them all into a single array with the same length for ease of use
 
 This dataset for handwriting recognition has over 13,000 handwritten lines from 657 different writers.
 

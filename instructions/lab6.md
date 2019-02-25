@@ -46,7 +46,7 @@ pipenv run python api/app.py
 ```
 
 Open up another terminal tab (click on the '+' button under 'File' to open the
-launcher). In this terminal, we'll send some a test image to the web server
+launcher). In this terminal, we'll send some test image to the web server
 we're running in the first terminal.
 
 **Make sure to `cd` into the `lab6` directory in this new terminal.**
