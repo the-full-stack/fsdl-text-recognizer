@@ -14,6 +14,7 @@ requests = "*"
 tensorflow = "*"
 
 [dev-packages]
+bandit = "*"
 gpustat = "*"
 gradescope-utils = "*"
 grequests = "*" # admin

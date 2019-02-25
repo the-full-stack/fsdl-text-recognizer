@@ -43,3 +43,4 @@ wandb
 .DS_Store
 _labs
 logs
+.mypy_cache
