@@ -1,3 +1,4 @@
+"""Keras callback for measuring GPU utilization."""
 import gpustat
 import numpy as np
 from tensorflow.keras.callbacks import Callback
@@ -12,12 +13,17 @@ class GPUUtilizationSampler(Callback):
     """
     def __init__(self, gpu_ind):
         self.gpu_ind = gpu_ind
+        self.samples = []
         super()
 
-    def on_train_begin(self, logs={}):
+    def on_train_begin(self, logs=None):
+        if logs is None:
+            logs = {}
         self.samples = []
 
-    def on_batch_end(self, batch, logs={}):
+    def on_batch_end(self, _batch, logs=None):
+        if logs is None:
+            logs = {}
         if np.random.rand() > 0.99:
             try:
                 gpu_info = gpustat.GPUStatCollection.new_query()[self.gpu_ind]

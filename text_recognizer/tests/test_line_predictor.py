@@ -5,9 +5,9 @@ import numpy as np
 
 import text_recognizer.util as util
 from text_recognizer.line_predictor import LinePredictor
-##### Hide lines below until Lab 5
+# Hide lines below until Lab 5
 from text_recognizer.datasets import IamLinesDataset
-##### Hide lines above until Lab 5
+# Hide lines above until Lab 5
 
 
 SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support'
@@ -40,7 +40,7 @@ class TestEmnistLinePredictorVariableImageWidth(unittest.TestCase):
             self.assertLess(edit_distance, 0.2)
 
 
-##### Hide lines below until Lab 5
+# Hide lines below until Lab 5
 class TestIamLinePredictor(unittest.TestCase):
     def test_filename(self):
         predictor = LinePredictor(IamLinesDataset)
@@ -51,4 +51,4 @@ class TestIamLinePredictor(unittest.TestCase):
             edit_distance = editdistance.eval(pred, true) / len(pred)
             print(f'Pred: "{pred}" | Confidence: {conf} | True: {true} | Edit distance: {edit_distance}')
             self.assertLess(editdistance.eval(pred, filename), 0.2)
-##### Hide lines above until Lab 5
+# Hide lines above until Lab 5

@@ -24,11 +24,11 @@ def create_emnist_lines_support_files():
         print(label)
         util.write_image(image, str(SUPPORT_DIRNAME / f'{label}.png'))
 
-        ##### Hide lines below until Lab 6
+        # Hide lines below until Lab 6
         # Inverted version
         image = -(image - 255)
         util.write_image(image, str(SUPPORT_DIRNAME / f'{label}_i.png'))
-        ##### Hide lines above until Lab 6
+        # Hide lines above until Lab 6
 
 
 

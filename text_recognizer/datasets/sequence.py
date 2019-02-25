@@ -1,3 +1,4 @@
+"""DatasetSequence class."""
 import numpy as np
 from tensorflow.keras.utils import Sequence
 
@@ -15,9 +16,11 @@ class DatasetSequence(Sequence):
         self.format_fn = format_fn
 
     def __len__(self):
+        """Return length of the dataset."""
         return int(np.ceil(len(self.x) / float(self.batch_size)))
 
     def __getitem__(self, idx):
+        """Return a single batch."""
         # idx = 0  # If you want to intentionally overfit to just one batch
         begin = idx * self.batch_size
         end = (idx + 1) * self.batch_size

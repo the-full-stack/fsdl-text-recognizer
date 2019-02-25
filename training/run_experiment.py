@@ -1,15 +1,16 @@
 #!/usr/bin/env python
+"""Script to run an experiment."""
 import argparse
 import json
 import importlib
 from typing import Dict
 import os
 
-##### Hide lines below until Lab 4
+# Hide lines below until Lab 4
 import wandb
 
 from training.gpu_manager import GPUManager
-##### Hide lines above until Lab 4
+# Hide lines above until Lab 4
 from training.util import train_model
 
 
@@ -19,7 +20,7 @@ DEFAULT_TRAIN_ARGS = {
 }
 
 
-def run_experiment(experiment_config: Dict, save_weights: bool, gpu_ind: int, use_wandb: bool=True):
+def run_experiment(experiment_config: Dict, save_weights: bool, gpu_ind: int, use_wandb: bool = True):
     """
     experiment_config is of the form
     {
@@ -56,18 +57,23 @@ def run_experiment(experiment_config: Dict, save_weights: bool, gpu_ind: int, us
     networks_module = importlib.import_module('text_recognizer.networks')
     network_fn_ = getattr(networks_module, experiment_config['network'])
     network_args = experiment_config.get('network_args', {})
-    model = model_class_(dataset_cls=dataset_class_, network_fn=network_fn_, dataset_args=dataset_args, network_args=network_args)
+    model = model_class_(
+        dataset_cls=dataset_class_,
+        network_fn=network_fn_,
+        dataset_args=dataset_args,
+        network_args=network_args
+    )
     print(model)
 
     experiment_config['train_args'] = {**DEFAULT_TRAIN_ARGS, **experiment_config.get('train_args', {})}
     experiment_config['experiment_group'] = experiment_config.get('experiment_group', None)
     experiment_config['gpu_ind'] = gpu_ind
 
-    ##### Hide lines below until Lab 4
+    # Hide lines below until Lab 4
     if use_wandb:
         wandb.init()
         wandb.config.update(experiment_config)
-    ##### Hide lines above until Lab 4
+    # Hide lines above until Lab 4
 
     train_model(
         model,
@@ -80,16 +86,17 @@ def run_experiment(experiment_config: Dict, save_weights: bool, gpu_ind: int, us
     score = model.evaluate(dataset.x_test, dataset.y_test)
     print(f'Test evaluation: {score}')
 
-    ##### Hide lines below until Lab 4
+    # Hide lines below until Lab 4
     if use_wandb:
         wandb.log({'test_metric': score})
-    ##### Hide lines above until Lab 4
+    # Hide lines above until Lab 4
 
     if save_weights:
         model.save_weights()
 
 
-if __name__ == '__main__':
+def parse_args():
+    """Parse command-line arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--gpu",
@@ -107,16 +114,26 @@ if __name__ == '__main__':
     parser.add_argument(
         "experiment_config",
         type=str,
-        help="JSON of experiment to run (e.g. '{\"dataset\": \"EmnistDataset\", \"model\": \"CharacterModel\", \"network\": \"mlp\"}'"
+        help="Experimenet JSON ('{\"dataset\": \"EmnistDataset\", \"model\": \"CharacterModel\", \"network\": \"mlp\"}'"
     )
     args = parser.parse_args()
+    return args
 
-    ##### Hide lines below until Lab 4
+
+def main():
+    """Run experiment."""
+    args = parse_args()
+
+    # Hide lines below until Lab 4
     if args.gpu < 0:
         gpu_manager = GPUManager()
         args.gpu = gpu_manager.get_free_gpu()  # Blocks until one is available
-    ##### Hide lines above until Lab 4
+    # Hide lines above until Lab 4
 
     experiment_config = json.loads(args.experiment_config)
     os.environ["CUDA_VISIBLE_DEVICES"] = f'{args.gpu}'
     run_experiment(experiment_config, args.save, args.gpu)
+
+
+if __name__ == '__main__':
+    main()

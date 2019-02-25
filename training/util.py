@@ -1,13 +1,13 @@
+"""Function to train a model."""
 from time import time
-from typing import Callable, Optional, Union, Tuple
+from typing import Optional
 
 import numpy as np
-from tensorflow.keras.callbacks import EarlyStopping, TensorBoard
-from tensorflow.keras.optimizers import RMSprop
-##### Hide lines below until Lab 4
+from tensorflow.keras.callbacks import EarlyStopping
+# Hide lines below until Lab 4
 import wandb
 from wandb.keras import WandbCallback
-##### Hide lines above until Lab 4
+# Hide lines above until Lab 4
 
 from text_recognizer.datasets.base import Dataset
 from text_recognizer.models.base import Model
@@ -18,7 +18,14 @@ EARLY_STOPPING = True
 GPU_UTIL_SAMPLER = True
 
 
-def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gpu_ind: Optional[int]=None, use_wandb=False) -> Model:
+def train_model(
+        model: Model,
+        dataset: Dataset,
+        epochs: int,
+        batch_size: int,
+        gpu_ind: Optional[int] = None,
+        use_wandb: bool = False) -> Model:
+    """Train model."""
     callbacks = []
 
     if EARLY_STOPPING:
@@ -29,16 +36,17 @@ def train_model(model: Model, dataset: Dataset, epochs: int, batch_size: int, gp
         gpu_utilization = GPUUtilizationSampler(gpu_ind)
         callbacks.append(gpu_utilization)
 
-    ##### Hide lines below until Lab 4
+    # Hide lines below until Lab 4
     if use_wandb:
-        wandb = WandbCallback()
-        callbacks.append(wandb)
-    ##### Hide lines above until Lab 4
+        wandb.init()
+        wandb_callback = WandbCallback()
+        callbacks.append(wandb_callback)
+    # Hide lines above until Lab 4
 
     model.network.summary()
 
     t = time()
-    history = model.fit(dataset, batch_size, epochs, callbacks)
+    _history = model.fit(dataset, batch_size, epochs, callbacks)
     print('Training took {:2f} s'.format(time() - t))
 
     if GPU_UTIL_SAMPLER and gpu_ind is not None:

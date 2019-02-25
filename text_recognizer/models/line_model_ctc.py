@@ -11,9 +11,9 @@ from tensorflow.keras.models import Model as KerasModel
 
 from text_recognizer.datasets.sequence import DatasetSequence
 from text_recognizer.datasets import EmnistLinesDataset
-##### Hide lines below until Lab 5
+# Hide lines below until Lab 5
 from text_recognizer.datasets import IamLinesDataset
-##### Hide lines above until Lab 5
+# Hide lines above until Lab 5
 from text_recognizer.models.base import Model
 from text_recognizer.networks.line_lstm_ctc import line_lstm_ctc
 
@@ -82,7 +82,7 @@ class LineModelCtc(Model):
             image = (image / 255).astype(np.float32)
 
         # Get the prediction and confidence using softmax_output_fn, passing the right input into it.
-        ##### Your code below (Lab 3)
+        # Your code below (Lab 3)
         input_image = np.expand_dims(image, 0)
         softmax_output = softmax_output_fn([input_image, 0])[0]
 
@@ -94,7 +94,7 @@ class LineModelCtc(Model):
 
         neg_sum_logit = K.eval(log_prob)[0][0]
         conf = np.exp(-neg_sum_logit)
-        ##### Your code above (Lab 3)
+        # Your code above (Lab 3)
 
         return pred, conf
 

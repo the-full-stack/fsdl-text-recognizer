@@ -16,7 +16,7 @@ from tensorflow.keras.utils import to_categorical
 from text_recognizer.datasets.base import Dataset
 
 
-#RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
+# RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
 RAW_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/matlab.zip'  # should be a little faster
 PROCESSED_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/byclass.h5'  # should be a little faster
 
@@ -46,6 +46,10 @@ class EmnistDataset(Dataset):
         self.num_classes = len(self.mapping)
         self.input_shape = essentials['input_shape']
         self.output_shape = (self.num_classes,)
+        self.x_train = None
+        self.y_train_int = None
+        self.x_test = None
+        self.y_test_int = None
 
     def load_or_generate_data(self):
         if not os.path.exists(PROCESSED_DATA_FILENAME):
@@ -154,9 +158,14 @@ def _augment_emnist_mapping(mapping):
     return {**mapping, **extra_mapping}
 
 
-if __name__ == '__main__':
+def main():
+    """Load EMNIST dataset and print info."""
     data = EmnistDataset()
     data.load_or_generate_data()
     print(data)
-    print(data.x_train.shape, data.y_train.shape)
-    print(data.x_test.shape, data.y_test.shape)
+    print(data.x_train.shape, data.y_train.shape)  # pylint: disable=E1101
+    print(data.x_test.shape, data.y_test.shape)  # pylint: disable=E1101
+
+
+if __name__ == '__main__':
+    main()

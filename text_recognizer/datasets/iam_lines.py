@@ -1,6 +1,4 @@
-"""
-IAM LINES dataset.
-"""
+"""IamLinesDataset class."""
 import pathlib
 from urllib.request import urlretrieve
 
@@ -16,6 +14,7 @@ DATA_DIRNAME = pathlib.Path(__file__).parents[2].resolve() / 'data'
 PROCESSED_DATA_DIRNAME = DATA_DIRNAME / 'processed' / 'iam_lines'
 PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'iam_lines.h5'
 PROCESSED_DATA_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/iam_lines.h5'
+
 
 class IamLinesDataset(Dataset):
     """
@@ -38,12 +37,17 @@ class IamLinesDataset(Dataset):
         self.num_classes = len(self.mapping)
         self.input_shape = (28, 952)
         self.output_shape = (97, self.num_classes)
+        self.x_train = None
+        self.x_test = None
+        self.y_train_int = None
+        self.y_test_int = None
 
     def load_or_generate_data(self):
+        """Load or generate dataset data."""
         if not PROCESSED_DATA_FILENAME.exists():
             PROCESSED_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
             print('Downloading IAM lines...')
-            urlretrieve(PROCESSED_DATA_URL, PROCESSED_DATA_FILENAME)
+            urlretrieve(PROCESSED_DATA_URL, PROCESSED_DATA_FILENAME)  # nosec
         with h5py.File(PROCESSED_DATA_FILENAME, 'r') as f:
             self.x_train = f['x_train'][:]
             self.y_train_int = f['y_train'][:]
@@ -52,13 +56,16 @@ class IamLinesDataset(Dataset):
 
     @cachedproperty
     def y_train(self):
+        """Return y_train"""
         return to_categorical(self.y_train_int, self.num_classes)
 
     @cachedproperty
     def y_test(self):
+        """Return y_test"""
         return to_categorical(self.y_test_int, self.num_classes)
 
     def __repr__(self):
+        """Print info about the dataset."""
         return (
             'IAM Lines Dataset\n'
             f'Num classes: {self.num_classes}\n'
@@ -68,7 +75,12 @@ class IamLinesDataset(Dataset):
         )
 
 
-if __name__ == '__main__':
+def main():
+    """Load dataset and print info."""
     dataset = IamLinesDataset()
     dataset.load_or_generate_data()
     print(dataset)
+
+
+if __name__ == '__main__':
+    main()

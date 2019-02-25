@@ -34,7 +34,7 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     # Convert the lstm outputs to softmax outputs.
     # Note that lstms expect a input of shape (num_batch_size, num_timesteps, feature_length).
 
-    ##### Your code below (Lab 3)
+    # Your code below (Lab 3)
     image_reshaped = Reshape((image_height, image_width, 1))(image_input)
     # (image_height, image_width, 1)
 
@@ -55,7 +55,7 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
 
     softmax_output = Dense(num_classes, activation='softmax', name='softmax_output')(lstm_output)
     # (num_windows, num_classes)
-    ##### Your code above (Lab 3)
+    # Your code above (Lab 3)
 
     input_length_processed = Lambda(
         lambda x, num_windows=None: x * num_windows,

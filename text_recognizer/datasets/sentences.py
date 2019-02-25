@@ -1,5 +1,5 @@
+"""SentenceGenerator class and supporting functions."""
 import itertools
-import pathlib
 import re
 import string
 from typing import Optional
@@ -12,13 +12,14 @@ from text_recognizer.datasets.base import Dataset
 NLTK_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'nltk'
 
 
-class SentenceGenerator():
-    def __init__(self, max_length: Optional[int]=None):
+class SentenceGenerator:
+    """Generate text sentences using the Brown corpus."""
+    def __init__(self, max_length: Optional[int] = None):
         self.text = brown_text()
         self.word_start_inds = [0] + [_.start(0) + 1 for _ in re.finditer(' ', self.text)]
         self.max_length = max_length
 
-    def generate(self, max_length: Optional[int]=None) -> str:
+    def generate(self, max_length: Optional[int] = None) -> str:
         """
         Sample a string from text of the Brown corpus of length at least one word and at most max_length,
         padding it to max_length with the '_' character.
@@ -51,6 +52,7 @@ def brown_text():
 
 
 def load_nltk_brown_corpus():
+    """Load the Brown corpus using the NLTK library."""
     nltk.data.path.append(NLTK_DATA_DIRNAME)
     try:
         nltk.corpus.brown.sents()
