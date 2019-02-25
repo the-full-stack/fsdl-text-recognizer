@@ -1,33 +1,26 @@
+"""Define LineModel class."""
 from typing import Callable, Dict, Tuple
 
 import editdistance
 import numpy as np
-import tensorflow as tf
 
 from text_recognizer.datasets.emnist_lines import EmnistLinesDataset
 from text_recognizer.datasets.sequence import DatasetSequence
 from text_recognizer.models.base import Model
-from text_recognizer.networks import line_cnn_sliding_window
-
-
-def loss_ignoring_blanks(target, output):
-    """This is categorical crossentropy, but with targets that correspond to the padding symbol not counting."""
-    import tensorflow.keras.backend as K
-    output /= tf.reduce_sum(output, -1, True)
-    _epsilon = tf.convert_to_tensor(K.epsilon(), output.dtype.base_dtype)
-    output = tf.clip_by_value(output, _epsilon, 1. - _epsilon)
-    prod = target * tf.log(output)
-    # TODO ??
-    loss = - tf.reduce_sum(prod, -1)
-    return loss
+from text_recognizer.networks import line_cnn_all_conv
 
 
 class LineModel(Model):
-    def __init__(self, dataset_cls: type=EmnistLinesDataset, network_fn: Callable=line_cnn_sliding_window, dataset_args: Dict=None, network_args: Dict=None):
+    """Model for predicting a string from an image of a handwritten line of text."""
+    def __init__(self,
+                 dataset_cls: type = EmnistLinesDataset,
+                 network_fn: Callable = line_cnn_all_conv,
+                 dataset_args: Dict = None,
+                 network_args: Dict = None):
         """Define the default dataset and network values for this model."""
         super().__init__(dataset_cls, network_fn, dataset_args, network_args)
 
-    def evaluate(self, x, y, verbose=True):
+    def evaluate(self, x, y, batch_size=16, verbose=True):
         sequence = DatasetSequence(x, y)
         preds_raw = self.network.predict_generator(sequence)
         trues = np.argmax(y, -1)
@@ -60,8 +53,5 @@ class LineModel(Model):
             image = (image / 255).astype(np.float32)
         pred_raw = self.network.predict(np.expand_dims(image, 0), batch_size=1).squeeze()
         pred = ''.join(self.data.mapping[label] for label in np.argmax(pred_raw, axis=-1).flatten()).strip()
-        conf = np.min(np.max(pred_raw, axis=-1)) # The least confident of the predictions.
+        conf = np.min(np.max(pred_raw, axis=-1))  # The least confident of the predictions.
         return pred, conf
-
-    # def loss(self):
-    #     return loss_ignoring_blanks

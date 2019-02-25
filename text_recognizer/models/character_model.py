@@ -1,21 +1,19 @@
-import pathlib
+"""Define CharacterModel class."""
 from typing import Callable, Dict, Tuple
 
-from boltons.cacheutils import cachedproperty
 import numpy as np
-import tensorflow
-from tensorflow.keras.models import load_model
 
 from text_recognizer.models.base import Model
 from text_recognizer.datasets.emnist import EmnistDataset
 from text_recognizer.networks.mlp import mlp
-# Hide lines below until Lab 2
-from text_recognizer.networks.lenet import lenet
-# Hide lines above until Lab 2
 
 
 class CharacterModel(Model):
-    def __init__(self, dataset_cls: type=EmnistDataset, network_fn: Callable=mlp, dataset_args: Dict=None, network_args: Dict=None):
+    def __init__(self,
+                 dataset_cls: type = EmnistDataset,
+                 network_fn: Callable = mlp,
+                 dataset_args: Dict = None,
+                 network_args: Dict = None):
         """Define the default dataset and network values for this model."""
         super().__init__(dataset_cls, network_fn, dataset_args, network_args)
 

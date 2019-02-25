@@ -1,3 +1,4 @@
+"""Utility functions for text_recognizer module."""
 import base64
 import os
 from urllib.request import urlopen

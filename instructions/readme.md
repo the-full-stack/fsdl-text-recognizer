@@ -23,9 +23,11 @@ Welcome!
 
 ## Tasks for morning of 2019 Feb 25
 
-- [ ] set up linting in editor
+- [x] set up linting
+- [x] get rid of sliding-window cnn
+- [x] get rid of non-ctc lstm
+- [ ] get to 100% linted
 - [ ] add training tests
-- [ ] get rid of either all-conv or sliding-window cnn
 - [ ] take some screenshots of looking at IAM dataset
 - [ ] add metadata.toml and download data in a separate script, not from dataset python file directly
 - [ ] add "subsample" mode to dataset

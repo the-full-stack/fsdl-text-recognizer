@@ -1,10 +1,10 @@
 {
-    "experiment_group": "AllConv vs SlidingWindow 2",
+    "experiment_group": "Line CNN",
     "experiments": [
         {
             "dataset": "EmnistLinesDataset",
             "model": "LineModel",
-            "network": "line_lstm",
+            "network": "line_cnn_all_conv",
             "network_args": {
                 "window_width": 14,
                 "window_stride": 14
@@ -13,10 +13,10 @@
         {
             "dataset": "EmnistLinesDataset",
             "model": "LineModel",
-            "network": "line_lstm",
+            "network": "line_cnn_all_conv",
             "network_args": {
-                "window_width": 20,
-                "window_stride": 10
+                "window_width": 7,
+                "window_stride": 7
             }
         }
     ]

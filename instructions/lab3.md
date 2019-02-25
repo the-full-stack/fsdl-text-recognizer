@@ -53,5 +53,5 @@ While you wait for the autograder to complete, feel free to try some experiments
 
 ## Things to try
 
-If you have time left over, or want to play around with this later on, you can try using the `line_lstm` network, defined in `text_recognizer/networks/line_lstm.py`.
-Code up an encoder-decoder architecture, for example!
+If you have time left over, or want to play around with this later on, you can try writing your own non-CTC `line_lstm` network (define it in `text_recognizer/networks/line_lstm.py`).
+For example, you could code up an encoder-decoder architecture with attention.

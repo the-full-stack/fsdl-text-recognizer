@@ -1,6 +1,7 @@
+"""Define ctc_decode function."""
 import tensorflow as tf
 import tensorflow.keras.backend as K
-from tensorflow.python.ops import ctc_ops
+from tensorflow.python.ops import ctc_ops  # pylint: disable=no-name-in-module
 
 
 def ctc_decode(y_pred, input_length, max_output_length):
@@ -25,13 +26,18 @@ def ctc_decode(y_pred, input_length, max_output_length):
 
     (decoded, _) = ctc_ops.ctc_greedy_decoder(inputs=y_pred, sequence_length=input_length)
 
-    st = decoded[0]
-    decoded_dense = tf.sparse_to_dense(st.indices, st.dense_shape, st.values, default_value=-1)
+    sparse = decoded[0]
+    decoded_dense = tf.sparse_to_dense(sparse.indices, sparse.dense_shape, sparse.values, default_value=-1)
 
     # Unfortunately, decoded_dense will be of different number of columns, depending on the decodings.
     # We need to get it all in one standard shape, so let's pad if necessary.
     max_length = max_output_length + 2  # giving 2 extra characters for CTC leeway
     cols = tf.shape(decoded_dense)[-1]
-    def f1(): return tf.pad(decoded_dense, [[0, 0], [0, max_length - cols]], constant_values=-1)
-    def f2(): return decoded_dense
+
+    def f1():
+        return tf.pad(decoded_dense, [[0, 0], [0, max_length - cols]], constant_values=-1)
+
+    def f2():
+        return decoded_dense
+
     return tf.cond(tf.less(cols, max_length), f1, f2)

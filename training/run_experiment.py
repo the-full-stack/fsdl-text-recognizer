@@ -29,7 +29,7 @@ def run_experiment(experiment_config: Dict, save_weights: bool, gpu_ind: int, us
             "max_overlap": 0.4
         },
         "model": "LineModel",
-        "network": "line_cnn_sliding_window",
+        "network": "line_cnn_all_conv",
         "network_args": {
             "window_width": 14,
             "window_stride": 7

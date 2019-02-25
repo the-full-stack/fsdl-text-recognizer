@@ -1,11 +1,8 @@
-from typing import Callable, Dict
-from functools import partial
-from typing import Tuple
+"""Define LineModelCtc class and associated functions."""
+from typing import Callable, Dict, Tuple
 
-from boltons.cacheutils import cachedproperty
 import editdistance
 import numpy as np
-import tensorflow as tf
 import tensorflow.keras.backend as K
 from tensorflow.keras.models import Model as KerasModel
 
@@ -19,9 +16,14 @@ from text_recognizer.networks.line_lstm_ctc import line_lstm_ctc
 
 
 class LineModelCtc(Model):
-    def __init__(self, dataset_cls: type=EmnistLinesDataset, network_fn: Callable=line_lstm_ctc, dataset_args: Dict=None, network_args: Dict=None):
+    """Model for recognizing handwritten text in an image of a line, using CTC loss/decoding."""
+    def __init__(self,
+                 dataset_cls: type = EmnistLinesDataset,
+                 network_fn: Callable = line_lstm_ctc,
+                 dataset_args: Dict = None,
+                 network_args: Dict = None):
         """Define the default dataset and network values for this model."""
-        default_dataset_args = {}
+        default_dataset_args: dict = {}
         if dataset_args is None:
             dataset_args = {}
         dataset_args = {**default_dataset_args, **dataset_args}
@@ -41,7 +43,7 @@ class LineModelCtc(Model):
         """We could probably pass in a custom character accuracy metric for 'ctc_decoded' output here."""
         return None
 
-    def evaluate(self, x, y, batch_size: int=16, verbose=True) -> float:
+    def evaluate(self, x, y, batch_size: int = 16, verbose: bool = True) -> float:
         test_sequence = DatasetSequence(x, y, batch_size, format_fn=self.batch_format_fn)
 
         # We can use the `ctc_decoded` layer that is part of our model here.
@@ -109,7 +111,7 @@ def format_batch_ctc(batch_x, batch_y):
     label_lengths = []
     for ind in range(batch_size):
         empty_at = np.where(batch_y[ind, :, -1] == 1)[0]
-        if len(empty_at) > 0:
+        if empty_at:
             label_lengths.append(empty_at[0])
         else:
             label_lengths.append(batch_y.shape[1])

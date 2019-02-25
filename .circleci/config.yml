@@ -28,6 +28,11 @@ jobs:
             - ~/.local
 
       - run:
+          name: run linting
+          command: |
+            PYTHONPATH=. ./tasks/lint.sh || true
+
+      - run:
           name: run prediction tests
           command: |
             PYTHONPATH=. pipenv run pytest -s text_recognizer/tests/*

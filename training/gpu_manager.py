@@ -1,3 +1,4 @@
+"""GPUManager class."""
 import os
 import time
 
@@ -6,11 +7,12 @@ import numpy as np
 from redlock import Redlock
 
 
-GPU_LOCK_TIMEOUT = 5000 # ms
+GPU_LOCK_TIMEOUT = 5000  # ms
 
 
-class GPUManager(object):
-    def __init__(self, verbose: bool=False):
+class GPUManager:
+    """Class for allocating GPUs."""
+    def __init__(self, verbose: bool = False):
         self.lock_manager = Redlock([{"host": "localhost", "port": 6379, "db": 0}, ])
         self.verbose = verbose
 

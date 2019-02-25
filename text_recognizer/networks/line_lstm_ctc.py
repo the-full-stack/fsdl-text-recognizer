@@ -1,24 +1,22 @@
-from boltons.cacheutils import cachedproperty
-import tensorflow as tf
+"""LSTM with CTC for handwritten text recognition within a line."""
 import tensorflow.keras.backend as K
-from tensorflow.python.client import device_lib
-from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, Input, MaxPooling2D, Permute, RepeatVector, Reshape, TimeDistributed, Lambda, LSTM, GRU, CuDNNLSTM, Bidirectional
-from tensorflow.keras.models import Sequential
+from tensorflow.python.client import device_lib  # pylint: disable=no-name-in-module
+from tensorflow.keras.layers import Dense, Input, Reshape, TimeDistributed, Lambda, LSTM, CuDNNLSTM
 from tensorflow.keras.models import Model as KerasModel
 
-from text_recognizer.models.line_model import LineModel
+
 from text_recognizer.networks.lenet import lenet
 from text_recognizer.networks.misc import slide_window
 from text_recognizer.networks.ctc import ctc_decode
 
 
-def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
+def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):  # pylint: disable=too-many-locals
     image_height, image_width = input_shape
     output_length, num_classes = output_shape
 
     num_windows = int((image_width - window_width) / window_stride) + 1
     if num_windows < output_length:
-        raise ValueError(f'Window width/stride need to generate at least {output_length} windows (currently {num_windows})')
+        raise ValueError(f'Window width/stride need to generate >= {output_length} windows (currently {num_windows})')
 
     image_input = Input(shape=input_shape, name='image')
     y_true = Input(shape=(output_length,), name='y_true')

@@ -67,7 +67,7 @@ class IamLinesDataset(Dataset):
     def __repr__(self):
         """Print info about the dataset."""
         return (
-            'IAM Lines Dataset\n'
+            'IAM Lines Dataset\n'  # pylint: disable=no-member
             f'Num classes: {self.num_classes}\n'
             f'Mapping: {self.mapping}\n'
             f'Train: {self.x_train.shape} {self.y_train.shape}\n'

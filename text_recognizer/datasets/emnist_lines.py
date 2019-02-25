@@ -1,7 +1,5 @@
 from collections import defaultdict
-import os
 import pathlib
-from typing import Tuple
 
 import h5py
 import numpy as np
@@ -16,7 +14,7 @@ ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_line
 
 
 class EmnistLinesDataset(Dataset):
-    def __init__(self, max_length: int=34, max_overlap: float=0.33, num_train: int=10000, num_test: int=1000):
+    def __init__(self, max_length: int = 34, max_overlap: float = 0.33, num_train: int = 10000, num_test: int = 1000):
         self.emnist = EmnistDataset()
         self.mapping = self.emnist.mapping
         self.max_length = max_length
@@ -26,6 +24,10 @@ class EmnistLinesDataset(Dataset):
         self.output_shape = (self.max_length, self.num_classes)
         self.num_train = num_train
         self.num_test = num_test
+        self.x_train = None
+        self.y_train = None
+        self.x_test = None
+        self.y_test = None
 
     @property
     def data_filename(self):
@@ -41,7 +43,7 @@ class EmnistLinesDataset(Dataset):
 
     def __repr__(self):
         return (
-            'EMNIST Lines Dataset\n'
+            'EMNIST Lines Dataset\n'  # pylint: disable=no-member
             f'Max length: {self.max_length}\n'
             f'Max overlap: {self.max_overlap}\n'
             f'Num classes: {self.num_classes}\n'
@@ -95,7 +97,7 @@ def select_letter_samples_for_string(string, samples_by_char):
         if char in sample_image_by_char:
             continue
         samples = samples_by_char[char]
-        sample = samples[np.random.choice(len(samples))] if len(samples) > 0 else zero_image
+        sample = samples[np.random.choice(len(samples))] if samples else zero_image
         sample_image_by_char[char] = sample.reshape(28, 28)
     return [sample_image_by_char[char] for char in string]
 
@@ -140,7 +142,11 @@ def convert_strings_to_categorical_labels(labels, mapping):
     ])
 
 
-if __name__ == '__main__':
+def main():
     dataset = EmnistLinesDataset()
     dataset.load_or_generate_data()
     print(dataset)
+
+
+if __name__ == '__main__':
+    main()

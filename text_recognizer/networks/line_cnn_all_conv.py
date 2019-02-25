@@ -1,9 +1,8 @@
-import pathlib
+"""CNN-based model for recognizing handwritten text."""
 from typing import Tuple
 
-import numpy as np
 import tensorflow as tf
-from tensorflow.keras.layers import Conv2D, Dense, Dropout, Flatten, Input, MaxPooling2D, Permute, Reshape, TimeDistributed, Lambda, ZeroPadding2D
+from tensorflow.keras.layers import Conv2D, Dropout, MaxPooling2D, Reshape, Lambda
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.models import Model as KerasModel
 
@@ -11,8 +10,8 @@ from tensorflow.keras.models import Model as KerasModel
 def line_cnn_all_conv(
         input_shape: Tuple[int, ...],
         output_shape: Tuple[int, ...],
-        window_width: float=16,
-        window_stride: float=8) -> KerasModel:
+        window_width: float = 16,
+        window_stride: float = 8) -> KerasModel:
     image_height, image_width = input_shape
     output_length, num_classes = output_shape
 
@@ -45,7 +44,6 @@ def line_cnn_all_conv(
     # Your code above (Lab 2)
     # (num_windows, 128, 1)
 
-    # Now we can use the same code we wrote in line_cnn_sliding_window:
     width = int(num_windows / output_length)
     model.add(Conv2D(num_classes, (width, 128), (width, 1), activation='softmax'))
     # (image_width / width, 1, num_classes)
