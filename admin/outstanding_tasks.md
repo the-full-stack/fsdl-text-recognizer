@@ -1,6 +1,7 @@
 ## Now
 
 - [ ] go through the first 5 labs and make sure it all works
+    - [x] make tests not use GPU
 
 ## Next
 
@@ -10,6 +11,7 @@
 - [ ] get the evaluation tests to pass
 - [ ] train a baller IAMLines model and use that in app.py
 - [ ] add metadata.toml and download data in a separate script, not from dataset python file directly
+- [ ] explain Pipenv in lab1.md
 
 - [ ] document my approaches to line detection and save the notebooks, so that saurabh can take over tuesday morning
 - [ ] port the IAM forms data to datasets/ and data/raw

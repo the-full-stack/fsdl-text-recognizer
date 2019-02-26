@@ -1,3 +1,3 @@
-rsync -aP -e "ssh -p 7730" text_recognizer 50.254.152.209:work/fsdl-text-recognizer/
-rsync -aP -e "ssh -p 7730" tasks 50.254.152.209:work/fsdl-text-recognizer/
-rsync -aP -e "ssh -p 7730" experiments 50.254.152.209:work/fsdl-text-recognizer/
+#!/bin/bash
+
+rsync -aP --exclude=".*" --exclude=data --exclude=wandb --exclude=node_modules . thefarm:work/fsdl-text-recognizer/
