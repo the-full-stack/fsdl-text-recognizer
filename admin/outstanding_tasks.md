@@ -1,17 +1,25 @@
 ## Now
 
-- [ ] add metadata.toml and download data in a separate script, not from dataset python file directly
+- [ ] go through the first 5 labs and make sure it all works
 
 ## Next
 
-- [ ] train a baller IAMLines model and use that in app.py
 - [ ] add tests for training (but don't run them in circleci)
 - [ ] add "subsample" mode to dataset
 - [ ] add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
-- [ ] go through the first 5 labs and make sure it all works
 - [ ] get the evaluation tests to pass
+- [ ] train a baller IAMLines model and use that in app.py
+- [ ] add metadata.toml and download data in a separate script, not from dataset python file directly
 
 - [ ] document my approaches to line detection and save the notebooks, so that saurabh can take over tuesday morning
+- [ ] port the IAM forms data to datasets/ and data/raw
+
+- [ ] get a basic version of a data annotation interface working (flask app with json db and react frontend)
+- [ ] get a great line detection model going in notebook
+- [ ] port line detection model to proper files, train it, and save model
+- [ ] connect the line detection and line recognition model
+- [ ] add test for the joint model
+- [ ] make the app.py use the joint model
 
 ## Ideas
 
