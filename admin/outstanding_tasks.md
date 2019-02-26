@@ -1,16 +1,38 @@
 ## Now
 
+- [ ] add metadata.toml and download data in a separate script, not from dataset python file directly
+
 ## Next
 
-## Later
+- [ ] train a baller IAMLines model and use that in app.py
+- [ ] add tests for training (but don't run them in circleci)
+- [ ] add "subsample" mode to dataset
+- [ ] add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
+- [ ] go through the first 5 labs and make sure it all works
+- [ ] get the evaluation tests to pass
+
+- [ ] document my approaches to line detection and save the notebooks, so that saurabh can take over tuesday morning
+
+## Ideas
 
 - [ ] save experiment json along with weights, and just call it canonical_character_predictor_weights.py and canonical_character_predictor_config.py
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
 - [ ] share pre-processing logic in predict() and fit()/evaluate()
-- [ ] store dataset over multiple files
-- [ ] test out cursive.ai image splitting into lines and see if it actually works from a phone picture
 
 ## Done
+
+### 2019 Feb 25
+
+- [x] set up linting
+    - [x] make the lint.sh script complete even when some commands fail
+- [x] get rid of sliding-window cnn
+- [x] get rid of non-ctc lstm
+- [x] get to ~100% linted
+- [x] use git-lfs for models
+- [x] add git-lfs to circleci config
+- [x] add linting to lab circleci
+
+### 2018 July/August
 
 - [x] data/ autograder image docker thing (the lab code now expects it one level up from where it was)
 - [x] output solutions in subset_repo

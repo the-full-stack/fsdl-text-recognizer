@@ -25,5 +25,4 @@ shellcheck ./**/*.sh || FAILURE=true
 if [ "$FAILURE" = true ]; then
   exit 1
 fi
-echo "FAILURE"
 exit 0

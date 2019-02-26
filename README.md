@@ -1,18 +1,10 @@
-# Text Recognizer
+# Text Recognizer Project
 
-Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp](https://fullstackdeeplearning.com).
+This repository is the admin view of the Full Stack Deep Learning project.
 
-- In this lab we will build a handwriting recognition system from scratch, and deploy it as a web service.
-- We will use Keras with Tensorflow backend as the underlying framework.
-- The framework will not lock us in to many design choices, and can easily be replaced with, for example, PyTorch.
-- We will structure the project in a way that will scale with future development and allow us to run experiments.
-- We will evaluate both convolutional and sequence methods for the task, and will see an example of how to compute loss in a more advanced way.
-- Throughout development, we will submit our project code to Gradescope for autograding and leaderboard.
-- We will run experiments on multiple GPUs, and store results to an online experiment management platform.
-- We will set up continuous integration system for our codebase, which will check functionality of code and evaluate the model about to be deployed.
-- We will package up the prediction system as a REST API, deployable as a Docker container.
-- We will deploy the prediction system as a serverless function to Amazon Lambda.
-- Lastly, we will set up monitoring that alerts us when the incoming data distribution changes.
+The instructions that students will see are in `instructions`.
+
+To create the `fsdl-text-recognizer-project` directory, with files subsetted into labs and lab solutions, run `admin/tasks/subset_repo_for_labs.sh`.
 
 ## Quick Start
 
@@ -63,88 +55,4 @@ pipenv run wandb login
 
 pipenv run wandb init
 # set up new project
-```
-
-## Project Structure
-
-```
-text_recognizer/
-    api/                        # Code for serving predictions as a REST API.
-        app.py                      # Flask web server that serves predictions.
-        Dockerfile                  # Specificies Docker image that runs the web server.
-        serverless.yml              # Specifies AWS Lambda deployment of the REST API.
-
-    data/                       # Data for training. Not under version control.
-        raw/                        # The raw data source. Perhaps from an external source, perhaps from your DBs. Contents of this should be re-creatable via scripts.
-            emnist-matlab.zip
-        processed/                  # Data in a format that can be used by our Dataset classses.
-            byclass.npz
-
-    experiments/                # Not under code version control.
-        emnist_mlp/                 # Name of the experiment
-            models/
-            logs/
-
-    notebooks/                  # For snapshots of initial exploration, before solidfying code as proper Python files.
-        00-download-emnist.ipynb    # Naming pattern is <order>-<initials>-<description>.ipynb
-        01-train-emnist-mlp.ipynb
-
-    text_recognizer/            # Package that can be deployed as a self-contained prediction system.
-        __init__.py
-
-        datasets/                   # Code for loading datasets
-            __init__.py
-            emnist.py
-
-        models/                     # Code for instantiating models, including data preprocessing and loss functions
-            __init__.py
-            emnist_mlp.py               # Code
-            emnist_mlp.h5               # Learned weights
-            emnist_mlp.config           # Experimental config that led to the learned weights
-
-        predict/
-            __init__.py
-            emnist_mlp.py
-
-        test/                       # Code that tests functionality of the other code.
-            support/                    # Support files for the tests
-                emnist/
-                    a.png
-                    3.png
-            test_emnist_predict.py  # Lightweight test to ensure that the trained emnist_mlp correctly classifies a few data points.
-
-    tasks/
-        train_emnist_mlp.py
-        run_emnist_mlp_experiments.py
-        update_model_with_best_experiment.py
-        evaluate_emnist_mlp_model.py
-        tasks/deploy_web_server_to_aws.py
-
-    train/                       # Code for running training experiments and selecting the best model.
-        run_experiment.py           # Script for running a training experiment.
-        gpu_manager.py              # Support script for distributing work onto multiple GPUs.
-        select_best_model.py        # Script for selecting the best model out of multiple experimental instances.
-
-    Pipfile
-    Pipfile.lock
-    README.md
-    setup.py
-```
-
-## Explanation
-
-### Pipenv
-
-Pipenv is necessary for being exact about the dependencies.
-TODO: explain that want to stay up to date with packages, but only update them intentionally, not randomly. Explain sync vs install.
-
-```
-# Workhorse command when adding another dependency
-pipenv install --dev --keep-outdated
-
-# Periodically, update all versions
-pipenv install --dev
-
-# For deployment, no need to install dev packages
-pipenv install
 ```

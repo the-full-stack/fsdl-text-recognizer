@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/python:3.6.5
+      - image: circleci/python:3.6.7
 
     steps:
       - checkout
@@ -14,6 +14,25 @@ jobs:
       - restore_cache:
           keys:
           - cache-{{ checksum "Pipfile.lock" }}
+
+      - run:
+          name: Install Git LFS
+          command: |
+            curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.sh | sudo bash
+            sudo apt-get install git-lfs
+            git lfs install
+
+      - run:
+          name: Pull LFS Files
+          command: git lfs pull
+
+      - run:
+          name: Install Shellcheck
+          command: |
+            curl -OL https://storage.googleapis.com/shellcheck/shellcheck-stable.linux.x86_64.tar.xz
+            tar xf shellcheck-stable.linux.x86_64.tar.xz
+            sudo mv shellcheck-stable/shellcheck /usr/local/bin
+          working_directory: /tmp/shellcheck
 
       - run:
           name: install dependencies
@@ -27,6 +46,8 @@ jobs:
           key: cache-{{ checksum "Pipfile.lock" }}
           paths:
             - ~/.local
+            - /usr/bin/git-lfs
+            - /usr/local/bin/shellcheck
 
       - run:
           name: run prediction tests
