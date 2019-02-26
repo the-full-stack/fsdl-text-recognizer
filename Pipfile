@@ -12,6 +12,7 @@ numpy = "*"
 opencv-python-headless = "*"
 requests = "*"
 tensorflow = "*"
+toml = "*"
 
 [dev-packages]
 bandit = "*"
