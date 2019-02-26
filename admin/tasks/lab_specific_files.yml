@@ -74,5 +74,6 @@
     - evaluation/evaluate_line_predictor.py
     - tasks/build_api_docker.sh
     - tasks/deploy_api_to_lambda.sh
+    - tasks/lint.sh
     - tasks/run_validation_tests.sh
     - tasks/test_api.sh

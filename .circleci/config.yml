@@ -29,12 +29,13 @@ jobs:
 
       - run:
           name: run linting
-          halt_build_on_fail: false
+          when: always
           command: |
             PYTHONPATH=. ./tasks/lint.sh
 
       - run:
           name: run prediction tests
+          when: always
           command: |
             PYTHONPATH=. pipenv run pytest -s text_recognizer/tests/*
 

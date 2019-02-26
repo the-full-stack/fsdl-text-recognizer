@@ -14,7 +14,7 @@ def read_image(image_uri, grayscale=False):
         return cv2.imread(image_filename, imread_flag)
 
     def read_image_from_url(image_url, imread_flag):
-        url_response = urlopen(image_url)
+        url_response = urlopen(image_url)  # nosec
         img_array = np.array(bytearray(url_response.read()), dtype=np.uint8)
         return cv2.imdecode(img_array, imread_flag)
 

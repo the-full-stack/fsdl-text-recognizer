@@ -1,5 +1,5 @@
-#!/bin/sh
+#!/bin/bash
 
 cp -r /autograder/submission/lab5/text_recognizer /autograder/source/
-cd /autograder/source
+cd /autograder/source || exit 1
 python3 run_tests.py > /autograder/results/results.json

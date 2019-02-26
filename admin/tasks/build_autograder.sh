@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Run this file from the top-level repo.
 
 # Build base image for all autograders
