@@ -1,4 +1,5 @@
 """Dataset class to be extended by dataset-specific classes."""
+import argparse
 import pathlib
 
 
@@ -10,3 +11,12 @@ class Dataset:
 
     def load_or_generate_data(self):
         pass
+
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--subsample_fraction",
+                        type=float,
+                        default=None,
+                        help="If given, is used as the fraction of data to expose.")
+    return parser.parse_args()

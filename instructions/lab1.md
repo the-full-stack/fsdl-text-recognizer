@@ -17,7 +17,6 @@ We will cover:
 - run_experiment.py
 - training/util.py
 
-
 ### Project Structure
 
 ```
@@ -125,6 +124,15 @@ Just for fun, you could also try a larger MLP, with a smaller batch size:
 pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 8}, "train_args": {"batch_size": 128}}'
 ```
 
+## Subsampling the dataset
+
+It is very useful to be able to subsample the dataset for quick experiments.
+This is possibe by passing `subsample_fraction=0.1` (or some other fraction) at dataset initialization, or in `dataset_args` in the `run_experiment.py` dictionary, for example:
+
+```sh
+pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "dataset_args": {"subsample_fraction": 0.1}, "model": "CharacterModel", "network": "mlp"}'
+```
+
 ## Testing
 
 Your network is trained, but you need to write a bit more code to get the `CharacterModel` to use it to predict.
@@ -138,22 +146,3 @@ pipenv run pytest -s text_recognizer/tests/test_character_predictor.py
 Or, use the shorthand `tasks/run_prediction_tests.sh`
 
 Testing should finish quickly.
-
-## Submitting to Gradescope
-
-Before submitting to Gradescope, add your trained weights, commit, and push your changes:
-
-```sh
-git add text_recognizer
-git commit -am "my lab1 work"
-git push mine master
-```
-
-Now go to https://gradescope.com/courses/21098 and click on Lab 1.
-Select the Github submission option, and there select your fork of the `fsdl-text-recognizer-project` repo and the master branch, and click Submit.
-Don't forget to enter a name for the leaderboard :)
-
-The autograder treats code that is in `lab1/text_recognizer` as your submission, so make sure your code is indeed there.
-
-The autograder should finish in <1 min, and display the results.
-Your name will show up in the Leaderboard.

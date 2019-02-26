@@ -1,19 +1,19 @@
 """
 EMNIST dataset. Downloads from NIST website and saves as .npz file if not already present.
 """
+from urllib.request import urlretrieve
 import json
 import os
 import pathlib
 import shutil
-from urllib.request import urlretrieve
 import zipfile
 
 from boltons.cacheutils import cachedproperty
+from tensorflow.keras.utils import to_categorical
 import h5py
 import numpy as np
-from tensorflow.keras.utils import to_categorical
 
-from text_recognizer.datasets.base import Dataset
+from text_recognizer.datasets.base import Dataset, parse_args
 
 
 # RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
@@ -36,7 +36,7 @@ class EmnistDataset(Dataset):
     The data split we will use is
     EMNIST ByClass: 814,255 characters. 62 unbalanced classes.
     """
-    def __init__(self):
+    def __init__(self, subsample_fraction: float = None):
         if not os.path.exists(ESSENTIALS_FILENAME):
             _download_and_process_emnist()
         with open(ESSENTIALS_FILENAME) as f:
@@ -46,6 +46,8 @@ class EmnistDataset(Dataset):
         self.num_classes = len(self.mapping)
         self.input_shape = essentials['input_shape']
         self.output_shape = (self.num_classes,)
+
+        self.subsample_fraction = subsample_fraction
         self.x_train = None
         self.y_train_int = None
         self.x_test = None
@@ -59,6 +61,18 @@ class EmnistDataset(Dataset):
             self.y_train_int = f['y_train'][:]
             self.x_test = f['x_test'][:]
             self.y_test_int = f['y_test'][:]
+        self._subsample()
+
+    def _subsample(self):
+        """Overriding method defined in base Dataset because we use y_int."""
+        if self.subsample_fraction is None:
+            return
+        num_train = int(self.x_train.shape[0] * self.subsample_fraction)
+        num_test = int(self.x_test.shape[0] * self.subsample_fraction)
+        self.x_train = self.x_train[:num_train]
+        self.y_train_int = self.y_train_int[:num_train]
+        self.x_test = self.x_test[:num_test]
+        self.y_test_int = self.y_test_int[:num_test]
 
     @cachedproperty
     def y_train(self):
@@ -160,11 +174,13 @@ def _augment_emnist_mapping(mapping):
 
 def main():
     """Load EMNIST dataset and print info."""
-    data = EmnistDataset()
-    data.load_or_generate_data()
-    print(data)
-    print(data.x_train.shape, data.y_train.shape)  # pylint: disable=E1101
-    print(data.x_test.shape, data.y_test.shape)  # pylint: disable=E1101
+    args = parse_args()
+    dataset = EmnistDataset(subsample_fraction=args.subsample_fraction)
+    dataset.load_or_generate_data()
+
+    print(dataset)
+    print(dataset.x_train.shape, dataset.y_train.shape)  # pylint: disable=E1101
+    print(dataset.x_test.shape, dataset.y_test.shape)  # pylint: disable=E1101
 
 
 if __name__ == '__main__':

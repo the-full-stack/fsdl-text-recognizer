@@ -2,16 +2,19 @@
 
 - [ ] go through the first 5 labs and make sure it all works
     - [x] make tests not use GPU
+    - [ ] figure out if there's something weird about ctc model (seems to die after four epochs on the farm)
+- [ ] add metadata.toml and download data in a separate script, not from dataset python file directly
+- [ ] strip &quot character from IAM dataset
 
 ## Next
 
 - [ ] add tests for training (but don't run them in circleci)
-- [ ] add "subsample" mode to dataset
+- [x] add "subsample" mode to dataset
 - [ ] add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
 - [ ] get the evaluation tests to pass
 - [ ] train a baller IAMLines model and use that in app.py
-- [ ] add metadata.toml and download data in a separate script, not from dataset python file directly
 - [ ] explain Pipenv in lab1.md
+- [ ] consider using datasets to the training class (move the mappings to models/ then)
 
 - [ ] document my approaches to line detection and save the notebooks, so that saurabh can take over tuesday morning
 - [ ] port the IAM forms data to datasets/ and data/raw
@@ -22,6 +25,7 @@
 - [ ] connect the line detection and line recognition model
 - [ ] add test for the joint model
 - [ ] make the app.py use the joint model
+- [ ] compute validation accuracy in ctc training (run decoding)
 
 ## Ideas
 

@@ -22,25 +22,35 @@ DEFAULT_TRAIN_ARGS = {
 
 def run_experiment(experiment_config: Dict, save_weights: bool, gpu_ind: int, use_wandb: bool = True):
     """
-    experiment_config is of the form
-    {
-        "dataset": "EmnistLinesDataset",
-        "dataset_args": {
-            "max_overlap": 0.4
-        },
-        "model": "LineModel",
-        "network": "line_cnn_all_conv",
-        "network_args": {
-            "window_width": 14,
-            "window_stride": 7
-        },
-        "train_args": {
-            "batch_size": 128,
-            "epochs": 10
+    Run a training experiment.
+
+    Parameters
+    ----------
+    experiment_config (dict)
+        Of the form
+        {
+            "dataset": "EmnistLinesDataset",
+            "dataset_args": {
+                "max_overlap": 0.4,
+                "subsample_fraction": 0.2
+            },
+            "model": "LineModel",
+            "network": "line_cnn_all_conv",
+            "network_args": {
+                "window_width": 14,
+                "window_stride": 7
+            },
+            "train_args": {
+                "batch_size": 128,
+                "epochs": 10
+            }
         }
-    }
-    save_weights: if True, will save the final model weights to a canonical location (see Model in models/base.py)
-    gpu_ind: integer specifying which gpu to use
+    save_weights (bool)
+        If True, will save the final model weights to a canonical location (see Model in models/base.py)
+    gpu_ind (int)
+        specifies which gpu to use (or -1 for first available)
+    use_wandb (bool)
+        sync training run to wandb
     """
     print(f'Running experiment with config {experiment_config} on GPU {gpu_ind}')
 

@@ -6,7 +6,7 @@ from boltons.cacheutils import cachedproperty
 import h5py
 from tensorflow.keras.utils import to_categorical
 
-from text_recognizer.datasets.base import Dataset
+from text_recognizer.datasets.base import Dataset, parse_args
 from text_recognizer.datasets.emnist import EmnistDataset
 
 
@@ -31,12 +31,14 @@ class IamLinesDataset(Dataset):
 
     Note that we use cachedproperty because data takes time to load.
     """
-    def __init__(self):
+    def __init__(self, subsample_fraction: float = None):
         self.mapping = EmnistDataset().mapping
         self.inverse_mapping = {v: k for k, v in self.mapping.items()}
         self.num_classes = len(self.mapping)
         self.input_shape = (28, 952)
         self.output_shape = (97, self.num_classes)
+
+        self.subsample_fraction = subsample_fraction
         self.x_train = None
         self.x_test = None
         self.y_train_int = None
@@ -53,6 +55,18 @@ class IamLinesDataset(Dataset):
             self.y_train_int = f['y_train'][:]
             self.x_test = f['x_test'][:]
             self.y_test_int = f['y_test'][:]
+        self._subsample()
+
+    def _subsample(self):
+        """Only this fraction of data will be loaded."""
+        if self.subsample_fraction is None:
+            return
+        num_train = int(self.x_train.shape[0] * self.subsample_fraction)
+        num_test = int(self.x_test.shape[0] * self.subsample_fraction)
+        self.x_train = self.x_train[:num_train]
+        self.y_train_int = self.y_train_int[:num_train]
+        self.x_test = self.x_test[:num_test]
+        self.y_test_int = self.y_test_int[:num_test]
 
     @cachedproperty
     def y_train(self):
@@ -77,7 +91,8 @@ class IamLinesDataset(Dataset):
 
 def main():
     """Load dataset and print info."""
-    dataset = IamLinesDataset()
+    args = parse_args()
+    dataset = IamLinesDataset(subsample_fraction=args.subsample_fraction)
     dataset.load_or_generate_data()
     print(dataset)
 
