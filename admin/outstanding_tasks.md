@@ -1,31 +1,40 @@
 ## Now
 
-- [ ] go through the first 5 labs and make sure it all works
-    - [x] make tests not use GPU
-    - [ ] figure out if there's something weird about ctc model (seems to die after four epochs on the farm)
-- [ ] add metadata.toml and download data in a separate script, not from dataset python file directly
-- [ ] strip &quot character from IAM dataset
-
 ## Next
 
-- [ ] add tests for training (but don't run them in circleci)
-- [x] add "subsample" mode to dataset
-- [ ] add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
-- [ ] get the evaluation tests to pass
-- [ ] train a baller IAMLines model and use that in app.py
-- [ ] explain Pipenv in lab1.md
-- [ ] consider using datasets to the training class (move the mappings to models/ then)
+- [-] 1 go through the first 5 labs and make sure it all works
+    - [ ] figure out if there's something weird about ctc model (seems to die after some number of epochs on the farm)
 
-- [ ] document my approaches to line detection and save the notebooks, so that saurabh can take over tuesday morning
-- [ ] port the IAM forms data to datasets/ and data/raw
+Data
+- [x] 1 add metadata.toml for EMNIST dataset
+- [ ] 1 add metadata.toml for IAM dataset
+- [ ] 1 strip &quot character from IAM dataset
+- [ ] 1 port the IAM forms data to datasets/ and data/raw
+    - add use of tqdm and subprocess to crop pages
+- [ ] 2 send instructions for including the raw data files in the repo to Chris
 
-- [ ] get a basic version of a data annotation interface working (flask app with json db and react frontend)
-- [ ] get a great line detection model going in notebook
-- [ ] port line detection model to proper files, train it, and save model
-- [ ] connect the line detection and line recognition model
-- [ ] add test for the joint model
-- [ ] make the app.py use the joint model
-- [ ] compute validation accuracy in ctc training (run decoding)
+Training
+- [ ] 1 add shuffling to the dataset sequence
+- [ ] 1 get the evaluation tests to pass
+
+Annotation
+- [ ] 1 get a basic version of a data annotation interface working (flask app with json db and react frontend)
+
+Detection
+- [ ] 1 line detection model
+    - [ ] get a great line detection model going in notebook
+    - [ ] port line detection model to proper files, train it, and save model
+- [ ] 1 connect the line detection and line recognition model
+    - [ ] add test for the joint model
+- [ ] 1 make the app.py use the joint model
+
+Less important
+- [ ] 2 add tests for training (but don't run them in circleci)
+- [ ] 2 add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
+- [ ] 3 train a baller IAMLines model
+- [ ] 3 explain Pipenv in lab1.md
+- [ ] 3 consider using datasets to the training class (move the mappings to models/ then)
+- [ ] 3 compute validation accuracy in ctc training (run decoding)
 
 ## Ideas
 
@@ -34,6 +43,10 @@
 - [ ] share pre-processing logic in predict() and fit()/evaluate()
 
 ## Done
+
+### 2019 Feb 26
+
+
 
 ### 2019 Feb 25
 
@@ -45,6 +58,9 @@
 - [x] use git-lfs for models
 - [x] add git-lfs to circleci config
 - [x] add linting to lab circleci
+- [x] make tests not use GPU
+- [x] add subsample mode to dataset
+- [x] document my approaches to line detection and save the notebooks, so that saurabh can take over tuesday morning
 
 ### 2018 July/August
 
