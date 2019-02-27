@@ -43,6 +43,10 @@ class IamDataset(Dataset):
     def xml_filenames(self):
         return list((EXTRACTED_DATASET_DIRNAME / 'xml').glob('*.xml'))
 
+    @property
+    def form_filenames(self):
+        return list((EXTRACTED_DATASET_DIRNAME / 'forms').glob('*.jpg'))
+
     def _download_iam(self):
         curdir = os.getcwd()
         os.chdir(RAW_DATA_DIRNAME)

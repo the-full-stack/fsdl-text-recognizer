@@ -19,6 +19,7 @@ bandit = "*"
 gpustat = "*"
 gradescope-utils = "*"
 grequests = "*" # admin
+itermplot = "*"
 jupyterlab = "*"
 matplotlib = "*"
 mypy = "*"

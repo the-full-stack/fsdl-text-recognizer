@@ -30,6 +30,6 @@ IAM lines Large Writer Independent Text Line Recognition Task (lwitlrt): 9,862 t
 - The test set has 1,861 lines from 128 writers.
 - The text lines of all data sets are mutually exclusive, thus each writer has contributed to one set only.
 """
-url = 'TODO: upload to S3'
+url = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/iam/iamdb.zip'
 filename = 'iamdb.zip'
 sha256 = 'f3c9e87a88a313e557c6d3548ed8a2a1af2dc3c4a678c5f3fc6f972ba4a50c55'

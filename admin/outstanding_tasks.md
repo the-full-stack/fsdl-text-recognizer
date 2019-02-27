@@ -6,15 +6,11 @@
     - [ ] figure out if there's something weird about ctc model (seems to die after some number of epochs on the farm)
 
 Data
-- [x] 1 add metadata.toml for EMNIST dataset
-- [ ] 1 add IAM paragraphs dataset
-    - [x] add IAM source data with metadata.toml
-        - [ ] add loading of train/val/test ids
-    - [ ] port code to create training data from notebooks to codebase
-        - [ ] add use of tqdm and subprocess to crop pages
-    - [ ] develop code to create IAM lines from IAM source data
-        - [ ] 1 strip &quot character from IAM dataset
+- [ ] 2 develop code to create IAM lines from IAM source data
+    - [ ] load in train/val/test ids in IamDataset
+    - [ ] 1 strip &quot character from IAM dataset
 - [ ] 2 send instructions for including the raw data files in the repo to Chris
+- [ ] 3 add tqdm progress bar to urlretrieve (some of the downloads take a while)
 
 Training
 - [ ] 1 add shuffling to the dataset sequence
@@ -50,7 +46,11 @@ Less important
 
 ### 2019 Feb 26
 
-
+- [x] 1 add metadata.toml for EMNIST dataset
+- [x] 1 add IAM paragraphs dataset
+    - [x] add IAM source data with metadata.toml
+    - [x] upload IAM data to S3
+    - [x] port code to create training data from notebooks to codebase
 
 ### 2019 Feb 25
 
