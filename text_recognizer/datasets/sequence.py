@@ -17,6 +17,7 @@ class DatasetSequence(Sequence):
 
     def __len__(self):
         """Return length of the dataset."""
+        print('__len__')
         return int(np.ceil(len(self.x) / float(self.batch_size)))
 
     def __getitem__(self, idx):
@@ -24,6 +25,8 @@ class DatasetSequence(Sequence):
         # idx = 0  # If you want to intentionally overfit to just one batch
         begin = idx * self.batch_size
         end = (idx + 1) * self.batch_size
+        
+        print('__getitem__', begin, end)
 
         # batch_x = np.take(self.x, range(begin, end), axis=0, mode='clip')
         # batch_y = np.take(self.y, range(begin, end), axis=0, mode='clip')
