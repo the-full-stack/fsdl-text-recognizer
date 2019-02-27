@@ -11,7 +11,7 @@ h5py = "*"
 numpy = "*"
 opencv-python-headless = "*"
 requests = "*"
-tensorflow-gpu = "*"
+tensorflow-gpu = ">=1.12,<1.13"
 toml = "*"
 
 [dev-packages]
