@@ -123,7 +123,7 @@ def subset_repo(info):
     shutil.copytree(REPO_DIRNAME / 'data', output_dir / 'data')
 
     shutil.copy('Pipfile-gpu', output_dir / 'Pipfile')
-    shutil.copy('Pipfile.lock-gpu', output_dir / 'Pipfile.lock')
+    shutil.copy('Pipfile-gpu.lock', output_dir / 'Pipfile.lock')
     shutil.copy('.gitignore', output_dir)
     shutil.copy('instructions/readme.md', output_dir)
 
@@ -143,7 +143,7 @@ def subset_repo(info):
         _process_new_files(new_paths, lab_number, filter_your_code=False)
         shutil.copy(f'instructions/lab{lab_number}.md', output_dir / f'lab{lab_number}_sln' / 'readme.md')
 
-    if lab_number == 6:
+    if lab_number == 8:
         (output_dir / '.circleci').mkdir(exist_ok=True)
         shutil.copy('.circleci/config.yml.for-lab', output_dir / '.circleci' / 'config.yml')
 
