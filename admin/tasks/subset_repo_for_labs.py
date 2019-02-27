@@ -19,17 +19,17 @@ for labs with index greater than the one given.
 
 NOTE that the stripping is only performed on .py files.
 """
+from pathlib import Path
 import argparse
 import os
 import glob
-import pathlib
 import re
 import shutil
 
 import yaml
 
 MAX_LAB_NUMBER = 10
-REPO_DIRNAME = pathlib.Path(__file__).parents[2].resolve()
+REPO_DIRNAME = Path(__file__).parents[2].resolve()
 INFO_FILENAME = REPO_DIRNAME / 'admin' / 'tasks' / 'lab_specific_files.yml'
 
 
@@ -74,8 +74,8 @@ def _filter_hidden_blocks(lines, lab_number):
 def _replace_data_dirname(lines):
     filtered_lines = []
     for line in lines:
-        if line == "        return pathlib.Path(__file__).parents[2].resolve() / 'data'":
-            line = "        return pathlib.Path(__file__).parents[3].resolve() / 'data'"
+        if line == "        return Path(__file__).parents[2].resolve() / 'data'":
+            line = "        return Path(__file__).parents[3].resolve() / 'data'"
         filtered_lines.append(line)
     return filtered_lines
 
@@ -112,7 +112,7 @@ def _process_new_files(new_paths, lab_number, filter_your_code=True, filter_hidd
 
 def subset_repo(info):
     """See module docstring."""
-    output_dir = pathlib.Path(args.output_dirname)
+    output_dir = Path(args.output_dirname)
     if output_dir.exists():
         for d in glob.glob(f'{str(output_dir)}/lab*'):
             shutil.rmtree(d)
