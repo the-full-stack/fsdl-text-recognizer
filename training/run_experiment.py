@@ -105,7 +105,7 @@ def run_experiment(experiment_config: Dict, save_weights: bool, gpu_ind: int, us
         model.save_weights()
 
 
-def parse_args():
+def _parse_args():
     """Parse command-line arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -132,7 +132,7 @@ def parse_args():
 
 def main():
     """Run experiment."""
-    args = parse_args()
+    args = _parse_args()
 
     # Hide lines below until Lab 4
     if args.gpu < 0:

@@ -1,7 +1,6 @@
 """
 EMNIST dataset. Downloads from NIST website and saves as .npz file if not already present.
 """
-from urllib.request import urlretrieve
 import json
 import os
 import pathlib
@@ -14,11 +13,9 @@ import h5py
 import numpy as np
 import toml
 
-from text_recognizer.datasets.base import compute_sha256, Dataset, parse_args
+from text_recognizer.datasets.base import _download_raw_dataset, Dataset, _parse_args
 
-SAMPLE_TO_BALANCE = True  # If true,
-
-PROCESSED_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/byclass.h5'  # should be a little faster
+SAMPLE_TO_BALANCE = True  # If true, take at most the mean number of instances per class.
 
 RAW_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'emnist'
 METADATA_FILENAME = RAW_DATA_DIRNAME / 'metadata.toml'
@@ -102,21 +99,10 @@ def _download_and_process_emnist():
     os.chdir(curdir)
 
 
-def _download_raw_dataset(metadata):
-    if os.path.exists(metadata['filename']):
-        return
-    print('Downloading EMNIST...')
-    urlretrieve(metadata['url'], metadata['filename'])  # nosec
-    print('Computing SHA-256...')
-    sha256 = compute_sha256(metadata['filename'])
-    if sha256 != metadata['sha256']:
-        raise ValueError('Downloaded data file SHA-256 does not match that listed in metadata document.')
-
-
 def _process_raw_dataset(filename: str):
     print('Unzipping EMNIST...')
     zip_file = zipfile.ZipFile(filename, 'r')
-    zip_file.extract('matlab/emnist-byclass.mat', )
+    zip_file.extract('matlab/emnist-byclass.mat')
 
     print('Loading training data from .mat file')
     from scipy.io import loadmat
@@ -182,7 +168,7 @@ def _augment_emnist_mapping(mapping):
 
 def main():
     """Load EMNIST dataset and print info."""
-    args = parse_args()
+    args = _parse_args()
     dataset = EmnistDataset(subsample_fraction=args.subsample_fraction)
     dataset.load_or_generate_data()
 

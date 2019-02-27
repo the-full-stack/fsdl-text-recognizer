@@ -1,6 +1,8 @@
 # Data
 data/processed
 data/raw/emnist/matlab.zip
+data/raw/iam/iamdb
+data/raw/iam/iamdb.zip
 
 # Editors
 .vscode

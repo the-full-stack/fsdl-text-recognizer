@@ -7,15 +7,19 @@
 
 Data
 - [x] 1 add metadata.toml for EMNIST dataset
-- [ ] 1 add metadata.toml for IAM dataset
-- [ ] 1 strip &quot character from IAM dataset
-- [ ] 1 port the IAM forms data to datasets/ and data/raw
-    - add use of tqdm and subprocess to crop pages
+- [ ] 1 add IAM paragraphs dataset
+    - [x] add IAM source data with metadata.toml
+        - [ ] add loading of train/val/test ids
+    - [ ] port code to create training data from notebooks to codebase
+        - [ ] add use of tqdm and subprocess to crop pages
+    - [ ] develop code to create IAM lines from IAM source data
+        - [ ] 1 strip &quot character from IAM dataset
 - [ ] 2 send instructions for including the raw data files in the repo to Chris
 
 Training
 - [ ] 1 add shuffling to the dataset sequence
 - [ ] 1 get the evaluation tests to pass
+- [ ] 3 make a flag for overfitting on one batch
 
 Annotation
 - [ ] 1 get a basic version of a data annotation interface working (flask app with json db and react frontend)
