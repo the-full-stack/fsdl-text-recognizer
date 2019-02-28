@@ -6,7 +6,7 @@ from boltons.cacheutils import cachedproperty
 import h5py
 from tensorflow.keras.utils import to_categorical
 
-from text_recognizer.datasets.base import Dataset, parse_args
+from text_recognizer.datasets.base import Dataset, _parse_args
 from text_recognizer.datasets.emnist import EmnistDataset
 
 
@@ -18,16 +18,6 @@ PROCESSED_DATA_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/iam_
 
 class IamLinesDataset(Dataset):
     """
-    "The IAM Lines dataset, first published at the ICDAR 1999, contains forms of unconstrained handwritten text,
-    which were scanned at a resolution of 300dpi and saved as PNG images with 256 gray levels.
-    From http://www.fki.inf.unibe.ch/databases/iam-handwriting-database
-
-    The data split we will use is
-    IAM lines Large Writer Independent Text Line Recognition Task (lwitlrt): 9,862 text lines.
-        The validation set has been merged into the train set.
-        The train set has 7,101 lines from 326 writers.
-        The test set has 1,861 lines from 128 writers.
-        The text lines of all data sets are mutually exclusive, thus each writer has contributed to one set only.
 
     Note that we use cachedproperty because data takes time to load.
     """
@@ -91,7 +81,7 @@ class IamLinesDataset(Dataset):
 
 def main():
     """Load dataset and print info."""
-    args = parse_args()
+    args = _parse_args()
     dataset = IamLinesDataset(subsample_fraction=args.subsample_fraction)
     dataset.load_or_generate_data()
     print(dataset)

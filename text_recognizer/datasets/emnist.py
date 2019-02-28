@@ -1,7 +1,6 @@
 """
 EMNIST dataset. Downloads from NIST website and saves as .npz file if not already present.
 """
-from urllib.request import urlretrieve
 import json
 import os
 import pathlib
@@ -12,18 +11,18 @@ from boltons.cacheutils import cachedproperty
 from tensorflow.keras.utils import to_categorical
 import h5py
 import numpy as np
+import toml
 
-from text_recognizer.datasets.base import Dataset, parse_args
+from text_recognizer.datasets.base import _download_raw_dataset, Dataset, _parse_args
 
-
-# RAW_URL = 'http://www.itl.nist.gov/iaui/vip/cs_links/EMNIST/matlab.zip'
-RAW_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/matlab.zip'  # should be a little faster
-PROCESSED_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/byclass.h5'  # should be a little faster
-
+SAMPLE_TO_BALANCE = True  # If true, take at most the mean number of instances per class.
 
 RAW_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'emnist'
+METADATA_FILENAME = RAW_DATA_DIRNAME / 'metadata.toml'
+
 PROCESSED_DATA_DIRNAME = Dataset.data_dirname() / 'processed' / 'emnist'
 PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'byclass.h5'
+
 ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_essentials.json'
 
 
@@ -64,7 +63,7 @@ class EmnistDataset(Dataset):
         self._subsample()
 
     def _subsample(self):
-        """Overriding method defined in base Dataset because we use y_int."""
+        """Only this fraction of data will be loaded."""
         if self.subsample_fraction is None:
             return
         num_train = int(self.x_train.shape[0] * self.subsample_fraction)
@@ -91,46 +90,42 @@ class EmnistDataset(Dataset):
         )
 
 
-def _download_and_process_emnist(download_processed=True, sample_to_balance=False):
-    import scipy.io
-
-    RAW_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
-    PROCESSED_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
-
-    if download_processed:
-        os.chdir(PROCESSED_DATA_DIRNAME)
-        print('Downloading EMNIST (processed)...')
-        urlretrieve(PROCESSED_URL, 'byclass.h5')  # nosec
-        return
-
+def _download_and_process_emnist():
+    metadata = toml.load(METADATA_FILENAME)
+    curdir = os.getcwd()
     os.chdir(RAW_DATA_DIRNAME)
+    _download_raw_dataset(metadata)
+    _process_raw_dataset(metadata['filename'])
+    os.chdir(curdir)
 
-    if not os.path.exists('matlab.zip'):
-        print('Downloading EMNIST...')
-        urlretrieve(RAW_URL, 'matlab.zip')  # nosec
 
-    print('Unzipping EMNIST and loading .mat file...')
-    zip_file = zipfile.ZipFile('matlab.zip', 'r')
-    zip_file.extract('matlab/emnist-byclass.mat', )
-    data = scipy.io.loadmat('matlab/emnist-byclass.mat')
+def _process_raw_dataset(filename: str):
+    print('Unzipping EMNIST...')
+    zip_file = zipfile.ZipFile(filename, 'r')
+    zip_file.extract('matlab/emnist-byclass.mat')
 
-    print('Saving to HDF5...')
+    print('Loading training data from .mat file')
+    from scipy.io import loadmat
+    data = loadmat('matlab/emnist-byclass.mat')
     x_train = data['dataset']['train'][0, 0]['images'][0, 0].reshape(-1, 28, 28).swapaxes(1, 2)
     y_train = data['dataset']['train'][0, 0]['labels'][0, 0]
     x_test = data['dataset']['test'][0, 0]['images'][0, 0].reshape(-1, 28, 28).swapaxes(1, 2)
     y_test = data['dataset']['test'][0, 0]['labels'][0, 0]
 
-    if sample_to_balance:
+    if SAMPLE_TO_BALANCE:
+        print('Balancing classes to reduce amount of data')
         x_train, y_train = _sample_to_balance(x_train, y_train)
         x_test, y_test = _sample_to_balance(x_test, y_test)
 
+    print('Saving to HDF5 in a compressed format...')
+    PROCESSED_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
     with h5py.File(PROCESSED_DATA_FILENAME, 'w') as f:
         f.create_dataset('x_train', data=x_train, dtype='u1', compression='lzf')
         f.create_dataset('y_train', data=y_train, dtype='u1', compression='lzf')
         f.create_dataset('x_test', data=x_test, dtype='u1', compression='lzf')
         f.create_dataset('y_test', data=y_test, dtype='u1', compression='lzf')
 
-    print('Saving essential dataset parameters...')
+    print('Saving essential dataset parameters to text_recognizer/datasets...')
     mapping = {int(k): chr(v) for k, v in data['dataset']['mapping'][0, 0]}
     essentials = {'mapping': list(mapping.items()), 'input_shape': list(x_train.shape[1:])}
     with open(ESSENTIALS_FILENAME, 'w') as f:
@@ -139,11 +134,10 @@ def _download_and_process_emnist(download_processed=True, sample_to_balance=Fals
     print('Cleaning up...')
     shutil.rmtree('matlab')
 
-    print('EMNIST downloaded and processed')
-
 
 def _sample_to_balance(x, y):
     """Because the dataset is not balanced, we take at most the mean number of instances per class."""
+    np.random.seed(42)
     num_to_sample = int(np.bincount(y.flatten()).mean())
     all_sampled_inds = []
     for label in np.unique(y.flatten()):
@@ -158,7 +152,7 @@ def _sample_to_balance(x, y):
 
 def _augment_emnist_mapping(mapping):
     """Augment the mapping with extra symbols."""
-    # symbols in IAM dataset
+    # Extra symbols in IAM dataset
     extra_symbols = [' ', '!', '"', '#', '&', "'", '(', ')', '*', '+', ',', '-', '.', '/', ':', ';', '?']
 
     # padding symbol
@@ -174,7 +168,7 @@ def _augment_emnist_mapping(mapping):
 
 def main():
     """Load EMNIST dataset and print info."""
-    args = parse_args()
+    args = _parse_args()
     dataset = EmnistDataset(subsample_fraction=args.subsample_fraction)
     dataset.load_or_generate_data()
 
