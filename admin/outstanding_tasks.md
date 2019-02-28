@@ -19,9 +19,6 @@
 
 - [ ] 1 test jupyterhub with a clean user
 
-- [ ] 1 add shuffling to the dataset sequence
-    - or do generators work with shuffle=True in fit_generator?
-
 - [ ] 1 get the evaluation tests to pass
 
 - [ ] 1 line detection model
@@ -45,6 +42,11 @@ Less important
 - [ ] 3 share pre-processing logic in predict() and fit()/evaluate()
 
 ## Done
+
+### 2019 Feb 28
+
+- [n] 1 add shuffling to the dataset sequence
+    - no need, fit_generator does it
 
 ### 2019 Feb 27
 

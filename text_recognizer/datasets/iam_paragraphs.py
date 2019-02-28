@@ -160,7 +160,7 @@ def _crop_paragraph_image(filename, line_regions, crop_dims, final_dims):
         image_crop[buffer:buffer + height] = image[min_y1:max_y2]
     except Exception as e:
         print(f'Rescued {filename}: {e}')
-        return None, None
+        return
 
     # Generate ground truth
     gt_image = np.zeros_like(image_crop, dtype=np.uint8)
