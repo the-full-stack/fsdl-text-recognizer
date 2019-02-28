@@ -17,7 +17,7 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
 - First session (90 min)
   - Introduction to the labs.
   - Lab 0 (15 min): gather handwriting data and get setup
-  - Lab 1 (45 min): Project structure. Intro to EMNIST. Simple EMNIST MLP model, linting in editor, testing
+  - Lab 1 (45 min): Project structure. Intro to EMNIST. Simple EMNIST MLP model, training, testing.
   - Lab 2 (20 min): Introduce approach of synthetic data, go through EMNIST lines, and then CNN solution for EMNIST Lines
   - Lab 3 (10 min): LSTM+CTC solution for EMNIST Lines
 - Second session (60 min)
@@ -59,7 +59,7 @@ git pull origin master
 
 ## 3. Set up the Python environment
 
-Run 
+Run
 
 ```sh
 pipenv install --dev
@@ -74,5 +74,3 @@ Now you should be setup for the labs. The instructions for each lab are in readm
 
 You will notice that there are solutions for all the labs right here in the repo, too.
 If you get stuck, you are welcome to take a look!
-
-

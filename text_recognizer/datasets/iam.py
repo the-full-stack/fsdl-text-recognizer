@@ -55,7 +55,7 @@ class IamDataset(Dataset):
         os.chdir(curdir)
 
     @cachedproperty
-    def line_regions_by_name(self):
+    def line_regions_by_id(self):
         """Return a dict from name of IAM form to a list of (x1, x2, y1, y2) coordinates of all lines in it."""
         return {
             filename.stem: _get_line_regions_from_xml_file(filename)
@@ -96,6 +96,16 @@ def _get_line_region_from_xml_element(xml_line) -> Dict[str, int]:
         'y1': min(y1s) // DOWNSAMPLE_FACTOR,
         'x2': max(x2s) // DOWNSAMPLE_FACTOR,
         'y2': max(y2s) // DOWNSAMPLE_FACTOR
+        # Optionally, we could be using baselines:
+        # 'y1': int(xml_line.attrib['lby']) // DOWNSAMPLE_FACTOR,
+        # 'y2': int(xml_line.attrib['uby']) // DOWNSAMPLE_FACTOR
+    }
+
+
+def _get_baseline_from_xml_element(xml_line) -> Dict[str, int]:
+    return {
+        'y1': int(xml_line.attrib['lby']) // DOWNSAMPLE_FACTOR,
+        'y2': int(xml_line.attrib['uby']) // DOWNSAMPLE_FACTOR
     }
 
 
