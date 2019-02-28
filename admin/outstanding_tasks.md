@@ -1,28 +1,31 @@
 ## Now
 
+- [ ] 1 data annotation part of the lab
+    - [ ] script for uploading data to dataturks (main thing is to retain id of image)
+    - [ ] annotate a bit, take screenshots
+    - [ ] download the data from dataturks and make a script for updating metadata.toml
+
+- [ ] 2 develop code to create IAM lines from IAM source data
+    - [ ] load in train/val/test ids in IamDataset
+    - [ ] strip &quot character from IAM dataset
+
 ## Next
 
 - [-] 1 go through the first 5 labs and make sure it all works
     - [ ] figure out if there's something weird about ctc model (seems to die after some number of epochs on the farm)
 
-Data
-- [ ] 2 develop code to create IAM lines from IAM source data
-    - [ ] load in train/val/test ids in IamDataset
-    - [ ] 1 strip &quot character from IAM dataset
-- [ ] 2 send instructions for including the raw data files in the repo to Chris
-- [ ] 3 add tqdm progress bar to urlretrieve (some of the downloads take a while)
+- [-] 1 test that deploying to lambda works
+    - [ ] debug why api errors (probably model loading)
 
-Training
+- [ ] 1 test jupyterhub with a clean user
+
 - [ ] 1 add shuffling to the dataset sequence
+    - or do generators work with shuffle=True in fit_generator?
+
 - [ ] 1 get the evaluation tests to pass
-- [ ] 3 make a flag for overfitting on one batch
 
-Annotation
-- [ ] 1 get a basic version of a data annotation interface working (flask app with json db and react frontend)
-
-Detection
 - [ ] 1 line detection model
-    - [ ] get a great line detection model going in notebook
+    - [-] @saurabh get a great line detection model going in notebook
     - [ ] port line detection model to proper files, train it, and save model
 - [ ] 1 connect the line detection and line recognition model
     - [ ] add test for the joint model
@@ -31,18 +34,23 @@ Detection
 Less important
 - [ ] 2 add tests for training (but don't run them in circleci)
 - [ ] 2 add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
+- [ ] 3 add tqdm progress bar to urlretrieve (some of the downloads take a while)
+- [ ] 3 make a flag for overfitting on one batch
 - [ ] 3 train a baller IAMLines model
 - [ ] 3 explain Pipenv in lab1.md
 - [ ] 3 consider using datasets to the training class (move the mappings to models/ then)
 - [ ] 3 compute validation accuracy in ctc training (run decoding)
-
-## Ideas
-
-- [ ] save experiment json along with weights, and just call it canonical_character_predictor_weights.py and canonical_character_predictor_config.py
+- [ ] 3 save experiment json along with weights, and just call it canonical_character_predictor_weights.py and canonical_character_predictor_config.py
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
-- [ ] share pre-processing logic in predict() and fit()/evaluate()
+- [ ] 3 share pre-processing logic in predict() and fit()/evaluate()
 
 ## Done
+
+### 2019 Feb 27
+
+- [x] 2 send instructions for including the raw data files (and the new repo url) to Chris
+- [n] 1 output line-region-boundary ground truth for saurabh
+    - didn't look great, but saurabh got it working with just region data
 
 ### 2019 Feb 26
 
