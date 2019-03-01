@@ -66,6 +66,7 @@
 
 6:
     - notebooks/04-look-at-iam-paragraphs.ipynb
+    - text_recognizer/datasets/iam.py
     - text_recognizer/datasets/iam_paragraphs.py
 
 7:
