@@ -3,9 +3,11 @@
 - [ ] 1 line detection model
     - [x] @saurabh get a great line detection model going in notebook
     - [-] @saurabh port line detection model to proper files, train it, and save model
+    - [ ] add test for line detector model
 - [ ] 1 connect the line detection and line recognition model
     - [ ] add test for the joint model
 - [ ] 1 make the app.py use the joint model
+    - [ ] set up data monitoring test for that
 
 ## Next
 
@@ -17,9 +19,8 @@
 - [ ] 1 get the evaluation tests to pass
 
 Less important
-- [ ] 2 develop code to create IAM lines from IAM source data
+- [-] 2 develop code to create IAM lines from IAM source data
     - [ ] load in train/val/test ids in IamDataset
-    - [ ] strip &quot character from IAM dataset
 - [ ] 2 add metadata.toml for Brown corpus
 - [ ] 2 add tests for training (but don't run them in circleci)
 - [ ] 2 add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
@@ -34,6 +35,10 @@ Less important
 - [ ] 3 share pre-processing logic in predict() and fit()/evaluate()
 
 ## Done
+
+### 2019 March 1
+
+- [x] 1 fix bug in IamLines data: replace &quot; with " (only the S3 file has to change)
 
 ### 2019 Feb 28
 

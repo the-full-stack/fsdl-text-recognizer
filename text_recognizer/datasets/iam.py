@@ -15,6 +15,7 @@ METADATA_FILENAME = RAW_DATA_DIRNAME / 'metadata.toml'
 EXTRACTED_DATASET_DIRNAME = RAW_DATA_DIRNAME / 'iamdb'
 
 DOWNSAMPLE_FACTOR = 2  # If images were downsampled, the regions must also be.
+LINE_REGION_PADDING = 0  # add this many pixels around the exact coordinates
 
 
 class IamDataset(Dataset):
@@ -87,12 +88,14 @@ def _extract_raw_dataset(metadata):
 
 
 def _get_line_strings_from_xml_file(filename: str) -> List[str]:
+    """Get the text content of each line. Note that we replace &quot; with "."""
     xml_root_element = ElementTree.parse(filename).getroot()  # nosec
     xml_line_elements = xml_root_element.findall('handwritten-part/line')
-    return [el.attrib['text'] for el in xml_line_elements]
+    return [el.attrib['text'].replace('&quot;', '"') for el in xml_line_elements]
 
 
 def _get_line_regions_from_xml_file(filename: str) -> List[Dict[str, int]]:
+    """Get the line region dict for each line."""
     xml_root_element = ElementTree.parse(filename).getroot()  # nosec
     xml_line_elements = xml_root_element.findall('handwritten-part/line')
     return [_get_line_region_from_xml_element(el) for el in xml_line_elements]
@@ -108,10 +111,10 @@ def _get_line_region_from_xml_element(xml_line) -> Dict[str, int]:
     x2s = [int(el.attrib['x']) + int(el.attrib['width']) for el in word_elements]
     y2s = [int(el.attrib['y']) + int(el.attrib['height']) for el in word_elements]
     return {
-        'x1': min(x1s) // DOWNSAMPLE_FACTOR,
-        'y1': min(y1s) // DOWNSAMPLE_FACTOR,
-        'x2': max(x2s) // DOWNSAMPLE_FACTOR,
-        'y2': max(y2s) // DOWNSAMPLE_FACTOR
+        'x1': min(x1s) // DOWNSAMPLE_FACTOR - LINE_REGION_PADDING,
+        'y1': min(y1s) // DOWNSAMPLE_FACTOR - LINE_REGION_PADDING,
+        'x2': max(x2s) // DOWNSAMPLE_FACTOR + LINE_REGION_PADDING,
+        'y2': max(y2s) // DOWNSAMPLE_FACTOR + LINE_REGION_PADDING
     }
 
 
