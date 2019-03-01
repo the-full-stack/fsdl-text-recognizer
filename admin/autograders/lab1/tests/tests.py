@@ -1,4 +1,4 @@
-import pathlib
+from pathlib import Path
 import unittest
 
 from gradescope_utils.autograder_utils.decorators import weight, leaderboard
@@ -7,7 +7,7 @@ from text_recognizer.datasets import EmnistDataset
 from text_recognizer.character_predictor import CharacterPredictor
 
 
-SUPPORT_DIRNAME = pathlib.Path(__file__).parents[1].resolve() / 'test_support' / 'emnist'
+SUPPORT_DIRNAME = Path(__file__).parents[1].resolve() / 'test_support' / 'emnist'
 
 
 class TestCharacterPredictor(unittest.TestCase):

@@ -1,6 +1,6 @@
 """Tests for LinePredictor class."""
 import os
-import pathlib
+from pathlib import Path
 import unittest
 
 import editdistance
@@ -12,7 +12,7 @@ from text_recognizer.line_predictor import LinePredictor
 from text_recognizer.datasets import IamLinesDataset
 # Hide lines above until Lab 5
 
-SUPPORT_DIRNAME = pathlib.Path(__file__).parents[0].resolve() / 'support'
+SUPPORT_DIRNAME = Path(__file__).parents[0].resolve() / 'support'
 
 os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
@@ -35,7 +35,7 @@ class TestEmnistLinePredictorVariableImageWidth(unittest.TestCase):
         for filename in SUPPORT_DIRNAME.glob('*.png'):
             image = util.read_image(str(filename), grayscale=True)
             print('Saved image shape:', image.shape)
-            image = image[:, :-np.random.randint(1, 150)]
+            image = image[:, :-np.random.randint(1, 150)]  # pylint: disable=invalid-unary-operand-type
             print('Randomly cropped image shape:', image.shape)
             pred, conf = predictor.predict(image)
             true = str(filename.stem)

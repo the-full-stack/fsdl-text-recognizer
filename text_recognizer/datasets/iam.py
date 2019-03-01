@@ -55,7 +55,7 @@ class IamDataset(Dataset):
         os.chdir(curdir)
 
     @cachedproperty
-    def line_regions_by_name(self):
+    def line_regions_by_id(self):
         """Return a dict from name of IAM form to a list of (x1, x2, y1, y2) coordinates of all lines in it."""
         return {
             filename.stem: _get_line_regions_from_xml_file(filename)

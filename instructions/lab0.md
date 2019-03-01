@@ -1,63 +1,136 @@
-# Lab 0 (Setup)
+# Lab 0: Codebase tour
 
-## W&B Jupyter Hub instructions
-
-Go to https://app.wandb.ai/profile and enter the code that we will share with you at the session into Access Code field.
-This will drop you into a JupyterLab instance with a couple of GPUs that you will use in these labs.
-
-**From now on, everything you do will be in that instance.**
-
-## Checking out the repo
-
-Start by cloning the repo and going into it
+Before we get started, please run
 
 ```
-git clone https://github.com/gradescope/fsdl-text-recognizer-project.git
-cd fsdl-text-recognizer-project
+pipenv run python text_recognizer/datasets/emnist.py
 ```
 
-If you already have the repo in your home directory, then simply go into it and pull the latest version.
+## Goal of the lab
 
-```sh
-cd fsdl-text-recognizer-project
-git pull origin master
+Familiarize you with the high-level organizational design of the codebase
+
+## Follow along
+
+```
+cd lab0/
 ```
 
-Now click Fork in the top right of this Github repo page: https://github.com/gradescope/fsdl-text-recognizer-project.
-Select your personal account to fork to, and note down your USERNAME, which will be right after https://github.com in the URL that you will be taken to.
+## Project structure
 
-Add your fork as a remote of the repo and push to it:
+Web backend
 
-```sh
-git remote add mine https://github.com//fsdl-text-recognizer-project.git
-git push mine master
+```
+text_recognizer/
+    api/                        # Code for serving predictions as a REST API.
+        tests/test_app.py           # Test that predictions are working
+        Dockerfile                  # Specificies Docker image that runs the web server.
+        __init__.py
+        app.py                      # Flask web server that serves predictions.
+        serverless.yml              # Specifies AWS Lambda deployment of the REST API.
 ```
 
-(If you face some kind of issue, you can `git remote rm mine` and then add it again.)
+Data (not under version control)
 
-Pushing will prompt you to enter your Github username and password.
-If your password is not accepted, it may be because you have two-factor authentication enabled.
-Follow directions here to generate a token you can use instead of your password on the command line: https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/
-Make sure you store the token (e.g. in your password manager), as you will not be able to see it again.
-If you want to avoid entering the token with each git push, you can run the following command to cache your credentials:
-
-```sh
-git config --global credential.helper cache
+```
+    data/                            # Training data lives here
+        raw/
+            emnist/metadata.toml     # Specifications for downloading data
+    experiments/                     # Experiment results live here
+        emnist_mlp/                  # Name of the experiment
+            models/              
+            logs/
 ```
 
-Note that if you do cache your credentials, we recommend you delete this token after the bootcamp.
+Experimentation
 
-## Setting up the Python environment
+```
+    evaluation/                     # Scripts for evaluating model on eval set.
+        evaluate_character_predictor.py
+        
+    notebooks/                  # For snapshots of initial exploration, before solidfying code as proper Python files.
+        01-look-at-emnist.ipynb
+```
 
-Run `pipenv install --dev` to install all required packages into a virtual environment.
+Convenience scripts
 
-Make sure to precede all commands with `pipenv run` from now on, to make sure that you are using the correct environment.
-Or, you could run `pipenv shell` to activate the environment in your terminal session, instead.
-Remember to do that in every terminal session you start.
+```
+    tasks/
+        # Deployment
+        build_api_docker.sh
+        deploy_api_to_lambda.sh
 
-## Ready
+        # Code quality
+        lint.sh
 
-Now you should be setup for the labs. The instructions for each lab are in readme files in their folders.
+        # Tests
+        run_prediction_tests.sh
+        run_validation_tests.sh
+        test_api.sh
 
-You will notice that there are solutions for all the labs right here in the repo, too.
-If you get stuck, you are welcome to take a look!
+        # Training
+        train_character_predictor.sh
+```
+
+Main model and training code
+
+```
+    text_recognizer/                # Package that can be deployed as a self-contained prediction system
+        __init__.py
+
+        character_predictor.py      # Takes a raw image and obtains a prediction
+
+        datasets/                   # Code for loading datasets
+            __init__.py
+            base.py                 # Base class for models - logic for downloading data
+            emnist.py
+            emnist_essentials.json
+            sequence.py 
+
+        models/                     # Code for instantiating models, including data preprocessing and loss functions
+            __init__.py
+            base.py                 # Base class for models
+            character_model.py
+
+        networks/                   # Code for building neural networks (i.e., 'dumb' input->output mappings) used by models
+            __init__.py
+            mlp.py
+
+        tests/
+            support/                        # Raw data used by tests
+            test_character_predictor.py     # Test model on a few key examples
+
+        weights/                            # Weights for production model
+            CharacterModel_EmnistDataset_mlp_weights.h5
+
+        predict/
+            __init__.py
+            emnist_mlp.py
+
+        test/                       # Code that tests functionality of the other code
+            support/                    # Support files for the tests
+                emnist/
+                    a.png
+                    3.png
+            test_emnist_predict.py  # Lightweight test to ensure that the trained emnist_mlp correctly classifies a few data points
+
+        util.py
+
+    tasks/                      # Scripts for running training, downloading data, etc.
+        # Training scripts
+        train_character_predictor.sh
+        # Deployment scripts
+        deploy_api_to_lambda.sh
+        build_api_docker.sh
+        prepare_sample_experiments.sh
+        # Tests
+        run_prediction_tests.sh
+        run_validation_tests.sh
+        test_api.sh
+        lint.sh
+
+    training/                       # Code for running training experiments and selecting the best model.
+        gpu_util_sampler.py
+        run_experiment.py           # Parse experiment config and launch training.
+        util.py                     # Logic for training a model with a given config
+```

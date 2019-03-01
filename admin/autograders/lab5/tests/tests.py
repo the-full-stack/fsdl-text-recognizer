@@ -1,4 +1,4 @@
-import pathlib
+from pathlib import Path
 import unittest
 
 import editdistance
@@ -8,7 +8,7 @@ from text_recognizer.datasets import IamLinesDataset
 from text_recognizer.line_predictor import LinePredictor
 
 
-SUPPORT_DIRNAME = pathlib.Path(__file__).parents[1].resolve() / 'test_support' / 'iam_lines'
+SUPPORT_DIRNAME = Path(__file__).parents[1].resolve() / 'test_support' / 'iam_lines'
 
 
 class TestLinePredictor(unittest.TestCase):

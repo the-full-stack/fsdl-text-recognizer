@@ -1,5 +1,5 @@
 from collections import defaultdict
-import pathlib
+from pathlib import Path
 
 import h5py
 import numpy as np
@@ -10,7 +10,7 @@ from text_recognizer.datasets.emnist import EmnistDataset
 
 
 DATA_DIRNAME = Dataset.data_dirname() / 'processed' / 'emnist_lines'
-ESSENTIALS_FILENAME = pathlib.Path(__file__).parents[0].resolve() / 'emnist_lines_essentials.json'
+ESSENTIALS_FILENAME = Path(__file__).parents[0].resolve() / 'emnist_lines_essentials.json'
 
 
 class EmnistLinesDataset(Dataset):
@@ -119,7 +119,7 @@ def construct_image_from_string(string: str, samples_by_char: dict, max_overlap:
 def create_dataset_of_images(N, samples_by_char, sentence_generator, max_overlap):
     sample_label = sentence_generator.generate()
     sample_image = construct_image_from_string(sample_label, samples_by_char, 0)  # Note that sample_image has 0 overlap
-    images = np.zeros((N, sample_image.shape[0], sample_image.shape[1]), np.uint8)
+    images = np.zeros((N, sample_image.shape[0], sample_image.shape[1]), np.uint8)  # pylint: disable=no-member
     labels = []
     for n in range(N):
         label = None
