@@ -65,7 +65,7 @@
     - text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5
 
 6:
-    - notebooks/04-looking-at-iam-paragraphs.ipynb
+    - notebooks/04-look-at-iam-paragraphs.ipynb
     - text_recognizer/datasets/iam_paragraphs.py
 
 7:
