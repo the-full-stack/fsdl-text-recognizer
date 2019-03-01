@@ -52,12 +52,12 @@ jobs:
       - run:
           name: run prediction tests
           command: |
-            cd lab6 && PYTHONPATH=. pipenv run pytest -s text_recognizer/tests/*
+            cd lab8 && PYTHONPATH=. pipenv run pytest -s text_recognizer/tests/*
 
       - run:
           name: run evaluation tests
           command: |
-            cd lab6 && PYTHONPATH=. pipenv run pytest -s evaluation/*
+            cd lab8 && PYTHONPATH=. pipenv run pytest -s evaluation/*
 
       - store_artifacts:
           path: test-reports

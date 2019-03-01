@@ -28,7 +28,7 @@ import shutil
 
 import yaml
 
-MAX_LAB_NUMBER = 10
+MAX_LAB_NUMBER = 13
 REPO_DIRNAME = Path(__file__).parents[2].resolve()
 INFO_FILENAME = REPO_DIRNAME / 'admin' / 'tasks' / 'lab_specific_files.yml'
 
@@ -110,12 +110,12 @@ def _process_new_files(new_paths, lab_number, filter_your_code=True, filter_hidd
             f.write('\n'.join(lines) + '\n')
 
 
-def subset_repo(info):
+def subset_repo(info, output_dirname):
     """See module docstring."""
-    output_dir = Path(args.output_dirname)
+    output_dir = Path(output_dirname)
     if output_dir.exists():
-        for d in glob.glob(f'{str(output_dir)}/lab*'):
-            shutil.rmtree(d)
+        for directory in glob.glob(f'{str(output_dir)}/lab*'):
+            shutil.rmtree(directory)
         if os.path.exists(output_dir / 'data'):
             shutil.rmtree(output_dir / 'data')
 
@@ -152,7 +152,7 @@ def subset_repo(info):
     os.remove(output_dir / 'lab5/text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5')
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output_dirname', default='_labs', help='Where to output the lab subset directories.')
     args = parser.parse_args()
@@ -160,4 +160,8 @@ if __name__ == '__main__':
     with open(INFO_FILENAME) as f:
         info = yaml.load(f.read())
 
-    subset_repo(info)
+    subset_repo(info, args.output_dirname)
+
+
+if __name__ == '__main__':
+    main()

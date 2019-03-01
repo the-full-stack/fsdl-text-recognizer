@@ -14,16 +14,13 @@
 - [-] 1 go through the first 5 labs and make sure it all works
     - [ ] figure out if there's something weird about ctc model (seems to die after some number of epochs on the farm)
 
-- [-] 1 test that deploying to lambda works
-    - [ ] debug why api errors (probably model loading)
-
 - [ ] 1 test jupyterhub with a clean user
 
 - [ ] 1 get the evaluation tests to pass
 
 - [ ] 1 line detection model
-    - [-] @saurabh get a great line detection model going in notebook
-    - [ ] port line detection model to proper files, train it, and save model
+    - [x] @saurabh get a great line detection model going in notebook
+    - [-] @saurabh port line detection model to proper files, train it, and save model
 - [ ] 1 connect the line detection and line recognition model
     - [ ] add test for the joint model
 - [ ] 1 make the app.py use the joint model
@@ -47,6 +44,8 @@ Less important
 
 - [n] 1 add shuffling to the dataset sequence
     - no need, fit_generator does it
+- [x] 1 test that deploying to lambda works
+    - [x] debug why api errors (at first due to package being too big, then due to opencv2 ELF headers. fixed by forking serverless-python-requirements.
 
 ### 2019 Feb 27
 
