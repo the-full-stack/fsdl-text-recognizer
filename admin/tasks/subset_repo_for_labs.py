@@ -64,7 +64,6 @@ def _filter_hidden_blocks(lines, lab_number):
         lab_numbers_to_hide = str(MAX_LAB_NUMBER)
     else:
         lab_numbers_to_hide = f"[{'|'.join(str(num) for num in range(lab_number + 1, MAX_LAB_NUMBER))}]"
-    print(lab_numbers_to_hide)
     beginning_comment = f'# Hide lines below until Lab {lab_numbers_to_hide}'
     ending_comment = f'# Hide lines above until Lab {lab_numbers_to_hide}'
     filtered_lines = []
