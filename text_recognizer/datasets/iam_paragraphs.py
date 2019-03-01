@@ -1,4 +1,5 @@
 """IamParagraphsDataset class and functions for data processing."""
+from typing import Tuple
 from pathlib import Path
 from boltons.cacheutils import cachedproperty
 from tensorflow.keras.utils import to_categorical
@@ -18,7 +19,6 @@ CROPS_DIRNAME = PROCESSED_DATA_DIRNAME / 'crops'
 GT_DIRNAME = PROCESSED_DATA_DIRNAME / 'gt'
 
 # On top of IAM forms being downsampled, we will downsample the paragraph crops once more, to make convnets tractable.
-DOWNSAMPLE_FACTOR = 2
 PARAGRAPH_BUFFER = 50  # pixels in the IAM form images to leave around the lines
 TEST_FRACTION = 0.2
 
@@ -27,14 +27,13 @@ class IamParagraphsDataset(Dataset):
     """
     Paragraphs from the IAM dataset.
     """
-    def __init__(self, subsample_fraction: float = None, downsample_factor: float = 1):
+    def __init__(self, image_shape: Tuple[int, int] = (512, 512), subsample_fraction: float = None):
         self.iam_dataset = IamDataset()
         self.iam_dataset.load_or_generate_data()
 
         self.num_classes = 3
-        self.downsample_factor = downsample_factor
-        self.input_shape = (512, 512)
-        self.output_shape = (512, 512, self.num_classes)
+        self.input_shape = image_shape
+        self.output_shape = image_shape + (self.num_classes, )
 
         self.subsample_fraction = subsample_fraction
         self.ids = None
@@ -44,12 +43,13 @@ class IamParagraphsDataset(Dataset):
 
     def load_or_generate_data(self):
         """Load or generate dataset data."""
-        num_actual = len(list(CROPS_DIRNAME.glob('*.jpg')))
-        num_target = len(self.iam_dataset.line_regions_by_id)
-        if num_actual < num_target - 2:  # There are a couple of instances that could not be cropped
-            self._process_iam_paragraphs()
+        # TODO: don't process everytime
+        # num_actual = len(list(CROPS_DIRNAME.glob('*.jpg')))
+        # num_target = len(self.iam_dataset.line_regions_by_id)
+        # if num_actual < num_target - 2:  # There are a couple of instances that could not be cropped
+        self._process_iam_paragraphs()
 
-        self.x, self.y, self.ids = _load_iam_paragraphs(self.downsample_factor)
+        self.x, self.y, self.ids = _load_iam_paragraphs()
         self.train_ind, self.test_ind = _get_random_split(self.x.shape[0])
         self._subsample()
 
@@ -84,8 +84,8 @@ class IamParagraphsDataset(Dataset):
     def _process_iam_paragraphs(self):
         """
         For each page, crop out the part of it that correspond to the paragraph of text, and make sure all crops are
-        512x512. The ground truth data is the same size, with a one-hot vector at each pixel corresponding to labels
-        0=background, 1=odd-numbered line, 2=even-numbered line
+        self.input_shape. The ground truth data is the same size, with a one-hot vector at each pixel
+        corresponding to labels 0=background, 1=odd-numbered line, 2=even-numbered line
         """
         crop_dims = self._decide_on_crop_dims()
         CROPS_DIRNAME.mkdir(parents=True, exist_ok=True)
@@ -193,7 +193,7 @@ def _crop_paragraph_image(filename, line_regions, crop_dims, final_dims):
     util.write_image(gt_image, GT_DIRNAME / f'{filename.stem}.png')
 
 
-def _load_iam_paragraphs(downsample_factor: float):
+def _load_iam_paragraphs():
     print('Loading IAM paragraph crops and ground truth from image files...')
     images = []
     gt_images = []
@@ -206,15 +206,10 @@ def _load_iam_paragraphs(downsample_factor: float):
         gt_filename = GT_DIRNAME / f'{id_}.png'
         gt_image = util.read_image(gt_filename, grayscale=True)
 
-        if downsample_factor > 1:
-            factor = 1 / downsample_factor
-            image = cv2.resize(image, dsize=None, fx=factor, fy=factor, interpolation=cv2.INTER_CUBIC)
-            gt_image = cv2.resize(gt_image, dsize=None, fx=factor, fy=factor, interpolation=cv2.INTER_NEAREST)
-
         images.append(image)
         gt_images.append(gt_image)
         ids.append(id_)
-    images = np.expand_dims(np.array(images).astype(np.float32), axis=-1)
+    images = np.array(images).astype(np.float32)
     gt_images = to_categorical(np.array(gt_images), 3).astype(np.uint8)
     return images, gt_images, np.array(ids)
 
