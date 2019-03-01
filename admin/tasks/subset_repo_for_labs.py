@@ -147,7 +147,7 @@ def subset_repo(info, output_dirname):
         (output_dir / '.circleci').mkdir(exist_ok=True)
         shutil.copy('.circleci/config.yml.for-lab', output_dir / '.circleci' / 'config.yml')
 
-    os.remove(output_dir / 'lab1/text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5')
+    os.remove(output_dir / 'lab2/text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5')
     os.remove(output_dir / 'lab3/text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5')
     os.remove(output_dir / 'lab5/text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5')
 
