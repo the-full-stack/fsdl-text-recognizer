@@ -41,7 +41,7 @@ class IamDataset(Dataset):
     def xml_filenames(self):
         return list((EXTRACTED_DATASET_DIRNAME / 'xml').glob('*.xml'))
 
-    @property
+    @cachedproperty
     def form_filenames(self):
         return list((EXTRACTED_DATASET_DIRNAME / 'forms').glob('*.jpg'))
 
@@ -51,6 +51,18 @@ class IamDataset(Dataset):
         _download_raw_dataset(self.metadata)
         _extract_raw_dataset(self.metadata)
         os.chdir(curdir)
+
+    @property
+    def form_filenames_by_id(self):
+        return {filename.stem: filename for filename in self.form_filenames}
+
+    @cachedproperty
+    def line_strings_by_id(self):
+        """Return a dict from name of IAM form to a list of line texts in it."""
+        return {
+            filename.stem: _get_line_strings_from_xml_file(filename)
+            for filename in self.xml_filenames
+        }
 
     @cachedproperty
     def line_regions_by_id(self):
@@ -72,6 +84,12 @@ def _extract_raw_dataset(metadata):
     print('Extracting IAM data')
     with zipfile.ZipFile(metadata['filename'], 'r') as zip_file:
         zip_file.extractall()
+
+
+def _get_line_strings_from_xml_file(filename: str) -> List[str]:
+    xml_root_element = ElementTree.parse(filename).getroot()  # nosec
+    xml_line_elements = xml_root_element.findall('handwritten-part/line')
+    return [el.attrib['text'] for el in xml_line_elements]
 
 
 def _get_line_regions_from_xml_file(filename: str) -> List[Dict[str, int]]:
