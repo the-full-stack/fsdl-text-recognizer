@@ -2,7 +2,7 @@
 data/processed
 data/interim
 data/raw/emnist/matlab.zip
-data/raw/fsdl_paragraphs/images
+data/raw/fsdl_handwriting/pages
 data/raw/iam/iamdb
 data/raw/iam/iamdb.zip
 

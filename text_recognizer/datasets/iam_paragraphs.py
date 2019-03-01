@@ -1,6 +1,4 @@
 """IamParagraphsDataset class and functions for data processing."""
-from pathlib import Path
-
 from tensorflow.keras.utils import to_categorical
 import cv2
 import numpy as np
@@ -12,7 +10,7 @@ from text_recognizer import util
 
 INTERIM_DATA_DIRNAME = Dataset.data_dirname() / 'interim' / 'iam_paragraphs'
 DEBUG_CROPS_DIRNAME = INTERIM_DATA_DIRNAME / 'debug_crops'
-PROCESSED_DATA_DIRNAME = Dataset.data_dirname()  / 'processed' / 'iam_paragraphs'
+PROCESSED_DATA_DIRNAME = Dataset.data_dirname() / 'processed' / 'iam_paragraphs'
 CROPS_DIRNAME = PROCESSED_DATA_DIRNAME / 'crops'
 GT_DIRNAME = PROCESSED_DATA_DIRNAME / 'gt'
 

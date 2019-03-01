@@ -1,5 +1,4 @@
 """IamLinesDataset class."""
-from pathlib import Path
 from urllib.request import urlretrieve
 
 from boltons.cacheutils import cachedproperty

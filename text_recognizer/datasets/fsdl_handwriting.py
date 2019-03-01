@@ -36,6 +36,7 @@ class FsdlHandwritingDataset(Dataset):
         return list(PAGES_DIRNAME.glob('*.jpg'))
 
     def _download_pages(self):
+        PAGES_DIRNAME.mkdir(exist_ok=True, parents=True)
         ids, urls = zip(*[
             (id_, data['url'])
             for id_, data
@@ -47,12 +48,12 @@ class FsdlHandwritingDataset(Dataset):
     @property
     def line_regions_by_id(self):
         """Return a dict from name of IAM form to a list of (x1, x2, y1, y2) coordinates of all lines in it."""
-        return {id_: data['regions'] for id_, data in self.data_by_page_id}
+        return {id_: data['regions'] for id_, data in self.data_by_page_id.items()}
 
     @property
     def line_strings_by_id(self):
         """Return a dict from name of image to a list of strings."""
-        return {id_: data['strings'] for id_, data in self.data_by_page_id}
+        return {id_: data['strings'] for id_, data in self.data_by_page_id.items()}
 
     def __repr__(self):
         return (
@@ -87,10 +88,10 @@ def _extract_id_and_data(page_datum):
         x1, y1 = points.min(0)
         x2, y2 = points.max(0)
         regions.append({
-            'x1': x1 * annotation['imageWidth'],
-            'y1': y1 * annotation['imageHeight'],
-            'x2': x2 * annotation['imageWidth'],
-            'y2': y2 * annotation['imageHeight']
+            'x1': int(x1 * annotation['imageWidth']),
+            'y1': int(y1 * annotation['imageHeight']),
+            'x2': int(x2 * annotation['imageWidth']),
+            'y2': int(y2 * annotation['imageHeight'])
         })
         strings.append(annotation['notes'])
     return id_, {'url': url, 'regions': regions, 'strings': strings}

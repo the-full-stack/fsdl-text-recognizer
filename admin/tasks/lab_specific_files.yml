@@ -70,8 +70,6 @@
 
 7:
     - tasks/update_fsdl_paragraphs_metadata.sh
-    - text_recognizer/datasets/fsdl_handwriting_lines.py
-    - text_recognizer/datasets/fsdl_handwriting_paragraphs.py
     - text_recognizer/datasets/fsdl_handwriting.py
     - training/update_metadata.py
 

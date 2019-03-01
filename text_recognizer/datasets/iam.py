@@ -1,6 +1,5 @@
 """Class for loading the IAM dataset, which encompasses both paragraphs and lines, with associated utilities."""
 import os
-from pathlib import Path
 from typing import Dict, List
 import xml.etree.ElementTree as ElementTree
 import zipfile

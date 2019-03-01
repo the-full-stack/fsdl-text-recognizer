@@ -1,15 +1,11 @@
 ## Now
 
-- [ ] 1 data annotation part of the lab
-    - [x] create documents with text for people to handwrite
-    - [x] annotate a bit, take screenshots
-    - [x] make a script for updating metadata.toml with dataturks export
-    - [ ] write FsdlParagraphs dataset
-    - [ ] write up instructions
-
-- [ ] 2 develop code to create IAM lines from IAM source data
-    - [ ] load in train/val/test ids in IamDataset
-    - [ ] strip &quot character from IAM dataset
+- [ ] 1 line detection model
+    - [x] @saurabh get a great line detection model going in notebook
+    - [-] @saurabh port line detection model to proper files, train it, and save model
+- [ ] 1 connect the line detection and line recognition model
+    - [ ] add test for the joint model
+- [ ] 1 make the app.py use the joint model
 
 ## Next
 
@@ -20,14 +16,10 @@
 
 - [ ] 1 get the evaluation tests to pass
 
-- [ ] 1 line detection model
-    - [x] @saurabh get a great line detection model going in notebook
-    - [-] @saurabh port line detection model to proper files, train it, and save model
-- [ ] 1 connect the line detection and line recognition model
-    - [ ] add test for the joint model
-- [ ] 1 make the app.py use the joint model
-
 Less important
+- [ ] 2 develop code to create IAM lines from IAM source data
+    - [ ] load in train/val/test ids in IamDataset
+    - [ ] strip &quot character from IAM dataset
 - [ ] 2 add metadata.toml for Brown corpus
 - [ ] 2 add tests for training (but don't run them in circleci)
 - [ ] 2 add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
@@ -49,6 +41,12 @@ Less important
     - no need, fit_generator does it
 - [x] 1 test that deploying to lambda works
     - [x] debug why api errors (at first due to package being too big, then due to opencv2 ELF headers. fixed by forking serverless-python-requirements.
+- [x] 1 data annotation part of the lab
+    - [x] create documents with text for people to handwrite
+    - [x] annotate a bit, take screenshots
+    - [x] make a script for updating metadata.toml with dataturks export
+    - [x] write FsdlParagraphs dataset
+    - [x] write up instructions
 
 ### 2019 Feb 27
 
