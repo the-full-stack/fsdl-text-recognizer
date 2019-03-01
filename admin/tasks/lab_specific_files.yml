@@ -1,8 +1,10 @@
 1:
+    - text_recognizer/__init__.py
+
+2:
     - notebooks/01-look-at-emnist.ipynb
     - tasks/train_character_predictor.sh
     - tasks/run_prediction_tests.sh
-    - text_recognizer/__init__.py
     - text_recognizer/util.py
     - text_recognizer/character_predictor.py
     - text_recognizer/datasets/__init__.py
@@ -24,14 +26,8 @@
     - training/util.py
     - training/run_experiment.py
     - training/gpu_util_sampler.py
-
-2:
     - notebooks/02-look-at-emnist-lines.ipynb
     - tasks/train_cnn_line_predictor.sh
-    - text_recognizer/datasets/emnist_lines.py
-    - text_recognizer/datasets/sentences.py
-    - text_recognizer/models/line_model.py
-    - text_recognizer/networks/line_cnn_all_conv.py
     - text_recognizer/networks/lenet.py
     - text_recognizer/networks/misc.py
     - text_recognizer/tests/support/create_emnist_lines_support_files.py
@@ -41,10 +37,14 @@
 
 3:
     - tasks/train_lstm_line_predictor.sh
+    - text_recognizer/datasets/emnist_lines.py
+    - text_recognizer/datasets/sentences.py
+    - text_recognizer/models/line_model.py
     - text_recognizer/line_predictor.py
     - text_recognizer/models/line_model_ctc.py
     - text_recognizer/networks/line_lstm_ctc.py
     - text_recognizer/networks/ctc.py
+    - text_recognizer/networks/line_cnn_all_conv.py
     - text_recognizer/tests/test_line_predictor.py
     - text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5
 
