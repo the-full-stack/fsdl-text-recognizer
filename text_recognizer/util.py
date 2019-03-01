@@ -1,13 +1,15 @@
 """Utility functions for text_recognizer module."""
+from concurrent.futures import as_completed, ThreadPoolExecutor
 from pathlib import Path
 from typing import Union
-from urllib.request import urlopen
+from urllib.request import urlopen, urlretrieve
 import base64
 import hashlib
 import os
 
 import numpy as np
 import cv2
+import tqdm
 
 
 def read_image(image_uri: Union[Path, str], grayscale=False) -> np.array:
@@ -52,3 +54,13 @@ def compute_sha256(filename: Union[Path, str]):
     """Return SHA256 checksum of a file."""
     with open(filename, 'rb') as f:
         return hashlib.sha256(f.read()).hexdigest()
+
+
+def download_urls(urls, filenames):
+    with ThreadPoolExecutor() as executor:
+        futures = [executor.submit(urlretrieve, url, filename) for url, filename in zip(urls, filenames)]
+        for future in tqdm(as_completed(futures), total=len(futures)):
+            try:
+                future.result()
+            except Exception as e:
+                print('Error', e)
