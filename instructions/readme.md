@@ -29,7 +29,8 @@ Project developed during lab sessions of the [Full Stack Deep Learning Bootcamp]
   - Lab 7 (30 min) data labeling
     - Go through data versioning and even have a little labeling interface for fresh data that they generated on the first day
 - Fourth session (75 min)
-  - Lab 8 (75 min) testing & deployment
+  - Lab 8 (15 min) continuous integration
+  - Lab 8 (60 min) web deployment
 
 # Setup
 
