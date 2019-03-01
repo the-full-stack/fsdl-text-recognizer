@@ -12,7 +12,7 @@ Furthermore, it also strips out text between blocks like
 for labs with index greater than or equal to the one given.
 
 It also strips text between blocks like
-    ## Hide lines below until Lab 2
+    # Hide lines below until Lab 2
     # <content>
     # Hide lines above until Lab 2
 for labs with index greater than the one given.
@@ -28,7 +28,7 @@ import shutil
 
 import yaml
 
-MAX_LAB_NUMBER = 13
+MAX_LAB_NUMBER = 9  # NOTE: Setting this to 10 will break the regexp!
 REPO_DIRNAME = Path(__file__).parents[2].resolve()
 INFO_FILENAME = REPO_DIRNAME / 'admin' / 'tasks' / 'lab_specific_files.yml'
 
@@ -37,7 +37,10 @@ def _filter_your_code_blocks(lines, lab_number):
     """
     Strip out stuff between "Your code here" blocks.
     """
-    lab_numbers_to_strip = f"[{'|'.join(str(num) for num in range(lab_number, MAX_LAB_NUMBER))}]"
+    if lab_number == MAX_LAB_NUMBER:
+        lab_numbers_to_strip = str(lab_number)
+    else:
+        lab_numbers_to_strip = f"[{'|'.join(str(num) for num in range(lab_number, MAX_LAB_NUMBER))}]"
     beginning_comment = f'# Your code below \(Lab {lab_numbers_to_strip}\)'
     ending_comment = f'# Your code above \(Lab {lab_numbers_to_strip}\)'
     filtered_lines = []
@@ -55,7 +58,13 @@ def _filter_your_code_blocks(lines, lab_number):
 
 
 def _filter_hidden_blocks(lines, lab_number):
-    lab_numbers_to_hide = f"[{'|'.join(str(num) for num in range(lab_number + 1, MAX_LAB_NUMBER))}]"
+    if lab_number == MAX_LAB_NUMBER:
+        return lines
+    if lab_number + 1 == MAX_LAB_NUMBER:
+        lab_numbers_to_hide = str(MAX_LAB_NUMBER)
+    else:
+        lab_numbers_to_hide = f"[{'|'.join(str(num) for num in range(lab_number + 1, MAX_LAB_NUMBER))}]"
+    print(lab_numbers_to_hide)
     beginning_comment = f'# Hide lines below until Lab {lab_numbers_to_hide}'
     ending_comment = f'# Hide lines above until Lab {lab_numbers_to_hide}'
     filtered_lines = []
