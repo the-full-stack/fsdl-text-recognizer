@@ -1,9 +1,10 @@
 ## Now
 
 - [ ] 1 data annotation part of the lab
-    - [ ] script for uploading data to dataturks (main thing is to retain id of image)
-    - [ ] annotate a bit, take screenshots
-    - [ ] download the data from dataturks and make a script for updating metadata.toml
+    - [x] create documents with text for people to handwrite
+    - [x] annotate a bit, take screenshots
+    - [ ] make a script for updating metadata.toml with dataturks export
+    - [ ] write up instructions
 
 - [ ] 2 develop code to create IAM lines from IAM source data
     - [ ] load in train/val/test ids in IamDataset
@@ -26,6 +27,7 @@
 - [ ] 1 make the app.py use the joint model
 
 Less important
+- [ ] 2 add metadata.toml for Brown corpus
 - [ ] 2 add tests for training (but don't run them in circleci)
 - [ ] 2 add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
 - [ ] 3 add tqdm progress bar to urlretrieve (some of the downloads take a while)
