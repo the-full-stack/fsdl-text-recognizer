@@ -42,7 +42,7 @@ class IamDataset(Dataset):
     def xml_filenames(self):
         return list((EXTRACTED_DATASET_DIRNAME / 'xml').glob('*.xml'))
 
-    @cachedproperty
+    @property
     def form_filenames(self):
         return list((EXTRACTED_DATASET_DIRNAME / 'forms').glob('*.jpg'))
 
