@@ -18,7 +18,7 @@ class FsdlHandwritingDataset(Dataset):
     """
     def __init__(self):
         self.metadata = toml.load(METADATA_FILENAME)
-        with open(self.metadata['filename']) as f:
+        with open(RAW_DATA_DIRNAME / self.metadata['filename']) as f:
             self.data = [json.loads(line) for line in f.readlines()]
         from IPython import embed
         embed()
@@ -47,7 +47,7 @@ class FsdlHandwritingDataset(Dataset):
     def __repr__(self):
         return (
             'FSDH Handwriting Dataset\n'
-            f'Num pages: {len(self.pages_dirname)}\n'
+            f'Num pages: {len(self.data)}\n'
         )
 
 
