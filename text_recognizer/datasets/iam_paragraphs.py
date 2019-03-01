@@ -1,6 +1,6 @@
 """IamParagraphsDataset class and functions for data processing."""
 from pathlib import Path
-
+from boltons.cacheutils import cachedproperty
 from tensorflow.keras.utils import to_categorical
 import cv2
 import numpy as np
@@ -27,11 +27,12 @@ class IamParagraphsDataset(Dataset):
     """
     Paragraphs from the IAM dataset.
     """
-    def __init__(self, subsample_fraction: float = None):
+    def __init__(self, subsample_fraction: float = None, downsample_factor: float = 1):
         self.iam_dataset = IamDataset()
         self.iam_dataset.load_or_generate_data()
 
         self.num_classes = 3
+        self.downsample_factor = downsample_factor
         self.input_shape = (512, 512)
         self.output_shape = (512, 512, self.num_classes)
 
@@ -48,31 +49,31 @@ class IamParagraphsDataset(Dataset):
         if num_actual < num_target - 2:  # There are a couple of instances that could not be cropped
             self._process_iam_paragraphs()
 
-        self.x, self.y, self.ids = _load_iam_paragraphs()
+        self.x, self.y, self.ids = _load_iam_paragraphs(self.downsample_factor)
         self.train_ind, self.test_ind = _get_random_split(self.x.shape[0])
         self._subsample()
 
-    @property
+    @cachedproperty
     def x_train(self):
         return self.x[self.train_ind]
 
-    @property
+    @cachedproperty
     def y_train(self):
         return self.y[self.train_ind]
 
-    @property
+    @cachedproperty
     def x_test(self):
         return self.x[self.test_ind]
 
-    @property
+    @cachedproperty
     def y_test(self):
-        return self.x[self.test_ind]
+        return self.y[self.test_ind]
 
-    @property
+    @cachedproperty
     def ids_train(self):
         return self.ids[self.train_ind]
 
-    @property
+    @cachedproperty
     def ids_test(self):
         return self.ids[self.test_ind]
 
@@ -192,7 +193,7 @@ def _crop_paragraph_image(filename, line_regions, crop_dims, final_dims):
     util.write_image(gt_image, GT_DIRNAME / f'{filename.stem}.png')
 
 
-def _load_iam_paragraphs():
+def _load_iam_paragraphs(downsample_factor: float):
     print('Loading IAM paragraph crops and ground truth from image files...')
     images = []
     gt_images = []
@@ -200,15 +201,21 @@ def _load_iam_paragraphs():
     for filename in CROPS_DIRNAME.glob('*.jpg'):
         id_ = filename.stem
         image = util.read_image(filename, grayscale=True)
+        image = 1. - image / 255
 
         gt_filename = GT_DIRNAME / f'{id_}.png'
         gt_image = util.read_image(gt_filename, grayscale=True)
 
-        images.append(image / 255)
+        if downsample_factor > 1:
+            factor = 1 / downsample_factor
+            image = cv2.resize(image, dsize=None, fx=factor, fy=factor, interpolation=cv2.INTER_CUBIC)
+            gt_image = cv2.resize(gt_image, dsize=None, fx=factor, fy=factor, interpolation=cv2.INTER_NEAREST)
+
+        images.append(image)
         gt_images.append(gt_image)
         ids.append(id_)
-    images = np.array(images).astype(np.float32)
-    gt_images = to_categorical(np.array(gt_images), 3)
+    images = np.expand_dims(np.array(images).astype(np.float32), axis=-1)
+    gt_images = to_categorical(np.array(gt_images), 3).astype(np.uint8)
     return images, gt_images, np.array(ids)
 
 
