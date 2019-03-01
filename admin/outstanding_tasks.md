@@ -19,12 +19,8 @@
 - [ ] 1 get the evaluation tests to pass
 
 Less important
-- [-] 2 develop code to create IAM lines from IAM source data
-    - [ ] load in train/val/test ids in IamDataset
-- [ ] 2 add metadata.toml for Brown corpus
 - [ ] 2 add tests for training (but don't run them in circleci)
 - [ ] 2 add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
-- [ ] 3 add tqdm progress bar to urlretrieve (some of the downloads take a while)
 - [ ] 3 make a flag for overfitting on one batch
 - [ ] 3 train a baller IAMLines model
 - [ ] 3 explain Pipenv in lab1.md
@@ -33,12 +29,16 @@ Less important
 - [ ] 3 save experiment json along with weights, and just call it canonical_character_predictor_weights.py and canonical_character_predictor_config.py
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
 - [ ] 3 share pre-processing logic in predict() and fit()/evaluate()
+- [ ] 4 add metadata.toml for Brown corpus
+- [-] 4 develop code to create IAM lines from IAM source data
+    - [ ] load in train/val/test ids in IamDataset
 
 ## Done
 
 ### 2019 March 1
 
 - [x] 1 fix bug in IamLines data: replace &quot; with " (only the S3 file has to change)
+- [x] 3 add tqdm progress bar to urlretrieve (some of the downloads take a while)
 
 ### 2019 Feb 28
 
