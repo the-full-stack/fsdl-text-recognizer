@@ -69,7 +69,9 @@
     - text_recognizer/datasets/iam_paragraphs.py
 
 7:
-    - text_recognizer/datasets/fsdl_paragraphs.py
+    - tasks/update_fsdl_paragraphs_metadata.sh
+    - text_recognizer/datasets/fsdl_handwriting.py
+    - training/update_metadata.py
 
 8:
     - evaluation/evaluate_character_predictor.py

@@ -1,6 +1,5 @@
 """Class for loading the IAM dataset, which encompasses both paragraphs and lines, with associated utilities."""
 import os
-from pathlib import Path
 from typing import Dict, List
 import xml.etree.ElementTree as ElementTree
 import zipfile
@@ -11,8 +10,7 @@ import toml
 from text_recognizer.datasets.base import Dataset, _download_raw_dataset
 
 
-DATA_DIRNAME = Path(__file__).parents[2].resolve() / 'data'
-RAW_DATA_DIRNAME = DATA_DIRNAME / 'raw' / 'iam'
+RAW_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'iam'
 METADATA_FILENAME = RAW_DATA_DIRNAME / 'metadata.toml'
 EXTRACTED_DATASET_DIRNAME = RAW_DATA_DIRNAME / 'iamdb'
 
