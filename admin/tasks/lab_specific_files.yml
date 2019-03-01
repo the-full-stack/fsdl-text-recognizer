@@ -69,6 +69,8 @@
     - text_recognizer/datasets/iam_paragraphs.py
 
 7:
+    - tasks/update_fsdl_paragraphs_metadata.sh
+    - training/update_metadata.py
     - text_recognizer/datasets/fsdl_paragraphs.py
 
 8:

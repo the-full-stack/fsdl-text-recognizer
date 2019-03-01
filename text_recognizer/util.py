@@ -3,6 +3,7 @@ from pathlib import Path
 from typing import Union
 from urllib.request import urlopen
 import base64
+import hashlib
 import os
 
 import numpy as np
@@ -45,3 +46,9 @@ def read_b64_image(b64_string, grayscale=False):
 
 def write_image(image: np.ndarray, filename: Union[Path, str]) -> None:
     cv2.imwrite(str(filename), image)
+
+
+def compute_sha256(filename: Union[Path, str]):
+    """Return SHA256 checksum of a file."""
+    with open(filename, 'rb') as f:
+        return hashlib.sha256(f.read()).hexdigest()
