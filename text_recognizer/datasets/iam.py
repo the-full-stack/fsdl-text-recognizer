@@ -11,8 +11,7 @@ import toml
 from text_recognizer.datasets.base import Dataset, _download_raw_dataset
 
 
-DATA_DIRNAME = Path(__file__).parents[2].resolve() / 'data'
-RAW_DATA_DIRNAME = DATA_DIRNAME / 'raw' / 'iam'
+RAW_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'iam'
 METADATA_FILENAME = RAW_DATA_DIRNAME / 'metadata.toml'
 EXTRACTED_DATASET_DIRNAME = RAW_DATA_DIRNAME / 'iamdb'
 
