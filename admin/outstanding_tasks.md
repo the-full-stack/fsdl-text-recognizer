@@ -3,7 +3,8 @@
 - [ ] 1 data annotation part of the lab
     - [x] create documents with text for people to handwrite
     - [x] annotate a bit, take screenshots
-    - [ ] make a script for updating metadata.toml with dataturks export
+    - [x] make a script for updating metadata.toml with dataturks export
+    - [ ] write FsdlParagraphs dataset
     - [ ] write up instructions
 
 - [ ] 2 develop code to create IAM lines from IAM source data

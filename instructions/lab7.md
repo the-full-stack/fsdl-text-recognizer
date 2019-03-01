@@ -12,7 +12,11 @@ TODO describe structure by looking at the IAM one
 
 To compute the SHA256 hash of a file, run `shasum -a 256 <filename>`.
 
-## Download the data
+## Download the JSON data and update metadata
 
 We can update `metadata.toml` with a convenient script that compares the SHA-256 of the current file with the SHA-256 of the new file.
 There is a convenience task script defined: `tasks/update_fsdl_paragraphs_metadata.sh`.
+
+## Download images
+
+TODO cover downloading in parallel
