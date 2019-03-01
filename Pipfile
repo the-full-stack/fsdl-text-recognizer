@@ -13,6 +13,7 @@ opencv-python-headless = "*"
 requests = "*"
 tensorflow = ">=1.12,<1.13"
 toml = "*"
+ipdb = "*"
 
 [dev-packages]
 bandit = "*"
