@@ -23,21 +23,20 @@ class Model:
         if network_args is None:
             network_args = {}
         self.network = network_fn(self.data.input_shape, self.data.output_shape, **network_args)
+        self.network.compile(loss=self.loss(), optimizer=self.optimizer(), metrics=self.metrics())
         self.network.summary()
 
         self.batch_augment_fn: Optional[Callable] = None
         self.batch_format_fn: Optional[Callable] = None
 
     @property
-    def weights_filename(self):
+    def weights_filename(self) -> str:
         DIRNAME.mkdir(parents=True, exist_ok=True)
         return str(DIRNAME / f'{self.name}_weights.h5')
 
-    def fit(self, dataset, batch_size=32, epochs=10, callbacks=None):
+    def fit(self, dataset, batch_size: int = 32, epochs: int = 10, augment_val: bool = True, callbacks: list = None):
         if callbacks is None:
             callbacks = []
-
-        self.network.compile(loss=self.loss(), optimizer=self.optimizer(), metrics=self.metrics())
 
         train_sequence = DatasetSequence(
             dataset.x_train,
@@ -50,12 +49,12 @@ class Model:
             dataset.x_test,
             dataset.y_test,
             batch_size,
-            augment_fn=self.batch_augment_fn,
+            augment_fn=self.batch_augment_fn if augment_val else None,
             format_fn=self.batch_format_fn
         )
 
         self.network.fit_generator(
-            train_sequence,
+            generator=train_sequence,
             epochs=epochs,
             callbacks=callbacks,
             validation_data=test_sequence,

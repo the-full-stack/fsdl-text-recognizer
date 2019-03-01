@@ -27,7 +27,7 @@ def fcn(input_shape: Tuple[int, ...], output_shape: Tuple[int, ...]) -> Model:
     """Function to instantiate a fully convolutional residual network for line detection."""
     num_filters = [16] * 14
     kernel_sizes = [7] * 14
-    dilation_rates = [3] * 4 + [7] * 10
+    dilation_rates = [3] * 4 + [5] * 2 + [7] * 8
 
     num_classes = output_shape[-1]
     input_image = Input(input_shape)

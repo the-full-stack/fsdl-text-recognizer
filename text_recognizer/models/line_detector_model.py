@@ -7,7 +7,6 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 from text_recognizer.datasets.iam_paragraphs import IamParagraphsDataset
-from text_recognizer.datasets.sequence import DatasetSequence
 from text_recognizer.models.base import Model
 from text_recognizer.networks import fcn
 
@@ -41,7 +40,7 @@ class LineDetectorModel(Model):
 
         self.image_shape = dataset_args['image_shape']
         self.data_augmentor = ImageDataGenerator(**_DATA_AUGMENTATION_PARAMS)
-        self.batch_augment_fn = self.augment_batch  # just rename augment_batch() to batch_augment_fn()
+        self.batch_augment_fn = self.augment_batch
 
     def loss(self):  # pylint: disable=no-self-use
         return 'categorical_crossentropy'
@@ -51,38 +50,6 @@ class LineDetectorModel(Model):
 
     def metrics(self):  # pylint: disable=no-self-use
         return None
-
-    def fit(self, dataset, batch_size=32, epochs=1000, callbacks=None):
-        """Overwriting the BaseModel fit method because we have to use ImageDataGenerator from keras."""
-        if callbacks is None:
-            callbacks = {}
-
-        self.network.compile(loss=self.loss(), optimizer=self.optimizer(), metrics=self.metrics())
-
-        train_sequence = DatasetSequence(
-            dataset.x_train,
-            dataset.y_train,
-            batch_size,
-            augment_fn=self.batch_augment_fn,
-            format_fn=self.batch_format_fn
-        )
-        test_sequence = DatasetSequence(
-            dataset.x_test,
-            dataset.y_test,
-            batch_size,
-            augment_fn=None,
-            format_fn=self.batch_format_fn
-        )
-
-        self.network.fit_generator(
-            train_sequence,
-            epochs=epochs,
-            callbacks=callbacks,
-            validation_data=test_sequence,  # (dataset.x_test, dataset.y_test),
-            use_multiprocessing=True,
-            workers=2,
-            shuffle=True
-        )
 
     def augment_batch(self, x_batch: np.ndarray, y_batch: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
         """Performs different random transformations on the whole batch of x, y samples."""
