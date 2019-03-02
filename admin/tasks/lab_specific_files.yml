@@ -1,13 +1,17 @@
 1:
+    - text_recognizer/__init__.py
+
+2:
     - notebooks/01-look-at-emnist.ipynb
     - tasks/train_character_predictor.sh
     - tasks/run_prediction_tests.sh
-    - text_recognizer/__init__.py
     - text_recognizer/util.py
     - text_recognizer/character_predictor.py
     - text_recognizer/datasets/__init__.py
     - text_recognizer/datasets/base.py
     - text_recognizer/datasets/emnist.py
+    - text_recognizer/datasets/emnist_lines.py
+    - text_recognizer/datasets/sentences.py
     - text_recognizer/datasets/emnist_essentials.json
     - text_recognizer/datasets/sequence.py
     - text_recognizer/models/__init__.py
@@ -24,14 +28,8 @@
     - training/util.py
     - training/run_experiment.py
     - training/gpu_util_sampler.py
-
-2:
     - notebooks/02-look-at-emnist-lines.ipynb
     - tasks/train_cnn_line_predictor.sh
-    - text_recognizer/datasets/emnist_lines.py
-    - text_recognizer/datasets/sentences.py
-    - text_recognizer/models/line_model.py
-    - text_recognizer/networks/line_cnn_all_conv.py
     - text_recognizer/networks/lenet.py
     - text_recognizer/networks/misc.py
     - text_recognizer/tests/support/create_emnist_lines_support_files.py
@@ -41,10 +39,12 @@
 
 3:
     - tasks/train_lstm_line_predictor.sh
+    - text_recognizer/models/line_model.py
     - text_recognizer/line_predictor.py
     - text_recognizer/models/line_model_ctc.py
     - text_recognizer/networks/line_lstm_ctc.py
     - text_recognizer/networks/ctc.py
+    - text_recognizer/networks/line_cnn_all_conv.py
     - text_recognizer/tests/test_line_predictor.py
     - text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5
 
@@ -65,22 +65,27 @@
     - text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5
 
 6:
-    - notebooks/04-looking-at-iam-paragraphs.ipynb
+    - notebooks/04-look-at-iam-paragraphs.ipynb
+    - text_recognizer/datasets/iam.py
     - text_recognizer/datasets/iam_paragraphs.py
 
 7:
-    - text_recognizer/datasets/fsdl_paragraphs.py
+    - tasks/update_fsdl_paragraphs_metadata.sh
+    - text_recognizer/datasets/fsdl_handwriting.py
+    - training/update_metadata.py
 
 8:
+    - evaluation/evaluate_character_predictor.py
+    - evaluation/evaluate_line_predictor.py
+    - tasks/lint.sh
+    - tasks/run_validation_tests.sh
+
+9:
     - api/app.py
     - api/tests/test_app.py
     - api/Dockerfile
     - api/serverless.yml
     - api/package.json
-    - evaluation/evaluate_character_predictor.py
-    - evaluation/evaluate_line_predictor.py
     - tasks/build_api_docker.sh
     - tasks/deploy_api_to_lambda.sh
-    - tasks/lint.sh
-    - tasks/run_validation_tests.sh
     - tasks/test_api.sh

@@ -1,39 +1,29 @@
 ## Now
 
-- [ ] 1 data annotation part of the lab
-    - [ ] script for uploading data to dataturks (main thing is to retain id of image)
-    - [ ] annotate a bit, take screenshots
-    - [ ] download the data from dataturks and make a script for updating metadata.toml
-
-- [ ] 2 develop code to create IAM lines from IAM source data
-    - [ ] load in train/val/test ids in IamDataset
-    - [ ] strip &quot character from IAM dataset
-
-## Next
-
-- [-] 1 go through the first 5 labs and make sure it all works
-    - [ ] figure out if there's something weird about ctc model (seems to die after some number of epochs on the farm)
-
-- [-] 1 test that deploying to lambda works
-    - [ ] debug why api errors (probably model loading)
-
-- [ ] 1 test jupyterhub with a clean user
-
-- [ ] 1 get the evaluation tests to pass
-
 - [ ] 1 line detection model
-    - [-] @saurabh get a great line detection model going in notebook
-    - [ ] port line detection model to proper files, train it, and save model
+    - [x] @saurabh get a great line detection model going in notebook
+    - [-] @saurabh port line detection model to proper files, train it, and save model
+    - [ ] add test for line detector model
 - [ ] 1 connect the line detection and line recognition model
     - [ ] add test for the joint model
 - [ ] 1 make the app.py use the joint model
+    - [ ] set up data monitoring test for that
+- [ ] 1 write up lab6 instructions
+
+- [ ] output a non-padded crop of IAM forms as training data
+
+- [ ] 1 do final renaming of everything to be consistent
+
+## Next
+
+- [ ] 1 go through the first 5 labs with a clean user and make sure it all works
+- [ ] 1 get the evaluation tests to pass for lab 6
 
 Less important
 - [ ] 2 add tests for training (but don't run them in circleci)
 - [ ] 2 add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
-- [ ] 3 add tqdm progress bar to urlretrieve (some of the downloads take a while)
-- [ ] 3 make a flag for overfitting on one batch
-- [ ] 3 train a baller IAMLines model
+- [ ] 2 train a baller IAM line recognition model on
+
 - [ ] 3 explain Pipenv in lab1.md
 - [ ] 3 consider using datasets to the training class (move the mappings to models/ then)
 - [ ] 3 compute validation accuracy in ctc training (run decoding)
@@ -41,12 +31,30 @@ Less important
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
 - [ ] 3 share pre-processing logic in predict() and fit()/evaluate()
 
+- [ ] 4 make a flag for overfitting on one batch
+- [ ] 4 add metadata.toml for Brown corpus
+- [-] 4 develop code to create IAM lines from IAM source data
+    - [ ] load in train/val/test ids in IamDataset
+
 ## Done
+
+### 2019 March 1
+
+- [x] 1 fix bug in IamLines data: replace &quot; with " (only the S3 file has to change)
+- [x] 3 add tqdm progress bar to urlretrieve (some of the downloads take a while)
 
 ### 2019 Feb 28
 
 - [n] 1 add shuffling to the dataset sequence
     - no need, fit_generator does it
+- [x] 1 test that deploying to lambda works
+    - [x] debug why api errors (at first due to package being too big, then due to opencv2 ELF headers. fixed by forking serverless-python-requirements.
+- [x] 1 data annotation part of the lab
+    - [x] create documents with text for people to handwrite
+    - [x] annotate a bit, take screenshots
+    - [x] make a script for updating metadata.toml with dataturks export
+    - [x] write FsdlParagraphs dataset
+    - [x] write up instructions
 
 ### 2019 Feb 27
 

@@ -1,17 +1,20 @@
-"""IamLinesDataset class."""
-from pathlib import Path
-from urllib.request import urlretrieve
+"""
+IamLinesDataset class.
+
+We will use a processed version of this dataset, without including code that did the processing.
+We will look at how to generate processed data from raw IAM data in the IamParagraphsDataset.
+"""
 
 from boltons.cacheutils import cachedproperty
 import h5py
 from tensorflow.keras.utils import to_categorical
 
+from text_recognizer import util
 from text_recognizer.datasets.base import Dataset, _parse_args
 from text_recognizer.datasets.emnist import EmnistDataset
 
 
-DATA_DIRNAME = Path(__file__).parents[2].resolve() / 'data'
-PROCESSED_DATA_DIRNAME = DATA_DIRNAME / 'processed' / 'iam_lines'
+PROCESSED_DATA_DIRNAME = Dataset.data_dirname() / 'processed' / 'iam_lines'
 PROCESSED_DATA_FILENAME = PROCESSED_DATA_DIRNAME / 'iam_lines.h5'
 PROCESSED_DATA_URL = 'https://s3-us-west-2.amazonaws.com/fsdl-public-assets/iam_lines.h5'
 
@@ -39,7 +42,7 @@ class IamLinesDataset(Dataset):
         if not PROCESSED_DATA_FILENAME.exists():
             PROCESSED_DATA_DIRNAME.mkdir(parents=True, exist_ok=True)
             print('Downloading IAM lines...')
-            urlretrieve(PROCESSED_DATA_URL, PROCESSED_DATA_FILENAME)  # nosec
+            util.download_url(PROCESSED_DATA_URL, PROCESSED_DATA_FILENAME)
         with h5py.File(PROCESSED_DATA_FILENAME, 'r') as f:
             self.x_train = f['x_train'][:]
             self.y_train_int = f['y_train'][:]

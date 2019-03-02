@@ -1,6 +1,5 @@
 """Class for loading the IAM dataset, which encompasses both paragraphs and lines, with associated utilities."""
 import os
-from pathlib import Path
 from typing import Dict, List
 import xml.etree.ElementTree as ElementTree
 import zipfile
@@ -11,12 +10,12 @@ import toml
 from text_recognizer.datasets.base import Dataset, _download_raw_dataset
 
 
-DATA_DIRNAME = Path(__file__).parents[2].resolve() / 'data'
-RAW_DATA_DIRNAME = DATA_DIRNAME / 'raw' / 'iam'
+RAW_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'iam'
 METADATA_FILENAME = RAW_DATA_DIRNAME / 'metadata.toml'
 EXTRACTED_DATASET_DIRNAME = RAW_DATA_DIRNAME / 'iamdb'
 
 DOWNSAMPLE_FACTOR = 2  # If images were downsampled, the regions must also be.
+LINE_REGION_PADDING = 0  # add this many pixels around the exact coordinates
 
 
 class IamDataset(Dataset):
@@ -54,6 +53,18 @@ class IamDataset(Dataset):
         _extract_raw_dataset(self.metadata)
         os.chdir(curdir)
 
+    @property
+    def form_filenames_by_id(self):
+        return {filename.stem: filename for filename in self.form_filenames}
+
+    @cachedproperty
+    def line_strings_by_id(self):
+        """Return a dict from name of IAM form to a list of line texts in it."""
+        return {
+            filename.stem: _get_line_strings_from_xml_file(filename)
+            for filename in self.xml_filenames
+        }
+
     @cachedproperty
     def line_regions_by_id(self):
         """Return a dict from name of IAM form to a list of (x1, x2, y1, y2) coordinates of all lines in it."""
@@ -76,7 +87,15 @@ def _extract_raw_dataset(metadata):
         zip_file.extractall()
 
 
+def _get_line_strings_from_xml_file(filename: str) -> List[str]:
+    """Get the text content of each line. Note that we replace &quot; with "."""
+    xml_root_element = ElementTree.parse(filename).getroot()  # nosec
+    xml_line_elements = xml_root_element.findall('handwritten-part/line')
+    return [el.attrib['text'].replace('&quot;', '"') for el in xml_line_elements]
+
+
 def _get_line_regions_from_xml_file(filename: str) -> List[Dict[str, int]]:
+    """Get the line region dict for each line."""
     xml_root_element = ElementTree.parse(filename).getroot()  # nosec
     xml_line_elements = xml_root_element.findall('handwritten-part/line')
     return [_get_line_region_from_xml_element(el) for el in xml_line_elements]
@@ -92,10 +111,10 @@ def _get_line_region_from_xml_element(xml_line) -> Dict[str, int]:
     x2s = [int(el.attrib['x']) + int(el.attrib['width']) for el in word_elements]
     y2s = [int(el.attrib['y']) + int(el.attrib['height']) for el in word_elements]
     return {
-        'x1': min(x1s) // DOWNSAMPLE_FACTOR,
-        'y1': min(y1s) // DOWNSAMPLE_FACTOR,
-        'x2': max(x2s) // DOWNSAMPLE_FACTOR,
-        'y2': max(y2s) // DOWNSAMPLE_FACTOR
+        'x1': min(x1s) // DOWNSAMPLE_FACTOR - LINE_REGION_PADDING,
+        'y1': min(y1s) // DOWNSAMPLE_FACTOR - LINE_REGION_PADDING,
+        'x2': max(x2s) // DOWNSAMPLE_FACTOR + LINE_REGION_PADDING,
+        'y2': max(y2s) // DOWNSAMPLE_FACTOR + LINE_REGION_PADDING
     }
 
 
