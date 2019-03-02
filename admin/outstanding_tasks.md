@@ -8,9 +8,7 @@
     - [ ] add test for the joint model
 - [ ] 1 make the app.py use the joint model
     - [ ] set up data monitoring test for that
-- [ ] 1 write up lab6 instructions
-
-- [ ] output a non-padded crop of IAM forms as training data
+- [-] 1 write up lab6 instructions
 
 - [ ] 1 do final renaming of everything to be consistent
 
