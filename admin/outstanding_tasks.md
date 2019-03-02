@@ -1,16 +1,9 @@
 ## Now
 
-
-- [ ] 1 line detection model
-    - [x] @saurabh get a great line detection model going in notebook
-    - [-] @saurabh port line detection model to proper files, train it, and save model
-- [ ] 1 connect the line detection and line recognition model
-    - [ ] add test for the joint model
 - [ ] 1 make the app.py use the joint model
-    - [ ] set up data monitoring test for that
-- [-] 1 write up lab6 instructions
+    - [ ] set up data monitoring test for that (inverted image)
 - [ ] 1 add ImageDataGenerator output images to iam-paragraphs notebook
-- [ ] 1 add a notebook that loads trained line detector and outputs some predictions
+- [ ] 1 @saurabh add a notebook that loads trained line detector and outputs some predictions
 
 ## Next
 
@@ -20,12 +13,13 @@
 Less important
 - [ ] 2 add tests for training (but don't run them in circleci)
 - [ ] 2 add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
-- [ ] 2 train a baller IAM line recognition model on
+- [ ] 2 train a better IAM line recognition model
+- [ ] 2 save experiment json along with weights, and just call it canonical_character_predictor_weights.h5 and canonical_character_predictor_config.json
 
 - [ ] 3 explain Pipenv in lab1.md
 - [ ] 3 consider using datasets to the training class (move the mappings to models/ then)
 - [ ] 3 compute validation accuracy in ctc training (run decoding)
-- [ ] 3 save experiment json along with weights, and just call it canonical_character_predictor_weights.py and canonical_character_predictor_config.py
+
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
 - [ ] 3 share pre-processing logic in predict() and fit()/evaluate()
 
@@ -41,6 +35,12 @@ Less important
 - [x] 1 fix bug in IamLines data: replace &quot; with " (only the S3 file has to change)
 - [x] 3 add tqdm progress bar to urlretrieve (some of the downloads take a while)
 - [x] 3 rename dataset stuff
+- [x] 1 line detection model
+    - [x] @saurabh get a great line detection model going in notebook
+    - [x] @saurabh port line detection model to proper files, train it, and save model
+    - [x] @saurabh connect the line detection and line recognition model
+    - [x] @saurabh add test for the joint model
+- [x] 1 write up lab6 instructions
 
 ### 2019 Feb 28
 
