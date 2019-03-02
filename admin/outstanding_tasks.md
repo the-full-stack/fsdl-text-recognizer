@@ -1,14 +1,17 @@
 ## Now
 
+- check up on the iam training I kicked off on the farm
+- if it's not 90%+, kick off another training with
+
 - [ ] 1 make the app.py use the joint model
     - [ ] set up data monitoring test for that (inverted image)
-- [ ] 1 add ImageDataGenerator output images to iam-paragraphs notebook
+- [ ] 1 @saurabh add ImageDataGenerator output images to iam-paragraphs notebook
 - [ ] 1 @saurabh add a notebook that loads trained line detector and outputs some predictions
+- [ ] 1 make sure circleci works
+- [ ] 1 make sure deployment works
+- [ ] 2 make sure monitoring works
 
 ## Next
-
-- [ ] 1 go through the first 5 labs with a clean user and make sure it all works
-- [ ] 1 get the evaluation tests to pass for lab 6
 
 Less important
 - [ ] 2 add tests for training (but don't run them in circleci)
@@ -34,6 +37,8 @@ Less important
 
 - [x] 1 fix bug in IamLines data: replace &quot; with " (only the S3 file has to change)
 - [x] 3 add tqdm progress bar to urlretrieve (some of the downloads take a while)
+- [x] 1 @josh go through the first 5 labs with a clean user and make sure it all works
+- [x] 1 get the evaluation tests to pass for lab 6
 - [x] 3 rename dataset stuff
 - [x] 1 line detection model
     - [x] @saurabh get a great line detection model going in notebook
