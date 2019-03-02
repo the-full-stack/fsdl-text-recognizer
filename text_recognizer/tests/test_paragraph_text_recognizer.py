@@ -17,10 +17,10 @@ class TestEmnistLinePredictor(unittest.TestCase):
         text_offset = 300
         num_text_lines = 7
         for filename in (SUPPORT_DIRNAME).glob('*.jpg'):
-            
+
             full_image = util.read_image(str(filename), grayscale=True)
             roi_image = full_image[text_offset:, :]
-            
+
             predicted_text, line_region_crops = predictor.predict(roi_image)
             print(predicted_text)
             assert len(line_region_crops) == num_text_lines

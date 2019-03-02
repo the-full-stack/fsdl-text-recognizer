@@ -30,9 +30,15 @@ class ParagraphTextRecognizer:
 
         line_region_crops = self._get_line_region_crops(image=image)
         print([a.shape for a in line_region_crops])
-        prepared_line_region_crops = [self._prepare_image_for_line_predictor_model(image=crop) for crop in line_region_crops]
+        prepared_line_region_crops = [
+            self._prepare_image_for_line_predictor_model(image=crop)
+            for crop in line_region_crops
+        ]
 
-        line_region_strings = [self.line_predictor_model.predict_on_image(crop)[0] for crop in prepared_line_region_crops]
+        line_region_strings = [
+            self.line_predictor_model.predict_on_image(crop)[0]
+            for crop in prepared_line_region_crops
+        ]
         return ' '.join(line_region_strings), line_region_crops
 
     def _get_line_region_crops(self, image: np.ndarray, min_crop_len_factor: float = 0.02) -> List[np.ndarray]:
@@ -97,4 +103,5 @@ def _resize_image_for_line_detector_model(image: np.ndarray, max_shape: Tuple[in
     scale_down_factor = max(np.array(image.shape) / np.array(max_shape))
     if scale_down_factor == 1:
         return image.copy(), scale_down_factor
-    return cv2.resize(image, dsize=None, fx=1/scale_down_factor, fy=1/scale_down_factor, interpolation=cv2.INTER_AREA), scale_down_factor
+    resized_image = cv2.resize(image, dsize=None, fx=1/scale_down_factor, fy=1/scale_down_factor, interpolation=cv2.INTER_AREA)
+    return resized_image, scale_down_factor
