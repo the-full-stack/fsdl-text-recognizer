@@ -5,6 +5,7 @@ of the image corresponding to the line regions, and running each line region cro
 from typing import List, Tuple, Union
 import cv2
 import numpy as np
+from text_recognizer.datasets import IamLinesDataset
 from text_recognizer.models.line_detector_model import LineDetectorModel
 from text_recognizer.models.line_model_ctc import LineModelCtc
 import text_recognizer.util as util
@@ -15,7 +16,7 @@ class ParagraphTextRecognizer:
     def __init__(self):
         self.line_detector_model = LineDetectorModel()
         self.line_detector_model.load_weights()
-        self.line_predictor_model = LineModelCtc()
+        self.line_predictor_model = LineModelCtc(dataset_cls=IamLinesDataset)
         self.line_predictor_model.load_weights()
 
     def predict(self, image_or_filename: Union[np.ndarray, str]):
@@ -32,6 +33,7 @@ class ParagraphTextRecognizer:
         line_region_crops = self._get_line_region_crops(square_image=square_image)
         print([a.shape for a in line_region_crops])
         line_region_crops = [self._prepare_image_for_line_predictor_model(image=crop) for crop in line_region_crops]
+
         line_region_strings = [self.line_predictor_model.predict_on_image(crop)[0] for crop in line_region_crops]
         return ' '.join(line_region_strings), line_region_crops
 
@@ -57,7 +59,7 @@ class ParagraphTextRecognizer:
             image=square_image,
             expected_shape=self.line_detector_model.image_shape
         )
-        image = (1. - image / 255.).astype('float32')
+        image = (1. - image / 255).astype('float32')
         return image, scale_down_factor
 
     def _prepare_image_for_line_predictor_model(self, image: np.ndarray) -> np.ndarray:
@@ -71,7 +73,7 @@ class ParagraphTextRecognizer:
 
         pad_width = ((0, expected_shape[0] - scaled_image.shape[0]), (0, expected_shape[1] - scaled_image.shape[1]))
         padded_image = np.pad(scaled_image, pad_width=pad_width, mode='constant', constant_values=255)
-        return 1. - padded_image / 255.
+        return 1 - padded_image / 255
 
 
 def _find_line_bounding_boxes(line_segmentation: np.ndarray):
@@ -82,7 +84,7 @@ def _find_line_bounding_boxes(line_segmentation: np.ndarray):
         line_activation_image = (line_activation_image * 255).astype('uint8')
         line_activation_image = cv2.threshold(line_activation_image, 0.5, 1, cv2.THRESH_BINARY | cv2.THRESH_OTSU)[1]
 
-        _, bounding_cnts, _ = cv2.findContours(line_activation_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        bounding_cnts, _ = cv2.findContours(line_activation_image, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         return np.array([cv2.boundingRect(cnt) for cnt in bounding_cnts])
 
     bboxes_xywh = np.concatenate([

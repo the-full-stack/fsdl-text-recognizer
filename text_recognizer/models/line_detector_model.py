@@ -6,7 +6,7 @@ import numpy as np
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-from text_recognizer.datasets.iam_paragraphs import IamParagraphsDataset
+from text_recognizer.datasets.iam_paragraphs_dataset import IamParagraphsDataset
 from text_recognizer.models.base import Model
 from text_recognizer.networks import fcn
 

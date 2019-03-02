@@ -7,7 +7,7 @@ from text_recognizer.paragraph_text_recognizer import ParagraphTextRecognizer
 
 SUPPORT_DIRNAME = Path(__file__).parents[0].resolve() / 'support' / 'iam_paragraphs'
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
+os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
 
 class TestEmnistLinePredictor(unittest.TestCase):
