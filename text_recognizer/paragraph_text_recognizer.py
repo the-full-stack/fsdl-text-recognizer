@@ -15,8 +15,8 @@ class ParagraphTextRecognizer:
     def __init__(self):
         self.line_detector_model = LineDetectorModel()
         self.line_detector_model.load_weights()
-        # self.line_predictor_model = LineModelCtc()
-        # self.line_predictor_model.load_weights()
+        self.line_predictor_model = LineModelCtc()
+        self.line_predictor_model.load_weights()
 
     def predict(self, image_or_filename: Union[np.ndarray, str]):
         """
@@ -29,25 +29,45 @@ class ParagraphTextRecognizer:
 
         square_image = _crop_out_square_image(image)
 
-        line_region_crops = self._get_line_region_crops(square_image)
-        return line_region_crops
-        # resize down image to height = 28?
-        # line_region_strings = [self.line_predictor_model.predict(crop) for crop in line_region_crops]
-        # return ' '.join(line_region_strings)
+        line_region_crops = self._get_line_region_crops(square_image=square_image)
+        print([a.shape for a in line_region_crops])
+        line_region_crops = [self._prepare_image_for_line_predictor_model(image=crop) for crop in line_region_crops]
+        line_region_strings = [self.line_predictor_model.predict_on_image(crop)[0] for crop in line_region_crops]
+        return ' '.join(line_region_strings), line_region_crops
 
-    def _get_line_region_crops(self, square_image: np.ndarray) -> List[np.ndarray]:
-        image, scale_down_factor = _resize_image(
-            image=square_image,
-            expected_shape=self.line_detector_model.image_shape
-        )
-        image = _format_image_for_line_detector_model(image)
-
+    def _get_line_region_crops(self, square_image: np.ndarray, min_crop_len_factor: float = 0.02) -> List[np.ndarray]:
+        """Find all the line regions in square image and crop them out and return them."""
+        image, scale_down_factor = self._prepare_image_for_line_detector_model(square_image)
         line_segmentation = self.line_detector_model.predict_on_image(image)
         bounding_boxes_wyxh = _find_line_bounding_boxes(line_segmentation)
 
         bounding_boxes_wyxh = (bounding_boxes_wyxh * scale_down_factor).astype(int)
-        line_region_crops = [square_image[y:y+h, x:x+w] for x, y, w, h in bounding_boxes_wyxh]
+
+        min_crop_length = int(min_crop_len_factor * square_image.shape[0])
+        line_region_crops = [
+            square_image[y:y+h, x:x+w]
+            for x, y, w, h in bounding_boxes_wyxh
+            if w >= min_crop_length and h >= min_crop_length
+        ]
         return line_region_crops
+
+    def _prepare_image_for_line_detector_model(self, square_image: np.ndarray) -> Tuple[np.ndarray, float]:
+        """Convert uint8 image to float image with black background with shape self.line_detector_model.image_shape."""
+        image, scale_down_factor = _resize_image_for_line_detector_model(
+            image=square_image,
+            expected_shape=self.line_detector_model.image_shape
+        )
+        image = (1. - image / 255.).astype('float32')
+        return image, scale_down_factor
+
+    def _prepare_image_for_line_predictor_model(self, image: np.ndarray) -> np.ndarray:
+        """Convert uint8 image into self.line_predictor_model.image_shape shape maintaining the aspect ratio."""
+        expected_shape = self.line_predictor_model.image_shape
+        scale_factor = (np.array(expected_shape) / np.array(image.shape)).min()
+        scaled_image = cv2.resize(image, dsize=None, fx=scale_factor, fy=scale_factor, interpolation=cv2.INTER_AREA)
+
+        pad_width = ((0, expected_shape[0] - scaled_image.shape[0]), (0, expected_shape[1] - scaled_image.shape[1]))
+        return np.pad(scaled_image, pad_width=pad_width, mode='constant', constant_values=255)
 
 
 def _find_line_bounding_boxes(line_segmentation: np.ndarray):
@@ -85,15 +105,11 @@ def _crop_out_square_image(image: np.ndarray) -> np.ndarray:
     return image[y1:y2, x1:x2]
 
 
-def _resize_image(image: np.ndarray, expected_shape: Tuple[int, int]) -> Tuple[np.ndarray, float]:
+def _resize_image_for_line_detector_model(image: np.ndarray,
+                                          expected_shape: Tuple[int, int]) -> Tuple[np.ndarray, float]:
     """If the image is of expected_shape shape, then crop the center, and resize it to the expected_shape."""
     assert image.shape[0] == image.shape[1]
     if image.shape == expected_shape:
         return image.copy(), 1.
     scale_down_factor = image.shape[0] / expected_shape[0]
     return cv2.resize(image, dsize=expected_shape, interpolation=cv2.INTER_AREA), scale_down_factor
-
-
-def _format_image_for_line_detector_model(image: np.ndarray) -> np.ndarray:
-    """Convert uint8 image to float image with black background."""
-    return (1. - image / 255.).astype('float32')
