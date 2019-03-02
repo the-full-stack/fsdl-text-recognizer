@@ -15,6 +15,7 @@ class TestEmnistLinePredictor(unittest.TestCase):
     def test_filename(self):  # pylint: disable=R0201
         predictor = ParagraphTextRecognizer()
         text_offset = 300
+        num_text_lines = 7
         for filename in (SUPPORT_DIRNAME).glob('*.jpg'):
             
             full_image = util.read_image(str(filename), grayscale=True)
@@ -22,5 +23,4 @@ class TestEmnistLinePredictor(unittest.TestCase):
             
             predicted_text, line_region_crops = predictor.predict(roi_image)
             print(predicted_text)
-            print(len(line_region_crops))
-            assert len(line_region_crops) == 7
+            assert len(line_region_crops) == num_text_lines
