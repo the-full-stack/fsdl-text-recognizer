@@ -71,7 +71,7 @@
     - text_recognizer/models/line_detector_model.py
     - text_recognizer/networks/fcn.py
     - text_recognizer/paragraph_text_recognizer.py
-    - text_recognizer/support/iam_paragraphs/a01-000u.jpg
+    - text_recognizer/tests/support/iam_paragraphs/a01-000u.jpg
     - text_recognizer/tests/test_paragraph_text_recognizer.py
     - text_recognizer/weights/LineDetectorModel_IamParagraphsDataset_fcn_weights.h5
 
