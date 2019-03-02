@@ -23,11 +23,14 @@ class Model:
         if network_args is None:
             network_args = {}
         self.network = network_fn(self.data.input_shape, self.data.output_shape, **network_args)
-        self.network.compile(loss=self.loss(), optimizer=self.optimizer(), metrics=self.metrics())
         self.network.summary()
 
         self.batch_augment_fn: Optional[Callable] = None
         self.batch_format_fn: Optional[Callable] = None
+
+    @property
+    def image_shape(self):
+        return self.data.input_shape
 
     @property
     def weights_filename(self) -> str:
@@ -37,6 +40,8 @@ class Model:
     def fit(self, dataset, batch_size: int = 32, epochs: int = 10, augment_val: bool = True, callbacks: list = None):
         if callbacks is None:
             callbacks = []
+
+        self.network.compile(loss=self.loss(), optimizer=self.optimizer(), metrics=self.metrics())
 
         train_sequence = DatasetSequence(
             dataset.x_train,

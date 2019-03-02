@@ -1,5 +1,4 @@
 """IamParagraphsDataset class and functions for data processing."""
-from typing import Tuple
 from boltons.cacheutils import cachedproperty
 from tensorflow.keras.utils import to_categorical
 import cv2
@@ -24,13 +23,13 @@ class IamParagraphsDataset(Dataset):
     """
     Paragraphs from the IAM dataset.
     """
-    def __init__(self, image_shape: Tuple[int, int] = (512, 512), subsample_fraction: float = None):
+    def __init__(self, subsample_fraction: float = None):
         self.iam_dataset = IamDataset()
         self.iam_dataset.load_or_generate_data()
 
         self.num_classes = 3
-        self.input_shape = image_shape
-        self.output_shape = image_shape + (self.num_classes, )
+        self.input_shape = (256, 256)
+        self.output_shape = (256, 256, self.num_classes)
 
         self.subsample_fraction = subsample_fraction
         self.ids = None

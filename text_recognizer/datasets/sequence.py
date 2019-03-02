@@ -46,7 +46,6 @@ class DatasetSequence(Sequence):
         if self.format_fn:
             batch_x, batch_y = self.format_fn(batch_x, batch_y)
 
-        batch_x, batch_y = _shuffle(batch_x, batch_y)
         return batch_x, batch_y
 
     def on_epoch_end(self) -> None:

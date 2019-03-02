@@ -1,4 +1,4 @@
-"""Define LineModel class."""
+"""Define LineDetectorModel class."""
 from typing import Callable, Dict, Tuple
 
 import numpy as np
@@ -10,10 +10,6 @@ from text_recognizer.datasets.iam_paragraphs import IamParagraphsDataset
 from text_recognizer.models.base import Model
 from text_recognizer.networks import fcn
 
-
-_DATASET_ARGS = {
-    'image_shape': (256, 256)
-}
 
 _DATA_AUGMENTATION_PARAMS = {
     'width_shift_range': 0.06,
@@ -27,18 +23,15 @@ _DATA_AUGMENTATION_PARAMS = {
 
 
 class LineDetectorModel(Model):
-    """Model for regions lines of ine of text."""
+    """Model to detect lines of text in an image."""
     def __init__(self,
                  dataset_cls: type = IamParagraphsDataset,
                  network_fn: Callable = fcn,
                  dataset_args: Dict = None,
                  network_args: Dict = None):
         """Define the default dataset and network values for this model."""
-        if dataset_args is None:
-            dataset_args = _DATASET_ARGS
         super().__init__(dataset_cls, network_fn, dataset_args, network_args)
 
-        self.image_shape = dataset_args['image_shape']
         self.data_augmentor = ImageDataGenerator(**_DATA_AUGMENTATION_PARAMS)
         self.batch_augment_fn = self.augment_batch
 

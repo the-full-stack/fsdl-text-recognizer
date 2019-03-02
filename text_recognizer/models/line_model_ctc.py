@@ -30,7 +30,6 @@ class LineModelCtc(Model):
             network_args = {}
         network_args = {**default_network_args, **network_args}
         super().__init__(dataset_cls, network_fn, dataset_args, network_args)
-        self.image_shape = self.data.input_shape
         self.batch_format_fn = format_batch_ctc
 
     def loss(self):
