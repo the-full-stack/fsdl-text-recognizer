@@ -11,7 +11,7 @@
     - text_recognizer/datasets/dataset.py
     - text_recognizer/datasets/emnist_dataset.py
     - text_recognizer/datasets/emnist_essentials.json
-    - text_recognizer/datasets/sequence_dataset.py
+    - text_recognizer/datasets/dataset_sequence.py
     - text_recognizer/models/__init__.py
     - text_recognizer/models/base.py
     - text_recognizer/models/character_model.py
@@ -56,7 +56,7 @@
 
 5:
     - notebooks/03-look-at-iam-lines.ipynb
-    - text_recognizer/datasets/iam_lines.py
+    - text_recognizer/datasets/iam_lines_dataset.py
     - tasks/train_lstm_line_predictor_on_iam.sh
     - text_recognizer/tests/support/create_iam_lines_support_files.py
     - "text_recognizer/tests/support/iam_lines/and came into the livingroom, where.png"
@@ -66,12 +66,12 @@
 
 6:
     - notebooks/04-look-at-iam-paragraphs.ipynb
-    - text_recognizer/datasets/iam.py
-    - text_recognizer/datasets/iam_paragraphs.py
+    - text_recognizer/datasets/iam_dataset.py
+    - text_recognizer/datasets/iam_paragraphs_dataset.py
 
 7:
     - tasks/update_fsdl_paragraphs_metadata.sh
-    - text_recognizer/datasets/fsdl_handwriting.py
+    - text_recognizer/datasets/fsdl_handwriting_dataset.py
     - training/update_metadata.py
 
 8:
