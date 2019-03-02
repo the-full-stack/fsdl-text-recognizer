@@ -8,27 +8,30 @@
     - [ ] add test for the joint model
 - [ ] 1 make the app.py use the joint model
     - [ ] set up data monitoring test for that
+- [ ] 1 write up lab6 instructions
+
+- [ ] output a non-padded crop of IAM forms as training data
+
+- [ ] 1 do final renaming of everything to be consistent
 
 ## Next
 
-- [-] 1 go through the first 5 labs and make sure it all works
-    - [ ] figure out if there's something weird about ctc model (seems to die after some number of epochs on the farm)
-
-- [ ] 1 test jupyterhub with a clean user
-
-- [ ] 1 get the evaluation tests to pass
+- [ ] 1 go through the first 5 labs with a clean user and make sure it all works
+- [ ] 1 get the evaluation tests to pass for lab 6
 
 Less important
 - [ ] 2 add tests for training (but don't run them in circleci)
 - [ ] 2 add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
-- [ ] 3 make a flag for overfitting on one batch
-- [ ] 3 train a baller IAMLines model
+- [ ] 2 train a baller IAM line recognition model on
+
 - [ ] 3 explain Pipenv in lab1.md
 - [ ] 3 consider using datasets to the training class (move the mappings to models/ then)
 - [ ] 3 compute validation accuracy in ctc training (run decoding)
 - [ ] 3 save experiment json along with weights, and just call it canonical_character_predictor_weights.py and canonical_character_predictor_config.py
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
 - [ ] 3 share pre-processing logic in predict() and fit()/evaluate()
+
+- [ ] 4 make a flag for overfitting on one batch
 - [ ] 4 add metadata.toml for Brown corpus
 - [-] 4 develop code to create IAM lines from IAM source data
     - [ ] load in train/val/test ids in IamDataset
