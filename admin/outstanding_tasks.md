@@ -1,18 +1,16 @@
 ## Now
 
-- [ ] 2 rename stuff
 
 - [ ] 1 line detection model
     - [x] @saurabh get a great line detection model going in notebook
     - [-] @saurabh port line detection model to proper files, train it, and save model
-    - [ ] add test for line detector model
 - [ ] 1 connect the line detection and line recognition model
     - [ ] add test for the joint model
 - [ ] 1 make the app.py use the joint model
     - [ ] set up data monitoring test for that
 - [-] 1 write up lab6 instructions
-
-- [ ] 1 do final renaming of everything to be consistent
+- [ ] 1 add ImageDataGenerator output images to iam-paragraphs notebook
+- [ ] 1 add a notebook that loads trained line detector and outputs some predictions
 
 ## Next
 
@@ -42,6 +40,7 @@ Less important
 
 - [x] 1 fix bug in IamLines data: replace &quot; with " (only the S3 file has to change)
 - [x] 3 add tqdm progress bar to urlretrieve (some of the downloads take a while)
+- [x] 3 rename dataset stuff
 
 ### 2019 Feb 28
 
