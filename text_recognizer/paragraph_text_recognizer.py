@@ -61,13 +61,17 @@ class ParagraphTextRecognizer:
         return image, scale_down_factor
 
     def _prepare_image_for_line_predictor_model(self, image: np.ndarray) -> np.ndarray:
-        """Convert uint8 image into self.line_predictor_model.image_shape shape maintaining the aspect ratio."""
+        """
+        Convert uint8 image to float image with black background with shape self.line_predictor_model.image_shape
+        while maintaining the image aspect ratio.
+        """
         expected_shape = self.line_predictor_model.image_shape
         scale_factor = (np.array(expected_shape) / np.array(image.shape)).min()
         scaled_image = cv2.resize(image, dsize=None, fx=scale_factor, fy=scale_factor, interpolation=cv2.INTER_AREA)
 
         pad_width = ((0, expected_shape[0] - scaled_image.shape[0]), (0, expected_shape[1] - scaled_image.shape[1]))
-        return np.pad(scaled_image, pad_width=pad_width, mode='constant', constant_values=255)
+        padded_image = np.pad(scaled_image, pad_width=pad_width, mode='constant', constant_values=255)
+        return 1. - padded_image / 255.
 
 
 def _find_line_bounding_boxes(line_segmentation: np.ndarray):
