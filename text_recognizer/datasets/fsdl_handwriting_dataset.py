@@ -5,7 +5,7 @@ import numpy as np
 import toml
 
 from text_recognizer import util
-from text_recognizer.datasets.base import Dataset
+from text_recognizer.datasets.dataset import Dataset
 
 
 RAW_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'fsdl_handwriting'

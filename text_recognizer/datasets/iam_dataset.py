@@ -7,7 +7,7 @@ import zipfile
 from boltons.cacheutils import cachedproperty
 import toml
 
-from text_recognizer.datasets.base import Dataset, _download_raw_dataset
+from text_recognizer.datasets.dataset import Dataset, _download_raw_dataset
 
 
 RAW_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'iam'

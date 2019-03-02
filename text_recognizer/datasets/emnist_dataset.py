@@ -13,7 +13,7 @@ import h5py
 import numpy as np
 import toml
 
-from text_recognizer.datasets.base import _download_raw_dataset, Dataset, _parse_args
+from text_recognizer.datasets.dataset import _download_raw_dataset, Dataset, _parse_args
 
 SAMPLE_TO_BALANCE = True  # If true, take at most the mean number of instances per class.
 

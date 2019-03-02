@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow.keras.backend as K
 from tensorflow.keras.models import Model as KerasModel
 
-from text_recognizer.datasets.sequence import DatasetSequence
+from text_recognizer.datasets.dataset_sequence import DatasetSequence
 from text_recognizer.datasets import EmnistLinesDataset
 from text_recognizer.models.base import Model
 from text_recognizer.networks.line_lstm_ctc import line_lstm_ctc
@@ -25,7 +25,7 @@ class LineModelCtc(Model):
             dataset_args = {}
         dataset_args = {**default_dataset_args, **dataset_args}
 
-        default_network_args = {'window_width': 14, 'window_stride': 7}
+        default_network_args = {'window_width': 12, 'window_stride': 5}
         if network_args is None:
             network_args = {}
         network_args = {**default_network_args, **network_args}

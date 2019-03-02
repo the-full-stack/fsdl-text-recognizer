@@ -7,7 +7,7 @@ from typing import Optional
 import nltk
 import numpy as np
 
-from text_recognizer.datasets.base import Dataset
+from text_recognizer.datasets.dataset import Dataset
 
 NLTK_DATA_DIRNAME = Dataset.data_dirname() / 'raw' / 'nltk'
 
