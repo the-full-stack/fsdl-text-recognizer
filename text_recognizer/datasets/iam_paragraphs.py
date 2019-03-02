@@ -39,11 +39,10 @@ class IamParagraphsDataset(Dataset):
 
     def load_or_generate_data(self):
         """Load or generate dataset data."""
-        # TODO: don't process everytime
-        # num_actual = len(list(CROPS_DIRNAME.glob('*.jpg')))
-        # num_target = len(self.iam_dataset.line_regions_by_id)
-        # if num_actual < num_target - 2:  # There are a couple of instances that could not be cropped
-        self._process_iam_paragraphs()
+        num_actual = len(list(CROPS_DIRNAME.glob('*.jpg')))
+        num_target = len(self.iam_dataset.line_regions_by_id)
+        if num_actual < num_target - 2:  # There are a couple of instances that could not be cropped
+            self._process_iam_paragraphs()
 
         self.x, self.y, self.ids = _load_iam_paragraphs()
         self.train_ind, self.test_ind = _get_random_split(self.x.shape[0])
