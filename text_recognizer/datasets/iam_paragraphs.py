@@ -18,7 +18,6 @@ PROCESSED_DATA_DIRNAME = DATA_DIRNAME / 'processed' / 'iam_paragraphs'
 CROPS_DIRNAME = PROCESSED_DATA_DIRNAME / 'crops'
 GT_DIRNAME = PROCESSED_DATA_DIRNAME / 'gt'
 
-# On top of IAM forms being downsampled, we will downsample the paragraph crops once more, to make convnets tractable.
 PARAGRAPH_BUFFER = 50  # pixels in the IAM form images to leave around the lines
 TEST_FRACTION = 0.2
 
@@ -183,10 +182,10 @@ def _crop_paragraph_image(filename, line_regions, crop_dims, final_dims):
             color,
             3
         )
-    image_crop_for_debug = cv2.resize(image_crop_for_debug, final_dims, interpolation=cv2.INTER_CUBIC)
+    image_crop_for_debug = cv2.resize(image_crop_for_debug, final_dims, interpolation=cv2.INTER_AREA)
     util.write_image(image_crop_for_debug, DEBUG_CROPS_DIRNAME / f'{filename.stem}.jpg')
 
-    image_crop = cv2.resize(image_crop, final_dims, interpolation=cv2.INTER_CUBIC)  # Quality interpolation for input
+    image_crop = cv2.resize(image_crop, final_dims, interpolation=cv2.INTER_AREA)  # Quality interpolation for input
     util.write_image(image_crop, CROPS_DIRNAME / f'{filename.stem}.jpg')
 
     gt_image = cv2.resize(gt_image, final_dims, interpolation=cv2.INTER_NEAREST)  # No interpolation for labels
