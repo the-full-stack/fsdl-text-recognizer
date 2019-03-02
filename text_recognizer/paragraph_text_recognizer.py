@@ -103,5 +103,9 @@ def _resize_image_for_line_detector_model(image: np.ndarray, max_shape: Tuple[in
     scale_down_factor = max(np.array(image.shape) / np.array(max_shape))
     if scale_down_factor == 1:
         return image.copy(), scale_down_factor
-    resized_image = cv2.resize(image, dsize=None, fx=1/scale_down_factor, fy=1/scale_down_factor, interpolation=cv2.INTER_AREA)
+    resized_image = cv2.resize(image,
+                               dsize=None,
+                               fx=1/scale_down_factor,
+                               fy=1/scale_down_factor,
+                               interpolation=cv2.INTER_AREA)
     return resized_image, scale_down_factor
