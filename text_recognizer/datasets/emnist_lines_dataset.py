@@ -5,8 +5,8 @@ import h5py
 import numpy as np
 from tensorflow.keras.utils import to_categorical
 
-from text_recognizer.datasets.base import Dataset
-from text_recognizer.datasets.emnist import EmnistDataset
+from text_recognizer.datasets.dataset import Dataset
+from text_recognizer.datasets.emnist_dataset import EmnistDataset
 
 
 DATA_DIRNAME = Dataset.data_dirname() / 'processed' / 'emnist_lines'
@@ -63,7 +63,7 @@ class EmnistLinesDataset(Dataset):
     def _generate_data(self, split):
         print('EmnistLinesDataset generating data...')
 
-        from text_recognizer.datasets.sentences import SentenceGenerator
+        from text_recognizer.datasets.sentence_generator import SentenceGenerator
         sentence_generator = SentenceGenerator(self.max_length)
 
         emnist = self.emnist

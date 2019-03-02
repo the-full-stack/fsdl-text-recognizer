@@ -8,10 +8,10 @@
     - text_recognizer/util.py
     - text_recognizer/character_predictor.py
     - text_recognizer/datasets/__init__.py
-    - text_recognizer/datasets/base.py
-    - text_recognizer/datasets/emnist.py
+    - text_recognizer/datasets/dataset.py
+    - text_recognizer/datasets/emnist_dataset.py
     - text_recognizer/datasets/emnist_essentials.json
-    - text_recognizer/datasets/sequence.py
+    - text_recognizer/datasets/sequence_dataset.py
     - text_recognizer/models/__init__.py
     - text_recognizer/models/base.py
     - text_recognizer/models/character_model.py
@@ -37,8 +37,8 @@
     - notebooks/02-look-at-emnist-lines.ipynb
     - tasks/train_cnn_line_predictor.sh
     - tasks/train_lstm_line_predictor.sh
-    - text_recognizer/datasets/emnist_lines.py
-    - text_recognizer/datasets/sentences.py
+    - text_recognizer/datasets/emnist_lines_dataset.py
+    - text_recognizer/datasets/sentence_generator.py
     - text_recognizer/line_predictor.py
     - text_recognizer/models/line_model_ctc.py
     - text_recognizer/models/line_model.py

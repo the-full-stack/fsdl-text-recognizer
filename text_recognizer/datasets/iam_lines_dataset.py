@@ -10,8 +10,8 @@ import h5py
 from tensorflow.keras.utils import to_categorical
 
 from text_recognizer import util
-from text_recognizer.datasets.base import Dataset, _parse_args
-from text_recognizer.datasets.emnist import EmnistDataset
+from text_recognizer.datasets.dataset import Dataset, _parse_args
+from text_recognizer.datasets.emnist_dataset import EmnistDataset
 
 
 PROCESSED_DATA_DIRNAME = Dataset.data_dirname() / 'processed' / 'iam_lines'

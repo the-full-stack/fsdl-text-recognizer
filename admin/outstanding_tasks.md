@@ -1,5 +1,7 @@
 ## Now
 
+- [ ] 2 rename stuff
+
 - [ ] 1 line detection model
     - [x] @saurabh get a great line detection model going in notebook
     - [-] @saurabh port line detection model to proper files, train it, and save model

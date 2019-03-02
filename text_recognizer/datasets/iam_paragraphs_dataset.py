@@ -4,8 +4,8 @@ import cv2
 import numpy as np
 import matplotlib.pyplot as plt
 
-from text_recognizer.datasets.base import Dataset, _parse_args
-from text_recognizer.datasets.iam import IamDataset
+from text_recognizer.datasets.dataset import Dataset, _parse_args
+from text_recognizer.datasets.iam_dataset import IamDataset
 from text_recognizer import util
 
 INTERIM_DATA_DIRNAME = Dataset.data_dirname() / 'interim' / 'iam_paragraphs'
