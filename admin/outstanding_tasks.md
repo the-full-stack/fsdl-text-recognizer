@@ -1,30 +1,28 @@
 ## Now
 
-- check up on the iam training I kicked off on the farm
-- if it's not 90%+, kick off another training with
-
+- [x] 1 fix notebook dataset loading error
+- [x] 1 make sure circleci works
+- [x] 1 add notebook showing IAM Paragraphs data
+- [x] confirm I can update FSDL Handwriting with polygon data and that it still works
+- [ ] 1 add a notebook that loads trained line detector and outputs some predictions, and also shows ImageDataGenerator
+- [ ] 2 add a notebook that uses our trained line detector on the fsdl handwriting data
 - [ ] 1 make the app.py use the joint model
-    - [ ] set up data monitoring test for that (inverted image)
-- [ ] 1 @saurabh add ImageDataGenerator output images to iam-paragraphs notebook
-- [ ] 1 @saurabh add a notebook that loads trained line detector and outputs some predictions
-- [ ] 1 make sure circleci works
 - [ ] 1 make sure deployment works
-- [ ] 2 make sure monitoring works
+- [ ] 1 strip out monitoring part of the last lab instructions
+- [ ] 1 test out saurabh's PR and merge it
 
 ## Next
 
 Less important
+- [ ] 2 kick off another IAM training with ImageDataGenerator
 - [ ] 2 add tests for training (but don't run them in circleci)
 - [ ] 2 add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
-- [ ] 2 train a better IAM line recognition model
+
 - [ ] 2 save experiment json along with weights, and just call it canonical_character_predictor_weights.h5 and canonical_character_predictor_config.json
-
-- [ ] 3 explain Pipenv in lab1.md
-- [ ] 3 consider using datasets to the training class (move the mappings to models/ then)
-- [ ] 3 compute validation accuracy in ctc training (run decoding)
-
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
+
 - [ ] 3 share pre-processing logic in predict() and fit()/evaluate()
+- [ ] 3 compute validation accuracy in ctc training (run decoding)
 
 - [ ] 4 make a flag for overfitting on one batch
 - [ ] 4 add metadata.toml for Brown corpus

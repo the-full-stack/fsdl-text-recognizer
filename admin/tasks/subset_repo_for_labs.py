@@ -29,7 +29,7 @@ import shutil
 import yaml
 
 MAX_LAB_NUMBER = 9  # NOTE: Setting this to 10 will break the regexp!
-REPO_DIRNAME = Path(__file__).parents[2].resolve()
+REPO_DIRNAME = Path(__file__).resolve().parents[2]
 INFO_FILENAME = REPO_DIRNAME / 'admin' / 'tasks' / 'lab_specific_files.yml'
 
 
@@ -82,8 +82,8 @@ def _filter_hidden_blocks(lines, lab_number):
 def _replace_data_dirname(lines):
     filtered_lines = []
     for line in lines:
-        if line == "        return Path(__file__).parents[2].resolve() / 'data'":
-            line = "        return Path(__file__).parents[3].resolve() / 'data'"
+        if line == "        return Path(__file__).resolve().parents[2] / 'data'":
+            line = "        return Path(__file__).resolve().parents[3] / 'data'"
         filtered_lines.append(line)
     return filtered_lines
 
@@ -151,13 +151,13 @@ def subset_repo(info, output_dirname):
         _process_new_files(new_paths, lab_number, filter_your_code=False)
         shutil.copy(f'instructions/lab{lab_number}.md', output_dir / f'lab{lab_number}_sln' / 'readme.md')
 
-    if lab_number == 8:
-        (output_dir / '.circleci').mkdir(exist_ok=True)
-        shutil.copy('.circleci/config.yml.for-lab', output_dir / '.circleci' / 'config.yml')
+    (output_dir / '.circleci').mkdir(exist_ok=True)
+    shutil.copy('.circleci/config.yml.for-lab', output_dir / '.circleci' / 'config.yml')
 
     os.remove(output_dir / 'lab2/text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5')
     os.remove(output_dir / 'lab3/text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5')
     os.remove(output_dir / 'lab5/text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5')
+    os.remove(output_dir / 'lab6/text_recognizer/weights/LineDetectorModel_IamParagraphsDataset_fcn_weights.h5')
 
 
 def main():
