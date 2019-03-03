@@ -2,12 +2,14 @@
 
 - [x] 1 fix notebook dataset loading error
 - [x] 1 make sure circleci works
-- [ ] 1 add notebook showing IAM Paragraphs data
+- [x] 1 add notebook showing IAM Paragraphs data
+- [x] confirm I can update FSDL Handwriting with polygon data and that it still works
+- [ ] 1 add a notebook that loads trained line detector and outputs some predictions, and also shows ImageDataGenerator
+- [ ] 2 add a notebook that uses our trained line detector on the fsdl handwriting data
 - [ ] 1 make the app.py use the joint model
-- [ ] 1 add ImageDataGenerator output images to iam-paragraphs notebook
-- [ ] 1 add a notebook that loads trained line detector and outputs some predictions
 - [ ] 1 make sure deployment works
-- [ ] 1 strip out monitoring part of the last lab
+- [ ] 1 strip out monitoring part of the last lab instructions
+- [ ] 1 test out saurabh's PR and merge it
 
 ## Next
 
@@ -15,7 +17,6 @@ Less important
 - [ ] 2 kick off another IAM training with ImageDataGenerator
 - [ ] 2 add tests for training (but don't run them in circleci)
 - [ ] 2 add to lab 5: output sample predictions every epoch so that they can be reviewed in weights and biases
-
 
 - [ ] 2 save experiment json along with weights, and just call it canonical_character_predictor_weights.h5 and canonical_character_predictor_config.json
     - easiest way to implement would probably be to pass in experiment_config from run_experiment to Model#save_weights
