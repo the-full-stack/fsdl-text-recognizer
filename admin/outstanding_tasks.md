@@ -1,8 +1,5 @@
 ## Now
 
-- check up on the iam training I kicked off on the farm
-- if it's not 90%+, kick off another training with
-
 - [ ] 1 make the app.py use the joint model
     - [ ] set up data monitoring test for that (inverted image)
 - [ ] 1 @saurabh add ImageDataGenerator output images to iam-paragraphs notebook
@@ -10,6 +7,8 @@
 - [ ] 1 make sure circleci works
 - [ ] 1 make sure deployment works
 - [ ] 2 make sure monitoring works
+
+- [ ] 2 kick off another IAM training with ImageDataGenerator
 
 ## Next
 

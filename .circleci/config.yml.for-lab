@@ -46,8 +46,6 @@ jobs:
           key: cache-{{ checksum "Pipfile.lock" }}
           paths:
             - ~/.local
-            - /usr/bin/git-lfs
-            - /usr/local/bin/shellcheck
 
       - run:
           name: run prediction tests

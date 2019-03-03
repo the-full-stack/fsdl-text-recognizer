@@ -158,6 +158,7 @@ def subset_repo(info, output_dirname):
     os.remove(output_dir / 'lab2/text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5')
     os.remove(output_dir / 'lab3/text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5')
     os.remove(output_dir / 'lab5/text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5')
+    os.remove(output_dir / 'lab6/text_recognizer/weights/LineDetectorModel_IamParagraphsDataset_fcn_weights.h5')
 
 
 def main():

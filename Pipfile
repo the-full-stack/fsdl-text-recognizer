@@ -31,6 +31,7 @@ pylint = "*"
 pytest = "*"
 pyyaml = "*"
 redlock-py = "*"
+tornado = "==5.1.1"  # TODO (2019-03-02) version 6.0 makes jupyter notebooks unusable
 scipy = "*"
 wandb = "*"
 
