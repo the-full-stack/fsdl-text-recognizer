@@ -88,6 +88,8 @@
     - evaluation/evaluate_line_predictor.py
     - tasks/lint.sh
     - tasks/run_validation_tests.sh
+    - .pylintrc
+    - setup.cfg
 
 9:
     - api/app.py

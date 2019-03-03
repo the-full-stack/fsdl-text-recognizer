@@ -115,7 +115,7 @@ def _process_new_files(new_paths, lab_number, filter_your_code=True, filter_hidd
             lines = _replace_data_dirname(lines)
 
         with open(path, 'w') as f:
-            f.write('\n'.join(lines) + '\n')
+            f.write('\n'.join(lines))
 
 
 def subset_repo(info, output_dirname):
