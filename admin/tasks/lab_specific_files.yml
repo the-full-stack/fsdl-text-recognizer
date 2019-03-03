@@ -66,17 +66,19 @@
 
 6:
     - notebooks/04-look-at-iam-paragraphs.ipynb
-    - tasks/train_line_detector.py
+    - notebooks/04b-look-at-line-detector-predictions.ipynb
+    - tasks/train_line_detector.sh
     - text_recognizer/datasets/iam_dataset.py
     - text_recognizer/datasets/iam_paragraphs_dataset.py
     - text_recognizer/models/line_detector_model.py
     - text_recognizer/networks/fcn.py
     - text_recognizer/paragraph_text_recognizer.py
-    - text_recognizer/tests/support/iam_paragraphs/a01-000u.jpg
+    - text_recognizer/tests/support/iam_paragraphs/a01-000u-cropped.jpg
     - text_recognizer/tests/test_paragraph_text_recognizer.py
     - text_recognizer/weights/LineDetectorModel_IamParagraphsDataset_fcn_weights.h5
 
 7:
+    - notebooks/05-look-at-fsdl-handwriting.ipynb
     - tasks/update_fsdl_paragraphs_metadata.sh
     - text_recognizer/datasets/fsdl_handwriting_dataset.py
     - training/update_metadata.py
