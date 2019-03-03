@@ -66,6 +66,7 @@
 
 6:
     - notebooks/04-look-at-iam-paragraphs.ipynb
+    - tasks/train_line_detector.py
     - text_recognizer/datasets/iam_dataset.py
     - text_recognizer/datasets/iam_paragraphs_dataset.py
     - text_recognizer/models/line_detector_model.py

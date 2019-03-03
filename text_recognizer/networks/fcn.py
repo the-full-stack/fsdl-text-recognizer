@@ -24,7 +24,7 @@ def residual_conv_block(input_layer: Layer,
     return x
 
 
-def fcn(input_shape: Tuple[int, ...], output_shape: Tuple[int, ...]) -> Model:
+def fcn(_input_shape: Tuple[int, ...], output_shape: Tuple[int, ...]) -> Model:
     """Function to instantiate a fully convolutional residual network for line detection."""
     num_filters = [16] * 14
     kernel_sizes = [7] * 14
