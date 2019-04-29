@@ -4,6 +4,8 @@ from typing import Optional
 
 import numpy as np
 from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.backend import set_session
+import tensorflow as tf
 # Hide lines below until Lab 4
 import wandb
 from wandb.keras import WandbCallback
@@ -14,7 +16,7 @@ from text_recognizer.models.base import Model
 from training.gpu_util_sampler import GPUUtilizationSampler
 
 
-EARLY_STOPPING = True
+EARLY_STOPPING = False
 GPU_UTIL_SAMPLER = True
 
 
@@ -44,6 +46,12 @@ def train_model(
     # Hide lines above until Lab 4
 
     model.network.summary()
+
+    # Ensure that GPU memory is allocated
+    config = tf.ConfigProto(log_device_placement=False, allow_soft_placement=False)
+    config.gpu_options.allow_growth = True
+    sess = tf.Session(config=config)
+    set_session(sess)
 
     t = time()
     _history = model.fit(dataset=dataset, batch_size=batch_size, epochs=epochs, callbacks=callbacks)

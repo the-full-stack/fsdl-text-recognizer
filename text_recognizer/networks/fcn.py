@@ -1,9 +1,10 @@
 """Keras network code for the fully-convolutional network used for line detection."""
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Activation, Add, Conv2D, Input, Lambda, Layer
+from tensorflow.keras.layers import Activation, Add, Conv2D, Input, Lambda, Layer, Multiply
 from tensorflow.keras import backend as K
-
+from tensorflow.keras.backend import set_session
+import tensorflow as tf
 
 def residual_conv_block(input_layer: Layer,
                         kernel_sizes: List[int],
