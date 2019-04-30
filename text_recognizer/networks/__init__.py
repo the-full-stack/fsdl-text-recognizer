@@ -6,5 +6,5 @@ from .line_lstm_ctc import line_lstm_ctc
 # Hide lines above until Lab 3
 # Hide lines below until Lab 6
 from .fcn import fcn
-from .fcn_words import fcn_gated_relu, fcn_gated_tanh
+from .fcn_words import fcn_gated_relu, fcn_gated2_relu, fcn_gated3_relu
 # Hide lines above until Lab 6
