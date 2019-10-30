@@ -1,4 +1,5 @@
 """Utility functions for text_recognizer module."""
+import base64
 from concurrent.futures import as_completed, ThreadPoolExecutor
 from pathlib import Path
 from typing import Union
@@ -38,7 +39,6 @@ def read_image(image_uri: Union[Path, str], grayscale=False) -> np.array:
 # Hide lines below until Lab 9
 def read_b64_image(b64_string, grayscale=False):
     """Load base64-encoded images."""
-    import base64
     imread_flag = cv2.IMREAD_GRAYSCALE if grayscale else cv2.IMREAD_COLOR
     try:
         _, b64_data = b64_string.split(',')

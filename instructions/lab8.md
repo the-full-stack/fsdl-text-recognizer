@@ -1,6 +1,5 @@
 # Lab 8: Testing and Continuous Integration
 
-
 ## Goal of the lab
 
 - Add evaluation tests
