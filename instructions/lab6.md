@@ -1,6 +1,9 @@
 # Lab 6: Line Detection
 
-We have trained a model that can recognize text in a line, given an image of a single line.
+At this point, we have trained a model that can recognize text in a line, given an image of a single line.
+
+## Goal of the lab
+
 Our next task is to automatically detect line regions in an image of a whole paragraph of text.
 
 Our approach will be to train a model that, when given an image containing lines of text, returns a pixelwise labeling of that image, with each pixel belonging to either background, odd line of handwriting, or even line of handwriting.

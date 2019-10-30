@@ -13,6 +13,7 @@ Move from reading single characters to reading entire lines.
 ## Follow along
 
 ```
+git pull
 cd lab3_sln/
 ```
 

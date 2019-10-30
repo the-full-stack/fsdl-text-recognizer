@@ -1,12 +1,18 @@
 # Lab 8: Testing and Continuous Integration
 
-As always, the first thing to do is `git pull` :)
 
-In this lab, we will
+## Goal of the lab
 
 - Add evaluation tests
 - Add linting to our codebase
 - Set up continuous integration via CircleCI, and see our commits pass/fail
+
+## Follow along
+
+```
+git pull
+cd lab8_sln/
+```
 
 ## Linting script
 

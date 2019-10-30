@@ -15,6 +15,7 @@ In this lab we will introduce the IAM handwriting dataset, and give you a chance
 ## Follow along
 
 ```
+git pull
 cd lab5_sln/
 wandb init
    - team: fsdl

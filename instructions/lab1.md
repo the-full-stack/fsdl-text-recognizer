@@ -1,8 +1,11 @@
 # Lab 1: Codebase tour
 
-Before we get started, please run
+## Before we get started
+
+Before we get started, please run a command that will take a little bit of time to execute.
 
 ```
+git pull
 cd lab2_sln/
 pipenv run python text_recognizer/datasets/emnist_dataset.py
 cd ..
@@ -10,7 +13,7 @@ cd ..
 
 ## Goal of the lab
 
-Familiarize you with the high-level organizational design of the codebase
+Familiarize you with the high-level design of the codebase.
 
 ## Follow along
 
@@ -25,7 +28,7 @@ Web backend
 ```
 api/                        # Code for serving predictions as a REST API.
     tests/test_app.py           # Test that predictions are working
-    Dockerfile                  # Specificies Docker image that runs the web server.
+    Dockerfile                  # Specifies Docker image that runs the web server.
     __init__.py
     app.py                      # Flask web server that serves predictions.
     serverless.yml              # Specifies AWS Lambda deployment of the REST API.

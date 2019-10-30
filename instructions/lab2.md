@@ -1,8 +1,17 @@
+---
+marp: true
+title: Single-character prediction
+paginate: true
+---
+
 # Lab 2: Single-character prediction
 
 ## Goal of the lab
 
 Train a model to solve a simplified version of the line text recognition problem.
+
+
+---
 
 ## Outline
 
@@ -11,17 +20,24 @@ Train a model to solve a simplified version of the line text recognition problem
 - Train simple MLP/CNN baselines to solve EMNIST.
 - Test your model.
 
+---
+
 ## Follow along
 
 ```
+git pull
 cd lab2_sln/
 ```
+
+---
 
 ## Intro to EMNIST
 
 - EMNIST = Extended Mini-NIST :)
 - All English letters and digits presented in the MNIST format.
 - Look at: `notebooks/01-look-at-emnist.ipynb`
+
+---
 
 ## Networks and training code
 

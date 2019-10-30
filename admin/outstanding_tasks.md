@@ -1,6 +1,18 @@
 ## Next
 
+- [ ] add top-level readme with important parts highlighted, and with other libraries pointed to
+	- [ ] ability to run end-to-end from raw data, with caching along the way to speed up future runs
+	- [ ] dataset streaming and augmentations (fast.ai, TFRecord)
+	- [ ] specifying and recording experiments via config file
+	- [ ] ability to run experiments and automatically pick best model
+
+- [ ] 1 FIRST: before changing anything, go through all labs and take screenshots, putting them into the readme
 - [ ] 1 make the app.py use the joint model
+
+- [ ] 2 introduce code that picks best run from weights and biases (2 hours)
+- [ ] 2 introduce config.json in running experiments (4 hours)
+- [ ] 2 try updating requirements to tensorflow 1.15
+- [ ] 2 explain pipenv in readme (1 hour)
 
 - [ ] 2 add a notebook that uses our trained line detector on the fsdl handwriting data
 - [ ] 2 kick off another IAM training with ImageDataGenerator

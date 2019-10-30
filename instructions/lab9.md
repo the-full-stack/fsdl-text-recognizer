@@ -1,12 +1,19 @@
 # Lab 9: Web Deployment
 
-In this lab, we will
+## Goal of the lab
 
 - Run our LinePredictor as a web app, and send it some requests
 - Dockerize our web app
 - Deploy our web app as a serverless function to AWS Lambda
 - Look at basic metrics and set up a more advanced one
 - Experience something going wrong in our deployed service, and catching it with metrics
+
+## Follow along
+
+```
+git pull
+cd lab9_sln/
+```
 
 This lab has quite a few new files, mostly in the new `api/` directory.
 
