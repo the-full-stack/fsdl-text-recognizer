@@ -10,7 +10,6 @@ paginate: true
 
 Train a model to solve a simplified version of the line text recognition problem.
 
-
 ---
 
 ## Outline
@@ -36,6 +35,8 @@ cd lab2_sln/
 - EMNIST = Extended Mini-NIST :)
 - All English letters and digits presented in the MNIST format.
 - Look at: `notebooks/01-look-at-emnist.ipynb`
+
+![bg right:33% fit](lab2.assets/emnist.png)
 
 ---
 
