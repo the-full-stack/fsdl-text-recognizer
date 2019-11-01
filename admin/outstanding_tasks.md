@@ -1,24 +1,18 @@
 ## Next
 
 - If I could get marp to work with <img> tags, it would be great. For now, just bust through these tasks without worrying about it
-	- FOR NOW just make one big keynote presentation for all labs
+  - FOR NOW just make one big keynote presentation for all labs
 
-- [ ] 1 update Pipfile
-	- tensorflow 1.15 seems to depend on functools32 which can't be installed for python3
-	- tensorflow 1.14 has the dual -gpu and not-gpu nature, which is a little annoying, but fine
-	- tensorflow 2.0 also has dual gpu
-	- COURSE OF ACTION:
-		- try python3.7 tensorflow 1.14. Get rid of Pipfile-gpu though, and simply develop in docker (or on a machine with gpus)
 - [ ] 1 before changing anything else, go through all labs in Jupyterhub and take screenshots, putting them into the readme
 - [ ] 1 make the app.py use the joint model
 
 Josh could do:
 - [ ] 1 add more information to intro slides as preview of the important things we'll be doing
-	- [ ] ability to run end-to-end from raw data, with caching along the way to speed up future runs
-	- [ ] dataset streaming and augmentations (fast.ai, TFRecord)
-	- [ ] specifying and recording experiments via config file
-	- [ ] ability to run experiments and automatically pick best model
-	- [ ] ability to create a deployment package in CI
+  - [ ] ability to run end-to-end from raw data, with caching along the way to speed up future runs
+  - [ ] dataset streaming and augmentations (fast.ai, TFRecord)
+  - [ ] specifying and recording experiments via config file
+  - [ ] ability to run experiments and automatically pick best model
+  - [ ] ability to create a deployment package in CI
 
 - [ ] 2 introduce code that picks best run from weights and biases (2 hours)
 - [ ] 2 introduce config.json in running experiments (4 hours)
@@ -45,3 +39,9 @@ Josh could do:
 ## Done
 
 - [x] 20191029 look into writing lab readme's as slides using Marp, but decided against it for now, because wasn't able to find a solution that looked good in both github readme format (and typora) and marp
+- [x] 20191030 1 update Pipfile
+  - tensorflow 1.15 seems to depend on functools32 which can't be installed for python3
+  - tensorflow 1.14 has the dual -gpu and not-gpu nature, which is a little annoying, but fine
+  - tensorflow 2.0 also has dual gpu
+  - python3.7 has trouble installing a dependency of wandb (forgot the name)
+  - settled on python3.6 and tensorflow 1.14

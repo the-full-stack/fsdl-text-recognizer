@@ -47,7 +47,6 @@ Feel free to peek in on your neighbors!
 
 If you commit and push your code changes, then the run will also be linked to the exact code your ran, which you will be able to review months later if necessary.
 
-
 - Change sliding window width/stride
 - Not using a sliding window: instead of sliding a LeNet over, you could just run the input through a few conv/pool layers, squeeze out the last (channel) dimension (which should be 0), and input the result into the LSTM. You can play around with the parameters there.
 - Change number of LSTM dimensions

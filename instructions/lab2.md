@@ -1,16 +1,8 @@
----
-marp: true
----
-
 # Lab 2: Single-character prediction
-
----
 
 ## Goal of the lab
 
 Train a model to solve a simplified version of the line text recognition problem.
-
----
 
 ## Outline
 
@@ -19,8 +11,6 @@ Train a model to solve a simplified version of the line text recognition problem
 - Train simple MLP/CNN baselines to solve EMNIST.
 - Test your model.
 
----
-
 ## Follow along
 
 ```
@@ -28,17 +18,11 @@ git pull
 cd lab2_sln/
 ```
 
----
-
 ## Intro to EMNIST
 
 - EMNIST = Extended Mini-NIST :)
 - All English letters and digits presented in the MNIST format.
 - Look at: `notebooks/01-look-at-emnist.ipynb`
-
-<img src="lab2.assets/emnist.png" style="zoom:50%;" />
-
----
 
 ## Networks and training code
 
@@ -49,8 +33,6 @@ cd lab2_sln/
 - text_recognizer/models/character_model.py
 - training/util.py
 ```
-
----
 
 ## Train MLP and CNN
 
@@ -63,16 +45,12 @@ pipenv run training/run_experiment.py --save \
 
 It will take a couple of minutes to train your model.
 
----
-
 Just for fun, you could also try a larger MLP, with a smaller batch size:
 
 ```sh
 pipenv run training/run_experiment.py \
   '{"dataset": "EmnistDataset", "model": "CharacterModel", "network": "mlp", "network_args": {"num_layers": 8}, "train_args": {"batch_size": 128}}'
 ```
-
----
 
 Let's also train a CNN on the same task.
 
@@ -82,8 +60,6 @@ pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "model": "Ch
 
 Training the single epoch will take about 2 minutes (that's why we only do one epoch in this lab :)).
 Leave it running while we go on to the next part.
-
----
 
 It is very useful to be able to subsample the dataset for quick experiments.
 This is possibe by passing `subsample_fraction=0.1` (or some other fraction) at dataset initialization, or in `dataset_args` in the `run_experiment.py` dictionary, for example:
@@ -106,6 +82,6 @@ Now let's see if it works by running:
 pipenv run pytest -s text_recognizer/tests/test_character_predictor.py
 ```
 
-Or, use the shorthand `tasks/run_prediction_tests.sh`
+Or, use the shorthand `tasks/test_functionality.sh`
 
 Testing should finish quickly.

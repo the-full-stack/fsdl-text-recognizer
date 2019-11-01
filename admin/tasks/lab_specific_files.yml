@@ -4,7 +4,7 @@
 2:
     - notebooks/01-look-at-emnist.ipynb
     - tasks/train_character_predictor.sh
-    - tasks/run_prediction_tests.sh
+    - tasks/test_functionality.sh
     - text_recognizer/util.py
     - text_recognizer/character_predictor.py
     - text_recognizer/datasets/__init__.py
@@ -25,7 +25,6 @@
     - text_recognizer/tests/test_character_predictor.py
     - training/util.py
     - training/run_experiment.py
-    - training/gpu_util_sampler.py
     - text_recognizer/networks/lenet.py
     - text_recognizer/networks/misc.py
     - text_recognizer/tests/support/create_emnist_lines_support_files.py
@@ -87,7 +86,7 @@
     - evaluation/evaluate_character_predictor.py
     - evaluation/evaluate_line_predictor.py
     - tasks/lint.sh
-    - tasks/run_validation_tests.sh
+    - tasks/test_validation.sh
     - .pylintrc
     - setup.cfg
 

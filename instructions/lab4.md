@@ -1,4 +1,4 @@
-# Lab 4
+# Lab 4: Experiment Management
 
 ## Goal of the lab
 

@@ -36,7 +36,7 @@ The relevant new files for setting up continuous integration are
 
 - `evaluation/evaluate_character_predictor.py`
 - `evaluation/evaluate_line_predictor.py`
-- `tasks/run_validation_tests.sh`
+- `tasks/test_validation.sh`
 
 There is one additional file that is outside of the lab8 directory (in the top-level directory): `.circleci/config.yml`
 

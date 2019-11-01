@@ -34,7 +34,7 @@ We can look at the results in `notebooks/04-look-at-iam-paragraphs.ipynb` and by
 The model code for our new `LineDetector` is in `text_recognizer/models/line_detector_model.py`.
 
 Because we only have about a thousand images to learn this task on, data augmentation will be crucial.
-Image augmentations such as streching, slight rotations, offsets, contrast and brightness changes, and potentially even mirror-flipping are tedious to code, and most frameworks provide optimized utility code for the task
+Image augmentations such as streching, slight rotations, offsets, contrast and brightness changes, and potentially even mirror-flipping are tedious to code, and most frameworks provide optimized utility code for the task.
 
 We use Keras's `ImageDataGenerator`, and you can see the parameters for it in `text_recognizer/models/line_detector_model.py`.
 We can take a look at what the data transformations look like in the same notebook.
@@ -70,4 +70,4 @@ We can see that it works as expected (albeit not too accurately yet) by running 
 ## Things to try
 
 - Try adding more data augmentations, or mess with the parameters of the existing ones
-- Try the U-Net architecture, that MaxPool's down and then UpSamples back up, with increased conv layer channel dimensions in the middle (https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/).
+- Try the U-Net architecture, which MaxPools down and then UpSamples back up, with increased conv layer channel dimensions in the middle (https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/).

@@ -33,8 +33,8 @@ We can also update `metadata.toml` with a convenient script that replace the SHA
 There is a convenience task script defined: `tasks/update_fsdl_paragraphs_metadata.sh`.
 
 The data file itself is checked into version control, but tracked with git-lfs, as it can get heavyweight and can change frequently as we keep adding and annotating more data.
-Git-lfs actually does something very similar to what we more manually do with `metadata.toml`.
-The reason we also use the latter is for standardization across other types of datasets, which may not have a file we want to check into even git-lfs -- for example, EMNIST and IAM, which are too large as they include the images.
+Note that `git-lfs` actually does something very similar to what we more manually do with `metadata.toml`.
+The reason we also use the latter is for standardization across other types of datasets, which may not have a file we want to check into even `git-lfs` -- for example, EMNIST and IAM, which are too large as they include the images.
 
 ## Download images
 

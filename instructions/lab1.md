@@ -25,7 +25,7 @@ cd lab9_sln/
 
 Web backend
 
-```
+```sh
 api/                        # Code for serving predictions as a REST API.
     tests/test_app.py           # Test that predictions are working
     Dockerfile                  # Specifies Docker image that runs the web server.
@@ -36,7 +36,7 @@ api/                        # Code for serving predictions as a REST API.
 
 Data (not under version control - one level up in the heirarchy)
 
-```
+```sh
 data/                            # Training data lives here
     raw/
         emnist/metadata.toml     # Specifications for downloading data
@@ -44,7 +44,7 @@ data/                            # Training data lives here
 
 Experimentation
 
-```
+```sh
     evaluation/                     # Scripts for evaluating model on eval set.
         evaluate_character_predictor.py
 
@@ -54,7 +54,7 @@ Experimentation
 
 Convenience scripts
 
-```
+```sh
     tasks/
         # Deployment
         build_api_docker.sh
@@ -64,9 +64,9 @@ Convenience scripts
         lint.sh
 
         # Tests
-        run_prediction_tests.sh
-        run_validation_tests.sh
         test_api.sh
+        test_functionality.sh
+        test_validation.sh
 
         # Training
         train_character_predictor.sh
@@ -74,7 +74,7 @@ Convenience scripts
 
 Main model and training code
 
-```
+```sh
     text_recognizer/                # Package that can be deployed as a self-contained prediction system
         __init__.py
 
@@ -107,7 +107,6 @@ Main model and training code
         util.py
 
     training/                       # Code for running training experiments and selecting the best model.
-        gpu_util_sampler.py
         run_experiment.py           # Parse experiment config and launch training.
         util.py                     # Logic for training a model with a given config
 ```

@@ -1,4 +1,4 @@
-# Lab 3
+# Lab 3: Line prediction
 
 ## Goal of the lab
 
