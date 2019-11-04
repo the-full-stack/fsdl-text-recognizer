@@ -1,10 +1,2 @@
-.git
-.pytest_cache
-.serverless
-node_modules
-cursive_ai
-data
-!data/processed
-notebooks
-wandb
-wandb-debug.log
+*
+!Pipfile*

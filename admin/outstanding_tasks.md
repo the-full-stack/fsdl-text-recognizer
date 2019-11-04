@@ -20,6 +20,8 @@ Josh could do:
 
 - [ ] 2 add data parallelism option
 
+- [ ] 2 look into switching from flask to that async one in fast.ai course
+
 - [ ] 2 add a notebook that uses our trained line detector on the fsdl handwriting data
 - [ ] 2 kick off another IAM training with ImageDataGenerator
 - [ ] 2 add tests for training (but don't run them in circleci)

@@ -1,10 +1,8 @@
 1:
-    - text_recognizer/__init__.py
-
-2:
     - notebooks/01-look-at-emnist.ipynb
     - tasks/train_character_predictor.sh
     - tasks/test_functionality.sh
+    - text_recognizer/__init__.py
     - text_recognizer/util.py
     - text_recognizer/character_predictor.py
     - text_recognizer/datasets/__init__.py
@@ -32,7 +30,7 @@
     - "text_recognizer/tests/support/emnist_lines/do that In.png"
     - "text_recognizer/tests/support/emnist_lines/or if used the results.png"
 
-3:
+2:
     - notebooks/02-look-at-emnist-lines.ipynb
     - tasks/train_cnn_line_predictor.sh
     - tasks/train_lstm_line_predictor.sh
@@ -47,13 +45,13 @@
     - text_recognizer/tests/test_line_predictor.py
     - text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5
 
-4:
+3:
     - tasks/prepare_sample_experiments.sh
     - training/gpu_manager.py
     - training/experiments/sample.json
     - training/prepare_experiments.py
 
-5:
+4:
     - notebooks/03-look-at-iam-lines.ipynb
     - text_recognizer/datasets/iam_lines_dataset.py
     - tasks/train_lstm_line_predictor_on_iam.sh
@@ -63,7 +61,7 @@
     - "text_recognizer/tests/support/iam_lines/his entrance. He came, almost falling.png"
     - text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5
 
-6:
+5:
     - notebooks/04-look-at-iam-paragraphs.ipynb
     - notebooks/04b-look-at-line-detector-predictions.ipynb
     - tasks/train_line_detector.sh
@@ -76,13 +74,13 @@
     - text_recognizer/tests/test_paragraph_text_recognizer.py
     - text_recognizer/weights/LineDetectorModel_IamParagraphsDataset_fcn_weights.h5
 
-7:
+6:
     - notebooks/05-look-at-fsdl-handwriting.ipynb
     - tasks/update_fsdl_paragraphs_metadata.sh
     - text_recognizer/datasets/fsdl_handwriting_dataset.py
     - training/update_metadata.py
 
-8:
+7:
     - evaluation/evaluate_character_predictor.py
     - evaluation/evaluate_line_predictor.py
     - tasks/lint.sh
@@ -90,7 +88,7 @@
     - .pylintrc
     - setup.cfg
 
-9:
+8:
     - api/app.py
     - api/tests/test_app.py
     - api/Dockerfile
