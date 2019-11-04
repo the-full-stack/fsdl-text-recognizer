@@ -166,7 +166,7 @@ def main():
     args = parser.parse_args()
 
     with open(INFO_FILENAME) as f:
-        info = yaml.load(f.read())
+        info = yaml.full_load(f.read())
 
     subset_repo(info, args.output_dirname)
 
