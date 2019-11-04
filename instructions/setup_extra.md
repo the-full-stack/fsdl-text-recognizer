@@ -1,23 +1,12 @@
 # Setup
 
-## Jupyterhub
-
-### Notes for updating Docker image:
-
-Already has Cuda 10
-
-- sudo apt-get install python3.7-dev
-- pip install --upgrade pip
-- pip install --upgrade pipenv
-
 ## Development on AWS (in progress)
 
-We will use the [Deep Learning Base AMI](https://aws.amazon.com/marketplace/pp/B07Y3VDBNS) which has NVIDA CUDA and GPU drivers, but no pre-installed deep learning framework Python packages.
-We will install those ourselves.
+We will use the [Deep Learning Base AMI](https://aws.amazon.com/marketplace/pp/B07Y3VDBNS) which has NVIDA CUDA and GPU drivers, but no pre-installed deep learning framework Python packages (we will install those ourselves).
 
 ```sh
 AMI="ami-0f4d5f31e6310624e"
-TYPE="p2.xlarge"
+TYPE="p2.4xlarge"
 aws ec2 run-instances --image-id "$AMI" --instance-type "$TYPE" --key-name id_rsa --security-group-ids=sg-331f3543
 ```
 

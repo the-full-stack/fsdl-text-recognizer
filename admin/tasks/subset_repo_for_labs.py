@@ -130,9 +130,9 @@ def subset_repo(info, output_dirname):
     output_dir.mkdir(parents=True, exist_ok=True)
     shutil.copytree(REPO_DIRNAME / 'data', output_dir / 'data')
 
-    shutil.copy('Pipfile-gpu', output_dir / 'Pipfile')
-    shutil.copy('Pipfile-gpu.lock', output_dir / 'Pipfile.lock')
     shutil.copy('.gitignore', output_dir)
+    shutil.copy('Pipfile', output_dir)
+    shutil.copy('Pipfile.lock', output_dir)
     shutil.copy('instructions/readme.md', output_dir)
 
     # Labs
@@ -152,7 +152,7 @@ def subset_repo(info, output_dirname):
         shutil.copy(f'instructions/lab{lab_number}.md', output_dir / f'lab{lab_number}_sln' / 'readme.md')
 
     (output_dir / '.circleci').mkdir(exist_ok=True)
-    shutil.copy('.circleci/config.yml.for-lab', output_dir / '.circleci' / 'config.yml')
+    shutil.copy('.circleci/config.for-lab.yml', output_dir / '.circleci' / 'config.yml')
 
     os.remove(output_dir / 'lab1/text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5')
     os.remove(output_dir / 'lab2/text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5')
