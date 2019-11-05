@@ -15,6 +15,7 @@ Train a model to solve a simplified version of the line text recognition problem
 
 ```
 git pull
+pipenv sync -d
 cd lab1_sln/
 ```
 
@@ -65,7 +66,7 @@ It is very useful to be able to subsample the dataset for quick experiments.
 This is possibe by passing `subsample_fraction=0.1` (or some other fraction) at dataset initialization, or in `dataset_args` in the `run_experiment.py` dictionary, for example:
 
 ```sh
-pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "dataset_args": {"subsample_fraction": 0.1}, "model": "CharacterModel", "network": "mlp"}'
+pipenv run training/run_experiment.py '{"dataset": "EmnistDataset", "dataset_args": {"subsample_fraction": 0.1}, "model": "CharacterModel", "network": "lenet"}'
 ```
 
 ## Testing

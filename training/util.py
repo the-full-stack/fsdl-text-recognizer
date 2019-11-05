@@ -4,10 +4,10 @@ from typing import Optional
 
 import numpy as np
 from tensorflow.keras.callbacks import EarlyStopping
-# Hide lines below until Lab 4
+# Hide lines below until Lab 3
 import wandb
 from wandb.keras import WandbCallback
-# Hide lines above until Lab 4
+# Hide lines above until Lab 3
 
 from text_recognizer.datasets.dataset import Dataset
 from text_recognizer.models.base import Model
@@ -30,12 +30,12 @@ def train_model(
         early_stopping = EarlyStopping(monitor='val_loss', min_delta=0.01, patience=3, verbose=1, mode='auto')
         callbacks.append(early_stopping)
 
-    # Hide lines below until Lab 4
+    # Hide lines below until Lab 3
     if use_wandb:
         wandb.init()
         wandb_callback = WandbCallback()
         callbacks.append(wandb_callback)
-    # Hide lines above until Lab 4
+    # Hide lines above until Lab 3
 
     model.network.summary()
 
