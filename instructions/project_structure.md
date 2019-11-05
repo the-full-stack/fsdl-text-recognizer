@@ -5,7 +5,7 @@ Before we get going with the labs, let's familiarize ourselves with the high-lev
 ## Follow along
 
 ```
-cd lab8_sln/
+cd lab8/
 ```
 
 ## Project structure

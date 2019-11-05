@@ -13,9 +13,6 @@ from training.gpu_manager import GPUManager
 # Hide lines above until Lab 3
 from training.util import train_model
 
-import tensorflow as tf
-tf.config.gpu_options.allow_growth = True
-
 DEFAULT_TRAIN_ARGS = {
     'batch_size': 64,
     'epochs': 16

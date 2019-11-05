@@ -136,20 +136,13 @@ def subset_repo(info, output_dirname):
     shutil.copy('instructions/readme.md', output_dir)
 
     # Labs
+    SOLUTION_VERSION = True
     for lab_number in info.keys():
         lab_output_dir = output_dir / f'lab{lab_number}'
         lab_output_dir.mkdir(parents=True)
         new_paths = _copy_files_for_lab(info, lab_number, lab_output_dir)
-        _process_new_files(new_paths, lab_number)
+        _process_new_files(new_paths, lab_number, filter_your_code=(not SOLUTION_VERSION))
         shutil.copy(f'instructions/lab{lab_number}.md', output_dir / f'lab{lab_number}' / 'readme.md')
-
-    # Solutions versions
-    for lab_number in info.keys():
-        lab_output_dir = output_dir / f'lab{lab_number}_sln'
-        lab_output_dir.mkdir(parents=True)
-        new_paths = _copy_files_for_lab(info, lab_number, lab_output_dir)
-        _process_new_files(new_paths, lab_number, filter_your_code=False)
-        shutil.copy(f'instructions/lab{lab_number}.md', output_dir / f'lab{lab_number}_sln' / 'readme.md')
 
     (output_dir / '.circleci').mkdir(exist_ok=True)
     shutil.copy('.circleci/config.for-lab.yml', output_dir / '.circleci' / 'config.yml')

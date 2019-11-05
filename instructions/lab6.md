@@ -49,7 +49,7 @@ We use the `concurrent.futures.ThreadPoolExecutor` method, and use the `tqdm` pa
 
 We can confirm that we loaded the data correctly by looking at line crops and their corresponding strings.
 
-Make sure you are in `lab6_sln` directory, and take a look at `notebooks/05-look-at-fsdl-handwriting.ipynb`.
+Make sure you are in `lab6` directory, and take a look at `notebooks/05-look-at-fsdl-handwriting.ipynb`.
 
 ## Training on the new dataset
 

@@ -13,7 +13,7 @@ Get familiar with our experiment running and experiment management tools
 
 ```
 git pull
-cd lab3_sln/
+cd lab3/
 ```
 
 ## Intro to Weights & Biases
@@ -26,7 +26,7 @@ cd lab3_sln/
 ### Let's get started with W&B!
 
 ```
-wandb init
+pipenv run wandb init
 ```
 
 You should see something like:

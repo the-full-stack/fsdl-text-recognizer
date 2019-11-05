@@ -12,7 +12,7 @@
 
 ```
 git pull
-cd lab8_sln/
+cd lab8/
 ```
 
 This lab has quite a few new files, mostly in the new `api/` directory.

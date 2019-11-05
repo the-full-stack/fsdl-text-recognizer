@@ -10,7 +10,7 @@
 
 ```
 git pull
-cd lab7_sln/
+cd lab7/
 ```
 
 ## Linting script

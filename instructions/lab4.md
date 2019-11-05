@@ -16,10 +16,7 @@ In this lab we will introduce the IAM handwriting dataset, and give you a chance
 
 ```
 git pull
-cd lab4_sln/
-wandb init
-   - team: fsdl
-   - project: fsdl-text-recognizer-project
+cd lab4/
 ```
 
 ## IAM Lines Dataset

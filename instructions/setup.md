@@ -48,7 +48,7 @@ Before we get started, please run a command that will take a little bit of time 
 
 ```sh
 git pull
-cd lab1_sln/
+cd lab1/
 pipenv run python text_recognizer/datasets/emnist_dataset.py
 cd ..
 ```
