@@ -121,7 +121,7 @@ You won't be able to quickly get those during lab right now, but you can sign fo
 Edit the command below and substitute your credentials for the placeholders:
 
 ```
-serverless config credentials --provider aws --key AKIAJCZMBCWB4WPN35CQ --secret fc5cpvNFiULRVmc2L494pC8UrIOSi47jDc8Fk7CY
+serverless config credentials --provider aws --key REPLACE_THIS --secret REPLACE_THIS
 ```
 
 Now you've got everything configured, and are ready to deploy. Serverless will package up your flask API before deploying it.
