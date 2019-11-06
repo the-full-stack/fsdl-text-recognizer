@@ -16,6 +16,8 @@ provider:
   memorysize: 3096
   timeout: 30
   versionFunctions: false
+  iamManagedPolicies:
+    - "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 
 functions:
   api:
