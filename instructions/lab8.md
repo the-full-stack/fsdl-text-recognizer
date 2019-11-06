@@ -71,11 +71,8 @@ tasks/build_api_docker.sh
 
 This should take a couple of minutes to complete.
 
-When it's finished, you can run the server with
+When it's finished, you can run the server with `tasks/run_api_docker.sh`
 
-```sh
-docker run -p 8000:8000 --name api -it --rm text_recognizer_api
-```
 
 You can run the same curl commands as you did when you ran the flask server earlier, and see that you're getting the same results.
 
