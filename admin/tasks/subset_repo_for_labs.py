@@ -31,6 +31,7 @@ import yaml
 MAX_LAB_NUMBER = 9  # NOTE: Setting this to 10 will break the regexp!
 REPO_DIRNAME = Path(__file__).resolve().parents[2]
 INFO_FILENAME = REPO_DIRNAME / 'admin' / 'tasks' / 'lab_specific_files.yml'
+SOLUTION_VERSION_LABS = True
 
 
 def _filter_your_code_blocks(lines, lab_number):
@@ -136,21 +137,21 @@ def subset_repo(info, output_dirname):
     shutil.copy('instructions/readme.md', output_dir)
 
     # Labs
-    SOLUTION_VERSION = True
     for lab_number in info.keys():
         lab_output_dir = output_dir / f'lab{lab_number}'
         lab_output_dir.mkdir(parents=True)
         new_paths = _copy_files_for_lab(info, lab_number, lab_output_dir)
-        _process_new_files(new_paths, lab_number, filter_your_code=(not SOLUTION_VERSION))
+        _process_new_files(new_paths, lab_number, filter_your_code=(not SOLUTION_VERSION_LABS))
         shutil.copy(f'instructions/lab{lab_number}.md', output_dir / f'lab{lab_number}' / 'readme.md')
 
     (output_dir / '.circleci').mkdir(exist_ok=True)
     shutil.copy('.circleci/config.for-lab.yml', output_dir / '.circleci' / 'config.yml')
 
-    os.remove(output_dir / 'lab1/text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5')
-    os.remove(output_dir / 'lab2/text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5')
-    os.remove(output_dir / 'lab4/text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5')
-    os.remove(output_dir / 'lab5/text_recognizer/weights/LineDetectorModel_IamParagraphsDataset_fcn_weights.h5')
+    if not SOLUTION_VERSION_LABS:
+        os.remove(output_dir / 'lab1/text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5')
+        os.remove(output_dir / 'lab2/text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5')
+        os.remove(output_dir / 'lab4/text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5')
+        os.remove(output_dir / 'lab5/text_recognizer/weights/LineDetectorModel_IamParagraphsDataset_fcn_weights.h5')
 
 
 def main():
