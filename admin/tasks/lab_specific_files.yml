@@ -81,6 +81,7 @@
     - training/update_metadata.py
 
 7:
+    - api/__init__.py
     - evaluation/evaluate_character_predictor.py
     - evaluation/evaluate_line_predictor.py
     - tasks/lint.sh
