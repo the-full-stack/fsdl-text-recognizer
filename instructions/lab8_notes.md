@@ -1,11 +1,10 @@
-# Lab 8 notes
+# Lab 9 notes
 
-- Show the winning run on IamLines
-- State that we should actually write out the prediction lines after every epoch
+- Live-code the Flask web app, explaining what's going on
+- At the end, should be able to CURL the app running locally with a GET request and a POST request
 
-- Set up CircleCI in their own fork
-    - Introduce evaluation tests
-    - Show how to do it (go to circleci, etc)
-    - Show what it does (marks the commit)
-    - Push a commit that makes it fail
-    - Push another commit that makes it pass
+- Now, we're going to build it as a Docker container
+    - go through each line
+    - cover .dockerignore
+
+- Now, we're going to deploy to Lambda

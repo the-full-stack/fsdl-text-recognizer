@@ -1,73 +1,57 @@
-# Lab 6: Line Detection
+# Lab 6: Data Labeling and Versioning
 
-At this point, we have trained a model that can recognize text in a line, given an image of a single line.
+In this lab we will annotate the handwriting samples we collected, export and version the resulting data, write an interface to the new data format, and download the pages in parallel.
 
-## Goal of the lab
+## Data labeling
 
-Our next task is to automatically detect line regions in an image of a whole paragraph of text.
+We will be using a simple online data annotation web service called Dataturks.
 
-Our approach will be to train a model that, when given an image containing lines of text, returns a pixelwise labeling of that image, with each pixel belonging to either background, odd line of handwriting, or even line of handwriting.
-Given the output of the model, we can find line regions with an easy image processing operation.
+Please head to the [project page](https://dataturks.com/projects/sergeykarayev/fsdl_handwriting) and log in using our shared credential: `annotator@fullstackdeeplearning.com` (the password will be shared during lab).
 
-## Setup
+You should be able to start tagging now.
+Let's do it together for a little bit, and then you'll have time to do a full page by yourself.
 
-- As always, `git pull` in the `~/fsdl-text-recognizer-project` repo to get the latest code.
-- Do a quick `pipenv sync --dev` to make sure your package versions are correct.
-- Then `cd lab6_sln`.
+We'll sync up and review results in a few minutes.
 
-## Data
+(Review results and discuss any differences in annotation and how they could be prevented.)
 
-We are starting from the IAM dataset, which includes not only lines but the original writing sample forms, with each line and word region annotated.
+## Export data and update metadata file
 
-Let's load the IAM dataset and then look at the data files.
-Run `pipenv run python text_recognizer/datasets/iam_dataset.py`
-Let's look at the raw data files, which are in `~/fsdl-text-recognizer-project/data/raw/iam/iamdb/forms`.
+Let's now export the data from Dataturks and add it to our version control.
 
-We want to crop out the region of each page corresponding to the handwritten paragraph as our model input, and generate corresponding ground truth.
+You have noticed the `metadata.toml` files in all of our `data/raw` directories.
+They contain the remote source of the data, the filename it should have when downloaded, and a SHA-256 hash of the downloaded file.
 
-Code to do this is in `text_recognizer/datasets/iam_paragraphs_dataset.py`
+The idea is that the data file has all the information needed for our dataset.
+In our case, it has image URLs and all the annotations we made.
+From this, we can download the images, and transform the annotation data into something usable by our training scripts.
+The hash, combined with the state of the codebase (tracked by git), then uniquely identifies the data we're going to use to train.
 
-We can look at the results in `notebooks/04-look-at-iam-paragraphs.ipynb` and by looking at some debug images we output in `data/interim/iam_paragraphs`.
+We replace the current `fsdl_handwriting.json` with the one we just exported, and now need to update the metadata file, since the hash is different.
+SHA256 hash of any file can be computed by running `shasum -a 256 <filename>`.
+We can also update `metadata.toml` with a convenient script that replace the SHA-256 of the current file with the SHA-256 of the new file.
+There is a convenience task script defined: `tasks/update_fsdl_paragraphs_metadata.sh`.
 
-## Training data augmentation
+The data file itself is checked into version control, but tracked with git-lfs, as it can get heavyweight and can change frequently as we keep adding and annotating more data.
+Note that `git-lfs` actually does something very similar to what we more manually do with `metadata.toml`.
+The reason we also use the latter is for standardization across other types of datasets, which may not have a file we want to check into even `git-lfs` -- for example, EMNIST and IAM, which are too large as they include the images.
 
-The model code for our new `LineDetector` is in `text_recognizer/models/line_detector_model.py`.
+## Download images
 
-Because we only have about a thousand images to learn this task on, data augmentation will be crucial.
-Image augmentations such as streching, slight rotations, offsets, contrast and brightness changes, and potentially even mirror-flipping are tedious to code, and most frameworks provide optimized utility code for the task.
+The class `IamHandwritingDataset` in `text_recognizer/datasets/iam_handwriting.py` must be able to load the data in the exported format and present it to consumers in a format they expect (e.g. `dataset.line_regions_by_id`).
 
-We use Keras's `ImageDataGenerator`, and you can see the parameters for it in `text_recognizer/models/line_detector_model.py`.
-We can take a look at what the data transformations look like in the same notebook.
+Since this data export does not come with images, but only pointers to remote locations of the images, the class must also be responsible for downloading the images.
 
-## Network description
+In downloading many images, it is very useful to do so in parallel.
+We use the `concurrent.futures.ThreadPoolExecutor` method, and use the `tqdm` package to provide a nice progress bar.
 
-The network used in this model is `text_recognizer/networks/fcn.py`.
+## Looking at the data
 
-The basic idea is a deep convolutional network with resnet-style blocks (input to block is concatenated to block output).
-We call it FCN, as in "Fully Convolutional Network," after the seminal paper that first used convnets for segmentation.
+We can confirm that we loaded the data correctly by looking at line crops and their corresponding strings.
 
-Unlike the original FCN, however, we do not maxpool or upsample, but instead rely on dilated convolutions to rapidly increase the effective receptive field.
-[Here](https://fomoro.com/projects/project/receptive-field-calculator) is a very calculator of the effective receptive field size of a convnet.
+Make sure you are in `lab6` directory, and take a look at `notebooks/05-look-at-fsdl-handwriting.ipynb`.
 
-The crucial thing to understand is that because we are labeling odd and even lines differently, each predicted pixel must have the context of the entire image to correctly label -- otherwise, there is no way to know whether the pixel is on an odd or even line.
+## Training on the new dataset
 
-## Review results
-
-The model converges to something really good.
-
-Check out `notebooks/04b-look-at-line-detector-predictions.ipynb` to see sample predictions on the test set.
-
-We also plot some sample training data augmentation in that notebook.
-
-## Combining the two models
-
-Now we are ready to combine the new `LineDetector` model and the `LinePredictor` model that we trained yesterday.
-
-This is done in `text_recognizer/paragraph_text_recognizer.py`, which loads both models, find line regions with one, and runs each crop through the other.
-
-We can see that it works as expected (albeit not too accurately yet) by running `pipenv run pytest -s text_recognizer/tests/test_paragraph_text_recognizer.py`.
-
-## Things to try
-
-- Try adding more data augmentations, or mess with the parameters of the existing ones
-- Try the U-Net architecture, which MaxPools down and then UpSamples back up, with increased conv layer channel dimensions in the middle (https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/).
+We're not going to have time to train on the new dataset, but that is something that is now possible.
+As an exercise, you could write `FsdlHandwritingLinesDataset` and `FsdlHandwritingParagraphsDataset`, and be able to train a model on a combination of IAM and FSDL Handwriting data on both the line detection and line text prediction tasks.

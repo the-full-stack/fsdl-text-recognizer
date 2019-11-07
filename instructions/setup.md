@@ -1,40 +1,61 @@
 # Setup
 
-## Jupyterhub
+## 1. Sign up for W&B
 
-### Notes for updating Docker image:
+- Go to https://app.wandb.ai
+- Click 'sign up'
+- Sign up with Github (or another if you prefer)
+- Select whatever username you want
 
-Already has Cuda 10
+## 2. Setup a JupyterLab instance
 
-- sudo apt-get install python3.7-dev
-- pip install --upgrade pip
-- pip install --upgrade pipenv
+- Go to https://app.wandb.ai/profile
+- Enter the code we will share with you at the session into Access Code field.
+- You should be dropped into a JuypyterLab instance with 2 GPUs to use for labs.
 
-## Development on AWS (in progress)
+*From now on, do everything else in that instance*
 
-We will use the [Deep Learning Base AMI](https://aws.amazon.com/marketplace/pp/B07Y3VDBNS) which has NVIDA CUDA and GPU drivers, but no pre-installed deep learning framework Python packages.
-We will install those ourselves.
+## 3. Check out the repo
 
-```sh
-AMI="ami-0f4d5f31e6310624e"
-TYPE="p2.xlarge"
-aws ec2 run-instances --image-id "$AMI" --instance-type "$TYPE" --key-name id_rsa --security-group-ids=sg-331f3543
-```
-
-We'll tag it for later ease of reference
+You should already have the repo in your home directory. Go into it and make sure you have the latest.
 
 ```sh
-aws ec2 create-tags --resources <REPORTED InstanceId> --tags Key=Name,Value=fsdl
+cd fsdl-text-recognizer-project
+git pull origin master
 ```
 
-We also need to install aws CLI tools, and add two functions to our `.bashrc` or equivalent file
+If not, open a shell in your JupyterLab instance and run
 
 ```sh
-function ec2ip() {
-    echo $(aws ec2 describe-instances --filters "{\"Name\":\"tag:Name\", \"Values\":[\"$1\"]}" --query='Reservations[0].Instances[0].PublicIpAddress' | tr -d '"')
-}
-
-function ec2id() {
-    echo $(aws ec2 describe-instances --filters "{\"Name\":\"tag:Name\", \"Values\":[\"$1\"]}" --query='Reservations[0].Instances[0].InstanceId' | tr -d '"')
-}
+git clone https://github.com/gradescope/fsdl-text-recognizer-project.git
+cd fsdl-text-recognizer-project
 ```
+
+## 4. Set up the Python environment
+
+Run
+
+```sh
+pipenv sync --dev
+```
+
+From now on, precede commands with `pipenv run` to make sure they use the correct
+environment.
+
+## 5. Kick off a command
+
+Before we get started, please run a command that will take a little bit of time to execute.
+
+```sh
+git pull
+cd lab1/
+pipenv run python text_recognizer/datasets/emnist_dataset.py
+cd ..
+```
+
+# Ready
+
+Now you should be setup for the labs. The instructions for each lab are in readme files in their folders.
+
+You will notice that there are solutions for all the labs right here in the repo, too.
+If you get stuck, you are welcome to take a look!
