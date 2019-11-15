@@ -1,0 +1,17 @@
+program: training/run_sweep.py
+method: random
+metric:
+  name: val_loss
+  goal: minimize
+parameters:
+  dataset_args.max_overlap:
+    min: 0.1
+    max: 0.7
+  network_args.window_width:
+    min: 10
+    max: 20
+  network_args.window_stride:
+    min: 5
+    max: 10
+  train_args.batch_size:
+    values: [32, 64, 128, 256]

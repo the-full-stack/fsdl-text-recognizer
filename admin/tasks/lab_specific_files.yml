@@ -50,6 +50,8 @@
     - training/gpu_manager.py
     - training/experiments/sample.json
     - training/prepare_experiments.py
+    - training/run_sweep.py
+    - wandb/settings
 
 4:
     - notebooks/03-look-at-iam-lines.ipynb
