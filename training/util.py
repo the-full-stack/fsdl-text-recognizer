@@ -16,7 +16,7 @@ class WandbImageLogger(Callback):
         self.model_wrapper = model_wrapper
         self.val_images = dataset.x_test[:example_count]  # type: ignore
 
-    def on_epoch_end(self, *args):
+    def on_epoch_end(self, *args):  # pylint: disable=unused-argument
         images = [wandb.Image(image, caption="{}: {}".format(*self.model_wrapper.predict_on_image(image)))
                   for i, image in enumerate(self.val_images)]
         wandb.log({"examples": images}, commit=False)
