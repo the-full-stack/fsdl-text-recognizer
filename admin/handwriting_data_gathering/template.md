@@ -5,7 +5,7 @@ header-includes: |
   \definecolor{light-gray}{gray}{0.8}
 ---
 
-# Full Stack Deep Learning - March 2019
+# Full Stack Deep Learning - November 2019
 
 ## Handwriting Data Collection
 
