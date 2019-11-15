@@ -1,5 +1,5 @@
 [default]
-entity = sergeyk
-project = fsdl-text-recognizer
+entity = fsdl
+project = fsdl-text-recognizer-nov2019
 base_url = https://api.wandb.ai
 
