@@ -8,12 +8,12 @@ from typing import Tuple
 from ast import literal_eval
 
 default_config = {
-    "dataset": "EmnistLinesDataset",
+    "dataset": "IamLinesDataset",
     "dataset_args": {
         "max_overlap": 0.4,
     },
-    "model": "LineModel",
-    "network": "line_cnn_all_conv",
+    "model": "LineModelCtc",
+    "network": "line_lstm_ctc",
     "network_args": {
         "window_width": 14,
         "window_stride": 7
