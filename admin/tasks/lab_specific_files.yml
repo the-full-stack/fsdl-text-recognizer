@@ -1,103 +1,105 @@
 1:
-    - notebooks/01-look-at-emnist.ipynb
-    - tasks/train_character_predictor.sh
-    - tasks/test_functionality.sh
-    - text_recognizer/__init__.py
-    - text_recognizer/util.py
-    - text_recognizer/character_predictor.py
-    - text_recognizer/datasets/__init__.py
-    - text_recognizer/datasets/dataset.py
-    - text_recognizer/datasets/emnist_dataset.py
-    - text_recognizer/datasets/emnist_essentials.json
-    - text_recognizer/datasets/dataset_sequence.py
-    - text_recognizer/models/__init__.py
-    - text_recognizer/models/base.py
-    - text_recognizer/models/character_model.py
-    - text_recognizer/networks/__init__.py
-    - text_recognizer/networks/mlp.py
-    - text_recognizer/tests/support/create_emnist_support_files.py
-    - text_recognizer/tests/support/emnist/8.png
-    - text_recognizer/tests/support/emnist/U.png
-    - text_recognizer/tests/support/emnist/e.png
-    - text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5
-    - text_recognizer/tests/test_character_predictor.py
-    - training/util.py
-    - training/run_experiment.py
-    - text_recognizer/networks/lenet.py
-    - text_recognizer/networks/misc.py
-    - text_recognizer/tests/support/create_emnist_lines_support_files.py
-    - "text_recognizer/tests/support/emnist_lines/Corsi left for.png"
-    - "text_recognizer/tests/support/emnist_lines/do that In.png"
-    - "text_recognizer/tests/support/emnist_lines/or if used the results.png"
+  - notebooks/01-look-at-emnist.ipynb
+  - tasks/train_character_predictor.sh
+  - tasks/test_functionality.sh
+  - text_recognizer/__init__.py
+  - text_recognizer/util.py
+  - text_recognizer/character_predictor.py
+  - text_recognizer/datasets/__init__.py
+  - text_recognizer/datasets/dataset.py
+  - text_recognizer/datasets/emnist_dataset.py
+  - text_recognizer/datasets/emnist_essentials.json
+  - text_recognizer/datasets/dataset_sequence.py
+  - text_recognizer/models/__init__.py
+  - text_recognizer/models/base.py
+  - text_recognizer/models/character_model.py
+  - text_recognizer/networks/__init__.py
+  - text_recognizer/networks/mlp.py
+  - text_recognizer/tests/support/create_emnist_support_files.py
+  - text_recognizer/tests/support/emnist/8.png
+  - text_recognizer/tests/support/emnist/U.png
+  - text_recognizer/tests/support/emnist/e.png
+  - text_recognizer/weights/CharacterModel_EmnistDataset_mlp_weights.h5
+  - text_recognizer/tests/test_character_predictor.py
+  - training/util.py
+  - training/run_experiment.py
+  - text_recognizer/networks/lenet.py
+  - text_recognizer/networks/misc.py
+  - text_recognizer/tests/support/create_emnist_lines_support_files.py
+  - "text_recognizer/tests/support/emnist_lines/Corsi left for.png"
+  - "text_recognizer/tests/support/emnist_lines/do that In.png"
+  - "text_recognizer/tests/support/emnist_lines/or if used the results.png"
 
 2:
-    - notebooks/02-look-at-emnist-lines.ipynb
-    - tasks/train_cnn_line_predictor.sh
-    - tasks/train_lstm_line_predictor.sh
-    - text_recognizer/datasets/emnist_lines_dataset.py
-    - text_recognizer/datasets/sentence_generator.py
-    - text_recognizer/line_predictor.py
-    - text_recognizer/models/line_model_ctc.py
-    - text_recognizer/models/line_model.py
-    - text_recognizer/networks/ctc.py
-    - text_recognizer/networks/line_cnn_all_conv.py
-    - text_recognizer/networks/line_lstm_ctc.py
-    - text_recognizer/tests/test_line_predictor.py
-    - text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5
+  - notebooks/02-look-at-emnist-lines.ipynb
+  - tasks/train_cnn_line_predictor.sh
+  - tasks/train_lstm_line_predictor.sh
+  - text_recognizer/datasets/emnist_lines_dataset.py
+  - text_recognizer/datasets/sentence_generator.py
+  - text_recognizer/line_predictor.py
+  - text_recognizer/models/line_model_ctc.py
+  - text_recognizer/models/line_model.py
+  - text_recognizer/networks/ctc.py
+  - text_recognizer/networks/line_cnn_all_conv.py
+  - text_recognizer/networks/line_lstm_ctc.py
+  - text_recognizer/tests/test_line_predictor.py
+  - text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5
 
 3:
-    - tasks/prepare_sample_experiments.sh
-    - training/gpu_manager.py
-    - training/experiments/sample.json
-    - training/prepare_experiments.py
-    - training/run_sweep.py
-    - wandb/settings
+  - tasks/prepare_sample_experiments.sh
+  - training/gpu_manager.py
+  - training/experiments/sample.json
+  - training/prepare_experiments.py
+  - wandb/settings
 
 4:
-    - notebooks/03-look-at-iam-lines.ipynb
-    - text_recognizer/datasets/iam_lines_dataset.py
-    - tasks/train_lstm_line_predictor_on_iam.sh
-    - text_recognizer/tests/support/create_iam_lines_support_files.py
-    - "text_recognizer/tests/support/iam_lines/and came into the livingroom, where.png"
-    - "text_recognizer/tests/support/iam_lines/He rose from his breakfast-nook bench.png"
-    - "text_recognizer/tests/support/iam_lines/his entrance. He came, almost falling.png"
-    - text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5
+  - notebooks/03-look-at-iam-lines.ipynb
+  - text_recognizer/datasets/iam_lines_dataset.py
+  - tasks/train_lstm_line_predictor_on_iam.sh
+  - text_recognizer/tests/support/create_iam_lines_support_files.py
+  - "text_recognizer/tests/support/iam_lines/and came into the livingroom, where.png"
+  - "text_recognizer/tests/support/iam_lines/He rose from his breakfast-nook bench.png"
+  - "text_recognizer/tests/support/iam_lines/his entrance. He came, almost falling.png"
+  - text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5
+  - training/run_sweep.py
+  - training/sweep_emnist.yaml
+  - training/sweep_iam.yaml
 
 5:
-    - notebooks/04-look-at-iam-paragraphs.ipynb
-    - notebooks/04b-look-at-line-detector-predictions.ipynb
-    - tasks/train_line_detector.sh
-    - text_recognizer/datasets/iam_dataset.py
-    - text_recognizer/datasets/iam_paragraphs_dataset.py
-    - text_recognizer/models/line_detector_model.py
-    - text_recognizer/networks/fcn.py
-    - text_recognizer/paragraph_text_recognizer.py
-    - text_recognizer/tests/support/iam_paragraphs/a01-000u-cropped.jpg
-    - text_recognizer/tests/test_paragraph_text_recognizer.py
-    - text_recognizer/weights/LineDetectorModel_IamParagraphsDataset_fcn_weights.h5
+  - notebooks/04-look-at-iam-paragraphs.ipynb
+  - notebooks/04b-look-at-line-detector-predictions.ipynb
+  - tasks/train_line_detector.sh
+  - text_recognizer/datasets/iam_dataset.py
+  - text_recognizer/datasets/iam_paragraphs_dataset.py
+  - text_recognizer/models/line_detector_model.py
+  - text_recognizer/networks/fcn.py
+  - text_recognizer/paragraph_text_recognizer.py
+  - text_recognizer/tests/support/iam_paragraphs/a01-000u-cropped.jpg
+  - text_recognizer/tests/test_paragraph_text_recognizer.py
+  - text_recognizer/weights/LineDetectorModel_IamParagraphsDataset_fcn_weights.h5
 
 6:
-    - notebooks/05-look-at-fsdl-handwriting.ipynb
-    - tasks/update_fsdl_paragraphs_metadata.sh
-    - text_recognizer/datasets/fsdl_handwriting_dataset.py
-    - training/update_metadata.py
+  - notebooks/05-look-at-fsdl-handwriting.ipynb
+  - tasks/update_fsdl_paragraphs_metadata.sh
+  - text_recognizer/datasets/fsdl_handwriting_dataset.py
+  - training/update_metadata.py
 
 7:
-    - api/__init__.py
-    - evaluation/evaluate_character_predictor.py
-    - evaluation/evaluate_line_predictor.py
-    - tasks/lint.sh
-    - tasks/test_validation.sh
-    - .pylintrc
-    - setup.cfg
+  - api/__init__.py
+  - evaluation/evaluate_character_predictor.py
+  - evaluation/evaluate_line_predictor.py
+  - tasks/lint.sh
+  - tasks/test_validation.sh
+  - .pylintrc
+  - setup.cfg
 
 8:
-    - api/app.py
-    - api/tests/test_app.py
-    - api/Dockerfile
-    - api/serverless.yml
-    - api/package.json
-    - tasks/build_api_docker.sh
-    - tasks/deploy_api_to_lambda.sh
-    - tasks/run_api_docker.sh
-    - tasks/test_api.sh
+  - api/app.py
+  - api/tests/test_app.py
+  - api/Dockerfile
+  - api/serverless.yml
+  - api/package.json
+  - tasks/build_api_docker.sh
+  - tasks/deploy_api_to_lambda.sh
+  - tasks/run_api_docker.sh
+  - tasks/test_api.sh

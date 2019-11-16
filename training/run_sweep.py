@@ -8,15 +8,15 @@ from typing import Tuple
 from ast import literal_eval
 
 default_config = {
-    "dataset": "EmnistLinesDataset",
+    "dataset": "IamLinesDataset",
     "dataset_args": {
         "subsample_fraction": 0.33,
     },
     "model": "LineModel",
-    "network": "line_cnn_all_conv",
+    "network": "line_lstm_ctc",
     "train_args": {
         "batch_size": 128,
-        "epochs": 10
+        "epochs": 5
     }
 }
 
