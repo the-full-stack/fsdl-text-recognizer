@@ -5,8 +5,6 @@
 - Run our LinePredictor as a web app, and send it some requests
 - Dockerize our web app
 - Deploy our web app as a serverless function to AWS Lambda
-- Look at basic metrics and set up a more advanced one
-- Experience something going wrong in our deployed service, and catching it with metrics
 
 ## Follow along
 

@@ -1,5 +1,10 @@
 # Lab 9: Monitoring running web service
 
+## Goals
+
+- Look at basic metrics and set up a more advanced one
+- Experience something going wrong in our deployed service, and catching it with metrics
+
 ## Monitoring
 
 We can look at the requests our function is receiving in the AWS CloudWatch interface.
