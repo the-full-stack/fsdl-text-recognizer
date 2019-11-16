@@ -1,5 +1,7 @@
 # pylint: skip-file
 import os
+import signal
+import subprocess
 import sys
 import json
 from typing import Tuple
@@ -65,7 +67,9 @@ def args_to_json(default_config: dict, preserve_args: list = ["gpu", "save"]) ->
 
 
 if __name__ == "__main__":
-    for key, val in os.environ.items():
-        os.putenv(key, val)
     config, args = args_to_json(default_config)
-    os.system("python training/run_experiment.py {} '{}'".format((" ").join(args), json.dumps(config)))  # nosec
+    env = {k: v for k, v in os.environ.items() if k not in ("WANDB_PROGRAM", "WANDB_ARGS")}
+    run = subprocess.Popen(["python", "training/run_experiment.py", *args, json.dumps(config)],
+                           env=env, preexec_fn=os.setsid)  # nosec
+    signal.signal(signal.SIGTERM, lambda *args: run.terminate())
+    run.wait()
