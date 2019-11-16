@@ -135,6 +135,7 @@ def subset_repo(info, output_dirname):
     shutil.copy('Pipfile', output_dir)
     shutil.copy('Pipfile.lock', output_dir)
     shutil.copy('instructions/readme.md', output_dir)
+    shutil.copy('instructions/setup.md', output_dir)
 
     # Labs
     for lab_number in info.keys():
