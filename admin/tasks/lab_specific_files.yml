@@ -50,7 +50,6 @@
     - training/gpu_manager.py
     - training/experiments/sample.json
     - training/prepare_experiments.py
-    - training/run_sweep.py
     - wandb/settings
 
 4:
@@ -62,6 +61,8 @@
     - "text_recognizer/tests/support/iam_lines/He rose from his breakfast-nook bench.png"
     - "text_recognizer/tests/support/iam_lines/his entrance. He came, almost falling.png"
     - text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5
+    - training/run_sweep.py
+    - training/sweep.yaml
 
 5:
     - notebooks/04-look-at-iam-paragraphs.ipynb
