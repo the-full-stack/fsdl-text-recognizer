@@ -84,9 +84,10 @@ class EmnistLinesDataset(Dataset):
     def _generate_data(self, split):
         print("EmnistLinesDataset generating data...")
 
+        # pylint: disable=import-outside-toplevel
         from text_recognizer.datasets.sentence_generator import (
             SentenceGenerator,
-        )  # pylint: disable=import-outside-toplevel
+        )
 
         sentence_generator = SentenceGenerator(self.max_length)
 

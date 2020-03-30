@@ -2,8 +2,6 @@
 
 import base64
 import glob
-import os
-import time
 
 import grequests
 
