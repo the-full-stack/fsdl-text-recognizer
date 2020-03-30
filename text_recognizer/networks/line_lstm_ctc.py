@@ -1,8 +1,7 @@
 """LSTM with CTC for handwritten text recognition within a line."""
-from tensorflow.python.client import device_lib  # pylint: disable=no-name-in-module
 from tensorflow.keras.layers import Dense, Input, Reshape, TimeDistributed, Lambda, LSTM
 from tensorflow.keras.models import Model as KerasModel
-
+import tensorflow.keras.backend as K
 
 from text_recognizer.networks.lenet import lenet
 from text_recognizer.networks.misc import slide_window
