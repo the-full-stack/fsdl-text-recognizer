@@ -5,7 +5,6 @@ import tensorflow.keras.backend as K
 
 from text_recognizer.networks.lenet import lenet
 from text_recognizer.networks.misc import slide_window
-from text_recognizer.networks.ctc import ctc_decode
 
 
 def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):  # pylint: disable=too-many-locals
@@ -61,7 +60,7 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     )([y_true, softmax_output, input_length_processed, label_length])
 
     ctc_decoded_output = Lambda(
-        lambda x: ctc_decode(x[0], x[1], output_length),
+        lambda x: K.ctc_decode(x[0], K.squeeze(x[1], -1), greedy=True)[0][0],
         name='ctc_decoded'
     )([softmax_output, input_length_processed])
 
