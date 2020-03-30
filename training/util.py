@@ -18,10 +18,11 @@ class WandbImageLogger(Callback):
     """Custom callback for logging image predictions"""
 
     def __init__(self, model_wrapper: Model, dataset: Dataset, example_count: int = 4):
+        super().__init__()
         self.model_wrapper = model_wrapper
         self.val_images = dataset.x_test[:example_count]  # type: ignore
 
-    def on_epoch_end(self, *args):  # pylint: disable=unused-argument
+    def on_epoch_end(self, epoch, logs=None):
         images = [wandb.Image(image, caption="{}: {}".format(*self.model_wrapper.predict_on_image(image)))
                   for i, image in enumerate(self.val_images)]
         wandb.log({"examples": images}, commit=False)

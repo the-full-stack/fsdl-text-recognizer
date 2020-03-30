@@ -14,6 +14,7 @@ from text_recognizer.networks.line_lstm_ctc import line_lstm_ctc
 
 class LineModelCtc(Model):
     """Model for recognizing handwritten text in an image of a line, using CTC loss/decoding."""
+
     def __init__(self,
                  dataset_cls: type = EmnistLinesDataset,
                  network_fn: Callable = line_lstm_ctc,
@@ -33,14 +34,19 @@ class LineModelCtc(Model):
         self.batch_format_fn = format_batch_ctc
 
     def loss(self):
-        """Dummy loss function: just pass through the loss that we computed in the network."""
+        """Simply pass through the loss that we computed in the network."""
         return {'ctc_loss': lambda y_true, y_pred: y_pred}
 
     def metrics(self):
-        """We could probably pass in a custom character accuracy metric for 'ctc_decoded' output here."""
+        """
+        Compute no metrics.
+
+        TODO: We could probably pass in a custom character accuracy metric for 'ctc_decoded' output here.
+        """
         return None
 
     def evaluate(self, x, y, batch_size: int = 16, verbose: bool = True) -> float:
+        """Evaluate model."""
         test_sequence = DatasetSequence(x, y, batch_size, format_fn=self.batch_format_fn)
 
         # We can use the `ctc_decoded` layer that is part of our model here.
@@ -74,6 +80,7 @@ class LineModelCtc(Model):
         return mean_accuracy
 
     def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
+        """Predict on a single input."""
         softmax_output_fn = KerasModel(
             inputs=[self.network.get_layer('image').input],
             outputs=[self.network.get_layer('softmax_output').output]

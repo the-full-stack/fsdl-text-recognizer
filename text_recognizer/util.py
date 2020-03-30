@@ -51,6 +51,7 @@ def read_b64_image(b64_string, grayscale=False):
 
 # Hide lines above until Lab 8
 def write_image(image: np.ndarray, filename: Union[Path, str]) -> None:
+    """Write image to file."""
     cv2.imwrite(str(filename), image)
 
 
@@ -62,8 +63,11 @@ def compute_sha256(filename: Union[Path, str]):
 
 class TqdmUpTo(tqdm):
     """From https://github.com/tqdm/tqdm/blob/master/examples/tqdm_wget.py"""
+
     def update_to(self, blocks=1, bsize=1, tsize=None):
         """
+        Parameters
+        ----------
         blocks : int, optional
             Number of blocks transferred so far [default: 1].
         bsize  : int, optional
@@ -84,11 +88,12 @@ def download_url(url, filename):
 
 # Hide lines below until Lab 6
 def download_urls(urls, filenames):
+    """Download urls to filenames in a multi-threaded way."""
     with ThreadPoolExecutor() as executor:
         futures = [executor.submit(urlretrieve, url, filename) for url, filename in zip(urls, filenames)]
         for future in tqdm(as_completed(futures), total=len(futures)):
             try:
                 future.result()
-            except Exception as e:
+            except Exception as e:  # pylint: disable=broad-except
                 print('Error', e)
 # Hide lines above until Lab 6

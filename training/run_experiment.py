@@ -53,9 +53,6 @@ def run_experiment(experiment_config: Dict, save_weights: bool, gpu_ind: int, us
     """
     print(f'Running experiment with config {experiment_config} on GPU {gpu_ind}')
 
-    import tensorflow as tf
-    tf.compat.v1.enable_eager_execution()
-
     datasets_module = importlib.import_module('text_recognizer.datasets')
     dataset_class_ = getattr(datasets_module, experiment_config['dataset'])
     dataset_args = experiment_config.get('dataset_args', {})

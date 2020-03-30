@@ -1,11 +1,20 @@
+"""Misc neural network functionality."""
+import numpy as np
 import tensorflow as tf
 
 
-def slide_window(image, window_width, window_stride):
+def slide_window(image: np.ndarray, window_width: int, window_stride: int) -> np.ndarray:
     """
-    Takes (image_height, image_width, 1) input,
-    Returns (num_windows, image_height, window_width, 1) output, where
-    num_windows is floor((image_width - window_width) / window_stride) + 1
+    Parameters
+    ----------
+    image
+        (image_height, image_width, 1) input
+
+    Returns
+    -------
+    np.ndarray
+        (num_windows, image_height, window_width, 1) output, where
+        num_windows is floor((image_width - window_width) / window_stride) + 1
     """
     kernel = [1, 1, window_width, 1]
     strides = [1, 1, window_stride, 1]

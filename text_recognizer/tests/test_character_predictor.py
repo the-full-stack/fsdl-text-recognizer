@@ -11,7 +11,10 @@ os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
 
 class TestCharacterPredictor(unittest.TestCase):
+    """Tests for the CharacterPredictor class."""
+
     def test_filename(self):
+        """Test that CharacterPredictor correctly predicts on a single image, for serveral test images."""
         predictor = CharacterPredictor()
 
         for filename in SUPPORT_DIRNAME.glob('*.png'):

@@ -12,6 +12,7 @@ GPU_LOCK_TIMEOUT = 5000  # ms
 
 class GPUManager:
     """Class for allocating GPUs."""
+
     def __init__(self, verbose: bool = False):
         self.lock_manager = Redlock([{"host": "localhost", "port": 6379, "db": 0}, ])
         self.verbose = verbose
@@ -36,7 +37,7 @@ class GPUManager:
                 for gpu in gpustat.GPUStatCollection.new_query()
                 if gpu.memory_used < 0.5 * gpu.memory_total
             ]
-        except Exception:
+        except Exception:  # pylint: disable=broad-except
             return [0]  # Return dummy GPU index if no CUDA GPUs are installed
 
         if available_gpu_inds:

@@ -15,6 +15,7 @@ pytest
 pyyaml
 redlock-py
 tornado
+safety
 scipy
 pillow
 wandb

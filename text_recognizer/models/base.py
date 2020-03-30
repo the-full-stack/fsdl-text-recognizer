@@ -1,8 +1,9 @@
 """Model class, to be extended by specific types of models."""
+# pylint: disable=missing-function-docstring
 from pathlib import Path
 from typing import Callable, Dict, Optional
 
-from tensorflow.keras.models import Model
+from tensorflow.keras.models import Model as KerasModel
 from tensorflow.keras.optimizers import RMSprop
 import numpy as np
 
@@ -14,11 +15,12 @@ DIRNAME = Path(__file__).parents[1].resolve() / 'weights'
 
 class Model:
     """Base class, to be subclassed by predictors for specific type of data."""
+
     def __init__(self,
-            dataset_cls: type,
-            network_fn: Callable[[], Model],
-            dataset_args: Dict = None,
-            network_args: Dict = None):
+                 dataset_cls: type,
+                 network_fn: Callable[..., KerasModel],
+                 dataset_args: Dict = None,
+                 network_args: Dict = None):
         self.name = f'{self.__class__.__name__}_{dataset_cls.__name__}_{network_fn.__name__}'
 
         if dataset_args is None:
@@ -73,7 +75,8 @@ class Model:
             shuffle=True
         )
 
-    def evaluate(self, x, y, batch_size=16, verbose=False):  # pylint: disable=unused-argument
+    def evaluate(self, x: np.ndarray, y: np.ndarray, batch_size: int = 16, _verbose: bool = False):
+        # pylint: disable=unused-argument
         sequence = DatasetSequence(x, y, batch_size=batch_size)  # Use a small batch size to use less memory
         preds = self.network.predict(sequence)
         return np.mean(np.argmax(preds, -1) == np.argmax(y, -1))

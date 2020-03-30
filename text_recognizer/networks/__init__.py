@@ -1,3 +1,4 @@
+"""Neural network code modules."""
 from .mlp import mlp
 from .lenet import lenet
 # Hide lines below until Lab 2

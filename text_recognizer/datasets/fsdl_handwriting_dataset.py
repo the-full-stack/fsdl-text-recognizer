@@ -98,7 +98,7 @@ def _extract_id_and_data(page_datum):
                 'y2': int(y2 * annotation['imageHeight'])
             })
             strings.append(annotation['notes'])
-    except Exception:
+    except Exception:  # pylint: disable=broad-except
         pass
     return id_, {'url': url, 'regions': regions, 'strings': strings}
 

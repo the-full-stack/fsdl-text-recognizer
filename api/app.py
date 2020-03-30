@@ -8,26 +8,14 @@ except ImportError:
 import os
 
 from flask import Flask, request, jsonify
-import tensorflow as tf
-from tensorflow.keras import backend
+import tensorflow.keras.backend as K
 
 from text_recognizer.line_predictor import LinePredictor
-# from text_recognizer.datasets import IamLinesDataset
 import text_recognizer.util as util
 
 os.environ["CUDA_VISIBLE_DEVICES"] = ""  # Do not use GPU
 
 app = Flask(__name__)  # pylint: disable=invalid-name
-
-
-@app.before_first_request
-def load_model_to_app():
-    """Instantiate tensorflow session and load model."""
-    # NOTE: following https://github.com/keras-team/keras/issues/2397#issuecomment-519128406
-    app.session = tf.Session(graph=tf.Graph())
-    with app.session.graph.as_default():
-        backend.set_session(app.session)
-        app.predictor = LinePredictor()
 
 
 @app.route('/')
@@ -39,13 +27,13 @@ def index():
 @app.route('/v1/predict', methods=['GET', 'POST'])
 def predict():
     """Provide main prediction API route. Responds to both GET and POST requests."""
+    K.clear_session()
+    predictor = LinePredictor()
     image = _load_image()
-    with app.session.graph.as_default():
-        backend.set_session(app.session)
-        pred, conf = app.predictor.predict(image)
-        print("METRIC confidence {}".format(conf))
-        print("METRIC mean_intensity {}".format(image.mean()))
-        print("INFO pred {}".format(pred))
+    pred, conf = predictor.predict(image)
+    print("METRIC confidence {}".format(conf))
+    print("METRIC mean_intensity {}".format(image.mean()))
+    print("INFO pred {}".format(pred))
     return jsonify({'pred': str(pred), 'conf': float(conf)})
 
 

@@ -24,6 +24,7 @@ _DATA_AUGMENTATION_PARAMS = {
 
 class LineDetectorModel(Model):
     """Model to detect lines of text in an image."""
+
     def __init__(self,
                  dataset_cls: type = IamParagraphsDataset,
                  network_fn: Callable = fcn,
@@ -45,7 +46,7 @@ class LineDetectorModel(Model):
         return None
 
     def augment_batch(self, x_batch: np.ndarray, y_batch: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Performs different random transformations on the whole batch of x, y samples."""
+        """Perform different random transformations on the whole batch of x, y samples."""
         x_augment, y_augment = zip(*[self._augment_sample(x, y) for x, y in zip(x_batch, y_batch)])
         return np.stack(x_augment, axis=0), np.stack(y_augment, axis=0)
 
@@ -61,7 +62,7 @@ class LineDetectorModel(Model):
         return np.squeeze(x_augment, axis=-1), y_augment
 
     def predict_on_image(self, x: np.ndarray) -> np.ndarray:
-        """Returns the network predictions on x."""
+        """Predict on a single input."""
         return self.network.predict(np.expand_dims(x, axis=0))[0]
 
     def evaluate(self,
@@ -69,5 +70,5 @@ class LineDetectorModel(Model):
                  y: np.ndarray,
                  batch_size: int = 32,
                  verbose: bool = False) -> float:  # pylint: disable=unused-argument
-        """Evaluates the network on x, y on returns the loss."""
+        """Evaluate the model."""
         return self.network.evaluate(x, y, batch_size=batch_size)

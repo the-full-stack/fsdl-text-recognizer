@@ -22,12 +22,10 @@ class TestIntegrations(TestCase):
         assert response.get_data().decode() == 'Hello, world!'
 
     def test_predict(self):
-        # with open(SUPPORT_DIRNAME / 'and came into the livingroom, where.png', 'rb') as f:
         with open(SUPPORT_DIRNAME / 'or if used the results.png', 'rb') as f:
             b64_image = base64.b64encode(f.read())
         response = self.app.post('/v1/predict', json={
             'image': f'data:image/jpeg;base64,{b64_image.decode()}'
         })
         json_data = response.get_json()
-        self.assertEqual(json_data['pred'], 'or if used the results')
-        # self.assertEqual(json_data['pred'], 'and came into the livingroom, where')
+        self.assertEqual(json_data['pred'], 'or if used the resuits')

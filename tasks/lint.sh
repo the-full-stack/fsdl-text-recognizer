@@ -4,8 +4,8 @@ set +e
 
 FAILURE=false
 
-echo "pipenv check"
-pipenv check  # Not reporting failure here, because sometimes this fails due to API request limit
+echo "safety"
+safety check -r requirements.txt -r requirements-dev.txt || FAILURE=true
 
 echo "pylint"
 pylint --ignore=.serverless api text_recognizer training || FAILURE=true
@@ -13,8 +13,8 @@ pylint --ignore=.serverless api text_recognizer training || FAILURE=true
 echo "pycodestyle"
 pycodestyle --exclude=node_modules,.serverless,.ipynb_checkpoints api text_recognizer training || FAILURE=true
 
-# echo "pydocstyle"
-# pydocstyle pandagrader projects lambda_deployment || FAILURE=true
+echo "pydocstyle"
+pydocstyle api text_recognizer training || FAILURE=true
 
 echo "mypy"
 mypy api text_recognizer training || FAILURE=true

@@ -1,3 +1,4 @@
+"""Emnist Lines dataset: synthetic handwriting lines dataset made from EMNIST characters."""
 from collections import defaultdict
 from pathlib import Path
 
@@ -14,6 +15,21 @@ ESSENTIALS_FILENAME = Path(__file__).parents[0].resolve() / 'emnist_lines_essent
 
 
 class EmnistLinesDataset(Dataset):
+    """
+    EmnistLinesDataset class.
+
+    Parameters
+    ----------
+    max_length
+        Max line length in characters.
+    max_overlap
+        Max overlap between characters in a line.
+    num_train
+        Number of training examples to generate.
+    num_test
+        Number of test examples to generate.
+    """
+
     def __init__(self, max_length: int = 34, max_overlap: float = 0.33, num_train: int = 10000, num_test: int = 1000):
         self.emnist = EmnistDataset()
         self.mapping = self.emnist.mapping
@@ -129,7 +145,7 @@ def create_dataset_of_images(N, samples_by_char, sentence_generator, max_overlap
             try:
                 label = sentence_generator.generate()
                 break
-            except Exception:
+            except Exception:  # pylint: disable=broad-except
                 pass
         images[n] = construct_image_from_string(label, samples_by_char, max_overlap)
         labels.append(label)

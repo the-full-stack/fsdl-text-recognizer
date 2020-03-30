@@ -18,7 +18,10 @@ os.environ["CUDA_VISIBLE_DEVICES"] = ""
 
 
 class TestEmnistLinePredictor(unittest.TestCase):
+    """Test LinePredictor class on the EmnistLines dataset."""
+
     def test_filename(self):
+        """Test that LinePredictor correctly predicts on single images, for several test images."""
         predictor = LinePredictor()
 
         for filename in (SUPPORT_DIRNAME / 'emnist_lines').glob('*.png'):
@@ -30,7 +33,10 @@ class TestEmnistLinePredictor(unittest.TestCase):
 
 
 class TestEmnistLinePredictorVariableImageWidth(unittest.TestCase):
+    """Test LinePredictor class on the EmnistLines dataset, with variable images."""
+
     def test_filename(self):
+        """Test that LinePredictor correctly predicts on single images, for several test images."""
         predictor = LinePredictor()
         for filename in SUPPORT_DIRNAME.glob('*.png'):
             image = util.read_image(str(filename), grayscale=True)
@@ -46,7 +52,10 @@ class TestEmnistLinePredictorVariableImageWidth(unittest.TestCase):
 
 # Hide lines below until Lab 4
 class TestIamLinePredictor(unittest.TestCase):
+    """Test LinePredictor class on the IamLines dataset, with variable images."""
+
     def test_filename(self):  # pylint: disable=R0201
+        """Test that LinePredictor correctly predicts on single images, for several test images."""
         predictor = LinePredictor(IamLinesDataset)
 
         for filename in (SUPPORT_DIRNAME / 'iam_lines').glob('*.png'):

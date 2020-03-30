@@ -12,6 +12,7 @@ from text_recognizer.networks import line_cnn_all_conv
 
 class LineModel(Model):
     """Model for predicting a string from an image of a handwritten line of text."""
+
     def __init__(self,
                  dataset_cls: type = EmnistLinesDataset,
                  network_fn: Callable = line_cnn_all_conv,
@@ -21,6 +22,7 @@ class LineModel(Model):
         super().__init__(dataset_cls, network_fn, dataset_args, network_args)
 
     def evaluate(self, x, y, batch_size=16, verbose=True):
+        """Evaluate model."""
         sequence = DatasetSequence(x, y)
         preds_raw = self.network.predict(sequence)
         trues = np.argmax(y, -1)
@@ -50,6 +52,7 @@ class LineModel(Model):
         return mean_accuracy
 
     def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
+        """Predict on a single input."""
         if image.dtype == np.uint8:
             image = (image / 255).astype(np.float32)
         pred_raw = self.network.predict(np.expand_dims(image, 0), batch_size=1).squeeze()
