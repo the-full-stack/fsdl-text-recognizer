@@ -8,14 +8,14 @@ from text_recognizer.datasets import EmnistLinesDataset
 from text_recognizer.line_predictor import LinePredictor
 
 
-SUPPORT_DIRNAME = Path(__file__).parents[1].resolve() / 'test_support' / 'emnist_lines'
+SUPPORT_DIRNAME = Path(__file__).parents[1].resolve() / "test_support" / "emnist_lines"
 
 
 class TestLinePredictor(unittest.TestCase):
     @weight(10)
     def test_filename(self):
         predictor = LinePredictor()
-        for filename in SUPPORT_DIRNAME.glob('*.png'):
+        for filename in SUPPORT_DIRNAME.glob("*.png"):
             pred, conf = predictor.predict(str(filename))
             true = filename.stem
             edit_distance = editdistance.eval(pred, true) / len(pred)

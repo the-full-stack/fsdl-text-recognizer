@@ -7,18 +7,18 @@ from text_recognizer.datasets import EmnistDataset
 from text_recognizer.character_predictor import CharacterPredictor
 
 
-SUPPORT_DIRNAME = Path(__file__).parents[1].resolve() / 'test_support' / 'emnist'
+SUPPORT_DIRNAME = Path(__file__).parents[1].resolve() / "test_support" / "emnist"
 
 
 class TestCharacterPredictor(unittest.TestCase):
     @weight(10)
     def test_filename(self):
-      predictor = CharacterPredictor()
+        predictor = CharacterPredictor()
 
-      for filename in SUPPORT_DIRNAME.glob('*.png'):
-        pred, conf = predictor.predict(str(filename))
-        print(pred, conf, filename.stem)
-        self.assertEqual(pred, filename.stem)
+        for filename in SUPPORT_DIRNAME.glob("*.png"):
+            pred, conf = predictor.predict(str(filename))
+            print(pred, conf, filename.stem)
+            self.assertEqual(pred, filename.stem)
 
 
 class TestEvaluateCharacterPredictor(unittest.TestCase):

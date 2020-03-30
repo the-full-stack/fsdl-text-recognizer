@@ -7,7 +7,8 @@
 # W0511 - TODO comments
 # W1202 - logging-format-interpolation - Behavior barring fstrings in logging https://github.com/PyCQA/pylint/issues/2395
 # missing-function-dosctring: docstyle handles
-disable=E1130,E1136,R0801,W0511,W1202,missing-function-docstring
+# bad-continuation: disagrees with black formatter
+disable=E1130,E1136,R0801,W0511,W1202,missing-function-docstring,bad-continuation
 # LAST AUDITED: 2019-01-09
 
 [MASTER]

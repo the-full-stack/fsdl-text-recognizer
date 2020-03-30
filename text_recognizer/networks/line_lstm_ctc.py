@@ -14,12 +14,12 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
 
     num_windows = int((image_width - window_width) / window_stride) + 1
     if num_windows < output_length:
-        raise ValueError(f'Window width/stride need to generate >= {output_length} windows (currently {num_windows})')
+        raise ValueError(f"Window width/stride need to generate >= {output_length} windows (currently {num_windows})")
 
-    image_input = Input(shape=input_shape, name='image')
-    y_true = Input(shape=(output_length,), name='y_true')
-    input_length = Input(shape=(1,), name='input_length')
-    label_length = Input(shape=(1,), name='label_length')
+    image_input = Input(shape=input_shape, name="image")
+    y_true = Input(shape=(output_length,), name="y_true")
+    input_length = Input(shape=(1,), name="input_length")
+    label_length = Input(shape=(1,), name="label_length")
 
     # Your code should use slide_window and extract image patches from image_input.
     # Pass a convolutional model over each image patch to generate a feature vector per window.
@@ -31,10 +31,9 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     image_reshaped = Reshape((image_height, image_width, 1))(image_input)
     # (image_height, image_width, 1)
 
-    image_patches = Lambda(
-        slide_window,
-        arguments={'window_width': window_width, 'window_stride': window_stride}
-    )(image_reshaped)
+    image_patches = Lambda(slide_window, arguments={"window_width": window_width, "window_stride": window_stride})(
+        image_reshaped
+    )
     # (num_windows, image_height, window_width, 1)
 
     # Make a LeNet and get rid of the last two layers (softmax and dropout)
@@ -46,27 +45,23 @@ def line_lstm_ctc(input_shape, output_shape, window_width=28, window_stride=14):
     lstm_output = LSTM(128, return_sequences=True)(convnet_outputs)
     # (num_windows, 128)
 
-    softmax_output = Dense(num_classes, activation='softmax', name='softmax_output')(lstm_output)
+    softmax_output = Dense(num_classes, activation="softmax", name="softmax_output")(lstm_output)
     # (num_windows, num_classes)
     # Your code above (Lab 3)
 
     input_length_processed = Lambda(
-        lambda x, num_windows=None: x * num_windows,
-        arguments={'num_windows': num_windows}
+        lambda x, num_windows=None: x * num_windows, arguments={"num_windows": num_windows}
     )(input_length)
 
-    ctc_loss_output = Lambda(
-        lambda x: K.ctc_batch_cost(x[0], x[1], x[2], x[3]),
-        name='ctc_loss'
-    )([y_true, softmax_output, input_length_processed, label_length])
+    ctc_loss_output = Lambda(lambda x: K.ctc_batch_cost(x[0], x[1], x[2], x[3]), name="ctc_loss")(
+        [y_true, softmax_output, input_length_processed, label_length]
+    )
 
-    ctc_decoded_output = Lambda(
-        lambda x: ctc_decode(x[0], x[1], output_length),
-        name='ctc_decoded'
-    )([softmax_output, input_length_processed])
+    ctc_decoded_output = Lambda(lambda x: ctc_decode(x[0], x[1], output_length), name="ctc_decoded")(
+        [softmax_output, input_length_processed]
+    )
 
     model = KerasModel(
-        inputs=[image_input, y_true, input_length, label_length],
-        outputs=[ctc_loss_output, ctc_decoded_output]
+        inputs=[image_input, y_true, input_length, label_length], outputs=[ctc_loss_output, ctc_decoded_output],
     )
     return model

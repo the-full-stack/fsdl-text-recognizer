@@ -1,5 +1,6 @@
 -c requirements.txt
 bandit
+black
 gpustat
 gradescope-utils
 grequests # admin
