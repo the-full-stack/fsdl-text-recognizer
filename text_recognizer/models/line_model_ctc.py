@@ -74,19 +74,18 @@ class LineModelCtc(Model):
         return mean_accuracy
 
     def predict_on_image(self, image: np.ndarray) -> Tuple[str, float]:
-        softmax_output_fn = K.function(
-            [self.network.get_layer('image').input, K.learning_phase()],
-            [self.network.get_layer('softmax_output').output]
+        softmax_output_fn = KerasModel(
+            inputs=[self.network.get_layer('image').input],
+            outputs=[self.network.get_layer('softmax_output').output]
         )
         if image.dtype == np.uint8:
             image = (image / 255).astype(np.float32)
 
         # Get the prediction and confidence using softmax_output_fn, passing the right input into it.
-        # Your code below (Lab 3)
         input_image = np.expand_dims(image, 0)
-        softmax_output = softmax_output_fn([input_image, 0])[0]
+        softmax_output = softmax_output_fn.predict(input_image)
 
-        input_length = np.array([softmax_output.shape[1]])
+        input_length = [softmax_output.shape[1]]
         decoded, log_prob = K.ctc_decode(softmax_output, input_length, greedy=True)
 
         pred_raw = K.eval(decoded[0])[0]
