@@ -8,7 +8,7 @@ from tensorflow.keras import backend as K
 def residual_conv_block(
     input_layer: Layer, kernel_sizes: List[int], num_filters: List[int], dilation_rates: List[int], activation: str,
 ) -> Layer:
-    """Function to instantiate a Residual convolutional block."""
+    """Instantiate a Residual convolutional block."""
     padding = "same"
     x = Conv2D(
         num_filters[0],
@@ -25,7 +25,7 @@ def residual_conv_block(
 
 
 def fcn(_input_shape: Tuple[int, ...], output_shape: Tuple[int, ...]) -> Model:
-    """Function to instantiate a fully convolutional residual network for line detection."""
+    """Instantiate a fully convolutional residual network for line detection."""
     num_filters = [16] * 14
     kernel_sizes = [7] * 14
     dilation_rates = [3] * 4 + [7] * 10

@@ -14,7 +14,7 @@ class GPUManager:
     """Class for allocating GPUs."""
 
     def __init__(self, verbose: bool = False):
-        self.lock_manager = Redlock([{"host": "localhost", "port": 6379, "db": 0},])
+        self.lock_manager = Redlock([{"host": "localhost", "port": 6379, "db": 0}])
         self.verbose = verbose
 
     def get_free_gpu(self):

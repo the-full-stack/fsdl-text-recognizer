@@ -1,3 +1,4 @@
+"""Module for creating EMNIST test support files."""
 from pathlib import Path
 import shutil
 

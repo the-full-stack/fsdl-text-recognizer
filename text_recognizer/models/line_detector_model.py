@@ -67,8 +67,7 @@ class LineDetectorModel(Model):
         """Predict on a single input."""
         return self.network.predict(np.expand_dims(x, axis=0))[0]
 
-    def evaluate(
-        self, x: np.ndarray, y: np.ndarray, batch_size: int = 32, verbose: bool = False
-    ) -> float:  # pylint: disable=unused-argument
+    def evaluate(self, x: np.ndarray, y: np.ndarray, batch_size: int = 32, verbose: bool = False) -> float:
         """Evaluate the model."""
+        # pylint: disable=unused-argument
         return self.network.evaluate(x, y, batch_size=batch_size)

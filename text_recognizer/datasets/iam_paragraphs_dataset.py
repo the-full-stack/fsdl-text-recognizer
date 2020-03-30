@@ -161,7 +161,7 @@ def _crop_paragraph_image(filename, line_regions, crop_dims, final_dims):  # pyl
     # Generate ground truth
     gt_image = np.zeros_like(image_crop, dtype=np.uint8)
     for ind, region in enumerate(line_regions):
-        gt_image[(region["y1"] - min_y1 + buffer) : (region["y2"] - min_y1 + buffer), region["x1"] : region["x2"],] = (
+        gt_image[(region["y1"] - min_y1 + buffer) : (region["y2"] - min_y1 + buffer), region["x1"] : region["x2"]] = (
             ind % 2 + 1
         )
 

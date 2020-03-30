@@ -95,7 +95,10 @@ def _get_line_regions_from_xml_file(filename: str) -> List[Dict[str, int]]:
 
 def _get_line_region_from_xml_element(xml_line) -> Dict[str, int]:
     """
-    line (xml element): has x, y, width, and height attributes
+    Parameters
+    ----------
+    xml_line
+        xml element that has x, y, width, and height attributes
     """
     word_elements = xml_line.findall("word/cmp")
     x1s = [int(el.attrib["x"]) for el in word_elements]
