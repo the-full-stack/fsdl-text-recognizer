@@ -22,7 +22,7 @@ class LineModel(Model):
 
     def evaluate(self, x, y, batch_size=16, verbose=True):
         sequence = DatasetSequence(x, y)
-        preds_raw = self.network.predict_generator(sequence)
+        preds_raw = self.network.predict(sequence)
         trues = np.argmax(y, -1)
         preds = np.argmax(preds_raw, -1)
         pred_strings = [''.join(self.data.mapping.get(label, '') for label in pred).strip(' |_') for pred in preds]

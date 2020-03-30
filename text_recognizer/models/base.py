@@ -2,6 +2,7 @@
 from pathlib import Path
 from typing import Callable, Dict, Optional
 
+from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import RMSprop
 import numpy as np
 
@@ -13,7 +14,11 @@ DIRNAME = Path(__file__).parents[1].resolve() / 'weights'
 
 class Model:
     """Base class, to be subclassed by predictors for specific type of data."""
-    def __init__(self, dataset_cls: type, network_fn: Callable, dataset_args: Dict = None, network_args: Dict = None):
+    def __init__(self,
+            dataset_cls: type,
+            network_fn: Callable[[], Model],
+            dataset_args: Dict = None,
+            network_args: Dict = None):
         self.name = f'{self.__class__.__name__}_{dataset_cls.__name__}_{network_fn.__name__}'
 
         if dataset_args is None:
@@ -58,8 +63,8 @@ class Model:
             format_fn=self.batch_format_fn
         )
 
-        self.network.fit_generator(
-            generator=train_sequence,
+        self.network.fit(
+            train_sequence,
             epochs=epochs,
             callbacks=callbacks,
             validation_data=test_sequence,
@@ -70,7 +75,7 @@ class Model:
 
     def evaluate(self, x, y, batch_size=16, verbose=False):  # pylint: disable=unused-argument
         sequence = DatasetSequence(x, y, batch_size=batch_size)  # Use a small batch size to use less memory
-        preds = self.network.predict_generator(sequence)
+        preds = self.network.predict(sequence)
         return np.mean(np.argmax(preds, -1) == np.argmax(y, -1))
 
     def loss(self):  # pylint: disable=no-self-use

@@ -20,7 +20,7 @@ This lab has quite a few new files, mostly in the new `api/` directory.
 First, we will get a Flask web server up and running and serving predictions.
 
 ```
-pipenv run python api/app.py
+python api/app.py
 ```
 
 Open up another terminal tab (click on the '+' button under 'File' to open the

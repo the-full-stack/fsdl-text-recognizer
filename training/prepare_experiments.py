@@ -12,7 +12,7 @@ def run_experiments(experiments_filename):
     for ind in range(num_experiments):
         experiment_config = experiments_config['experiments'][ind]
         experiment_config['experiment_group'] = experiments_config['experiment_group']
-        print(f"pipenv run python training/run_experiment.py --gpu=-1 '{json.dumps(experiment_config)}'")
+        print(f"python training/run_experiment.py --gpu=-1 '{json.dumps(experiment_config)}'")
 
 
 def main():
