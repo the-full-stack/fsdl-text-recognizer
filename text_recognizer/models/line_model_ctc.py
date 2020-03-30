@@ -45,7 +45,7 @@ class LineModelCtc(Model):
 
         # We can use the `ctc_decoded` layer that is part of our model here.
         decoding_model = KerasModel(inputs=self.network.input, outputs=self.network.get_layer('ctc_decoded').output)
-        preds = decoding_model.predict_generator(test_sequence)
+        preds = decoding_model.predict(test_sequence)
 
         trues = np.argmax(y, -1)
         pred_strings = [''.join(self.data.mapping.get(label, '') for label in pred).strip(' |_') for pred in preds]
