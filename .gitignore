@@ -7,9 +7,6 @@ data/raw/iam/iamdb
 data/raw/iam/iamdb.zip
 data/raw/nltk
 
-# API requirements
-api/requirements.txt
-
 # Editors
 .vscode
 
