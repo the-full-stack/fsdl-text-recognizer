@@ -88,55 +88,12 @@ docker exec -it api bash
 
 You can shut down your docker container now.
 
-We could deploy this container to, for example, AWS Elastic Container Service or Kubernetes.
-Feel free to do that as an exercise after the bootcamp!
+We could deploy this container to a number of platforms.
+In this lab, we will deploy the app as a Docker container using https://render.com
 
-In this lab, we will deploy the app as a package to AWS Lambda.
+## Web deployment
 
-## Lambda deployment
-
-To deploy to AWS Lambda, we are going to use the `serverless` framework.
-
-First, we need to get the production requirements, replacing `tensorflow` with `tensorflow-cpu`, a much smaller package.
-
-```sh
-sed 's/tensorflow==/tensorflow-cpu==/' requirements.txt > api/requirements.txt
-```
-
-Now let's go into the `api` directory and install the dependencies for serverless:
-
-```sh
-cd api
-npm install
-export PATH="$PWD/node_modules/serverless/bin:$PATH"
-```
-
-Next, we'll need to configure serverless. Edit `serverless.yml` and change the service name on the first line (you can use your Github username for USERNAME):
-
-```
-service: text-recognizer-USERNAME
-```
-
-Next, run `serverless info`.
-You'll see a message asking you to set up your AWS credentials.
-
-You won't be able to quickly get those during lab right now, but you can sign for an AWS account, and note down your access key and secret key -- I store mine in 1Password, right next to my password and 2FA.
-
-Edit the command below and substitute your credentials for the placeholders:
-
-```
-serverless config credentials --provider aws --key REPLACE_THIS --secret REPLACE_THIS
-```
-
-Now you've got everything configured, and are ready to deploy. Serverless will package up your flask API before deploying it.
-It will install all of the python packages in a docker container that matches the environment lambda uses, to make sure the compiled code is compatible.
-This will take 3-5 minutes. This command will package up and deploy your flask API:
-
-```
-serverless deploy -v
-```
-
-Near the end of the output of the deploy command, you'll see links to your API endpoint. Copy the top one (the one that doesn't end in `{proxy+}`).
+TODO: render.com
 
 As before, we can test out our API by running a few curl commands (from the `lab8` directory). We need to change the `API_URL` first though to point it at Lambda:
 
