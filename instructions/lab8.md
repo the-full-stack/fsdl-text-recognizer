@@ -97,7 +97,7 @@ In this lab, we will deploy the app as a package to AWS Lambda.
 
 To deploy to AWS Lambda, we are going to use the `serverless` framework.
 
-First, we need to get the production requirements, replacing `tensorflow-gpu` with simple `tensorflow`.
+First, we need to get the production requirements, replacing `tensorflow` with `tensorflow-cpu`, a much smaller package.
 
 ```sh
 pipenv lock --requirements --keep-outdated > api/requirements.txt
