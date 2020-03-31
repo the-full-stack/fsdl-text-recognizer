@@ -1,4 +1,4 @@
-service: text-recognizer-USERNAME
+service: text-recognizer-sergeyk
 
 frameworkVersion: ">=1.2.0 <2.0.0"
 
@@ -12,7 +12,7 @@ package:
 provider:
   name: aws
   region: us-west-2
-  runtime: python3.6
+  runtime: python3.7
   memorysize: 3096
   timeout: 30
   versionFunctions: false

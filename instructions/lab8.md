@@ -100,8 +100,7 @@ To deploy to AWS Lambda, we are going to use the `serverless` framework.
 First, we need to get the production requirements, replacing `tensorflow` with `tensorflow-cpu`, a much smaller package.
 
 ```sh
-pipenv lock --requirements --keep-outdated > api/requirements.txt
-sed -i 's/tensorflow-gpu/tensorflow/' api/requirements.txt
+sed 's/tensorflow==/tensorflow-cpu==/' requirements.txt > api/requirements.txt
 ```
 
 Now let's go into the `api` directory and install the dependencies for serverless:

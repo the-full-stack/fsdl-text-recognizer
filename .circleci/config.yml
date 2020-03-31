@@ -37,6 +37,7 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            sed -i 's/tensorflow==/tensorflow-cpu==/' requirements.txt
             pip install -r requirements.txt
             pip install -r requirements-dev.txt
 

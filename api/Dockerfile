@@ -10,7 +10,7 @@ COPY text_recognizer/ ./text_recognizer
 COPY api/ ./api
 
 # Install Python dependencies
-RUN set -ex && pip3 install -r requirements.txt
+RUN set -ex && pip3 install -r api/requirements.txt
 
 # Run the web server
 EXPOSE 8000
