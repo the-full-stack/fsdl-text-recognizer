@@ -2,8 +2,9 @@
 
 ## VSCode
 
-There are two things you want to make sure of when using VSCode: 1) that it uses the pipenv environment, and 2) that it lints your files as you work.
-Here is my setup that does both:
+There are two things you want to make sure of when using VSCode: 1) that it uses the right environment, and 2) that it lints your files as you work.
+
+Here is my setup for linting:
 
 ```
 {
@@ -22,7 +23,6 @@ Here is my setup that does both:
   "python.linting.banditEnabled": true,
   "python.linting.banditArgs": ["-ll"],
   "python.linting.enabled": true,
-  "python.pythonPath": "/Users/sergeyk/.local/share/virtualenvs/fsdl-text-recognizer-q2WYtN-5/bin/python",
   "[python]": {
     "editor.tabSize": 4
   },
