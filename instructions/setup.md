@@ -33,14 +33,17 @@ cd fsdl-text-recognizer-project
 
 ## 4. Set up the Python environment
 
-Run
+Run `conda env create` to create an environment called `fsdl-text-recognizer`, as defined in `environment.yml`.
+This environment will provide us with the right Python version as well as the CUDA and CUDNN libraries.
+We will install Python libraries using `pip-sync`, however, which will let us do three nice things:
 
-```sh
-pipenv sync --dev
-```
+1. Separate out dev from production dependencies (`requirements-dev.in` vs `requirements.in`).
+2. Have a lockfile of exact versions for all dependencies (the auto-generated `requirements-dev.txt` and `requirements.txt`).
+3. Allow us to easily deploy to targets that may not support the `conda` environment.
 
-From now on, precede commands with `pipenv run` to make sure they use the correct
-environment.
+So, after running `conda env create`, activate the new environment with `conda activate fsdl-text-recognizer`, and then run `pip-compile requirements.in && pip-compile requirements-dev.in` and then `pip-sync requirements.txt requirements-dev.txt`.
+
+Now, every time you work in this directory, make sure to start your session with `conda activate fsdl-text-recognizer`.
 
 ## 5. Kick off a command
 
@@ -49,7 +52,7 @@ Before we get started, please run a command that will take a little bit of time 
 ```sh
 git pull
 cd lab1/
-pipenv run python text_recognizer/datasets/emnist_dataset.py
+python text_recognizer/datasets/emnist_dataset.py
 cd ..
 ```
 

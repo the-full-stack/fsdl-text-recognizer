@@ -97,8 +97,6 @@
   - api/app.py
   - api/tests/test_app.py
   - api/Dockerfile
-  - api/serverless.yml
-  - api/package.json
   - tasks/build_api_docker.sh
   - tasks/deploy_api_to_lambda.sh
   - tasks/run_api_docker.sh

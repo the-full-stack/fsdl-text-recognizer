@@ -2,7 +2,7 @@
 
 echo "outputting markdown..."
 mkdir -p mds
-pipenv run python output_markdown.py
+python output_markdown.py
 
 echo "converting to pdfs..."
 mkdir -p pdfs
