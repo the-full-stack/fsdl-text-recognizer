@@ -1,10 +1,4 @@
 """Flask web server serving text_recognizer predictions."""
-# From https://github.com/UnitedIncome/serverless-python-requirements
-try:
-    import unzip_requirements  # pylint: disable=unused-import
-except ImportError:
-    pass
-
 import os
 
 from flask import Flask, request, jsonify

@@ -41,7 +41,15 @@ We will install Python libraries using `pip-sync`, however, which will let us do
 2. Have a lockfile of exact versions for all dependencies (the auto-generated `requirements-dev.txt` and `requirements.txt`).
 3. Allow us to easily deploy to targets that may not support the `conda` environment.
 
-So, after running `conda env create`, activate the new environment with `conda activate fsdl-text-recognizer`, and then run `pip-compile requirements.in && pip-compile requirements-dev.in` and then `pip-sync requirements.txt requirements-dev.txt`.
+So, after running `conda env create`, activate the new environment and install the requirements:
+
+```sh
+conda activate fsdl-text-recognizer
+pip-compile requirements.in && pip-compile requirements-dev.in
+pip-sync requirements.txt requirements-dev.txt
+```
+
+The latter two commands are provided for you as `tasks/update_requirements.sh` and `tasks/sync_requirements.sh`.
 
 Now, every time you work in this directory, make sure to start your session with `conda activate fsdl-text-recognizer`.
 

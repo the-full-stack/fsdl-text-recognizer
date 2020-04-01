@@ -18,7 +18,6 @@ api/                        # Code for serving predictions as a REST API.
     Dockerfile                  # Specifies Docker image that runs the web server.
     __init__.py
     app.py                      # Flask web server that serves predictions.
-    serverless.yml              # Specifies AWS Lambda deployment of the REST API.
 ```
 
 Data (not under version control - one level up in the heirarchy)
@@ -45,7 +44,6 @@ Convenience scripts
     tasks/
         # Deployment
         build_api_docker.sh
-        deploy_api_to_lambda.sh
 
         # Code quality
         lint.sh

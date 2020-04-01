@@ -36,11 +36,6 @@ var/
 .installed.cfg
 *.egg
 
-# Serverless directories
-.serverless
-.requirements.zip
-.requirements
-
 # W&B
 wandb-debug.log
 wandb/*

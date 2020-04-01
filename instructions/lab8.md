@@ -4,7 +4,7 @@
 
 - Run our LinePredictor as a web app, and send it some requests
 - Dockerize our web app
-- Deploy our web app as a serverless function to AWS Lambda
+- Deploy our web app to production
 
 ## Follow along
 

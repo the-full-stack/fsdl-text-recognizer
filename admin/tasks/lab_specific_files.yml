@@ -98,6 +98,5 @@
   - api/tests/test_app.py
   - api/Dockerfile
   - tasks/build_api_docker.sh
-  - tasks/deploy_api_to_lambda.sh
   - tasks/run_api_docker.sh
   - tasks/test_api.sh
