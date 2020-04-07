@@ -91,6 +91,7 @@
   - tasks/lint.sh
   - tasks/test_validation.sh
   - .pylintrc
+  - pyproject.toml
   - setup.cfg
 
 8:
