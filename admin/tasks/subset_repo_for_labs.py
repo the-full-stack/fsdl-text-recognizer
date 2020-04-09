@@ -132,6 +132,7 @@ def subset_repo(info, output_dirname):
     shutil.copytree(REPO_DIRNAME / "data", output_dir / "data")
 
     shutil.copy(".gitignore", output_dir)
+    shutil.copy("environment.yml", output_dir)
     shutil.copy("requirements.in", output_dir)
     shutil.copy("requirements-dev.in", output_dir)
     shutil.copy("requirements.txt", output_dir)
