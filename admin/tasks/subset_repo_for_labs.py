@@ -83,8 +83,8 @@ def _filter_hidden_blocks(lines, lab_number):
 def _replace_data_dirname(lines):
     filtered_lines = []
     for line in lines:
-        if line == "        return Path(__file__).resolve().parents[2] / 'data'":
-            line = "        return Path(__file__).resolve().parents[3] / 'data'"
+        if line == '        return Path(__file__).resolve().parents[2] / "data"':
+            line = '        return Path(__file__).resolve().parents[3] / "data"'
         filtered_lines.append(line)
     return filtered_lines
 
