@@ -32,38 +32,39 @@
 
 2:
   - notebooks/02-look-at-emnist-lines.ipynb
-  - tasks/train_cnn_line_predictor.sh
-  - tasks/train_lstm_line_predictor.sh
+  - notebooks/01b-cnn-for-emnist.ipynb
+  - notebooks/02b-cnn-for-simple-emnist-lines.ipynb
   - text_recognizer/datasets/emnist_lines_dataset.py
   - text_recognizer/datasets/sentence_generator.py
   - text_recognizer/line_predictor.py
-  - text_recognizer/models/line_model_ctc.py
   - text_recognizer/models/line_model.py
-  - text_recognizer/networks/ctc.py
   - text_recognizer/networks/line_cnn_all_conv.py
-  - text_recognizer/networks/line_lstm_ctc.py
-  - text_recognizer/tests/test_line_predictor.py
-  - text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5
 
 3:
-  - tasks/prepare_sample_experiments.sh
-  - training/gpu_manager.py
-  - training/experiments/sample.json
-  - training/prepare_experiments.py
-  - wandb/settings
+  - tasks/train_lstm_line_predictor.sh
+  - text_recognizer/models/line_model_ctc.py
+  - text_recognizer/networks/ctc.py
+  - text_recognizer/networks/line_lstm_ctc.py
+  - text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5
+  - text_recognizer/tests/test_line_predictor.py
 
 4:
-  - notebooks/03-look-at-iam-lines.ipynb
-  - text_recognizer/datasets/iam_lines_dataset.py
-  - tasks/train_lstm_line_predictor_on_iam.sh
-  - text_recognizer/tests/support/create_iam_lines_support_files.py
   - "text_recognizer/tests/support/iam_lines/and came into the livingroom, where.png"
   - "text_recognizer/tests/support/iam_lines/He rose from his breakfast-nook bench.png"
   - "text_recognizer/tests/support/iam_lines/his entrance. He came, almost falling.png"
+  - notebooks/03-look-at-iam-lines.ipynb
+  - tasks/prepare_sample_experiments.sh
+  - tasks/train_lstm_line_predictor_on_iam.sh
+  - text_recognizer/datasets/iam_lines_dataset.py
+  - text_recognizer/tests/support/create_iam_lines_support_files.py
   - text_recognizer/weights/LineModelCtc_IamLinesDataset_line_lstm_ctc_weights.h5
+  - training/experiments/sample.json
+  - training/gpu_manager.py
+  - training/prepare_experiments.py
   - training/run_sweep.py
   - training/sweep_emnist.yaml
   - training/sweep_iam.yaml
+  - wandb/settings
 
 5:
   - notebooks/04-look-at-iam-paragraphs.ipynb
