@@ -25,6 +25,7 @@ def scaled_dot_product_attention(query, key, value, mask):
 
 class MultiHeadAttention(tf.keras.layers.Layer):
     """Multi-head attention."""
+
     def __init__(self, d_model, num_heads, name="multi_head_attention"):
         super(MultiHeadAttention, self).__init__(name=name)
         self.num_heads = num_heads

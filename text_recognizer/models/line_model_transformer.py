@@ -82,5 +82,5 @@ class LineModelTransformer(Model):
         if image.dtype == np.uint8:
             image = (image / 255).astype(np.float32)
         pred = run_inference(self.model, image, self.data.max_length, self.data.start_label, self.data.end_label)
-        string = ''.join([dataset.mapping[ind] for ind in pred.numpy()]).strip()
+        string = "".join([dataset.mapping[ind] for ind in pred.numpy()]).strip()
         return pred, 1.0  # NOTE: conference is always given as 1.0 for now...
