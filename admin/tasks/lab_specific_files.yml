@@ -41,12 +41,21 @@
   - text_recognizer/networks/line_cnn_all_conv.py
 
 3:
+  - notebooks/02c-transformer.ipynb
   - tasks/train_lstm_line_predictor.sh
   - text_recognizer/models/line_model_ctc.py
+  - text_recognizer/models/line_model_transformer.py
+  - text_recognizer/models/util.py
   - text_recognizer/networks/ctc.py
   - text_recognizer/networks/line_lstm_ctc.py
-  - text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5
+  - text_recognizer/networks/transformer/__init__.py
+  - text_recognizer/networks/transformer/attention.py
+  - text_recognizer/networks/transformer/decoder.py
+  - text_recognizer/networks/transformer/masking.py
+  - text_recognizer/networks/transformer/positional_encoding.py
+  - text_recognizer/networks/transformer/main.py
   - text_recognizer/tests/test_line_predictor.py
+  - text_recognizer/weights/LineModelCtc_EmnistLinesDataset_line_lstm_ctc_weights.h5
 
 4:
   - "text_recognizer/tests/support/iam_lines/and came into the livingroom, where.png"
