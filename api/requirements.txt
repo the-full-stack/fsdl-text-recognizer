@@ -21,7 +21,7 @@ grpcio==1.27.2            # via tensorboard, tensorflow
 h5py==2.10.0              # via -r requirements.in, tensorflow
 idna==2.9                 # via requests
 itsdangerous==1.1.0       # via flask
-jinja2==2.11.1            # via flask
+jinja2==2.11.3            # via flask
 keras-preprocessing==1.1.0  # via tensorflow
 markdown==3.2.1           # via tensorboard
 markupsafe==1.1.1         # via jinja2
