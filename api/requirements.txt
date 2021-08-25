@@ -40,7 +40,7 @@ six==1.14.0               # via absl-py, astunparse, google-auth, google-pasta, 
 tensorboard-plugin-wit==1.6.0.post2  # via tensorboard
 tensorboard==2.2.0        # via tensorflow
 tensorflow-estimator==2.2.0rc0  # via tensorflow
-tensorflow-cpu==2.2.0rc2      # via -r requirements.in
+tensorflow-cpu==2.5.1      # via -r requirements.in
 termcolor==1.1.0          # via tensorflow
 toml==0.10.0              # via -r requirements.in
 tqdm==4.44.1              # via -r requirements.in
