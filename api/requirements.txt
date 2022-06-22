@@ -25,7 +25,7 @@ jinja2==2.11.1            # via flask
 keras-preprocessing==1.1.0  # via tensorflow
 markdown==3.2.1           # via tensorboard
 markupsafe==1.1.1         # via jinja2
-numpy==1.18.2             # via -r requirements.in, h5py, keras-preprocessing, opencv-python-headless, opt-einsum, scipy, tensorboard, tensorflow
+numpy==1.22.0             # via -r requirements.in, h5py, keras-preprocessing, opencv-python-headless, opt-einsum, scipy, tensorboard, tensorflow
 oauthlib==3.1.0           # via requests-oauthlib
 opencv-python-headless==4.2.0.32  # via -r requirements.in
 opt-einsum==3.2.0         # via tensorflow
