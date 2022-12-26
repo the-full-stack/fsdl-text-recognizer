@@ -46,7 +46,7 @@ toml==0.10.0              # via -r requirements.in
 tqdm==4.44.1              # via -r requirements.in
 urllib3==1.25.8           # via requests
 werkzeug==1.0.0           # via flask, tensorboard
-wheel==0.34.2             # via astunparse, tensorboard, tensorflow
+wheel==0.38.1             # via astunparse, tensorboard, tensorflow
 wrapt==1.11.2             # via -r requirements.in, tensorflow
 
 # The following packages are considered to be unsafe in a requirements file:
